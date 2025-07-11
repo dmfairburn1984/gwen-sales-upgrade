@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINT Outdoor - Gwen AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .chat-container {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .chat-header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .chat-header p {
+            opacity: 0.95;
+            font-size: 15px;
+        }
+        
+        .personality-indicator {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .status-indicators {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+        
+        .status-dot.error {
+            background: #f44336;
+        }
+        
+        .status-dot.warning {
+            background: #FF9800;
+        }
+        
+        .quick-buttons {
+            padding: 15px 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .quick-button {
+            padding: 10px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .quick-button:hover {
+            background: #2196F3;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            color: white;
+        }
+        
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            order: 2;
+        }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 16px 20px;
+            border-radius: 20px;
+            word-wrap: break-word;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .message.bot .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .message-time {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+        
+        .message-metadata {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 15px 25px;
+            font-style: italic;
+            color: #666;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .typing-dots {
+            display: inline-flex;
+            gap: 3px;
+            margin-left: 5px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2196F3;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            30% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+        
+        .suggestions-container {
+            padding: 15px 25px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: none;
+        }
+        
+        .suggestions-title {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .suggestion-button {
+            padding: 8px 14px;
+            background: #f0f7ff;
+            color: #2196F3;
+            border: 1px solid #2196F3;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-button:hover {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .chat-input-container {
+            padding: 20px 25px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            line-height: 1.4;
+            transition: border-color 0.2s ease;
+        }
+        
+        .chat-input:focus {
+            border-color: #2196F3;
+        }
+        
+        .send-button {
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 80px;
+            height: 50px;
+        }
+        
+        .send-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 18px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .status-indicator.error {
+            background: #f44336;
+        }
+        
+        .status-indicator.warning {
+            background: #FF9800;
+        }
+        
+        .escalation-banner {
+            background: linear-gradient(135deg, #f44336, #E91E63);
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .feature-badges {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+        }
+        
+        .feature-badge {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 95%;
+                height: 95vh;
+                border-radius: 15px;
+            }
+            
+            .chat-header {
+                padding: 20px;
+            }
+            
+            .chat-header h1 {
+                font-size: 24px;
+            }
+            
+            .chat-messages {
+                padding: 20px;
+            }
+            
+            .quick-buttons {
+                padding: 12px 20px;
+            }
+            
+            .chat-input-container {
+                padding: 15px 20px;
+            }
+            
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator" id="statusIndicator">🟢 Connected</div>
+    
+    <div class="feature-badges">
+        <div class="feature-badge" id="salesBadge">🧠 AI Sales</div>
+        <div class="feature-badge" id="analyticsBadge">📊 Analytics</div>
+    </div>
+    
+    <div class="chat-container">
+        <div class="escalation-banner" id="escalationBanner">
+            🚨 Your concern has been escalated to management. Someone will contact you directly.
+        </div>
+        
+        <div class="chat-header">
+            <div class="status-indicators">
+                <div class="status-dot" id="systemStatus" title="System Status"></div>
+                <div class="status-dot" id="aiStatus" title="AI Status"></div>
+            </div>
+            
+            <h1>🌿 MINT Outdoor</h1>
+            <p>Gwen AI - Advanced Customer Service & Sales Intelligence</p>
+            
+            <div class="personality-indicator" id="personalityIndicator">
+                🎯 Personality Detected
+            </div>
+        </div>
+        
+        <div class="quick-buttons" id="quickButtons">
+            <button class="quick-button" onclick="sendQuickMessage('Hello, I need help')">👋 Get Started</button>
+            <button class="quick-button" onclick="sendQuickMessage('Where is my order?')">📦 Track Order</button>
+            <button class="quick-button" onclick="sendQuickMessage('I need outdoor furniture for entertaining')">🎉 Entertaining</button>
+            <button class="quick-button" onclick="sendQuickMessage('Help with returns')">↩️ Returns</button>
+            <button class="quick-button" onclick="sendQuickMessage('What furniture do you recommend?')">💡 Recommendations</button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">🌿</div>
+                <div class="message-bubble">
+                    <div>Hello! I'm Gwen from MINT Outdoor. I'm here to help you with:</div>
+                    <br>
+                    <div>🔍 <strong>Order tracking & support</strong> - Check delivery status, returns, and account help</div>
+                    <div>🪑 <strong>Furniture recommendations</strong> - Find perfect pieces for your outdoor space</div>
+                    <div>🎯 <strong>Personalized advice</strong> - Get suggestions based on your style and needs</div>
+                    <br>
+                    <div>How can I assist you today?</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="suggestions-container" id="suggestionsContainer">
+            <div class="suggestions-title">💡 Suggested responses:</div>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            Gwen is thinking<span class="typing-dots">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </span>
+        </div>
+        
+        <div class="chat-input-container">
+            <textarea class="chat-input" id="chatInput" placeholder="Type your message here..." onkeydown="handleKeyPress(event)" rows="1"></textarea>
+            <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const sessionId = 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        let currentPersonality = null;
+        let conversationStage = 'greeting';
+        let isEscalated = false;
+        
+        // DOM elements
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const suggestionsContainer = document.getElementById('suggestionsContainer');
+        const suggestions = document.getElementById('suggestions');
+        const personalityIndicator = document.getElementById('personalityIndicator');
+        const escalationBanner = document.getElementById('escalationBanner');
+        const quickButtons = document.getElementById('quickButtons');
+        
+        // Auto-resize textarea
+        chatInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+        
+        // Send message on Enter (Shift+Enter for new line)
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+        
+        // Send quick message
+        function sendQuickMessage(message) {
+            chatInput.value = message;
+            sendMessage();
+        }
+        
+        // Send suggestion
+        function sendSuggestion(suggestion) {
+            chatInput.value = suggestion;
+            sendMessage();
+        }
+        
+        // Add message to chat
+        function addMessage(message, isUser = false, metadata = {}) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'message-avatar';
+            avatarDiv.textContent = isUser ? '👤' : '🌿';
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            
+            const messageContent = document.createElement('div');
+            messageContent.textContent = message;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            bubbleDiv.appendChild(messageContent);
+            bubbleDiv.appendChild(timeDiv);
+            
+            // Add metadata for bot messages
+            if (!isUser && (metadata.personality || metadata.escalated)) {
+                const metadataDiv = document.createElement('div');
+                metadataDiv.className = 'message-metadata';
+                
+                let metadataText = '';
+                if (metadata.personality) {
+                    metadataText += `🎯 ${metadata.personality.replace('_', ' ')} detected`;
+                }
+                if (metadata.escalated) {
+                    metadataText += (metadataText ? ' • ' : '') + '🚨 Escalated to management';
+                }
+                
+                metadataDiv.textContent = metadataText;
+                bubbleDiv.appendChild(metadataDiv);
+            }
+            
+            messageDiv.appendChild(avatarDiv);
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Show/hide typing indicator
+        function showTyping(show = true) {
+            typingIndicator.style.display = show ? 'block' : 'none';
+            if (show) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        
+        // Update status indicator
+        function updateStatus(message, type = 'success') {
+            statusIndicator.textContent = message;
+            statusIndicator.className = `status-indicator ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : ''}`;
+        }
+        
+        // Update personality indicator
+        function updatePersonality(personality) {
+            if (personality && personality !== currentPersonality) {
+                currentPersonality = personality;
+                personalityIndicator.textContent = `🎯 ${personality.replace('_', ' ')} detected`;
+                personalityIndicator.style.display = 'block';
+                
+                // Update quick buttons based on personality
+                updateQuickButtons(personality);
+            }
+        }
+        
+        // Update quick buttons based on personality
+        function updateQuickButtons(personality) {
+            const personalityButtons = {
+                entertainer: ['Large dining sets for 6+', 'Premium outdoor collections', 'Statement pieces'],
+                budget_conscious: ['Best value options', 'Budget-friendly sets', 'Payment plans available'],
+                style_conscious: ['Designer collections', 'Modern outdoor styles', 'Exclusive UK designs'],
+                family_focused: ['Family-sized furniture', 'Durable materials', 'Child-safe options'],
+                comfort_seeker: ['Luxury comfort seating', 'Cushioned furniture', 'Relaxation sets'],
+                small_space: ['Compact solutions', 'Space-saving designs', 'Balcony furniture']
+            };
+            
+            if (personalityButtons[personality]) {
+                quickButtons.innerHTML = personalityButtons[personality]
+                    .map(button => `<button class="quick-button" onclick="sendQuickMessage('${button}')">${button}</button>`)
+                    .join('');
+            }
+        }
+        
+        // Show suggestions
+        function showSuggestions(suggestionsList) {
+            if (suggestionsList && suggestionsList.length > 0) {
+                suggestions.innerHTML = suggestionsList
+                    .map(suggestion => `<button class="suggestion-button" onclick="sendSuggestion('${suggestion}')">${suggestion}</button>`)
+                    .join('');
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        }
+        
+        // Show escalation banner
+        function showEscalation() {
+            if (!isEscalated) {
+                isEscalated = true;
+                escalationBanner.style.display = 'block';
+                setTimeout(() => {
+                    escalationBanner.style.display = 'none';
+                }, 10000); // Hide after 10 seconds
+            }
+        }
+        
+        // Send message to server
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage(message, true);
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            
+            // Hide suggestions
+            showSuggestions([]);
+            
+            // Disable send button and show typing
+            sendButton.disabled = true;
+            showTyping(true);
+            updateStatus('🟡 Processing...', 'warning');
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        sessionId: sessionId
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Hide typing and add bot response
+                showTyping(false);
+                addMessage(data.response, false, data.metadata || {});
+                
+                // Update UI based on response
+                if (data.personality) {
+                    updatePersonality(data.personality);
+                }
+                
+                if (data.suggestions) {
+                    showSuggestions(data.suggestions);
+                }
+                
+                if (data.escalated) {
+                    showEscalation();
+                }
+                
+                updateStatus('🟢 Connected');
+                
+            } catch (error) {
+                console.error('Chat error:', error);
+                showTyping(false);
+                addMessage('Sorry, I\'m having trouble connecting. Please try again in a moment.');
+                updateStatus('🔴 Connection Error', 'error');
+            } finally {
+                sendButton.disabled = false;
+                chatInput.focus();
+            }
+        }
+        
+        // Initialize application
+        window.onload = function() {
+            chatInput.focus();
+            
+            // Test connection and get system status
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('System status:', data);
+                    updateStatus('🟢 Connected');
+                    
+                    // Update feature badges
+                    if (data.features.ENABLE_SALES_MODE) {
+                        document.getElementById('salesBadge').style.background = '#4CAF50';
+                        document.getElementById('salesBadge').style.color = 'white';
+                    }
+                    
+                    if (data.database === 'connected') {
+                        document.getElementById('analyticsBadge').style.background = '#4CAF50';
+                        document.getElementById('analyticsBadge').style.color = 'white';
+                    }
+                })
+                .catch(error => {
+                    console.error('Health check failed:', error);
+                    updateStatus('🔴 Connection Error', 'error');
+                });
+        };
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Ctrl/Cmd + K to focus input
+            if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                event.preventDefault();
+                chatInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>

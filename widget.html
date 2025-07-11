@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINT Outdoor - Personal Shopper</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- [MINT OUTDOOR] Brand-Aligned UI Redesign --- */
+
+        /* --- 1. CSS Variables from Style Guide  --- */
+        :root {
+            /* Color Palette */
+            --color-mint-green: #9FDCC2;
+            --color-forest-green: #2E6041;
+            --color-off-white: #F5F5F0;
+            --color-charcoal-gray: #333333;
+            --color-black: #000000;
+            /* Typography  */
+            --font-primary: 'Montserrat', sans-serif; /* For headlines & CTAs */
+            --font-secondary: 'Lora', serif; /* For body text */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- 2. Base Widget & Typography --- */
+        .gwen-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            font-family: var(--font-secondary); /* Default to sophisticated serif */
+        }
+
+        /* --- 3. Chat Button (The Invitation) --- */
+        .gwen-chat-button {
+            padding: 14px 28px;
+            border-radius: 6px; /* A more refined, slightly rounded rectangle */
+            background: var(--color-off-white);
+            border: 1px solid #EAEAEA;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--color-charcoal-gray); /* Using Charcoal for primary text  */
+            font-family: var(--font-primary); /* Bold, modern Montserrat for the CTA [cite: 75] */
+            font-size: 15px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .gwen-chat-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        /* Using black for the "close" button state for a minimal, clean look  */
+        .gwen-chat-button.active {
+            background: var(--color-black);
+            color: var(--color-off-white);
+            border-color: var(--color-black);
+        }
+
+        /* --- 4. Chat Window --- */
+        .gwen-chat-window {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 390px;
+            max-height: calc(100vh - 95px); /* Set max height relative to screen, with a buffer */
+            height: 640px; /* Keep a default height for large screens */
+            background: var(--color-off-white); /* Using Off-White for a softer background  */
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #EAEAEA;
+            animation: slideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .gwen-chat-window.active { display: flex; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 5. Header --- */
+        .gwen-header {
+            background: var(--color-off-white);
+            color: var(--color-black);
+            padding: 24px;
+            text-align: left;
+            position: relative;
+            border-bottom: 1px solid #EAEAEA;
+        }
+
+        .gwen-header h3 {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 18px;
+            margin-bottom: 4px;
+            color: var(--color-mint-green); /* Using Mint Green for the primary brand header  */
+        }
+
+        .gwen-header p {
+            font-family: var(--font-secondary);
+            font-size: 14px;
+            color: var(--color-charcoal-gray); /* Charcoal for supporting text  */
+        }
+
+        .gwen-close {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            font-size: 28px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .gwen-close:hover { color: var(--color-black); }
+
+        /* --- 6. Messages Area --- */
+        .gwen-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: #FFFFFF; /* A slightly brighter white for the message area to contrast with the frame */
+        }
+
+        .gwen-message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeIn 0.5s ease;
+            max-width: 95%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gwen-message.user { justify-content: flex-end; margin-left: auto; }
+
+        .gwen-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .gwen-message.bot .gwen-avatar {
+            background: var(--color-charcoal-gray);
+            color: var(--color-off-white);
+        }
+
+        .gwen-message.user .gwen-avatar {
+            background: var(--color-forest-green); /* Using Forest Green for user accent  */
+            color: var(--color-off-white);
+            order: 2;
+        }
+
+        .gwen-bubble {
+            padding: 16px 20px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            line-height: 1.6; /* Increased line-height for readability */
+            font-size: 15px;
+            font-weight: 400;
+            font-family: var(--font-secondary); /* Lora for conversational text [cite: 80] */
+        }
+
+        .gwen-message.user .gwen-bubble {
+            background: var(--color-forest-green);
+            color: var(--color-off-white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .gwen-message.bot .gwen-bubble {
+            background: var(--color-off-white);
+            color: var(--color-charcoal-gray);
+            border: none; /* Cleaner look for bot messages */
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* --- 7. Input Area & Actions --- */
+        .gwen-quick-actions {
+            padding: 10px 24px 15px 24px;
+            background: #FFFFFF;
+            border-top: 1px solid #EAEAEA;
+        }
+
+        .gwen-quick-button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px 4px 4px 0;
+            background: transparent;
+            color: var(--color-forest-green);
+            border: 1px solid #EAEAEA;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: var(--font-primary);
+            transition: all 0.2s;
+        }
+        .gwen-quick-button:hover { background: var(--color-forest-green); color: var(--color-off-white); border-color: var(--color-forest-green); }
+
+        .gwen-input-area {
+            padding: 20px 24px;
+            background: var(--color-off-white);
+            border-top: 1px solid #EAEAEA;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .gwen-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            resize: none;
+            height: 48px;
+            color: var(--color-charcoal-gray);
+            font-family: var(--font-secondary);
+        }
+        .gwen-input:focus { border-color: var(--color-forest-green); }
+
+        .gwen-send-button {
+            background: var(--color-forest-green); /* Forest Green for primary CTA button  */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: var(--font-primary);
+            transition: all 0.2s;
+            height: 48px;
+            padding: 0 24px;
+        }
+        .gwen-send-button:hover:not(:disabled) { background: var(--color-black); }
+        .gwen-send-button:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* --- 8. Typing Indicator --- */
+        .gwen-typing { display: none; padding: 10px 24px; background: #FFFFFF; }
+        .gwen-typing.show { display: block; }
+        .gwen-typing-dots { display: inline-flex; gap: 4px; }
+        .gwen-typing-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #EAEAEA; animation: typing 1.4s infinite;
+        }
+        .gwen-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .gwen-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+            30% { transform: translateY(-3px); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gwen-widget" id="gwenWidget">
+        <button class="gwen-chat-button" id="gwenChatButton">
+            Ask Gwen, Your Personal Shopping Concierge!
+        </button>
+        
+        <div class="gwen-chat-window" id="gwenChatWindow">
+            <div class="gwen-header">
+                <button class="gwen-close" id="gwenClose">&times;</button>
+                <h3>MINT OUTDOOR</h3>
+                <p>Your Personal Shopping Concierge</p>
+            </div>
+            
+            <div class="gwen-messages" id="gwenMessages">
+                <div class="gwen-message bot">
+                    <div class="gwen-avatar">M</div>
+                    <div class="gwen-bubble">
+                        Welcome. I am Gwen, your personal consultant for crafting the perfect outdoor space. How may I assist you today?
+                    </div>
+                </div>
+            </div>
+            
+                      
+            <div class="gwen-typing" id="gwenTyping">
+                <span class="gwen-typing-dots">
+                    <span class="gwen-typing-dot"></span><span class="gwen-typing-dot"></span><span class="gwen-typing-dot"></span>
+                </span>
+            </div>
+            
+            <div class="gwen-input-area">
+                <textarea class="gwen-input" id="gwenInput" placeholder="How may I assist with your selection?" rows="1"></textarea>
+                <button class="gwen-send-button" id="gwenSendButton">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GWEN_API_URL = 'http://localhost:3000';
+        const sessionId = 'widget_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        
+        const chatButton = document.getElementById('gwenChatButton');
+        const chatWindow = document.getElementById('gwenChatWindow');
+        const closeButton = document.getElementById('gwenClose');
+        const messagesContainer = document.getElementById('gwenMessages');
+        const input = document.getElementById('gwenInput');
+        const sendButton = document.getElementById('gwenSendButton');
+        const typing = document.getElementById('gwenTyping');
+        const quickActions = document.getElementById('gwenQuickActions');
+        
+        let isOpen = false;
+        
+        chatButton.addEventListener('click', toggleChat);
+        closeButton.addEventListener('click', toggleChat);
+        
+        function toggleChat() {
+            isOpen = !isOpen;
+            chatWindow.classList.toggle('active', isOpen);
+            chatButton.classList.toggle('active', isOpen);
+            chatButton.textContent = isOpen ? '✕ Close' : 'Ask Gwen, Your Personal Shopping Concierge';
+            if (isOpen) input.focus();
+        }
+        
+        function showTyping(show = true) {
+            if (typing) typing.classList.toggle('show', show);
+            if (show) messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        sendButton.addEventListener('click', sendMessage);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+        });
+        
+        input.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 48) + 'px';
+        });
+        
+        function sendQuickMessage(message) {
+            input.value = message;
+            sendMessage();
+        }
+        
+        async function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addMessage(message, true);
+            input.value = '';
+            input.style.height = 'auto';
+            
+            sendButton.disabled = true;
+            showTyping(true);
+            
+            try {
+                const response = await fetch(`${GWEN_API_URL}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, sessionId: sessionId })
+                });
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                
+                showTyping(false);
+                addMessage(data.response, false);
+                
+            } catch (error) {
+                console.error('Chat error:', error);
+                showTyping(false);
+                addMessage('Apologies, but I am encountering a connection issue. Please try again shortly.', false);
+            } finally {
+                sendButton.disabled = false;
+                input.focus();
+            }
+        }
+        
+        function addMessage(message, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `gwen-message ${isUser ? 'user' : 'bot'}`;
+    
+    const avatarDiv = document.createElement('div');
+    avatarDiv.className = 'gwen-avatar';
+    avatarDiv.textContent = isUser ? 'You' : 'M';
+    
+    const bubbleDiv = document.createElement('div');
+    bubbleDiv.className = 'gwen-bubble';
+    
+    if (!isUser) {
+        bubbleDiv.innerHTML = formatProductMessage(message);
+    } else {
+        bubbleDiv.textContent = message;
+    }
+    
+    messageDiv.appendChild(avatarDiv);
+    messageDiv.appendChild(bubbleDiv);
+    messagesContainer.appendChild(messageDiv);
+    
+    // --- NEW SCROLL LOGIC ---
+    if (isUser) {
+        // For short user messages, scrolling to the bottom is fine.
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+setTimeout(() => {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}, 100);
+setTimeout(() => {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}, 300);
+    } else {
+        // For bot messages, scroll to the top of the new message, with a small padding buffer.
+        const topPos = messageDiv.offsetTop;
+        messagesContainer.scrollTo({ top: topPos - 24, behavior: 'smooth' });
+    }
+}
+        function formatProductMessage(message) {
+            let formatted = message;
+            
+            // Product Title (Montserrat, Black) [cite: 75, 68]
+            formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<h3 style="font-family: \'Montserrat\', sans-serif; font-size: 17px; color: #000000; font-weight: 700; margin: 0 0 12px 0; line-height: 1.3;">$1</h3>');
+            
+            // Product Image
+            formatted = formatted.replace(/<img src="([^"]+)"[^>]+>/g, '<img src="$1" style="max-width: 100%; border-radius: 8px; margin: 12px 0; border: 1px solid #EAEAEA;">');
+            
+            // Key-Value Pairs (SKU, Price, Stock)
+            formatted = formatted.replace(/^(SKU|Price|Stock Status):(.+)/gm, (match, key, value) => {
+                let color = key === 'Price' ? '#2E6041' : '#555555';
+                let weight = key === 'Price' ? '700' : '400';
+                return `<div style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: ${color}; font-weight: ${weight}; margin: 4px 0;">${key}:${value}</div>`;
+            });
+
+            // View in Store Button (Forest Green CTA) 
+            formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, '<a href="$1" target="_blank" style="display: inline-block; margin-top: 15px; padding: 12px 24px; background: #2E6041; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: \'Montserrat\', sans-serif;">View in Store</a>');
+
+            // Assembly Instructions Button
+            formatted = formatted.replace(/\[View Assembly Guide\]\((.*?)\)/g, '<a href="$1" target="_blank" style="display: inline-block; margin-top: 8px; padding: 10px 18px; background: #F5F5F0; color: #333333; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 13px; border: 1px solid #EAEAEA; font-family: \'Montserrat\', sans-serif;">📋 Assembly Instructions</a>');
+
+            // General link styling
+            formatted = formatted.replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, (match, href, text) => {
+                if (match.includes('style=')) return match;
+                return `<a href="${href}" target="_blank" style="color: #2E6041; text-decoration: underline;">${text}</a>`;
+            });
+
+            // Convert newlines to breaks
+            formatted = formatted.replace(/\n/g, '<br>');
+
+            return formatted;
+        }
+        
+        console.log('MINT Outdoor Concierge Widget Loaded.');
+    </script>
+</body>
+</html>

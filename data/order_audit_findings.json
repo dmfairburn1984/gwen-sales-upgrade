@@ -1,0 +1,409 @@
+{
+  "reportGenerated": "2025-07-01T11:29:17.078Z",
+  "auditSections": [
+    {
+      "sectionTitle": "⚠️ Pre-orders Tagged as In-Stock (but PO Not Arrived)",
+      "headers": [
+        "Order ID",
+        "SKU",
+        "Current Tag",
+        "PO Number",
+        "PO Arrived?",
+        "Uploaded to RRL?",
+        "Issue"
+      ],
+      "rows": [
+        [
+          "No issues found",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "🚨 Orders Assigned to Empty PO (All SKUs Zero/Missing in PO Column)",
+      "headers": [
+        "Order ID",
+        "Order SKUs",
+        "Matched PO in Tag",
+        "PO SKU Qty (Summary)",
+        "Issue",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          2829,
+          "STOCK-CNR-COVERS-BEIGE",
+          "42/2025",
+          "STOCK-CNR-COVERS-BEIGE: SKU not in 'pre order schedule'",
+          "All order SKUs assigned to a PO with zero or missing quantities for them.",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "🔴 Refunded PreOrders Audit (Needs 'refunded' tag)",
+      "headers": [
+        "Order ID",
+        "SKU",
+        "Current Tag",
+        "Issue",
+        "",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          2662,
+          "STOCKHOLM-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ],
+        [
+          2514,
+          "SANTORINI-GREY",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ],
+        [
+          2500,
+          "STOCKHOLM-CHAISE-LOUNGE",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ],
+        [
+          2345,
+          "KIKI-ORGANIC-CHAISE",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ],
+        [
+          2269,
+          "MARBELLA-COVER",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ],
+        [
+          2170,
+          "STOCKHOLM-CORNER-COVER",
+          "Delivery Booking in Progress",
+          "Pre-order refunded — mark tag accordingly",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "🟣 Pre-orders in JOB But PO Hasn't Landed (Too Early)",
+      "headers": [
+        "Order ID",
+        "SKU",
+        "Current Tag",
+        "PO Number",
+        "Effective PO Arrival Date",
+        "Issue",
+        ""
+      ],
+      "rows": [
+        [
+          "No issues found",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "🟢 Pre-orders NOT in JOB But PO HAS Landed (Excludes Fulfilled/Refunded Orders)",
+      "headers": [
+        "Order ID",
+        "SKU",
+        "Current Tag",
+        "PO Number",
+        "PO Arrival Date",
+        "Issue",
+        ""
+      ],
+      "rows": [
+        [
+          "No issues found",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "🟡 Orders With In-Stock Tags But Not in JOB or POD",
+      "headers": [
+        "Order ID",
+        "SKU",
+        "Current Tag",
+        "In JOB?",
+        "In POD?",
+        "Financial Status (Sheet1 Col I)",
+        "Issue"
+      ],
+      "rows": [
+        [
+          3082,
+          "STOCKHOLM-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3081,
+          "PALMA-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3081,
+          "FARO-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3080,
+          "STOCKHOLM-CORNER-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3080,
+          "STOCKHOLM-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3078,
+          "MARBELLA FIVE SEATER CORNER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3076,
+          "SANTORINI-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3076,
+          "SANTORINI-GREY",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3075,
+          "SANTORINI-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3075,
+          "SANTORINI-GREY",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3074,
+          "SANTORINI-GREY",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3074,
+          "SANTORINI-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3073,
+          "PALMA-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3073,
+          "FARO-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3072,
+          "BRIDGETOWN-120-4S",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3071,
+          "PALMA-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3071,
+          "FARO-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3070,
+          "FARO-LOUNGE-SET",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          3069,
+          "PALMA-COVER",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          2584,
+          "ASSEMBLY-ADD-ON",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          2239,
+          "STOCKHOLM-CHAISE-LOUNGE",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          1652,
+          "STOCKHOLM-CHAISE-LOUNGE",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ],
+        [
+          1034,
+          "",
+          "Delivery Booking in Progress",
+          "No",
+          "No",
+          "paid",
+          "In-stock tag but not in JOB or POD (and not fulfilled/cancelled/refunded)"
+        ]
+      ]
+    },
+    {
+      "sectionTitle": "⚠️ Duplicated JOB Entries in Podfather",
+      "headers": [
+        "Order ID",
+        "Occurrences",
+        "Issue",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "rows": [
+        [
+          "No duplicates found",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    }
+  ]
+}
