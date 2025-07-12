@@ -1,5 +1,6 @@
 // MINT OUTDOOR AI SYSTEM - NATURAL PACKAGE DEAL APPROACH
 // Implementing Gemini's feedback: Remove artificial delays, use immediate expert consultation
+// Pagination fix applied - test commit.
 
 require('dotenv').config();
 const express = require('express');
@@ -977,13 +978,30 @@ async function searchShopifyProducts(criteria) {
         console.log('🔍 Initial search criteria:', criteria);
 
         if (criteria.sku) {
-            const response = await fetch(`https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`, {
-                headers: { 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN, 'Content-Type': 'application/json' }
-            });
-            if (!response.ok) { return searchRealProducts(criteria); }
-            const data = await response.json();
-            const product = (data.products || []).find(p => p.variants.some(v => v.sku === criteria.sku));
+            let allProducts = [];
+            let url = `https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`;
+            while (url) {
+                const response = await fetch(url, {
+                    headers: { 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN, 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    console.log('⚠️ Shopify API failed during pagination, using JSON backup');
+                    return searchRealProducts(criteria);
+                }
+                const data = await response.json();
+                allProducts = allProducts.concat(data.products || []);
+                console.log(`✅ Fetched page, total products so far: ${allProducts.length}`);
 
+                const linkHeader = response.headers.get('Link');
+                if (linkHeader) {
+                    const nextLinkMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/);
+                    url = nextLinkMatch ? nextLinkMatch[1] : null;
+                } else {
+                    url = null;
+                }
+            }
+
+            const product = allProducts.find(p => p.variants.some(v => v.sku === criteria.sku));
             if (!product) {
                 console.log(`❌ No product found for SKU: ${criteria.sku}`);
                 return [];
@@ -1000,6 +1018,7 @@ async function searchShopifyProducts(criteria) {
             }];
         }
 
+        // The rest of the function remains unchanged for non-SKU searches
         const response = await fetch(`https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`, {
             headers: {
                 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN,
@@ -1079,7 +1098,6 @@ async function searchShopifyProducts(criteria) {
         });
         console.log(`✅ Found ${validProducts.length} products with valid stock & price.`);
 
-        // --- THIS IS THE CODE YOU COULDN'T SEE ---
         const getProductSeatCount = (product) => {
             const title = (product.title || '');
             const text = `${title}`.toLowerCase();
@@ -1111,7 +1129,6 @@ async function searchShopifyProducts(criteria) {
             });
              console.log(`  ➡️ Found ${validProducts.length} products after seat count filter.`);
         }
-        // --- END OF THE CODE YOU COULDN'T SEE ---
 
         validProducts.sort((a, b) => {
             if (criteria.seatCount) {
@@ -1163,7 +1180,6 @@ async function searchShopifyProducts(criteria) {
         return searchRealProducts(criteria);
     }
 }
-
 
 
 // ENHANCED AI TOOLS - Now includes all knowledge base access
