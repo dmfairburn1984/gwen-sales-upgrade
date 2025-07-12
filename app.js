@@ -30,7 +30,7 @@ const pool = process.env.DATABASE_URL ? new Pool({
 }) : null;
 
 // MOVE logChat to top - Fix housekeeping issue Gemini noted
-async function logChat(sessionId, role, message) {
+async function logChat(sessionId + '-SALES', role, message) {
   if (!pool) {
     console.log(`Chat Log: ${sessionId} - ${role}: ${message.substring(0, 50)}...`);
     return;
