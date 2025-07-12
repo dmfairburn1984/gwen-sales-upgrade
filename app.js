@@ -30,7 +30,7 @@ const pool = process.env.DATABASE_URL ? new Pool({
 }) : null;
 
 // MOVE logChat to top - Fix housekeeping issue Gemini noted
-async function logChat(sessionId + '-SALES', role, message) {
+async function logChat(sessionId, role, message) {
   if (!pool) {
     console.log(`Chat Log: ${sessionId} - ${role}: ${message.substring(0, 50)}...`);
     return;
@@ -88,8 +88,6 @@ let stoneCompositesMaster = [];
 let taxonomyData = {};
 let product_faqs = [];
 let productMaterialIndex = [];
-let productFamilies = loadDataFile('product_families.json', {});
-
 
 // Enhanced data loading with structure detection
 function loadDataFile(filename, defaultValue = []) {
@@ -179,7 +177,6 @@ console.log(`   🧪 Synthetics data: ${Array.isArray(syntheticsMaster) ? synthe
 console.log(`   🪨 Stone/composites: ${Array.isArray(stoneCompositesMaster) ? stoneCompositesMaster.length : 'N/A'}`);
 console.log(`   🏷️ Taxonomy categories: ${Object.keys(taxonomyData.product_categories || {}).length}`);
 console.log('🧪 DEBUG: Taxonomy data keys:', Object.keys(taxonomyData));
-console.log(`   👨‍👩‍👧‍👦 Product families: ${Object.keys(productFamilies.furniture_families || {}).length}`);
 
 // FIND the detectCustomerInterest function and add better logging:
 
@@ -794,32 +791,6 @@ function detectProductCategory(customerMessage) {
   return null;
 }
 
-
-async function identifyBundleOpportunities(productInterest, customerBudget) {
-  // 1. Check direct bundle matches from data
-  const matchingBundles = bundleSuggestions.filter(bundle => 
-    bundle.name.toLowerCase().includes(productInterest.toLowerCase()) || 
-    bundle.description.toLowerCase().includes(productInterest.toLowerCase())
-  );
-
-  // 2. Analyze product family relationships (check items in bundle_items.json)
-  const familyMatches = matchingBundles.filter(bundle => {
-    const items = bundleItems.filter(item => item.bundle_id === bundle.bundle_id);
-    return items.some(item => item.product_sku.toLowerCase().includes(productInterest.toLowerCase()));
-  });
-
-  // 3. Consider customer budget constraints (prices from Shopify, so estimate or skip if no budget)
-  const budgetFiltered = familyMatches; // Placeholder: Integrate Shopify price fetch if needed for exact filtering
-
-  // 4. Apply seasonal/promotional logic
-  const currentMonth = new Date().getMonth();
-  const isPeakSeason = currentMonth >= 4 && currentMonth <= 8; // May to September for outdoor peak
-  const promoBundles = isPeakSeason ? budgetFiltered : budgetFiltered.slice(0, 2); // Limit in off-season
-
-  // 5. ALWAYS suggest if bundle exists
-  return promoBundles.length > 0 ? promoBundles : [];
-}
-
 // ENHANCED: Better product search with taxonomy
 function searchRealProducts(criteria) {
   if (!Array.isArray(productData) || productData.length === 0) {
@@ -1246,23 +1217,6 @@ const aiTools = [
       }
     }
     },
-    {
-  type: "function",
-  function: {
-    name: "suggest_cover_with_furniture",
-    description: "Suggest covers ONLY as add-ons to matching furniture families. Never standalone.",
-    parameters: {
-      type: "object",
-      properties: {
-        furniture_sku: {
-          type: "string",
-          description: "SKU of the furniture being discussed"
-        }
-      },
-      required: ["furniture_sku"]
-    }
-  }
-},
 {
   type: "function",
   function: {
@@ -1452,33 +1406,6 @@ const aiTools = [
       required: ["mainProductSku", "productCategory"]
     }
   }
-},
-
-{
-  type: "function",
-  function: {
-    name: "trigger_bundle_check",
-    description: "Automatically check for bundles on product views, cart adds, budget talks, or seasonal prompts",
-    parameters: {
-      type: "object",
-      properties: {
-        trigger_type: {
-          type: "string",
-          enum: ["product_view", "cart_add", "budget_discussion", "seasonal_prompt"],
-          description: "Type of trigger for bundle check"
-        },
-        product_sku: {
-          type: "string",
-          description: "SKU of the product being discussed"
-        },
-        customer_budget: {
-          type: "number",
-          description: "Customer's mentioned budget (optional)"
-        }
-      },
-      required: ["trigger_type", "product_sku"]
-    }
-  }
 }
 ];
 
@@ -1559,15 +1486,6 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
   3. Third step: If they want it, forward to marketing
 - NEVER mention "managers" or "checking with anyone" - this is immediate service
 - Keep the tone natural and helpful, not pushy
-- Use 'trigger_bundle_check' for mandatory triggers: product pages, cart analysis, budget discussions, seasonal prompts.
-- When triggered, ALWAYS call identifyBundleOpportunities and suggest if bundles exist (pull prices/images from Shopify for display as product cards).
-
-**Intelligent Cover Suggestion Logic:**
-- NEVER suggest covers standalone. Use 'suggest_cover_with_furniture' tool first.
-- ONLY suggest if matching furniture family interest.
-- Frame as: "Complete your [FAMILY] set with matching protection" (pull price/image from Shopify).
-- Always bundle with furniture.
-- Check parent existence.
 
     **PRICE ACCURACY REQUIREMENTS:**
     - Always display real prices from the product data (e.g., "£299.00", "£450.50")
@@ -1812,64 +1730,6 @@ if (toolCall.function.name === "search_products") {
             enhancedCriteria.material = 'rattan';
             console.log('🎯 Enhanced search: Detected rattan request');
         }
-
-if (toolCall.function.name === "suggest_cover_with_furniture") {
-  const args = JSON.parse(toolCall.function.arguments);
-  let coverSuggestion = null;
-  
-  for (const [family, data] of Object.entries(productFamilies.furniture_families || {})) {
-    if (data.furniture_skus.includes(args.furniture_sku) && data.cover_sku) {
-      const shopifyCover = await searchShopifyProducts({ sku: data.cover_sku, maxResults: 1 });
-      if (shopifyCover.length > 0) {
-        coverSuggestion = {
-          family: family,
-          cover: shopifyCover[0], // For card display
-          message: `Matching cover for ${family}`
-        };
-      }
-      break;
-    }
-  }
-  
-  toolResults.push({
-    tool_call_id: toolCall.id,
-    output: JSON.stringify({
-      success: !!coverSuggestion,
-      suggestion: coverSuggestion,
-      note: coverSuggestion ? "Suggest as add-on card" : "No cover - do not suggest"
-    })
-  });
-}
-
-
-
-if (toolCall.function.name === "trigger_bundle_check") {
-    const args = JSON.parse(toolCall.function.arguments);
-    const bundles = await identifyBundleOpportunities(args.product_sku, args.customer_budget || Infinity);
-    
-    // Fetch Shopify details for display (no hardcoded prices)
-    const bundleProducts = [];
-    for (const bundle of bundles) {
-      const items = bundleItems.filter(item => item.bundle_id === bundle.bundle_id);
-      for (const item of items) {
-        const shopifyProduct = await searchShopifyProducts({ sku: item.product_sku, maxResults: 1 });
-        if (shopifyProduct.length > 0) {
-          bundleProducts.push(shopifyProduct[0]);
-        }
-      }
-    }
-    
-    toolResults.push({
-      tool_call_id: toolCall.id,
-      output: JSON.stringify({
-        success: bundles.length > 0,
-        bundles: bundles,
-        products: bundleProducts, // For card display with Shopify prices
-        message: bundles.length > 0 ? "Bundles available - suggest them as cards" : "No bundles found"
-      })
-    });
-  }
-
     }
 
     console.log('🎯 Final enhanced criteria:', enhancedCriteria);
@@ -2674,15 +2534,13 @@ session.conversationHistory.push({
       mode: mode
     });
 
- } catch (error) {
-  console.error('AI Error Details:', {
-    message: error.message,
-    stack: error.stack,
-    code: error.code,
-    response: error.response ? error.response.data : null
-  });
-  return "Apologies, but I am encountering a connection issue. Please try again shortly.";
-}
+  } catch (error) {
+    console.error('Chat error:', error);
+    res.status(500).json({
+      response: "I apologize, but I'm experiencing a technical issue. Please try again in a moment.",
+      suggestions: ["Try again", "Contact support"]
+    });
+  }
 });
 
 // Health check endpoint
