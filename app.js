@@ -92,10 +92,33 @@ let productMaterialIndex = [];
 
 // Enhanced data loading with structure detection
 function loadDataFile(filename, defaultValue = []) {
+  const filePath = `./data/${filename}`; // Full path for clarity
+  console.log(`🔍 Starting to load file: ${filename} (path: ${filePath})`); // NEW: Log start
+
   try {
-    const data = JSON.parse(fs.readFileSync(`./data/${filename}`, 'utf8'));
-    
-    // Handle different data structures intelligently
+    // NEW: Check if file exists first
+    if (!fs.existsSync(filePath)) {
+      console.error(`❌ File not found: ${filePath}`);
+      return defaultValue;
+    }
+    console.log(`✅ File exists: ${filePath}`);
+
+    // NEW: Read raw content and log its length
+    const raw = fs.readFileSync(filePath, 'utf8');
+    console.log(`📄 Raw file content length: ${raw.length} characters`);
+    if (raw.length === 0) {
+      console.warn(`⚠️ File is empty: ${filename}`);
+      return defaultValue;
+    }
+    if (raw.length < 50) {
+      console.log(`📄 Raw content preview: ${raw.substring(0, 50)}...`); // Show first 50 chars if small
+    }
+
+    // Original parsing code (with extra logging)
+    const data = JSON.parse(raw);
+    console.log(`🛠️ Successfully parsed JSON for ${filename}`);
+
+    // ... (keep the rest of your original processing code here unchanged)
     let processedData;
     let recordCount;
     
@@ -103,7 +126,6 @@ function loadDataFile(filename, defaultValue = []) {
       processedData = data;
       recordCount = data.length;
     } else if (data && typeof data === 'object') {
-      // Handle nested structures like product_database.json
       if (data.products && Array.isArray(data.products)) {
         processedData = data.products;
         recordCount = data.products.length;
@@ -111,7 +133,6 @@ function loadDataFile(filename, defaultValue = []) {
         processedData = data.inventory;
         recordCount = data.inventory.length;
       } else {
-        // It's an object (like material_maintenance.json)
         processedData = data;
         recordCount = Object.keys(data).length;
       }
@@ -123,7 +144,12 @@ function loadDataFile(filename, defaultValue = []) {
     console.log(`✅ Loaded ${filename}: ${recordCount} records`);
     return processedData;
   } catch (error) {
-    console.warn(`⚠️ Could not load ${filename}: ${error.message}`);
+    console.error(`❌ Error loading ${filename}: ${error.message}`); // CHANGED: Use error (shows in red) and full message
+    if (error.message.includes('Unexpected token')) {
+      console.error(`❌ Looks like a JSON format error in ${filename}`);
+    } else if (error.message.includes('no such file')) {
+      console.error(`❌ File path issue - confirm exact name and case`);
+    }
     return defaultValue;
   }
 }
