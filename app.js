@@ -4,9 +4,11 @@
 
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const OpenAI = require('openai');
 const fs = require('fs');
+
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -56,6 +58,7 @@ async function logChat(sessionId, role, message) {
 }
 
 const app = express();
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 const ENABLE_SALES_MODE = process.env.ENABLE_SALES_MODE === 'true';
 const sessions = new Map();
