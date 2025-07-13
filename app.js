@@ -2698,6 +2698,16 @@ app.get('/widget', (req, res) => {
   res.sendFile(path.join(__dirname, 'widget.html'));
 });
 
+// Bundle system test
+app.get('/test-bundles', (req, res) => {
+    res.json({
+        bundle_suggestions_loaded: bundleSuggestions ? bundleSuggestions.length : 0,
+        bundle_items_loaded: bundleItems ? bundleItems.length : 0,
+        sample_bundle: bundleSuggestions ? bundleSuggestions[0] : null,
+        sample_items: bundleItems ? bundleItems.slice(0, 3) : null
+    });
+});
+
 // Temporary endpoint to check product data
 app.get('/debug-products', (req, res) => {
   const products = productData.slice(0, 20).map(p => ({
