@@ -2737,6 +2737,17 @@ setInterval(() => {
   if (cleaned > 0) console.log(`Cleaned ${cleaned} expired sessions`);
 }, 60 * 60 * 1000);
 
+// Bundle debug endpoint
+app.get('/bundle-debug', (req, res) => {
+    res.json({
+        bundles_loaded: bundleSuggestions ? bundleSuggestions.length : 0,
+        items_loaded: bundleItems ? bundleItems.length : 0,
+        first_bundle: bundleSuggestions && bundleSuggestions[0] ? bundleSuggestions[0] : 'No bundles',
+        first_items: bundleItems ? bundleItems.slice(0, 3) : 'No items'
+    });
+});
+
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`🚀 MINT Outdoor AI System v10.0 (Complete Knowledge Integration) running on port ${port}`);
