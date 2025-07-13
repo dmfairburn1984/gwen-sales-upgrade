@@ -792,184 +792,255 @@ function detectProductCategory(customerMessage) {
   return null;
 }
 
-// ENHANCED: Better product search with taxonomy
+// Replace your existing searchRealProducts function with this enhanced version
+
 function searchRealProducts(criteria) {
-  if (!Array.isArray(productData) || productData.length === 0) {
-    return [];
-  }
-
-  const { material, furnitureType, seatCount, productName, sku, maxResults = 3 } = criteria;
-  let filtered = productData;
-
-  console.log('🔍 Starting search with criteria:', criteria);
-
-  // ENHANCED: Use taxonomy for better product name matching
-  if (productName) {
-    // First detect if this is a category request
-    const detectedCategory = detectProductCategory(productName);
-    
-    if (detectedCategory) {
-      console.log('📂 Using taxonomy search terms:', detectedCategory.searchTerms);
-      
-      // Search using all the category's search terms
-      filtered = filtered.filter(product => {
-        const title = (product.product_title || '').toLowerCase();
-        const description = (product.description || '').toLowerCase();
-        const searchText = `${title} ${description}`;
-        
-        // Check if any of the search terms match
-        const hasMatch = detectedCategory.searchTerms.some(term => 
-          searchText.includes(term.toLowerCase())
-        );
-        
-        if (hasMatch) {
-          console.log(`✅ Taxonomy match found: ${product.product_title}`);
-        }
-        
-        return hasMatch;
-      });
-    } else {
-      // Original product name search
-      filtered = filtered.filter(product => {
-        const title = (product.product_title || '').toLowerCase();
-        const productSku = (product.sku || '').toLowerCase();
-        const description = (product.description || '').toLowerCase();
-        const searchName = productName.toLowerCase();
-        
-        if (title.includes(searchName) || productSku.includes(searchName) || description.includes(searchName)) {
-          return true;
-        }
-        
-        const searchWords = searchName.split(' ').filter(word => word.length > 2);
-        const titleWords = title.split(' ');
-        const descWords = description.split(' ');
-        const allProductWords = [...titleWords, ...descWords];
-        
-        const matchedWords = searchWords.filter(searchWord => 
-          allProductWords.some(productWord => 
-            productWord.includes(searchWord) || searchWord.includes(productWord)
-          )
-        );
-        
-        return matchedWords.length >= Math.ceil(searchWords.length * 0.6);
-      });
+    if (!Array.isArray(productData) || productData.length === 0) {
+        console.log('❌ No product data available');
+        return [];
     }
-  }
 
-  // Exact SKU search
-  if (sku) {
-    const exactMatch = filtered.find(product => 
-      (product.sku || '').toLowerCase() === sku.toLowerCase()
-    );
-    if (exactMatch) return [exactMatch];
-  }
+    const { material, furnitureType, seatCount, productName, sku, maxResults = 3 } = criteria;
+    let filtered = [...productData]; // Create a copy to avoid mutations
 
-  // Material search
-  if (material) {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes(material.toLowerCase());
-    });
-  }
+    console.log('🔍 Starting enhanced search with criteria:', criteria);
 
-  // Furniture type search
-  if (furnitureType === 'dining') {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes('dining') || 
-             searchText.includes('table') || 
-             (searchText.includes('chair') && !searchText.includes('armchair'));
-    });
-  } else if (furnitureType === 'lounge') {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes('sofa') || 
-             searchText.includes('lounge') || 
-             searchText.includes('seating') || 
-             searchText.includes('armchair') ||
-             searchText.includes('corner') ||
-             (searchText.includes('set') && !searchText.includes('dining'));
-    });
-  }
+    // EXACT SKU MATCH - Highest priority
+    if (sku) {
+        const exactMatch = productData.find(product => 
+            (product.sku || '').toLowerCase() === sku.toLowerCase()
+        );
+        if (exactMatch) {
+            console.log(`✅ Exact SKU match found: ${exactMatch.product_title}`);
+            return [exactMatch];
+        }
+    }
 
-   // Enhanced seat count detection
-    if (seatCount) {
-        console.log(`🪑 Looking for ${seatCount} seater furniture...`);
+    // PRODUCT NAME SEARCH - Improved fuzzy matching
+    if (productName) {
+        const searchQuery = productName.toLowerCase();
+        
+        // Special handling for known product lines
+        const productLineMap = {
+            'barcelona': ['barcelona'],
+            'palma': ['palma', 'faro'], // Palma products might have Faro SKUs
+            'malai': ['malai'],
+            'reva': ['reva'],
+            'alex': ['alex'],
+            'santorini': ['santorini'],
+            'marbella': ['marbella']
+        };
+        
+        // Extract product line if mentioned
+        let productLine = null;
+        for (const [key, values] of Object.entries(productLineMap)) {
+            if (searchQuery.includes(key)) {
+                productLine = values;
+                break;
+            }
+        }
         
         filtered = filtered.filter(product => {
             const title = (product.product_title || '').toLowerCase();
+            const productSku = (product.sku || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
-            const searchText = `${title} ${description}`;
+            const searchText = `${title} ${productSku} ${description}`;
             
-            const seatPatterns = [
-                /(\d+)\s*seater/gi,
-                /for\s*(\d+)\s*people/gi,
-                /seat\s*(\d+)/gi,
-                /(\d+)\s*person/gi,
-                /(\d+)\s*people/gi
-            ];
-            
-            for (const pattern of seatPatterns) {
-                const matches = searchText.match(pattern);
-                if (matches) {
-                    const foundSeats = parseInt(matches[0].match(/\d+/)[0]);
-                    if (foundSeats >= seatCount) {
-                        console.log(`✅ Found ${foundSeats} seater: ${product.product_title}`);
-                        return true;
-                    }
+            // If we identified a product line, prioritize those
+            if (productLine) {
+                const hasProductLine = productLine.some(line => 
+                    title.includes(line) || productSku.includes(line)
+                );
+                if (hasProductLine) {
+                    console.log(`✅ Product line match: ${product.product_title}`);
+                    return true;
                 }
             }
             
-            const titleNumbers = product.product_title.match(/\d+/g);
-            if (titleNumbers) {
-                const hasMatchingNumber = titleNumbers.some(num => parseInt(num) >= seatCount);
-                if (hasMatchingNumber) {
-                    console.log(`✅ Found number match: ${product.product_title}`);
-                    return true;
-                }
+            // Otherwise, do intelligent word matching
+            const searchWords = searchQuery.split(' ')
+                .filter(word => word.length > 2 && !['the', 'and', 'for'].includes(word));
+            
+            // Count how many search words appear in the product
+            const matchedWords = searchWords.filter(word => searchText.includes(word));
+            const matchPercentage = matchedWords.length / searchWords.length;
+            
+            // Require at least 60% of words to match
+            if (matchPercentage >= 0.6) {
+                console.log(`✅ Fuzzy match (${Math.round(matchPercentage * 100)}%): ${product.product_title}`);
+                return true;
             }
             
             return false;
         });
     }
 
-    // Add stock information to each product
-    const productsWithStock = filtered.map(product => {
-        const stockStatus = getStockStatus(product.sku); // Assumes getStockStatus is defined elsewhere
+    // SEAT COUNT FILTER - Multiple patterns
+    if (seatCount) {
+        console.log(`🪑 Filtering for ${seatCount} seater furniture...`);
+        
+        filtered = filtered.filter(product => {
+            const title = (product.product_title || '').toLowerCase();
+            const description = (product.description || '').toLowerCase();
+            const searchText = `${title} ${description}`;
+            
+            // Multiple regex patterns to catch different formats
+            const patterns = [
+                new RegExp(`\\b${seatCount}\\s*seater\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*seat\\b`, 'i'),
+                new RegExp(`\\bseats?\\s*${seatCount}\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*person\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*people\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*pax\\b`, 'i')
+            ];
+            
+            const matches = patterns.some(pattern => pattern.test(searchText));
+            if (matches) {
+                console.log(`✅ Seat count match: ${product.product_title}`);
+            }
+            return matches;
+        });
+    }
+
+    // MATERIAL FILTER - Handle variations
+    if (material) {
+        console.log(`🧱 Filtering for ${material} material...`);
+        
+        const materialMap = {
+            'rattan': ['rattan', 'wicker', 'weave', 'poly rattan', 'synthetic rattan'],
+            'teak': ['teak', 'hardwood', 'solid wood'],
+            'aluminium': ['aluminium', 'aluminum', 'metal', 'alloy'],
+            'wood': ['wood', 'timber', 'hardwood', 'teak', 'eucalyptus'],
+            'metal': ['metal', 'steel', 'iron', 'aluminium', 'aluminum']
+        };
+        
+        const searchTerms = materialMap[material.toLowerCase()] || [material.toLowerCase()];
+        
+        filtered = filtered.filter(product => {
+            const title = (product.product_title || '').toLowerCase();
+            const description = (product.description || '').toLowerCase();
+            const searchText = `${title} ${description}`;
+            
+            const matches = searchTerms.some(term => searchText.includes(term));
+            if (matches) {
+                console.log(`✅ Material match: ${product.product_title}`);
+            }
+            return matches;
+        });
+    }
+
+    // FURNITURE TYPE FILTER
+    if (furnitureType) {
+        console.log(`🪑 Filtering for ${furnitureType} furniture...`);
+        
+        const typeMap = {
+            'dining': {
+                include: ['dining', 'table', 'dinner', 'meal'],
+                exclude: ['coffee', 'side', 'lounge', 'sofa']
+            },
+            'lounge': {
+                include: ['lounge', 'sofa', 'corner', 'seating', 'relaxing', 'conversation'],
+                exclude: ['dining', 'table']
+            }
+        };
+        
+        const typeConfig = typeMap[furnitureType.toLowerCase()];
+        if (typeConfig) {
+            filtered = filtered.filter(product => {
+                const title = (product.product_title || '').toLowerCase();
+                const description = (product.description || '').toLowerCase();
+                const searchText = `${title} ${description}`;
+                
+                const hasInclude = typeConfig.include.some(term => searchText.includes(term));
+                const hasExclude = typeConfig.exclude.some(term => searchText.includes(term));
+                
+                const matches = hasInclude && !hasExclude;
+                if (matches) {
+                    console.log(`✅ Type match: ${product.product_title}`);
+                }
+                return matches;
+            });
+        }
+    }
+
+    // ENHANCE RESULTS WITH STOCK STATUS
+    const enhancedResults = filtered.map(product => {
+        const stockStatus = getStockStatus(product.sku);
         return {
             ...product,
-            stockStatus: stockStatus
+            stockStatus: stockStatus,
+            // Handle missing prices gracefully
+            price: product.price || product.variant_price || 'Contact for pricing'
         };
     });
 
-    // Filter to only include in-stock products
-    const inStockProducts = productsWithStock.filter(product => product.stockStatus.inStock);
-
-    // Sort by price (lowest first)
-    inStockProducts.sort((a, b) => {
-        const aPrice = parseFloat(a.price || a.variant_price || 0);
-        const bPrice = parseFloat(b.price || b.variant_price || 0);
+    // SORT RESULTS
+    // 1. In-stock first
+    // 2. Then by relevance (exact matches scored higher)
+    // 3. Then by price (lowest first)
+    enhancedResults.sort((a, b) => {
+        // Stock status priority
+        if (a.stockStatus.inStock !== b.stockStatus.inStock) {
+            return a.stockStatus.inStock ? -1 : 1;
+        }
+        
+        // Price comparison (if both have prices)
+        const aPrice = parseFloat(a.price) || Infinity;
+        const bPrice = parseFloat(b.price) || Infinity;
         return aPrice - bPrice;
     });
 
-    // Log the results for debugging
-    console.log(`🔍 Search Results: Found ${inStockProducts.length} in-stock products`);
-    inStockProducts.forEach((product, index) => {
-        const price = parseFloat(product.price || product.variant_price || 0);
-        console.log(`  ${index + 1}. ${product.product_title} - Stock: ${product.stockStatus.stockLevel}, Price: £${price.toFixed(2)}`);
+    // LIMIT RESULTS
+    const finalResults = enhancedResults.slice(0, maxResults);
+
+    // LOG RESULTS
+    console.log(`\n📊 Search Results Summary:`);
+    console.log(`   Total products searched: ${productData.length}`);
+    console.log(`   Products matching criteria: ${filtered.length}`);
+    console.log(`   In-stock products: ${finalResults.filter(p => p.stockStatus.inStock).length}`);
+    console.log(`   Returning: ${finalResults.length} products\n`);
+    
+    finalResults.forEach((product, index) => {
+        console.log(`${index + 1}. ${product.product_title}`);
+        console.log(`   SKU: ${product.sku}`);
+        console.log(`   Price: ${product.price}`);
+        console.log(`   Stock: ${product.stockStatus.message}`);
     });
 
-    // Return the final, sliced results
-    return inStockProducts.slice(0, maxResults);
+    return finalResults;
 }
 
-// Find and replace this entire function in app.js
+// HELPER FUNCTION - Ensure this exists
+function getStockStatus(sku) {
+    if (!inventoryData || !Array.isArray(inventoryData) || inventoryData.length === 0) {
+        return { 
+            inStock: true, 
+            stockLevel: 'unknown', 
+            message: 'Stock information not available'
+        };
+    }
+    
+    const stockInfo = inventoryData.find(item => item.sku === sku);
+    
+    if (!stockInfo) {
+        return { 
+            inStock: true, 
+            stockLevel: 'unknown', 
+            message: 'Stock information not available'
+        };
+    }
+    
+    const available = parseInt(stockInfo.available) || 0;
+    const inStock = available > 0;
+    
+    return {
+        inStock: inStock,
+        stockLevel: available,
+        message: inStock ? `In stock (${available} available)` : 'Currently out of stock'
+    };
+}
+
+
 // PASTE THIS ENTIRE CORRECTED FUNCTION INTO YOUR APP.JS FILE
 
 async function searchShopifyProducts(criteria) {
