@@ -1791,6 +1791,10 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
 if (toolCall.function.name === "search_products") {
     const args = JSON.parse(toolCall.function.arguments);
 
+console.log('🚨 SEARCH DEBUG: Which search are we using?');
+console.log('🔍 Search criteria:', args);
+console.log('🏪 Shopify token exists?', !!process.env.SHOPIFY_ACCESS_TOKEN);
+
     console.log('🔍 Search criteria received:', args);
 
     const enhancedCriteria = {
@@ -2629,6 +2633,8 @@ session.conversationHistory.push({
     });
   }
 });
+
+
 
 // Health check endpoint
 app.get('/health', (req, res) => {
