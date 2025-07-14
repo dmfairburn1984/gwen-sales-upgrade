@@ -160,7 +160,11 @@ body {
 .gwen-bubble {
     padding: 18px 22px;
     border-radius: 12px;
-    word-wrap: break-word;
+    word-wrap: break-word; /* Keep for compatibility */
+    overflow-wrap: break-word; /* Modern wrapping for long words */
+    word-break: break-all; /* Break very long strings (e.g., URLs) */
+    white-space: normal; /* Ensure normal wrapping behavior */
+    hyphens: auto; /* Optional: Auto-hyphenate for better readability */
     line-height: 1.6;
     font-size: 16px;
     font-weight: 400;
