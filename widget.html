@@ -12,251 +12,274 @@
     <style>
         /* --- [MINT OUTDOOR] Brand-Aligned UI Redesign --- */
 
-        /* --- 1. CSS Variables from Style Guide  --- */
-        :root {
-            /* Color Palette */
-            --color-mint-green: #9FDCC2;
-            --color-forest-green: #2E6041;
-            --color-off-white: #F5F5F0;
-            --color-charcoal-gray: #333333;
-            --color-black: #000000;
-            /* Typography  */
-            --font-primary: 'Montserrat', sans-serif; /* For headlines & CTAs */
-            --font-secondary: 'Lora', serif; /* For body text */
-        }
+/* --- 1. CSS Variables from Style Guide  --- */
+:root {
+    /* Color Palette */
+    --color-mint-green: #9FDCC2;
+    --color-forest-green: #2E6041;
+    --color-off-white: #F5F5F0;
+    --color-charcoal-gray: #333333;
+    --color-black: #000000;
+    /* Typography  */
+    --font-primary: 'Montserrat', sans-serif; /* For headlines & CTAs */
+    --font-secondary: 'Lora', serif; /* For body text */
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: var(--font-secondary);
-            background: var(--color-off-white);
-            height: 100vh;
-            overflow: hidden;
-        }
+body {
+    font-family: var(--font-secondary);
+    background: var(--color-off-white);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Ensure body flows vertically */
+}
 
-        /* --- Hide the button completely since we're going direct to chat --- */
-        .gwen-chat-button {
-            display: none !important;
-        }
+/* --- Hide the button completely since we're going direct to chat --- */
+.gwen-chat-button {
+    display: none !important;
+}
 
-        /* --- 2. Chat Window (Now Full Screen) --- */
-        .gwen-chat-window {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--color-off-white);
-            display: flex !important; /* Always show the chat window */
-            flex-direction: column;
-            overflow: hidden;
-            border: none;
-        }
+/* --- 2. Chat Window (Now Full Screen) --- */
+.gwen-chat-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--color-off-white);
+    display: flex !important; /* Always show the chat window */
+    flex-direction: column;
+    overflow: hidden;
+    border: none;
+}
 
-        /* --- 3. Header --- */
-        .gwen-header {
-            background: var(--color-off-white);
-            color: var(--color-black);
-            padding: 24px;
-            text-align: left;
-            position: relative;
-            border-bottom: 1px solid #EAEAEA;
-            flex-shrink: 0;
-        }
+/* --- 3. Header --- */
+.gwen-header {
+    background: var(--color-off-white);
+    color: var(--color-black);
+    padding: 24px;
+    text-align: left;
+    position: relative;
+    border-bottom: 1px solid #EAEAEA;
+    flex-shrink: 0;
+}
 
-        .gwen-header h3 {
-            font-family: var(--font-primary);
-            font-weight: 800;
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: var(--color-mint-green);
-        }
+.gwen-header h3 {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: var(--color-mint-green);
+}
 
-        .gwen-header p {
-            font-family: var(--font-secondary);
-            font-size: 16px;
-            color: var(--color-charcoal-gray);
-        }
+.gwen-header p {
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    color: var(--color-charcoal-gray);
+}
 
-        .gwen-close {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 20px;
-            background: var(--color-forest-green);
-            border: none;
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-family: var(--font-primary);
-        }
-        .gwen-close:hover { 
-            background: var(--color-black); 
-            transform: translateY(-50%) scale(1.05);
-        }
+.gwen-close {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    background: var(--color-forest-green);
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: var(--font-primary);
+}
+.gwen-close:hover { 
+    background: var(--color-black); 
+    transform: translateY(-50%) scale(1.05);
+}
 
-        /* --- 4. Messages Area --- */
-        .gwen-messages {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            background: #FFFFFF;
-        }
+/* --- 4. Messages Area --- */
+.gwen-messages {
+    flex: 1 1 auto; /* Grow but allow shrinking */
+    padding: 24px;
+    overflow-y: auto;
+    background: #FFFFFF;
+    max-height: calc(100vh - 150px); /* Limit height to leave room for header/input (adjust if needed) */
+}
 
-        .gwen-message {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-            animation: fadeIn 0.5s ease;
-            max-width: 95%;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.gwen-message {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    animation: fadeIn 0.5s ease;
+    max-width: 95%;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        .gwen-message.user { justify-content: flex-end; margin-left: auto; }
+.gwen-message.user { justify-content: flex-end; margin-left: auto; }
 
-        .gwen-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            margin: 0 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-family: var(--font-primary);
-            font-weight: 700;
-            flex-shrink: 0;
-        }
+.gwen-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    flex-shrink: 0;
+}
 
-        .gwen-message.bot .gwen-avatar {
-            background: var(--color-charcoal-gray);
-            color: var(--color-off-white);
-        }
+.gwen-message.bot .gwen-avatar {
+    background: var(--color-charcoal-gray);
+    color: var(--color-off-white);
+}
 
-        .gwen-message.user .gwen-avatar {
-            background: var(--color-forest-green);
-            color: var(--color-off-white);
-            order: 2;
-        }
+.gwen-message.user .gwen-avatar {
+    background: var(--color-forest-green);
+    color: var(--color-off-white);
+    order: 2;
+}
 
-        .gwen-bubble {
-            padding: 18px 22px;
-            border-radius: 12px;
-            word-wrap: break-word;
-            line-height: 1.6;
-            font-size: 16px;
-            font-weight: 400;
-            font-family: var(--font-secondary);
-        }
+.gwen-bubble {
+    padding: 18px 22px;
+    border-radius: 12px;
+    word-wrap: break-word;
+    line-height: 1.6;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: var(--font-secondary);
+}
 
-        .gwen-message.user .gwen-bubble {
-            background: var(--color-forest-green);
-            color: var(--color-off-white);
-            border-bottom-right-radius: 4px;
-        }
+.gwen-message.user .gwen-bubble {
+    background: var(--color-forest-green);
+    color: var(--color-off-white);
+    border-bottom-right-radius: 4px;
+}
 
-        .gwen-message.bot .gwen-bubble {
-            background: var(--color-off-white);
-            color: var(--color-charcoal-gray);
-            border: 1px solid #EAEAEA;
-            border-bottom-left-radius: 4px;
-        }
+.gwen-message.bot .gwen-bubble {
+    background: var(--color-off-white);
+    color: var(--color-charcoal-gray);
+    border: 1px solid #EAEAEA;
+    border-bottom-left-radius: 4px;
+}
         
-        /* --- 5. Input Area --- */
-        .gwen-input-area {
-            padding: 20px 24px;
-            background: var(--color-off-white);
-            border-top: 1px solid #EAEAEA;
-            display: flex;
-            gap: 12px;
-            align-items: flex-end;
-            flex-shrink: 0;
-        }
+/* --- 5. Input Area --- */
+.gwen-input-area {
+    padding: 20px 24px;
+    background: var(--color-off-white);
+    border-top: 1px solid #EAEAEA;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-shrink: 0;
+    position: sticky; /* Stick to bottom */
+    bottom: 0;
+    z-index: 10; /* Above messages */
+}
 
-        .gwen-input {
-            flex: 1;
-            padding: 14px 20px;
-            border: 1px solid #E0E0E0;
-            border-radius: 8px;
-            outline: none;
-            font-size: 16px;
-            resize: none;
-            min-height: 50px;
-            max-height: 120px;
-            color: var(--color-charcoal-gray);
-            font-family: var(--font-secondary);
-        }
-        .gwen-input:focus { border-color: var(--color-forest-green); }
+.gwen-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    resize: none;
+    min-height: 50px;
+    max-height: 120px;
+    color: var(--color-charcoal-gray);
+    font-family: var(--font-secondary);
+}
+.gwen-input:focus { border-color: var(--color-forest-green); }
 
-        .gwen-send-button {
-            background: var(--color-forest-green);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 700;
-            font-family: var(--font-primary);
-            transition: all 0.2s;
-            height: 50px;
-            padding: 0 28px;
-            flex-shrink: 0;
-        }
-        .gwen-send-button:hover:not(:disabled) { background: var(--color-black); }
-        .gwen-send-button:disabled { background: #ccc; cursor: not-allowed; }
+.gwen-send-button {
+    background: var(--color-forest-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    transition: all 0.2s;
+    height: 50px;
+    padding: 0 28px;
+    flex-shrink: 0;
+}
+.gwen-send-button:hover:not(:disabled) { background: var(--color-black); }
+.gwen-send-button:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- 6. Typing Indicator --- */
-        .gwen-typing { 
-            display: none; 
-            padding: 10px 24px; 
-            background: #FFFFFF; 
-        }
-        .gwen-typing.show { display: block; }
-        .gwen-typing-dots { display: inline-flex; gap: 4px; align-items: center; }
-        .gwen-typing-text {
-            margin-right: 8px;
-            font-size: 14px;
-            color: var(--color-charcoal-gray);
-            font-style: italic;
-        }
-        .gwen-typing-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--color-mint-green); 
-            animation: typing 1.4s infinite;
-        }
-        .gwen-typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .gwen-typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
-            30% { transform: translateY(-3px); opacity: 1; }
-        }
+/* --- 6. Typing Indicator --- */
+.gwen-typing { 
+    display: none; 
+    padding: 10px 24px; 
+    background: #FFFFFF; 
+}
+.gwen-typing.show { display: block; }
+.gwen-typing-dots { display: inline-flex; gap: 4px; align-items: center; }
+.gwen-typing-text {
+    margin-right: 8px;
+    font-size: 14px;
+    color: var(--color-charcoal-gray);
+    font-style: italic;
+}
+.gwen-typing-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-mint-green); 
+    animation: typing 1.4s infinite;
+}
+.gwen-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.gwen-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+    30% { transform: translateY(-3px); opacity: 1; }
+}
 
-        /* --- 7. Mobile Responsiveness --- */
-        @media (max-width: 768px) {
-            .gwen-header {
-                padding: 20px;
-            }
-            .gwen-header h3 {
-                font-size: 20px;
-            }
-            .gwen-messages {
-                padding: 20px;
-            }
-            .gwen-input-area {
-                padding: 16px 20px;
-            }
-        }
+/* --- 7. Mobile Responsiveness (Enhanced Fixes) --- */
+@media (max-width: 768px) {
+    .gwen-header {
+        padding: 16px; /* Smaller padding */
+    }
+    .gwen-header h3 {
+        font-size: 20px;
+    }
+    .gwen-messages {
+        padding: 16px;
+        max-height: calc(100vh - 180px); /* More room for keyboard */
+    }
+    .gwen-input-area {
+        padding: 12px 16px;
+    }
+    .gwen-input {
+        min-height: 45px;
+        max-height: 100px; /* Prevent overflow with keyboard */
+    }
+    .gwen-send-button {
+        height: 45px;
+        padding: 0 20px;
+    }
+    body {
+        height: 100vh; /* Reinforce full height */
+        overflow-y: hidden; /* Prevent body scroll */
+    }
+    .gwen-chat-window {
+        height: 100vh; /* Full viewport */
+    }
+}
+
     </style>
 </head>
 <body>
