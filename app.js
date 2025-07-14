@@ -2517,6 +2517,27 @@ session.conversationHistory.push({
       }
       session.context.mode = 'order';
     } else {
+
+// Check for promo code inquiries
+const promoKeywords = ['promo code', 'discount code', 'voucher code', 'deal code', 'affiliate code', 'coupon code'];
+const isPromoQuery = promoKeywords.some(keyword => message.toLowerCase().includes(keyword));
+
+if (isPromoQuery) {
+  response = "Sorry, I am not able to check on promo codes so you would need to refer back to the publication you found the promo code. Sometimes they are time sensitive and othertimes they are not real promo codes issued by us but other companies attempting to get you to visit their website.";
+  
+  session.conversationHistory.push({ role: 'user', content: message, timestamp: new Date() });
+  session.conversationHistory.push({ role: 'assistant', content: response, timestamp: new Date() });
+  
+  await logChat(sessionId, 'user', message);
+  await logChat(sessionId, 'assistant', response);
+  
+  return res.json({
+    response: response,
+    sessionId: sessionId,
+    suggestions: ["Continue shopping", "Product recommendations"]
+  });
+}
+
       // Sales mode
       mode = 'sales';
       session.context.mode = 'sales';
