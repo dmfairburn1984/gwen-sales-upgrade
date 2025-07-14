@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-visual">
     <title>MINT Outdoor - Chat with Gwen</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +11,8 @@
 
     <style>
         /* --- [MINT OUTDOOR] Brand-Aligned UI Redesign --- */
+
+/* --- [MINT OUTDOOR] Brand-Aligned UI Redesign --- */
 
 /* --- 1. CSS Variables from Style Guide  --- */
 :root {
@@ -34,10 +36,10 @@
 body {
     font-family: var(--font-secondary);
     background: var(--color-off-white);
-    height: 100vh;
+    height: 100dvh; /* Use dynamic vh for keyboard adjustment */
     overflow: hidden;
     display: flex;
-    flex-direction: column; /* Ensure body flows vertically */
+    flex-direction: column;
 }
 
 /* --- Hide the button completely since we're going direct to chat --- */
@@ -51,7 +53,7 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh; /* Dynamic for keyboard */
     background: var(--color-off-white);
     display: flex !important; /* Always show the chat window */
     flex-direction: column;
@@ -68,6 +70,7 @@ body {
     position: relative;
     border-bottom: 1px solid #EAEAEA;
     flex-shrink: 0;
+    padding-top: env(safe-area-inset-top); /* For iPhone notch */
 }
 
 .gwen-header h3 {
@@ -107,11 +110,12 @@ body {
 
 /* --- 4. Messages Area --- */
 .gwen-messages {
-    flex: 1 1 auto; /* Grow but allow shrinking */
+    flex: 1 1 auto; /* Flexible growth */
     padding: 24px;
     overflow-y: auto;
     background: #FFFFFF;
-    max-height: calc(100vh - 150px); /* Limit height to leave room for header/input (adjust if needed) */
+    -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+    padding-bottom: env(safe-area-inset-bottom); /* Pad for iPhone bottom bar/keyboard */
 }
 
 .gwen-message {
@@ -185,9 +189,15 @@ body {
     gap: 12px;
     align-items: flex-end;
     flex-shrink: 0;
-    position: sticky; /* Stick to bottom */
+    position: sticky;
     bottom: 0;
-    z-index: 10; /* Above messages */
+    z-index: 10;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)); /* Extra pad for iPhone keyboard/bottom bar */
+    transition: margin-top 0.3s ease; /* For smooth repositioning */
+}
+
+.gwen-input-area.fixed { /* New class for JS adjustment */
+    margin-top: 0 !important; /* Reset if needed */
 }
 
 .gwen-input {
@@ -258,27 +268,22 @@ body {
     }
     .gwen-messages {
         padding: 16px;
-        max-height: calc(100vh - 180px); /* More room for keyboard */
+        -webkit-overflow-scrolling: touch; /* Smooth scroll */
+        padding-bottom: calc(env(safe-area-inset-bottom) + 100px); /* Extra for keyboard */
     }
     .gwen-input-area {
         padding: 12px 16px;
-    }
-    .gwen-input {
-        min-height: 45px;
-        max-height: 100px; /* Prevent overflow with keyboard */
-    }
-    .gwen-send-button {
-        height: 45px;
-        padding: 0 20px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* iOS safe area */
     }
     body {
-        height: 100vh; /* Reinforce full height */
+        height: 100dvh; /* Dynamic for keyboard */
         overflow-y: hidden; /* Prevent body scroll */
     }
     .gwen-chat-window {
-        height: 100vh; /* Full viewport */
+        height: 100dvh; /* Full dynamic viewport */
     }
 }
+
 
     </style>
 </head>
@@ -455,6 +460,43 @@ body {
         }
         
         console.log('MINT Outdoor Direct Chat Widget Loaded');
+
+        // Mobile keyboard fix: Reposition input on iOS
+let fixPosition = 0; // Track adjustment
+const inputArea = document.querySelector('.gwen-input-area');
+const messages = document.querySelector('.gwen-messages');
+
+// Function to check and fix input visibility
+const fixInputPosition = () => {
+    const rect = inputArea.getBoundingClientRect();
+    if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        fixPosition = Math.abs(rect.top);
+        inputArea.style.marginTop = `${fixPosition}px`;
+        inputArea.classList.add('fixed'); // For transition if needed
+    } else {
+        fixPosition = 0;
+        inputArea.style.marginTop = '0';
+        inputArea.classList.remove('fixed');
+    }
+    messages.scrollTop = messages.scrollHeight; // Scroll to bottom
+};
+
+// Debounce to prevent flicker (simple setTimeout version)
+let debounceTimer;
+const debouncedFix = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fixInputPosition, 150);
+};
+
+// Event listeners
+window.addEventListener('resize', debouncedFix); // Keyboard open/close
+window.addEventListener('scroll', debouncedFix); // Scroll adjustments
+input.addEventListener('focus', () => setTimeout(debouncedFix, 300)); // Delay for keyboard animation
+input.addEventListener('blur', debouncedFix); // Keyboard close
+
+// Initial call
+debouncedFix();
+
     </script>
 </body>
 </html>
