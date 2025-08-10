@@ -2538,7 +2538,7 @@ if (isPromoQuery) {
   });
 }
 
-      // Sales mode
+      // Sales mode test
       mode = 'sales';
       session.context.mode = 'sales';
 
