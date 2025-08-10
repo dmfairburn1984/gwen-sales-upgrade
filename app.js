@@ -1,6 +1,6 @@
 // MINT OUTDOOR AI SYSTEM - NATURAL PACKAGE DEAL APPROACH
-// Implementing Gemini's feedback: Remove artificial delays, use immediate expert consultation
-// Pagination fix applied - test commit.
+// Implementing feedback: Remove artificial delays, use immediate expert consultation
+// Pagination fix applied - test commit and new location
 
 require('dotenv').config();
 const express = require('express');
