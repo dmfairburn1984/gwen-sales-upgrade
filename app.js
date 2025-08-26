@@ -1,6 +1,6 @@
 // MINT OUTDOOR AI SYSTEM - NATURAL PACKAGE DEAL APPROACH
 // Implementing feedback: Remove artificial delays, use immediate expert consultation
-// Pagination fix applied - test commit and new
+// Pagination fix applied - test commit and new location
 
 require('dotenv').config();
 const express = require('express');
@@ -498,7 +498,7 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
     // Email configuration
     const mailOptions = {
         from: `"MINT Outdoor - Gwen AI" <${process.env.EMAIL_USER}>`,
-        to: 'help@mint-outdoor.com',
+        to: 'marketing@mint-outdoor.com',
         subject: subject,
         html: emailHTML,
         priority: priority.toLowerCase(),
@@ -511,7 +511,7 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
 
     try {
         console.log('\n📧 ========== SENDING EMAIL ==========');
-        console.log(`📋 To: help@mint-outdoor.com`);
+        console.log(`📋 To: marketing@mint-outdoor.com`);
         console.log(`📋 Subject: ${subject}`);
         console.log(`📋 Priority: ${priority}`);
         console.log(`🆔 Session ID: ${sessionId}`);
@@ -845,7 +845,7 @@ function searchRealProducts(criteria) {
         }
     }
 
-    // PRODUCT NAME SEARCH - - Improved fuzzy matching
+    // PRODUCT NAME SEARCH - Improved fuzzy matching
     if (productName) {
         const searchQuery = productName.toLowerCase();
         
@@ -891,12 +891,7 @@ function searchRealProducts(criteria) {
                 .filter(word => word.length > 2 && !['the', 'and', 'for'].includes(word));
             
             // Count how many search words appear in the product
-            const matchedWords = searchWords.filter(word => {
-                if (word.endsWith('s')) {
-                    return searchText.includes(word) || searchText.includes(word.slice(0, -1));
-                }
-                return searchText.includes(word);
-            });
+            const matchedWords = searchWords.filter(word => searchText.includes(word));
             const matchPercentage = matchedWords.length / searchWords.length;
             
             // Require at least 60% of words to match
@@ -969,12 +964,12 @@ function searchRealProducts(criteria) {
         
         const typeMap = {
             'dining': {
-                include: ['dining'],
-                exclude: ['coffee', 'side', 'sofa']
+                include: ['dining', 'table', 'dinner', 'meal'],
+                exclude: ['coffee', 'side', 'lounge', 'sofa']
             },
             'lounge': {
-                include: ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'corner'],
-                exclude: ['dining']
+                include: ['lounge', 'sofa', 'corner', 'seating', 'relaxing', 'conversation'],
+                exclude: ['dining', 'table']
             }
         };
         
@@ -1382,7 +1377,7 @@ const aiTools = [
   type: "function",
   function: {
         name: "marketing_handoff",
-        description: "Escalate to help@mint-outdoor.com when customer wants to place order, requests callback, or when you cannot answer their question",
+        description: "Escalate to marketing@mint-outdoor.com when customer wants to place order, requests callback, or when you cannot answer their question",
         parameters: {
             type: "object",
             properties: {
@@ -1540,23 +1535,6 @@ async function generateAISalesResponse(message, sessionId, session) {
     const conversation = session.conversationHistory || [];
     const lowerMessage = message.toLowerCase();
     
-    // Check if handoff needed
-    const handoffNeeded = detectMarketingHandoff(message, session.conversationHistory);
-    if (handoffNeeded && session.context.waitingForHandoffEmail) {
-        const customerDetails = extractCustomerDetails(message);
-        if (customerDetails.email) {
-            // Proceed with handoff including email
-            const reason = "Customer requested handoff"; // Or extract from history
-            await sendChatToMarketing(sessionId, reason, session.conversationHistory, { email: customerDetails.email });
-            return "Thank you for providing your email. I've escalated this to our team at help@mint-outdoor.com, and they'll contact you soon.";
-        } else {
-            return "I need your email address to escalate this properly. Please provide it.";
-        }
-    } else if (handoffNeeded && !extractCustomerDetails(message).email) {
-        session.context.waitingForHandoffEmail = true;
-        return "To better assist you, could you please provide your email address? Our team will contact you directly.";
-    }
-    
     // Detect customer persona for personalized responses
     const customerPersona = detectCustomerPersona(conversation);
     session.context.detectedPersona = customerPersona;
@@ -1634,16 +1612,13 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
     
     **ENHANCED PRODUCT SEARCH INTELLIGENCE:**
     When customers ask for products, be smart about search terms and use MULTIPLE criteria:
-    - For descriptive requests like "corner rattan dining sets", use productName with the key descriptors (e.g., productName="corner rattan dining sets") to match titles/descriptions.
-    - Treat words like "corner", "casual" as part of productName if they describe the style/type.
-    - "teak lounge set" should search: productName="teak lounge set", furnitureType="lounge" 
+    - "teak lounge set" should search: productName="teak", furnitureType="lounge" 
     - "malai" should search: productName="malai" (this finds the Malai teak set)
     - "dining set for 6" should search: furnitureType="dining", seatCount=6
     - "outdoor sofa" should search: furnitureType="lounge"
     - "teak dining table" should search: material="teak", furnitureType="dining"
-    - Always combine material + furniture type + productName when mentioned for better matching
+    - Always combine material + furniture type when both are mentioned
     - Use specific product names when customers mention them (Malai, Reva, Alex, etc.)
-    - If "casual" is mentioned, include it in productName but fall back to general if no exact matches.
 
     **When customers ask about dimensions, sizes, or measurements:**
 - ALWAYS use the get_product_dimensions tool with the product SKU
@@ -1734,7 +1709,7 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
        - Respond: "I can see you're asking about an existing order. Our order handling team can help you with that. Please visit our Order Desk at: https://mint-outdoor-support-cf235e896ea9.herokuapp.com/ where you can check your order status, delivery updates, and returns."
 
     2. **MARKETING HANDOFF** - If customer wants to place an order, requests callback, or you cannot answer their question:
-       - Use the 'marketing_handoff' tool to send chat history to help@mint-outdoor.com
+       - Use the 'marketing_handoff' tool to send chat history to marketing@mint-outdoor.com
        - Tell customer they'll be contacted within 24 hours
 
     3. **CONTINUE NORMAL OPERATION** - For all product questions, browsing, recommendations, and sales inquiries, continue as normal.
@@ -1943,7 +1918,7 @@ if (toolCall.function.name === "offer_bundle_naturally") {
     
     toolResults.push({
       tool_call_id: toolCall.id,
-      output: JSON.stringify({
+      output: JSON.stringify({ 
         success: true, 
         message: "Offer bundle naturally to customer",
         offerText: "By the way, we have bundle offers available for this product that could save you money. Would you like to see what bundle deals we have?"
@@ -2069,7 +2044,7 @@ if (toolCall.function.name === "marketing_handoff") {
             success: emailSent,
             message: emailSent ? 
                 "Perfect! I've sent your details to our team. Someone will contact you within 2 hours to help with your inquiry." :
-                "I'm having trouble with our email system right now. Please email help@mint-outdoor.com directly or call us, and mention session ID: " + sessionId
+                "I'm having trouble with our email system right now. Please email marketing@mint-outdoor.com directly or call us, and mention session ID: " + sessionId
         })
     });
 }
@@ -2517,7 +2492,7 @@ session.conversationHistory.push({
           response = `I found your order ${orderNumber}! For security, I'll need to verify your identity with your surname and postcode before I can share details.`;
           session.context.awaitingVerification = orderNumber;
         } else {
-          response = `I couldn't find order ${orderNumber}. Please double-check the number or contact help@mint-outdoor.com for assistance.`;
+          response = `I couldn't find order ${orderNumber}. Please double-check the number or contact support@mint-outdoor.com for assistance.`;
         }
       } else if (session.context.awaitingVerification) {
         const parts = message.split(' ');
@@ -2532,7 +2507,7 @@ session.conversationHistory.push({
             session.context.currentOrder = verification.order;
             delete session.context.awaitingVerification;
           } else {
-            response = `I couldn't verify those details. Please double-check your surname and postcode, or contact us at help@mint-outdoor.com for assistance.`;
+            response = `I couldn't verify those details. Please double-check your surname and postcode, or contact us at support@mint-outdoor.com for assistance.`;
           }
         } else {
           response = `Please provide both your surname and postcode separated by a space.`;
@@ -2653,9 +2628,9 @@ if (isPromoQuery) {
             );
             
             if (emailSent) {
-                response = `Excellent! I have your details:\n📧 Email: ${customerDetails.email}\n📍 Postcode: ${customerDetails.postcode}\n\nPlease place your bundle order using the email and postcode you gave me SW1A 1AA and I will arrange the £30 refund within 48 hours. \n\nThank you for choosing MINT Outdoor!`;
+                response = `Excellent! I have your details:\n📧 Email: ${customerDetails.email}\n📍 Postcode: ${customerDetails.postcode}\n\nPlease place your bundle order using the email and postcode you gave me and I will arrange the £30 refund within 48 hours. \n\nThank you for choosing MINT Outdoor!`;
             } else {
-                response = `I have your details, but I'm having trouble with our system. Please email help@mint-outdoor.com with:\n\n- Subject: "Bundle Order + £30 Refund"\n- Your email: ${customerDetails.email}\n- Your postcode: ${customerDetails.postcode}\n- Session ID: ${sessionId}\n\nOur team will process this quickly!`;
+                response = `I have your details, but I'm having trouble with our system. Please email marketing@mint-outdoor.com with:\n\n- Subject: "Bundle Order + £30 Refund"\n- Your email: ${customerDetails.email}\n- Your postcode: ${customerDetails.postcode}\n- Session ID: ${sessionId}\n\nOur team will process this quickly!`;
             }
         } else {
             // Missing required information
