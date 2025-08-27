@@ -208,6 +208,198 @@ console.log(`   🪨 Stone/composites: ${Array.isArray(stoneCompositesMaster) ? 
 console.log(`   🏷️ Taxonomy categories: ${Object.keys(taxonomyData.product_categories || {}).length}`);
 console.log('🧪 DEBUG: Taxonomy data keys:', Object.keys(taxonomyData));
 
+
+/***** GWEN HOTFIX: Corner Rattan Dining Resolver (BLOCKER) *****/
+
+// 1) Lightweight cache for JSON loads (browser-safe)
+const _GWEN_DATA_CACHE = {};
+async function loadJsonOnce(path) {
+  if (_GWEN_DATA_CACHE[path]) return _GWEN_DATA_CACHE[path];
+  const res = await fetch(path, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load ${path}`);
+  const json = await res.json();
+  _GWEN_DATA_CACHE[path] = json;
+  return json;
+}
+
+// 2) Very explicit match for this query
+function isCornerRattanDiningQuery(text) {
+  const t = (text || "").toLowerCase();
+  const hasCorner = /\bcorner\b/.test(t) || /\bl\s*shape\b/.test(t) || /\bl\-shape\b/.test(t);
+  const hasRattan = /\brattan\b/.test(t) || /\bwicker\b/.test(t);
+  const hasDining = /\bdining\b/.test(t) || /casual\s*dining/.test(t);
+  return hasCorner && hasRattan && hasDining;
+}
+
+// 3) Utility: simple price & seats hints if the customer included them
+function extractBudgetAndSeats(text) {
+  const t = (text || "").toLowerCase();
+  // budget
+  let budget = null;
+  const money = t.match(/(?:under|below|max|budget|up to|upto|less than)\s*£?\s*([\d,\.]+)/i) || t.match(/£\s*([\d,\.]+)/i);
+  if (money) {
+    budget = Number(String(money[1]).replace(/[^\d\.]/g, "")) || null;
+  }
+  // seats
+  let seats = null;
+  const seatsMatch = t.match(/(\d+)\s*(?:seater|seat|people)/i);
+  if (seatsMatch) seats = Number(seatsMatch[1]);
+  return { budget, seats };
+}
+
+// 4) Normalizers (robust against varied schemas)
+function getField(o, names, fallback = null) {
+  for (const n of names) {
+    if (o && o[n] != null) return o[n];
+  }
+  return fallback;
+}
+
+function textContains(txt, ...needles) {
+  const t = String(txt || "").toLowerCase();
+  return needles.some(n => t.includes(String(n).toLowerCase()));
+}
+
+function looksLikeCornerDining(prod) {
+  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
+  const cat = getField(prod, ["category", "Category", "product_type", "taxonomy_path"], "");
+  const tags = (getField(prod, ["tags", "Tags"], []) || []).join(" ");
+  const blob = [title, cat, tags].join(" || ").toLowerCase();
+
+  const isDining = /\bdining\b/.test(blob) || /\bcasual dining\b/.test(blob);
+  const isCorner = /\bcorner\b/.test(blob) || /\bl\s*shape\b/.test(blob) || /\bl\-shape\b/.test(blob);
+  const isRattan = /\brattan\b/.test(blob) || /\bwicker\b/.test(blob) || textContains(blob, "pe rattan", "polyrattan");
+
+  // Exclude lounge-only and tables-only results
+  const isClearlyNotDining =
+    /\bcoffee table\b/.test(blob) ||
+    /\bside table\b/.test(blob) ||
+    /\bbench only\b/.test(blob) ||
+    /\blounge set\b/.test(blob) && !/\bdining\b/.test(blob) ||
+    /\bsofa set\b/.test(blob) && !/\bdining\b/.test(blob) ||
+    /\bbistro\b/.test(blob);
+
+  return isDining && isCorner && isRattan && !isClearlyNotDining;
+}
+
+function extractPriceGBP(prod) {
+  const p = getField(prod, ["price", "Price", "price_gbp", "retail_price"], null);
+  if (p == null) return null;
+  const n = Number(String(p).replace(/[^\d\.]/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
+function extractSeats(prod) {
+  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
+  const tags = (getField(prod, ["tags", "Tags"], []) || []).join(" ");
+  const blob = [title, tags].join(" ").toLowerCase();
+  const m = blob.match(/(\d+)\s*(?:seater|seat|people)/);
+  return m ? Number(m[1]) : null;
+}
+
+function extractLeadTimeText(prod) {
+  // Prefer explicit stock fields if present; otherwise fall back to tags/strings
+  const stock = String(getField(prod, ["stock_status", "Stock Status", "availability"], "")).toLowerCase();
+  const eta = getField(prod, ["eta", "lead_time", "Lead Time"], null);
+  if (stock.includes("in stock")) return "In stock — ready to ship";
+  if (eta) return `Pre-order — ${eta}`;
+  return stock ? stock : "Availability on request";
+}
+
+// 5) Ranking for best-fit
+function scoreCornerDining(prod, pref) {
+  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
+  const cat = getField(prod, ["category", "Category", "product_type", "taxonomy_path"], "");
+  const blob = [title, cat].join(" || ").toLowerCase();
+  let s = 0;
+
+  // must-have traits (already filtered, but we reward stronger signals)
+  if (/\bcorner\b/.test(blob)) s += 3;
+  if (/\bl\s*shape\b/.test(blob) || /\bl\-shape\b/.test(blob)) s += 2;
+  if (/\bcasual dining\b/.test(blob)) s += 2; // often what people mean by “corner dining”
+  if (/\bdining set\b/.test(blob)) s += 2;
+  if (/\brattan\b/.test(blob) || /\bwicker\b/.test(blob)) s += 1;
+
+  // budget fit
+  const price = extractPriceGBP(prod);
+  if (pref.budget && price) {
+    if (price <= pref.budget) s += 2;            // fits budget
+    else if (price <= pref.budget * 1.15) s += 1; // slightly above
+  }
+
+  // seats fit
+  const seats = extractSeats(prod);
+  if (pref.seats && seats) {
+    if (seats === pref.seats) s += 2;
+    if (seats >= pref.seats) s += 1;
+  }
+
+  // availability preference
+  const stock = String(getField(prod, ["stock_status", "Stock Status", "availability"], "")).toLowerCase();
+  if (stock.includes("in stock")) s += 2;
+
+  return s;
+}
+
+// 6) Main resolver: returns a complete, conversion-first reply string
+async function cornerRattanDiningResolver(userText) {
+  // Load sources (paths assume your public folder or same host)
+  const products = await loadJsonOnce("/product_database.json");
+  // Optional reads if you want stricter gating later:
+  // const cats = await loadJsonOnce("/furniture_categories_master.json");
+  // const taxonomy = await loadJsonOnce("/taxonomy.json");
+
+  const prefs = extractBudgetAndSeats(userText);
+
+  // Filter strictly to corner + rattan + dining sets
+  const candidates = (Array.isArray(products) ? products : products?.items || [])
+    .filter(looksLikeCornerDining);
+
+  // Rank
+  const ranked = candidates
+    .map(p => ({ p, score: scoreCornerDining(p, prefs) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3) // top 3
+    .map(x => x.p);
+
+  if (!ranked.length) {
+    // Fallback: useful “next question” + reassurance
+    return [
+      "I can help you with **corner rattan dining sets**.",
+      "Could you share your **budget** and the **number of seats** you need (e.g., 5-seater, 8-seater)?",
+      "I’ll show you the best in-stock options first, and pre-order picks if they land soon."
+    ].join("\n");
+  }
+
+  // Build succinct, sales-ready card list (primary + 2 alternates max)
+  const lines = [];
+  const makeLine = (prod) => {
+    const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
+    const sku   = getField(prod, ["sku", "SKU", "product_sku", "id"], "");
+    const price = extractPriceGBP(prod);
+    const priceText = price ? `£${price.toLocaleString("en-GB", { maximumFractionDigits: 0 })}` : "Price on request";
+    const lead = extractLeadTimeText(prod);
+    const seats = extractSeats(prod);
+    const seatsText = seats ? ` · ${seats}-seater` : "";
+    return `• **${title}**${seatsText}\n  SKU: ${sku}\n  Price: ${priceText}\n  Availability: ${lead}`;
+  };
+
+  const primary = ranked[0];
+  const upsells = ranked.slice(1);
+
+  lines.push("Here are the **corner rattan dining sets** that fit best:");
+  lines.push(makeLine(primary));
+  upsells.forEach(u => lines.push(makeLine(u)));
+
+  // CTA with soft prompt to refine (budget/seats)
+  lines.push("");
+  lines.push("Would you like me to filter by **budget** or **number of seats** and show delivery dates?");
+
+  return lines.join("\n");
+}
+
+
+
 // FIND the detectCustomerInterest function and add better logging:
 
 function detectCustomerInterest(message, session) {
@@ -1525,6 +1717,8 @@ const aiTools = [
 }
 ];
 
+
+
 // ENHANCED AI RESPONSE GENERATION - Implementing Gemini's natural approach
 async function generateAISalesResponse(message, sessionId, session) {
   if (!ENABLE_SALES_MODE) {
@@ -2654,7 +2848,31 @@ if (isPromoQuery) {
         });
       }
 
-      // THEN AI call for non-bundle responses
+      // === GWEN HOTFIX INTERCEPT: Corner Rattan Dining ===
+if (isCornerRattanDiningQuery(message)) {
+  try {
+    const reply = await cornerRattanDiningResolver(message);
+
+    // track response in session + db log, exactly like your normal flow
+    session.conversationHistory.push({
+      role: 'assistant',
+      content: reply,
+      timestamp: new Date()
+    });
+    await logChat(sessionId, 'assistant', reply);
+
+    // return immediately (skip the AI call)
+    return res.json({
+      response: reply,
+      sessionId,
+      suggestions: ["Filter by budget", "Show 6–8 seaters", "Quick-ship options"]
+    });
+  } catch (e) {
+    console.error("Corner dining resolver failed", e);
+    // fall through to normal AI if the resolver has trouble
+  }
+}
+
       response = await generateAISalesResponse(message, sessionId, session);
     }
 
