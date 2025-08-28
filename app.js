@@ -208,198 +208,6 @@ console.log(`   🪨 Stone/composites: ${Array.isArray(stoneCompositesMaster) ? 
 console.log(`   🏷️ Taxonomy categories: ${Object.keys(taxonomyData.product_categories || {}).length}`);
 console.log('🧪 DEBUG: Taxonomy data keys:', Object.keys(taxonomyData));
 
-
-/***** GWEN HOTFIX: Corner Rattan Dining Resolver (BLOCKER) *****/
-
-// 1) Lightweight cache for JSON loads (browser-safe)
-const _GWEN_DATA_CACHE = {};
-async function loadJsonOnce(path) {
-  if (_GWEN_DATA_CACHE[path]) return _GWEN_DATA_CACHE[path];
-  const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to load ${path}`);
-  const json = await res.json();
-  _GWEN_DATA_CACHE[path] = json;
-  return json;
-}
-
-// 2) Very explicit match for this query
-function isCornerRattanDiningQuery(text) {
-  const t = (text || "").toLowerCase();
-  const hasCorner = /\bcorner\b/.test(t) || /\bl\s*shape\b/.test(t) || /\bl\-shape\b/.test(t);
-  const hasRattan = /\brattan\b/.test(t) || /\bwicker\b/.test(t);
-  const hasDining = /\bdining\b/.test(t) || /casual\s*dining/.test(t);
-  return hasCorner && hasRattan && hasDining;
-}
-
-// 3) Utility: simple price & seats hints if the customer included them
-function extractBudgetAndSeats(text) {
-  const t = (text || "").toLowerCase();
-  // budget
-  let budget = null;
-  const money = t.match(/(?:under|below|max|budget|up to|upto|less than)\s*£?\s*([\d,\.]+)/i) || t.match(/£\s*([\d,\.]+)/i);
-  if (money) {
-    budget = Number(String(money[1]).replace(/[^\d\.]/g, "")) || null;
-  }
-  // seats
-  let seats = null;
-  const seatsMatch = t.match(/(\d+)\s*(?:seater|seat|people)/i);
-  if (seatsMatch) seats = Number(seatsMatch[1]);
-  return { budget, seats };
-}
-
-// 4) Normalizers (robust against varied schemas)
-function getField(o, names, fallback = null) {
-  for (const n of names) {
-    if (o && o[n] != null) return o[n];
-  }
-  return fallback;
-}
-
-function textContains(txt, ...needles) {
-  const t = String(txt || "").toLowerCase();
-  return needles.some(n => t.includes(String(n).toLowerCase()));
-}
-
-function looksLikeCornerDining(prod) {
-  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
-  const cat = getField(prod, ["category", "Category", "product_type", "taxonomy_path"], "");
-  const tags = (getField(prod, ["tags", "Tags"], []) || []).join(" ");
-  const blob = [title, cat, tags].join(" || ").toLowerCase();
-
-  const isDining = /\bdining\b/.test(blob) || /\bcasual dining\b/.test(blob);
-  const isCorner = /\bcorner\b/.test(blob) || /\bl\s*shape\b/.test(blob) || /\bl\-shape\b/.test(blob);
-  const isRattan = /\brattan\b/.test(blob) || /\bwicker\b/.test(blob) || textContains(blob, "pe rattan", "polyrattan");
-
-  // Exclude lounge-only and tables-only results
-  const isClearlyNotDining =
-    /\bcoffee table\b/.test(blob) ||
-    /\bside table\b/.test(blob) ||
-    /\bbench only\b/.test(blob) ||
-    /\blounge set\b/.test(blob) && !/\bdining\b/.test(blob) ||
-    /\bsofa set\b/.test(blob) && !/\bdining\b/.test(blob) ||
-    /\bbistro\b/.test(blob);
-
-  return isDining && isCorner && isRattan && !isClearlyNotDining;
-}
-
-function extractPriceGBP(prod) {
-  const p = getField(prod, ["price", "Price", "price_gbp", "retail_price"], null);
-  if (p == null) return null;
-  const n = Number(String(p).replace(/[^\d\.]/g, ""));
-  return Number.isFinite(n) ? n : null;
-}
-
-function extractSeats(prod) {
-  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
-  const tags = (getField(prod, ["tags", "Tags"], []) || []).join(" ");
-  const blob = [title, tags].join(" ").toLowerCase();
-  const m = blob.match(/(\d+)\s*(?:seater|seat|people)/);
-  return m ? Number(m[1]) : null;
-}
-
-function extractLeadTimeText(prod) {
-  // Prefer explicit stock fields if present; otherwise fall back to tags/strings
-  const stock = String(getField(prod, ["stock_status", "Stock Status", "availability"], "")).toLowerCase();
-  const eta = getField(prod, ["eta", "lead_time", "Lead Time"], null);
-  if (stock.includes("in stock")) return "In stock — ready to ship";
-  if (eta) return `Pre-order — ${eta}`;
-  return stock ? stock : "Availability on request";
-}
-
-// 5) Ranking for best-fit
-function scoreCornerDining(prod, pref) {
-  const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
-  const cat = getField(prod, ["category", "Category", "product_type", "taxonomy_path"], "");
-  const blob = [title, cat].join(" || ").toLowerCase();
-  let s = 0;
-
-  // must-have traits (already filtered, but we reward stronger signals)
-  if (/\bcorner\b/.test(blob)) s += 3;
-  if (/\bl\s*shape\b/.test(blob) || /\bl\-shape\b/.test(blob)) s += 2;
-  if (/\bcasual dining\b/.test(blob)) s += 2; // often what people mean by “corner dining”
-  if (/\bdining set\b/.test(blob)) s += 2;
-  if (/\brattan\b/.test(blob) || /\bwicker\b/.test(blob)) s += 1;
-
-  // budget fit
-  const price = extractPriceGBP(prod);
-  if (pref.budget && price) {
-    if (price <= pref.budget) s += 2;            // fits budget
-    else if (price <= pref.budget * 1.15) s += 1; // slightly above
-  }
-
-  // seats fit
-  const seats = extractSeats(prod);
-  if (pref.seats && seats) {
-    if (seats === pref.seats) s += 2;
-    if (seats >= pref.seats) s += 1;
-  }
-
-  // availability preference
-  const stock = String(getField(prod, ["stock_status", "Stock Status", "availability"], "")).toLowerCase();
-  if (stock.includes("in stock")) s += 2;
-
-  return s;
-}
-
-// 6) Main resolver: returns a complete, conversion-first reply string
-async function cornerRattanDiningResolver(userText) {
-  // Load sources (paths assume your public folder or same host)
-  const products = await loadJsonOnce("/product_database.json");
-  // Optional reads if you want stricter gating later:
-  // const cats = await loadJsonOnce("/furniture_categories_master.json");
-  // const taxonomy = await loadJsonOnce("/taxonomy.json");
-
-  const prefs = extractBudgetAndSeats(userText);
-
-  // Filter strictly to corner + rattan + dining sets
-  const candidates = (Array.isArray(products) ? products : products?.items || [])
-    .filter(looksLikeCornerDining);
-
-  // Rank
-  const ranked = candidates
-    .map(p => ({ p, score: scoreCornerDining(p, prefs) }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3) // top 3
-    .map(x => x.p);
-
-  if (!ranked.length) {
-    // Fallback: useful “next question” + reassurance
-    return [
-      "I can help you with **corner rattan dining sets**.",
-      "Could you share your **budget** and the **number of seats** you need (e.g., 5-seater, 8-seater)?",
-      "I’ll show you the best in-stock options first, and pre-order picks if they land soon."
-    ].join("\n");
-  }
-
-  // Build succinct, sales-ready card list (primary + 2 alternates max)
-  const lines = [];
-  const makeLine = (prod) => {
-    const title = getField(prod, ["title", "Product: Title", "name", "product_title"], "");
-    const sku   = getField(prod, ["sku", "SKU", "product_sku", "id"], "");
-    const price = extractPriceGBP(prod);
-    const priceText = price ? `£${price.toLocaleString("en-GB", { maximumFractionDigits: 0 })}` : "Price on request";
-    const lead = extractLeadTimeText(prod);
-    const seats = extractSeats(prod);
-    const seatsText = seats ? ` · ${seats}-seater` : "";
-    return `• **${title}**${seatsText}\n  SKU: ${sku}\n  Price: ${priceText}\n  Availability: ${lead}`;
-  };
-
-  const primary = ranked[0];
-  const upsells = ranked.slice(1);
-
-  lines.push("Here are the **corner rattan dining sets** that fit best:");
-  lines.push(makeLine(primary));
-  upsells.forEach(u => lines.push(makeLine(u)));
-
-  // CTA with soft prompt to refine (budget/seats)
-  lines.push("");
-  lines.push("Would you like me to filter by **budget** or **number of seats** and show delivery dates?");
-
-  return lines.join("\n");
-}
-
-
-
 // FIND the detectCustomerInterest function and add better logging:
 
 function detectCustomerInterest(message, session) {
@@ -605,10 +413,22 @@ function detectMarketingHandoff(message, conversationHistory) {
     return hasMarketingTrigger;
 }
 
-// REPLACE your existing sendChatToMarketing function with this:
-
 async function sendChatToMarketing(sessionId, reason, conversationHistory, customerDetails = null) {
     const session = sessions.get(sessionId);
+    
+    // Extract customer email from conversation history if not provided
+    if (!customerDetails || !customerDetails.email) {
+        // Search through conversation history for email
+        conversationHistory.forEach(msg => {
+            if (msg.role === 'user') {
+                const emailMatch = msg.content.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
+                if (emailMatch && (!customerDetails || !customerDetails.email)) {
+                    customerDetails = customerDetails || {};
+                    customerDetails.email = emailMatch[0];
+                }
+            }
+        });
+    }
     
     // Format conversation history for email
     let chatTranscript = '\n=== CHAT TRANSCRIPT ===\n';
@@ -621,33 +441,40 @@ async function sendChatToMarketing(sessionId, reason, conversationHistory, custo
     });
     chatTranscript += '\n=== END TRANSCRIPT ===\n';
 
-    // Create customer info section
-    let customerInfo = '';
-    if (customerDetails) {
-        customerInfo = `
+    // Create customer info section with extracted email
+    const customerEmail = customerDetails?.email || 'Not provided - URGENT: Check conversation for contact details';
+    const customerPostcode = customerDetails?.postcode || 'Not provided';
+    
+    let customerInfo = `
 === CUSTOMER DETAILS ===
-Email: ${customerDetails.email || 'Not provided'}
-Postcode: ${customerDetails.postcode || 'Not provided'}
+Customer Email: ${customerEmail}
+Postcode: ${customerPostcode}
+Session ID: ${sessionId}
+Timestamp: ${new Date().toLocaleString('en-GB')}
 ========================
-        `;
-    }
+    `;
 
     // Email subject based on reason
-    let subject = 'Gwen AI - Customer Inquiry';
+    let subject = `Gwen AI - Customer Inquiry`;
     let priority = 'Normal';
     
+    // Add customer email to subject if available
+    if (customerDetails?.email) {
+        subject = `Gwen AI - Customer Inquiry from ${customerDetails.email}`;
+    }
+    
     if (reason.toLowerCase().includes('bundle') || reason.toLowerCase().includes('purchase')) {
-        subject = '🎯 HIGH PRIORITY - Customer Ready to Purchase';
+        subject = `🎯 HIGH PRIORITY - Customer Ready to Purchase${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'High';
     } else if (reason.toLowerCase().includes('complaint') || reason.toLowerCase().includes('issue')) {
-        subject = '⚠️ URGENT - Customer Service Issue';
+        subject = `⚠️ URGENT - Customer Service Issue${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'High';
     } else if (reason.toLowerCase().includes('callback') || reason.toLowerCase().includes('human')) {
-        subject = '📞 Customer Requests Human Contact';
+        subject = `📞 Customer Requests Human Contact${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'Normal';
     }
 
-    // HTML Email content
+    // HTML Email content - prominently display customer email
     const emailHTML = `
     <html>
     <body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
@@ -656,7 +483,23 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
             <p style="margin: 0; font-size: 16px;">${reason}</p>
         </div>
         
+        <!-- PROMINENT CUSTOMER EMAIL DISPLAY -->
         <div style="padding: 20px; background: #f8f9fa;">
+            ${customerDetails?.email ? `
+            <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h2 style="color: #856404; margin-top: 0;">⚠️ CUSTOMER CONTACT EMAIL</h2>
+                <p style="font-size: 18px; font-weight: bold; color: #856404; margin: 5px 0;">
+                    ${customerDetails.email}
+                </p>
+                <p style="color: #856404; margin: 5px 0;">Please respond to this customer directly at the above email address.</p>
+            </div>
+            ` : `
+            <div style="background: #f8d7da; border: 2px solid #f5c6cb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h2 style="color: #721c24; margin-top: 0;">⚠️ NO EMAIL PROVIDED</h2>
+                <p style="color: #721c24;">Customer email not captured. Check conversation transcript for contact details.</p>
+            </div>
+            `}
+            
             <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #9FDCC2;">
                 <h2 style="color: #2E6041; margin-top: 0;">📋 Inquiry Details</h2>
                 <p><strong>Session ID:</strong> ${sessionId}</p>
@@ -666,13 +509,11 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
                 <p><strong>Messages:</strong> ${conversationHistory.length}</p>
             </div>
 
-            ${customerDetails ? `
             <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2196F3;">
                 <h2 style="color: #2E6041; margin-top: 0;">👤 Customer Contact Details</h2>
-                <p><strong>Email:</strong> ${customerDetails.email || 'Not provided'}</p>
-                <p><strong>Postcode:</strong> ${customerDetails.postcode || 'Not provided'}</p>
+                <p><strong>Email:</strong> ${customerDetails?.email || 'Not provided - check conversation'}</p>
+                <p><strong>Postcode:</strong> ${customerDetails?.postcode || 'Not provided'}</p>
             </div>
-            ` : ''}
 
             <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b;">
                 <h2 style="color: #2E6041; margin-top: 0;">💬 Full Conversation</h2>
@@ -682,28 +523,66 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
         
         <div style="background: #2E6041; color: white; padding: 15px; text-align: center; font-size: 14px;">
             <p style="margin: 0;">This email was automatically generated by the Gwen AI system</p>
+            ${customerDetails?.email ? 
+                `<p style="margin: 5px 0; font-weight: bold;">Customer Email: ${customerDetails.email}</p>` : 
+                `<p style="margin: 5px 0; color: #ffc107;">⚠️ No customer email captured</p>`
+            }
         </div>
     </body>
     </html>
     `;
 
-    // Email configuration
+    // Email configuration - now sends to help@mint-outdoor.com
     const mailOptions = {
         from: `"MINT Outdoor - Gwen AI" <${process.env.EMAIL_USER}>`,
-        to: 'marketing@mint-outdoor.com',
+        to: process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com', // Uses env variable
         subject: subject,
         html: emailHTML,
         priority: priority.toLowerCase(),
         headers: {
             'X-Priority': priority === 'High' ? '1' : '3',
             'X-MSMail-Priority': priority,
-            'Importance': priority
+            'Importance': priority,
+            'X-Customer-Email': customerDetails?.email || 'not-provided' // Add customer email to headers
         }
     };
 
+    // Log to Firebase with CUSTOMER email, not escalation email
+    if (pool) {
+        try {
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS escalations (
+                    id SERIAL PRIMARY KEY,
+                    session_id VARCHAR(255),
+                    customer_email VARCHAR(255),
+                    customer_postcode VARCHAR(20),
+                    reason TEXT,
+                    conversation_history JSONB,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    escalation_sent_to VARCHAR(255)
+                )
+            `);
+            
+            await pool.query(
+                'INSERT INTO escalations (session_id, customer_email, customer_postcode, reason, conversation_history, escalation_sent_to) VALUES ($1, $2, $3, $4, $5, $6)',
+                [
+                    sessionId, 
+                    customerDetails?.email || null,  // Log CUSTOMER email
+                    customerDetails?.postcode || null,
+                    reason,
+                    JSON.stringify(conversationHistory),
+                    process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com' // Track where it was sent
+                ]
+            );
+        } catch (dbError) {
+            console.error('Database logging error:', dbError);
+        }
+    }
+
     try {
         console.log('\n📧 ========== SENDING EMAIL ==========');
-        console.log(`📋 To: marketing@mint-outdoor.com`);
+        console.log(`📋 To: ${process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com'}`);
+        console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`📋 Subject: ${subject}`);
         console.log(`📋 Priority: ${priority}`);
         console.log(`🆔 Session ID: ${sessionId}`);
@@ -724,6 +603,7 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
         // Still log the conversation for manual follow-up
         console.log('\n📝 ========== BACKUP LOG (Email Failed) ==========');
         console.log(`📋 Reason: ${reason}`);
+        console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`🆔 Session ID: ${sessionId}`);
         console.log(`⏰ Timestamp: ${new Date().toLocaleString('en-GB')}`);
         console.log(chatTranscript);
@@ -1717,8 +1597,6 @@ const aiTools = [
 }
 ];
 
-
-
 // ENHANCED AI RESPONSE GENERATION - Implementing Gemini's natural approach
 async function generateAISalesResponse(message, sessionId, session) {
   if (!ENABLE_SALES_MODE) {
@@ -1767,6 +1645,11 @@ Stock Status: {{stockStatus.message}}
 **3. Handoff Rules:**
 - **Existing Orders:** If a message contains an order number or asks about delivery/tracking/returns for a past purchase, respond with this exact text and stop: "I can see you're asking about an existing order. Our order handling team can help with that. Please visit our <a href='https://mint-outdoor-support-cf235e896ea9.herokuapp.com/' style='color: #9FDCC2; font-weight: bold;' target='_blank'>ORDER HELPDESK</a> for assistance."
 - **Human/Purchase Request:** If a customer wants to speak to a human or place an order, use the \`marketing_handoff\` tool.
+
+- **Email Capture for Escalations:**
+- When a customer requests human contact, callback, or wants to place an order, ALWAYS ask for their email address first if not already provided
+- Say: "I'll connect you with our team right away. What's the best email address to reach you at?"
+- Only proceed with escalation after capturing email
 
 **--- YOUR PERSONA & KNOWLEDGE ---**
 - You are an expert, friendly, and efficient.
@@ -2848,31 +2731,7 @@ if (isPromoQuery) {
         });
       }
 
-      // === GWEN HOTFIX INTERCEPT: Corner Rattan Dining ===
-if (isCornerRattanDiningQuery(message)) {
-  try {
-    const reply = await cornerRattanDiningResolver(message);
-
-    // track response in session + db log, exactly like your normal flow
-    session.conversationHistory.push({
-      role: 'assistant',
-      content: reply,
-      timestamp: new Date()
-    });
-    await logChat(sessionId, 'assistant', reply);
-
-    // return immediately (skip the AI call)
-    return res.json({
-      response: reply,
-      sessionId,
-      suggestions: ["Filter by budget", "Show 6–8 seaters", "Quick-ship options"]
-    });
-  } catch (e) {
-    console.error("Corner dining resolver failed", e);
-    // fall through to normal AI if the resolver has trouble
-  }
-}
-
+      // THEN AI call for non-bundle responses
       response = await generateAISalesResponse(message, sessionId, session);
     }
 
