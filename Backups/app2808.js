@@ -1144,15 +1144,11 @@ function getStockStatus(sku) {
 
 // PASTE THIS ENTIRE CORRECTED FUNCTION INTO YOUR APP.JS FILE
 
-// REPLACE the entire searchShopifyProducts function with this enhanced version
-// This goes in your app.js file, replacing lines approximately 1650-1900
-
 async function searchShopifyProducts(criteria) {
     try {
-        console.log('🛒 Enhanced Shopify search with improved categorization...');
-        console.log('🔍 Search criteria:', criteria);
+        console.log('🛒 Trying Shopify products with new enhanced logic...');
+        console.log('🔍 Initial search criteria:', criteria);
 
-        // SKU search logic remains the same
         if (criteria.sku) {
             let allProducts = [];
             let url = `https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`;
@@ -1161,11 +1157,13 @@ async function searchShopifyProducts(criteria) {
                     headers: { 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN, 'Content-Type': 'application/json' }
                 });
                 if (!response.ok) {
-                    console.log('⚠️ Shopify API failed, using JSON backup');
+                    console.log('⚠️ Shopify API failed during pagination, using JSON backup');
                     return searchRealProducts(criteria);
                 }
                 const data = await response.json();
                 allProducts = allProducts.concat(data.products || []);
+                console.log(`✅ Fetched page, total products so far: ${allProducts.length}`);
+
                 const linkHeader = response.headers.get('Link');
                 if (linkHeader) {
                     const nextLinkMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/);
@@ -1192,7 +1190,7 @@ async function searchShopifyProducts(criteria) {
             }];
         }
 
-        // Fetch all products
+        // The rest of the function remains unchanged for non-SKU searches
         const response = await fetch(`https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`, {
             headers: {
                 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN,
@@ -1211,154 +1209,150 @@ async function searchShopifyProducts(criteria) {
 
         let filteredProducts = allProducts;
 
-        // ENHANCED FURNITURE TYPE DETECTION
-        if (criteria.furnitureType) {
-            console.log(`🔂 Enhanced filtering for furnitureType: ${criteria.furnitureType}`);
-            const type = criteria.furnitureType.toLowerCase();
-            
-            // Comprehensive category mappings
-            const categoryMappings = {
-                'dining': {
-                    include: ['dining', 'table', 'chair set', 'dining set'],
-                    exclude: ['coffee', 'side', 'lounge', 'sofa', 'corner', 'parasol', 'lounger']
-                },
-                'lounge': {
-                    include: ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'relax'],
-                    exclude: ['dining', 'corner set', 'corner sofa', 'lounger', 'sun lounger']
-                },
-                'corner': {
-                    include: ['corner set', 'corner sofa', 'corner dining', 'corner lounge', 'l-shaped'],
-                    exclude: ['sun lounger', 'lounger', 'parasol', 'single', 'armchair']
-                },
-                'lounger': {
-                    include: ['lounger', 'sun lounger', 'daybed', 'recliner'],
-                    exclude: ['corner', 'dining', 'sofa set']
-                }
-            };
-            
-            // Check if we have a mapping for this type
-            const mapping = categoryMappings[type];
-            if (mapping) {
-                filteredProducts = filteredProducts.filter(p => {
-                    const title = (p.title || '').toLowerCase();
-                    const hasInclude = mapping.include.some(term => title.includes(term));
-                    const hasExclude = mapping.exclude.some(term => title.includes(term));
-                    return hasInclude && !hasExclude;
-                });
-            }
-            
-            console.log(`  ➡️ Found ${filteredProducts.length} products after enhanced type filter.`);
-        }
-        
-        // ENHANCED PRODUCT NAME SEARCH
-        if (criteria.productName) {
-            console.log(`🏷️ Filtering for productName: "${criteria.productName}"`);
-            const searchQuery = criteria.productName.toLowerCase();
-            
-            // Handle special cases
-            if (searchQuery.includes('corner') && (searchQuery.includes('rattan') || searchQuery.includes('set'))) {
-                // Special handling for corner sets
-                filteredProducts = filteredProducts.filter(p => {
-                    const title = (p.title || '').toLowerCase();
-                    const hasCorner = title.includes('corner');
-                    const hasMaterial = searchQuery.includes('rattan') ? title.includes('rattan') : true;
-                    return hasCorner && hasMaterial && !title.includes('lounger');
-                });
-            } else {
-                // Standard product name matching
-                filteredProducts = filteredProducts.filter(p => {
-                    const title = (p.title || '').toLowerCase();
-                    const description = (p.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
-                    const productText = `${title} ${description}`;
-                    const searchWords = searchQuery.split(' ').filter(w => w.length > 1);
-                    return searchWords.every(word => productText.includes(word));
-                });
-            }
-            console.log(`  ➡️ Found ${filteredProducts.length} products after name filter.`);
-        }
+        const productMatchesText = (product, searchText) => {
+            const title = (product.title || '').toLowerCase();
+            const description = (product.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
+            const productText = `${title} ${description}`;
+            const searchWords = searchText.toLowerCase().split(' ').filter(w => w.length > 1);
+            return searchWords.every(word => productText.includes(word));
+        };
 
-        // MATERIAL FILTER
-        if (criteria.material) {
-            console.log(`🧱 Filtering for material: "${criteria.material}"`);
-            const materialMappings = {
-                'rattan': ['rattan', 'wicker', 'weave', 'poly rattan'],
-                'teak': ['teak', 'hardwood'],
-                'aluminium': ['aluminium', 'aluminum', 'metal']
-            };
-            
-            const searchTerms = materialMappings[criteria.material.toLowerCase()] || [criteria.material.toLowerCase()];
-            
+        if (criteria.furnitureType) {
+            console.log(`📂 Filtering for furnitureType: ${criteria.furnitureType}`);
+            const type = criteria.furnitureType.toLowerCase();
+            const diningTerms = ['dining', 'table'];
+            const nonDiningTerms = ['lounge', 'sofa', 'parasol', 'daybed', 'conversation'];
+            const loungeTerms = ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'corner'];
+            const nonLoungeTerms = ['dining'];
             filteredProducts = filteredProducts.filter(p => {
                 const title = (p.title || '').toLowerCase();
-                const description = (p.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
-                const productText = `${title} ${description}`;
-                return searchTerms.some(term => productText.includes(term));
+                if (type === 'dining') {
+                    return diningTerms.some(term => title.includes(term)) && !nonDiningTerms.some(term => title.includes(term));
+                }
+                if (type === 'lounge') {
+                    return loungeTerms.some(term => title.includes(term)) && !nonLoungeTerms.some(term => title.includes(term));
+                }
+                return true;
             });
-            console.log(`  ➡️ Found ${filteredProducts.length} products after material filter.`);
+            console.log(`  ➡️ Found ${filteredProducts.length} products after type filter.`);
+        }
+        
+        if (criteria.productName) {
+             console.log(`🏷️ Filtering for productName: "${criteria.productName}"`);
+             filteredProducts = filteredProducts.filter(p => productMatchesText(p, criteria.productName));
+             console.log(`  ➡️ Found ${filteredProducts.length} products after name filter.`);
         }
 
-        // STOCK AND PRICE VALIDATION
+        if (criteria.material) {
+             console.log(`🧱 Filtering for material: "${criteria.material}"`);
+             filteredProducts = filteredProducts.filter(p => productMatchesText(p, criteria.material));
+             console.log(`  ➡️ Found ${filteredProducts.length} products after material filter.`);
+        }
+
         let validProducts = filteredProducts.filter(product => {
             const variant = product.variants[0] || {};
             const price = parseFloat(variant.price || 0);
             const stock = parseInt(variant.inventory_quantity || 0);
             const isAvailable = variant.available !== false;
-            
-            if (stock <= 0 || price <= 0 || !isAvailable) {
-                console.log(`❌ Filtering out: "${product.title}" (Stock: ${stock}, Price: ${price})`);
+            if (stock <= 0) {
+                console.log(`❌ Filtering out [OUT OF STOCK]: "${product.title}" (Shopify stock: ${stock})`);
+                return false;
+            }
+            if (price <= 0) {
+                console.log(`❌ Filtering out [NO PRICE]: "${product.title}" (Shopify price: ${price})`);
+                return false;
+            }
+            if (!isAvailable) {
+                console.log(`❌ Filtering out [NOT AVAILABLE]: "${product.title}" (Shopify 'available' flag: ${isAvailable})`);
                 return false;
             }
             return true;
         });
+        console.log(`✅ Found ${validProducts.length} products with valid stock & price.`);
 
-        // SEAT COUNT FILTER
+        const getProductSeatCount = (product) => {
+            const title = (product.title || '');
+            const text = `${title}`.toLowerCase();
+            const patterns = [ /(\d+)\s*seater/i, /(\d+)\s*seat/i, /for\s*(\d+)\s*people/i ];
+            for(const pattern of patterns) {
+                const match = text.match(pattern);
+                if (match && match[1]) {
+                    if (title.toLowerCase().includes('parasol') || title.toLowerCase().includes('cover')) {
+                        return 0;
+                    }
+                    return parseInt(match[1], 10);
+                }
+            }
+            return 0;
+        };
+        
+        validProducts = validProducts.map(product => {
+            return { ...product, extractedSeatCount: getProductSeatCount(product) };
+        });
+
         if (criteria.seatCount) {
-            console.log(`🪑 Applying seat count filter for: ${criteria.seatCount}`);
+            console.log(`🪑 Applying strict seat count filter for: ${criteria.seatCount}`);
             validProducts = validProducts.filter(product => {
-                const title = (product.title || '').toLowerCase();
-                const patterns = [
-                    new RegExp(`\\b${criteria.seatCount}\\s*seater\\b`, 'i'),
-                    new RegExp(`\\b${criteria.seatCount}\\s*seat\\b`, 'i'),
-                    new RegExp(`seats?\\s*${criteria.seatCount}\\b`, 'i')
-                ];
-                return patterns.some(pattern => pattern.test(title));
+                const hasMatch = product.extractedSeatCount >= criteria.seatCount;
+                if (!hasMatch) {
+                     console.log(`❌ Seat count mismatch: ${product.title} (Extracted: ${product.extractedSeatCount})`);
+                }
+                return hasMatch;
             });
-            console.log(`  ➡️ Found ${validProducts.length} products after seat count filter.`);
+             console.log(`  ➡️ Found ${validProducts.length} products after seat count filter.`);
         }
 
-        // SORT BY PRICE
         validProducts.sort((a, b) => {
+            if (criteria.seatCount) {
+                const aIsExactMatch = a.extractedSeatCount === criteria.seatCount;
+                const bIsExactMatch = b.extractedSeatCount === criteria.seatCount;
+                if (aIsExactMatch && !bIsExactMatch) return -1;
+                if (!aIsExactMatch && bIsExactMatch) return 1;
+            }
+
             const aPrice = parseFloat(a.variants[0]?.price || 99999);
             const bPrice = parseFloat(b.variants[0]?.price || 99999);
             return aPrice - bPrice;
         });
 
-        // CONVERT TO GWEN FORMAT
+        console.log('🔍 FINAL SORTED PRODUCTS:');
+        validProducts.slice(0, 5).forEach((product, index) => {
+            const variant = product.variants[0] || {};
+            const stock = variant.inventory_quantity || 0;
+            const price = parseFloat(variant.price || 0);
+            const seatInfo = product.extractedSeatCount ? ` (Seats: ${product.extractedSeatCount})` : '';
+            console.log(`  ${index + 1}. ${product.title} - Price: £${price.toFixed(2)}, Stock: ${stock}${seatInfo}`);
+        });
+
         const gwenProducts = validProducts.slice(0, criteria.maxResults || 3).map(product => {
             const variant = product.variants[0] || {};
             const image = product.images[0] || {};
             const stockLevel = parseInt(variant.inventory_quantity || 0);
-            
-            return {
+            const productForAI = {
                 product_title: product.title,
                 sku: variant.sku,
                 price: parseFloat(variant.price || '0').toFixed(2),
                 website_url: `https://mint-outdoor.com/products/${product.handle}`,
                 stockStatus: {
                     message: stockLevel > 0 ? 'In stock' : 'Out of stock'
-                },
-                image_url: image.src || null
+                }
             };
+            if (image && image.src) {
+                productForAI.image_url = image.src;
+            }
+            return productForAI;
         });
 
-        console.log(`🎯 Returning ${gwenProducts.length} valid products to AI.`);
+        console.log(`🎯 Returning ${gwenProducts.length} valid Shopify products to the AI.`);
         return gwenProducts;
 
     } catch (error) {
-        console.error('❌ Shopify search failed:', error.message);
+        console.error('❌ Shopify search failed dramatically:', error.message);
+        console.log('📁 Falling back to local JSON product search.');
         return searchRealProducts(criteria);
     }
 }
+
 
 // ENHANCED AI TOOLS - Now includes all knowledge base access
 const aiTools = [
