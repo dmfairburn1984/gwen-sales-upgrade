@@ -418,7 +418,6 @@ async function sendChatToMarketing(sessionId, reason, conversationHistory, custo
     
     // Extract customer email from conversation history if not provided
     if (!customerDetails || !customerDetails.email) {
-        // Search through conversation history for email
         conversationHistory.forEach(msg => {
             if (msg.role === 'user') {
                 const emailMatch = msg.content.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
@@ -441,8 +440,8 @@ async function sendChatToMarketing(sessionId, reason, conversationHistory, custo
     });
     chatTranscript += '\n=== END TRANSCRIPT ===\n';
 
-    // Create customer info section with extracted email
-    const customerEmail = customerDetails?.email || 'Not provided - URGENT: Check conversation for contact details';
+    // Create customer info section
+    const customerEmail = customerDetails?.email || 'Not provided - CHECK CONVERSATION FOR CONTACT DETAILS';
     const customerPostcode = customerDetails?.postcode || 'Not provided';
     
     let customerInfo = `
@@ -450,12 +449,11 @@ async function sendChatToMarketing(sessionId, reason, conversationHistory, custo
 Customer Email: ${customerEmail}
 Postcode: ${customerPostcode}
 Session ID: ${sessionId}
-Timestamp: ${new Date().toLocaleString('en-GB')}
 ========================
-    `;
+        `;
 
     // Email subject based on reason
-    let subject = `Gwen AI - Customer Inquiry`;
+    let subject = 'Gwen AI - Customer Inquiry';
     let priority = 'Normal';
     
     // Add customer email to subject if available
@@ -474,7 +472,7 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
         priority = 'Normal';
     }
 
-    // HTML Email content - prominently display customer email
+    // HTML Email content
     const emailHTML = `
     <html>
     <body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
@@ -483,20 +481,18 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
             <p style="margin: 0; font-size: 16px;">${reason}</p>
         </div>
         
-        <!-- PROMINENT CUSTOMER EMAIL DISPLAY -->
         <div style="padding: 20px; background: #f8f9fa;">
             ${customerDetails?.email ? `
             <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <h2 style="color: #856404; margin-top: 0;">⚠️ CUSTOMER CONTACT EMAIL</h2>
-                <p style="font-size: 18px; font-weight: bold; color: #856404; margin: 5px 0;">
-                    ${customerDetails.email}
+                <h2 style="color: #856404; margin-top: 0;">⚠️ CUSTOMER EMAIL - RESPOND TO THIS ADDRESS</h2>
+                <p style="font-size: 20px; font-weight: bold; color: #856404; margin: 5px 0;">
+                    📧 ${customerDetails.email}
                 </p>
-                <p style="color: #856404; margin: 5px 0;">Please respond to this customer directly at the above email address.</p>
             </div>
             ` : `
             <div style="background: #f8d7da; border: 2px solid #f5c6cb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <h2 style="color: #721c24; margin-top: 0;">⚠️ NO EMAIL PROVIDED</h2>
-                <p style="color: #721c24;">Customer email not captured. Check conversation transcript for contact details.</p>
+                <h2 style="color: #721c24; margin-top: 0;">⚠️ NO EMAIL CAPTURED</h2>
+                <p style="color: #721c24; font-weight: bold;">Check conversation transcript for any contact details the customer may have provided.</p>
             </div>
             `}
             
@@ -509,11 +505,13 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
                 <p><strong>Messages:</strong> ${conversationHistory.length}</p>
             </div>
 
+            ${customerDetails ? `
             <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2196F3;">
                 <h2 style="color: #2E6041; margin-top: 0;">👤 Customer Contact Details</h2>
-                <p><strong>Email:</strong> ${customerDetails?.email || 'Not provided - check conversation'}</p>
-                <p><strong>Postcode:</strong> ${customerDetails?.postcode || 'Not provided'}</p>
+                <p><strong>Email:</strong> ${customerDetails.email || 'Not provided'}</p>
+                <p><strong>Postcode:</strong> ${customerDetails.postcode || 'Not provided'}</p>
             </div>
+            ` : ''}
 
             <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b;">
                 <h2 style="color: #2E6041; margin-top: 0;">💬 Full Conversation</h2>
@@ -524,18 +522,21 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
         <div style="background: #2E6041; color: white; padding: 15px; text-align: center; font-size: 14px;">
             <p style="margin: 0;">This email was automatically generated by the Gwen AI system</p>
             ${customerDetails?.email ? 
-                `<p style="margin: 5px 0; font-weight: bold;">Customer Email: ${customerDetails.email}</p>` : 
-                `<p style="margin: 5px 0; color: #ffc107;">⚠️ No customer email captured</p>`
+                `<p style="margin: 5px 0; font-size: 16px; font-weight: bold;">Customer Email: ${customerDetails.email}</p>` : 
+                ''
             }
         </div>
     </body>
     </html>
     `;
 
-    // Email configuration - now sends to help@mint-outdoor.com
+    // CRITICAL FIX: Use environment variable for escalation email
+    const ESCALATION_EMAIL = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
+    
+    // Email configuration
     const mailOptions = {
         from: `"MINT Outdoor - Gwen AI" <${process.env.EMAIL_USER}>`,
-        to: process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com', // Uses env variable
+        to: ESCALATION_EMAIL,  // NOW USES THE ENVIRONMENT VARIABLE!
         subject: subject,
         html: emailHTML,
         priority: priority.toLowerCase(),
@@ -543,45 +544,13 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
             'X-Priority': priority === 'High' ? '1' : '3',
             'X-MSMail-Priority': priority,
             'Importance': priority,
-            'X-Customer-Email': customerDetails?.email || 'not-provided' // Add customer email to headers
+            'X-Customer-Email': customerDetails?.email || 'not-provided'
         }
     };
 
-    // Log to Firebase with CUSTOMER email, not escalation email
-    if (pool) {
-        try {
-            await pool.query(`
-                CREATE TABLE IF NOT EXISTS escalations (
-                    id SERIAL PRIMARY KEY,
-                    session_id VARCHAR(255),
-                    customer_email VARCHAR(255),
-                    customer_postcode VARCHAR(20),
-                    reason TEXT,
-                    conversation_history JSONB,
-                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    escalation_sent_to VARCHAR(255)
-                )
-            `);
-            
-            await pool.query(
-                'INSERT INTO escalations (session_id, customer_email, customer_postcode, reason, conversation_history, escalation_sent_to) VALUES ($1, $2, $3, $4, $5, $6)',
-                [
-                    sessionId, 
-                    customerDetails?.email || null,  // Log CUSTOMER email
-                    customerDetails?.postcode || null,
-                    reason,
-                    JSON.stringify(conversationHistory),
-                    process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com' // Track where it was sent
-                ]
-            );
-        } catch (dbError) {
-            console.error('Database logging error:', dbError);
-        }
-    }
-
     try {
         console.log('\n📧 ========== SENDING EMAIL ==========');
-        console.log(`📋 To: ${process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com'}`);
+        console.log(`📋 To: ${ESCALATION_EMAIL}`);  // Updated logging
         console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`📋 Subject: ${subject}`);
         console.log(`📋 Priority: ${priority}`);
@@ -592,12 +561,14 @@ Timestamp: ${new Date().toLocaleString('en-GB')}
         
         console.log('✅ EMAIL SENT SUCCESSFULLY!');
         console.log(`📧 Message ID: ${info.messageId}`);
+        console.log(`📧 Sent to: ${ESCALATION_EMAIL}`);
         console.log('📧 ====================================\n');
         
         return true;
         
     } catch (error) {
         console.error('❌ EMAIL SENDING FAILED:', error.message);
+        console.log(`📧 Was trying to send to: ${ESCALATION_EMAIL}`);
         console.log('📧 ====================================\n');
         
         // Still log the conversation for manual follow-up
@@ -812,6 +783,110 @@ function detectProductCategoryForBundle(product) {
   return null;
 }
 
+function detectFuzzyProductIntent(customerMessage) {
+    const message = customerMessage.toLowerCase();
+    
+    // Comprehensive category detection patterns
+    const categoryPatterns = {
+        'corner': {
+            triggers: ['corner', 'l-shaped', 'l shaped', 'sectional'],
+            furnitureType: 'corner',
+            confidence: 0
+        },
+        'dining': {
+            triggers: ['dining', 'table', 'eat', 'dinner', 'meal', 'dining set', 'dining table'],
+            furnitureType: 'dining',
+            confidence: 0
+        },
+        'lounge': {
+            triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
+            furnitureType: 'lounge',
+            confidence: 0
+        },
+        'lounger': {
+            triggers: ['lounger', 'sun lounger', 'sunbed', 'daybed', 'recliner', 'lie down'],
+            furnitureType: 'lounger',
+            confidence: 0
+        },
+        'parasol': {
+            triggers: ['parasol', 'umbrella', 'shade', 'sun protection'],
+            furnitureType: 'parasol',
+            confidence: 0
+        },
+        'storage': {
+            triggers: ['storage', 'box', 'chest', 'store'],
+            furnitureType: 'storage',
+            confidence: 0
+        }
+    };
+    
+    // Material detection
+    const materials = {
+        'rattan': ['rattan', 'wicker', 'weave', 'woven'],
+        'teak': ['teak', 'wood', 'wooden', 'hardwood'],
+        'aluminium': ['aluminium', 'aluminum', 'metal', 'steel'],
+        'fabric': ['fabric', 'textile', 'cushion']
+    };
+    
+    // Calculate confidence scores
+    let detectedCategory = null;
+    let detectedMaterial = null;
+    let maxConfidence = 0;
+    
+    // Check category patterns
+    for (const [key, pattern] of Object.entries(categoryPatterns)) {
+        pattern.confidence = pattern.triggers.filter(trigger => 
+            message.includes(trigger)
+        ).length;
+        
+        if (pattern.confidence > maxConfidence) {
+            maxConfidence = pattern.confidence;
+            detectedCategory = key;
+        }
+    }
+    
+    // Check materials
+    for (const [material, keywords] of Object.entries(materials)) {
+        if (keywords.some(keyword => message.includes(keyword))) {
+            detectedMaterial = material;
+            break;
+        }
+    }
+    
+    // Build search criteria
+    const searchCriteria = {};
+    
+    if (detectedCategory) {
+        // Special handling for corner sets
+        if (detectedCategory === 'corner') {
+            searchCriteria.productName = 'corner';
+            searchCriteria.furnitureType = 'corner';
+        } else {
+            searchCriteria.furnitureType = categoryPatterns[detectedCategory].furnitureType;
+        }
+    }
+    
+    if (detectedMaterial) {
+        searchCriteria.material = detectedMaterial;
+    }
+    
+    // Detect seat count
+    const seatMatch = message.match(/(\d+)\s*(?:seater|seat|person|people)/);
+    if (seatMatch) {
+        searchCriteria.seatCount = parseInt(seatMatch[1]);
+    }
+    
+    console.log(`🎯 Fuzzy detection results:`, {
+        input: customerMessage,
+        detectedCategory,
+        detectedMaterial,
+        confidence: maxConfidence,
+        searchCriteria
+    });
+    
+    return searchCriteria;
+}
+
 function generateBundleOffer(mainProduct, bundleData, pricingData) {
   const urgencyMinutes = Math.floor(Math.random() * 15) + 5; // 5-20 minutes
   
@@ -835,7 +910,6 @@ function generateBundleOffer(mainProduct, bundleData, pricingData) {
   return offer;
 }
 
-// ===== END OF HELPER FUNCTIONS =====
 
 
 // ENHANCED: Stock checking function with better error handling
@@ -893,7 +967,7 @@ function detectProductCategory(customerMessage) {
   return null;
 }
 
-// Replace your existing searchRealProducts function with this enhanced version
+
 
 function searchRealProducts(criteria) {
     if (!Array.isArray(productData) || productData.length === 0) {
@@ -1366,7 +1440,7 @@ const aiTools = [
     type: "function",
     function: {
       name: "search_products",
-      description: "Search for REAL products in our inventory by criteria OR specific product name/SKU. Returns products with current stock status.",
+      description: "Search for REAL products in our inventory by criteria OR specific product name/SKU. Returns products with current stock status. Use furnitureType='corner' for corner sets, 'dining' for dining sets, 'lounge' for regular sofas, 'lounger' for sun loungers. Always combine material + furnitureType when both are mentioned.",
       parameters: {
         type: "object",
         properties: {
@@ -1377,8 +1451,28 @@ const aiTools = [
           },
           furnitureType: {
             type: "string",
-            enum: ["dining", "lounge"],
-            description: "Type of furniture"
+            enum: ["dining", "lounge", "corner", "lounger", "parasol", "storage"],
+            description: "Type of furniture - use 'corner' for corner sets/sofas"
+          },
+          'lounge': {
+            triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
+            furnitureType: 'lounge',
+            confidence: 0
+          },
+          'lounger': {
+            triggers: ['lounger', 'sun lounger', 'sunbed', 'daybed', 'recliner', 'lie down'],
+            furnitureType: 'lounger',
+            confidence: 0
+          },
+          'parasol': {
+            triggers: ['parasol', 'umbrella', 'shade', 'sun protection'],
+            furnitureType: 'parasol',
+            confidence: 0
+          },
+          'storage': {
+            triggers: ['storage', 'box', 'chest', 'store'],
+            furnitureType: 'storage',
+            confidence: 0
           },
           seatCount: {
             type: "integer",
@@ -1628,6 +1722,25 @@ const messages = [{
 **1. Displaying Products (VERY IMPORTANT):**
 - When the \`search_products\` tool returns items, you MUST format the response using this EXACT template for each product. This is not optional; it triggers the visual UI.
 - Use the exact data fields provided in the tool's JSON output (e.g., product_title, price, stockStatus.message, image_url, website_url).
+
+**CRITICAL CATEGORY DETECTION:**
+- "corner set" or "corner rattan" or "corner sofa" → use furnitureType="corner" 
+- "dining set" or "dining table" → use furnitureType="dining"
+- "lounge set" or "sofa" (NOT corner) → use furnitureType="lounge"  
+- "sun lounger" or "lounger" → use furnitureType="lounger"
+- NEVER confuse corner sets with sun loungers!
+
+**Smart Search Examples:**
+- "corner rattan sets" → search: {furnitureType: "corner", material: "rattan"}
+- "teak dining set for 6" → search: {furnitureType: "dining", material: "teak", seatCount: 6}
+- "aluminium lounge furniture" → search: {furnitureType: "lounge", material: "aluminium"}
+- "rattan sun loungers" → search: {furnitureType: "lounger", material: "rattan"}
+
+**Material + Type Combinations:**
+- ALWAYS use both material AND furnitureType when customer mentions both
+- If customer says "corner" ALWAYS set furnitureType="corner"
+- If no corner sets found, explain and offer regular lounge sets as alternative
+
 
 **TEMPLATE START**
 **{{product_title}}**
