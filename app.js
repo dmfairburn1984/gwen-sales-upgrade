@@ -242,36 +242,28 @@ function detectCustomerInterest(message, session) {
 }
 
 function shouldOfferBundleNaturally(session) {
-  // Check if we've shown products
-  const hasShownProducts = session.conversationHistory.some(msg => 
-    msg.role === 'assistant' && msg.content.includes('Price: £')
-  );
-  
-  // Check conversation length (reduced threshold)
-  const conversationLength = session.conversationHistory.length;
-  
-  // Check if already offered
-  const alreadyOffered = session.context.offeredBundle || 
-                         session.context.waitingForPackageResponse || 
-                         session.context.packageDealProduct;
-  
-  // Minimum engagement check
-  const hasEngagement = conversationLength >= 4;
-  
-  // Customer shows interest
-  const lastMessage = session.conversationHistory[session.conversationHistory.length - 1];
-  const showsInterest = lastMessage && detectCustomerInterest(lastMessage.content, session);
-  
-  console.log(`🎯 Bundle Check:`, {
-    hasShownProducts,
-    conversationLength,
-    alreadyOffered,
-    hasEngagement,
-    showsInterest,
-    shouldOffer: hasShownProducts && hasEngagement && !alreadyOffered && showsInterest
-  });
-  
-  return hasShownProducts && hasEngagement && !alreadyOffered && showsInterest;
+    // Check qualification is complete
+    const isQualified = session.qualificationState?.qualified || false;
+    
+    // Check if we've shown products
+    const hasShownProducts = session.conversationHistory.some(msg => 
+        msg.role === 'assistant' && msg.content.includes('Price: £')
+    );
+    
+    // Check customer engagement with specific product
+    const lastMessage = session.conversationHistory[session.conversationHistory.length - 1];
+    const showsProductInterest = lastMessage && (
+        lastMessage.content.toLowerCase().includes('this one') ||
+        lastMessage.content.toLowerCase().includes('i like') ||
+        lastMessage.content.toLowerCase().includes('tell me more') ||
+        lastMessage.content.toLowerCase().includes('perfect')
+    );
+    
+    // Check if already offered
+    const alreadyOffered = session.context.offeredBundle || 
+                           session.context.waitingForPackageResponse;
+    
+    return isQualified && hasShownProducts && showsProductInterest && !alreadyOffered;
 }
 
 function extractCustomerDetails(message) {
@@ -775,108 +767,187 @@ function detectProductCategoryForBundle(product) {
   return null;
 }
 
-function detectFuzzyProductIntent(customerMessage) {
+// ENHANCED CUSTOMER QUALIFICATION SYSTEM
+function detectFuzzyProductIntent(customerMessage, session) {
     const message = customerMessage.toLowerCase();
     
-    // Comprehensive category detection patterns
-    const categoryPatterns = {
-        'corner': {
-            triggers: ['corner', 'l-shaped', 'l shaped', 'sectional'],
-            furnitureType: 'corner',
-            confidence: 0
-        },
-        'dining': {
-            triggers: ['dining', 'table', 'eat', 'dinner', 'meal', 'dining set', 'dining table'],
-            furnitureType: 'dining',
-            confidence: 0
-        },
-        'lounge': {
-            triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
-            furnitureType: 'lounge',
-            confidence: 0
-        },
-        'lounger': {
-            triggers: ['lounger', 'sun lounger', 'sunbed', 'daybed', 'recliner', 'lie down'],
-            furnitureType: 'lounger',
-            confidence: 0
-        },
-        'parasol': {
-            triggers: ['parasol', 'umbrella', 'shade', 'sun protection'],
-            furnitureType: 'parasol',
-            confidence: 0
-        },
-        'storage': {
-            triggers: ['storage', 'box', 'chest', 'store'],
-            furnitureType: 'storage',
-            confidence: 0
-        }
+    // Initialize qualification state if not exists
+    if (!session.qualificationState) {
+        session.qualificationState = {
+            purpose: null,      // dining, lounge, lounger, corner
+            capacity: null,     // number of seats
+            space: null,        // dimensions available
+            material: null,     // teak, aluminium, rattan
+            budget: null,       // price range
+            maintenance: null,  // low, medium, high tolerance
+            qualified: false
+        };
+    }
+    
+    // DETECT WHAT CUSTOMER ALREADY KNOWS
+    const detectedInfo = {
+        purpose: detectPurpose(message),
+        capacity: detectCapacity(message),
+        material: detectMaterial(message),
+        budget: detectBudget(message),
+        space: detectSpace(message)
     };
     
-    // Material detection
-    const materials = {
-        'rattan': ['rattan', 'wicker', 'weave', 'woven'],
-        'teak': ['teak', 'wood', 'wooden', 'hardwood'],
-        'aluminium': ['aluminium', 'aluminum', 'metal', 'steel'],
-        'fabric': ['fabric', 'textile', 'cushion']
-    };
-    
-    // Calculate confidence scores
-    let detectedCategory = null;
-    let detectedMaterial = null;
-    let maxConfidence = 0;
-    
-    // Check category patterns
-    for (const [key, pattern] of Object.entries(categoryPatterns)) {
-        pattern.confidence = pattern.triggers.filter(trigger => 
-            message.includes(trigger)
-        ).length;
-        
-        if (pattern.confidence > maxConfidence) {
-            maxConfidence = pattern.confidence;
-            detectedCategory = key;
+    // Update qualification state
+    Object.keys(detectedInfo).forEach(key => {
+        if (detectedInfo[key] && !session.qualificationState[key]) {
+            session.qualificationState[key] = detectedInfo[key];
         }
-    }
-    
-    // Check materials
-    for (const [material, keywords] of Object.entries(materials)) {
-        if (keywords.some(keyword => message.includes(keyword))) {
-            detectedMaterial = material;
-            break;
-        }
-    }
-    
-    // Build search criteria
-    const searchCriteria = {};
-    
-    if (detectedCategory) {
-        // Special handling for corner sets
-        if (detectedCategory === 'corner') {
-            searchCriteria.productName = 'corner';
-            searchCriteria.furnitureType = 'corner';
-        } else {
-            searchCriteria.furnitureType = categoryPatterns[detectedCategory].furnitureType;
-        }
-    }
-    
-    if (detectedMaterial) {
-        searchCriteria.material = detectedMaterial;
-    }
-    
-    // Detect seat count
-    const seatMatch = message.match(/(\d+)\s*(?:seater|seat|person|people)/);
-    if (seatMatch) {
-        searchCriteria.seatCount = parseInt(seatMatch[1]);
-    }
-    
-    console.log(`🎯 Fuzzy detection results:`, {
-        input: customerMessage,
-        detectedCategory,
-        detectedMaterial,
-        confidence: maxConfidence,
-        searchCriteria
     });
     
-    return searchCriteria;
+    // Check if we have enough info to search
+    const hasMinimumInfo = (session.qualificationState.purpose || session.qualificationState.capacity) 
+                           && (session.qualificationState.material || session.qualificationState.budget);
+    
+    if (hasMinimumInfo) {
+        session.qualificationState.qualified = true;
+        return buildSearchCriteria(session.qualificationState);
+    }
+    
+    // Return what we need to ask next
+    return {
+        needsMoreInfo: true,
+        nextQuestion: getNextQualifyingQuestion(session.qualificationState),
+        currentState: session.qualificationState
+    };
+}
+
+function detectPurpose(message) {
+    const purposes = {
+        'dining': ['dining', 'eating', 'meals', 'dinner', 'lunch', 'table and chairs'],
+        'lounge': ['lounge', 'sofa', 'relaxing', 'sitting', 'conversation', 'living'],
+        'corner': ['corner', 'l-shaped', 'l shaped', 'sectional'],
+        'lounger': ['sun lounger', 'sunbed', 'tanning', 'lying down', 'daybed']
+    };
+    
+    for (const [key, keywords] of Object.entries(purposes)) {
+        if (keywords.some(kw => message.includes(kw))) {
+            return key;
+        }
+    }
+    return null;
+}
+
+function detectCapacity(message) {
+    const match = message.match(/(\d+)\s*(?:seater|seat|person|people|pax)/);
+    if (match) return parseInt(match[1]);
+    
+    // Common descriptions
+    if (message.includes('couple') || message.includes('two')) return 2;
+    if (message.includes('small family')) return 4;
+    if (message.includes('large family') || message.includes('extended family')) return 8;
+    if (message.includes('entertaining') || message.includes('parties')) return 8;
+    
+    return null;
+}
+
+function detectMaterial(message) {
+    const materials = {
+        'teak': ['teak', 'wood', 'wooden', 'hardwood'],
+        'aluminium': ['aluminium', 'aluminum', 'metal'],
+        'rattan': ['rattan', 'wicker', 'weave']
+    };
+    
+    for (const [key, keywords] of Object.entries(materials)) {
+        if (keywords.some(kw => message.includes(kw))) {
+            return key;
+        }
+    }
+    
+    // Maintenance-based detection
+    if (message.includes('no maintenance') || message.includes('low maintenance')) {
+        return 'aluminium';
+    }
+    if (message.includes('natural') || message.includes('classic')) {
+        return 'teak';
+    }
+    
+    return null;
+}
+
+function detectBudget(message) {
+    const priceMatch = message.match(/[£$](\d+)/);
+    if (priceMatch) return parseInt(priceMatch[1]);
+    
+    if (message.includes('budget') || message.includes('cheap') || message.includes('affordable')) {
+        return 1000;
+    }
+    if (message.includes('premium') || message.includes('luxury') || message.includes('best')) {
+        return 5000;
+    }
+    
+    return null;
+}
+
+function detectSpace(message) {
+    const sizeMatch = message.match(/(\d+)\s*(?:x|by)\s*(\d+)/);
+    if (sizeMatch) {
+        return {
+            width: parseInt(sizeMatch[1]),
+            depth: parseInt(sizeMatch[2])
+        };
+    }
+    
+    if (message.includes('small') || message.includes('compact') || message.includes('balcony')) {
+        return { width: 200, depth: 200 };
+    }
+    if (message.includes('large') || message.includes('spacious')) {
+        return { width: 500, depth: 500 };
+    }
+    
+    return null;
+}
+
+function getNextQualifyingQuestion(state) {
+    // Priority order of questions
+    if (!state.purpose && !state.capacity) {
+        return "I'd love to help you find the perfect outdoor furniture! Are you looking for a dining set for meals, a lounge set for relaxing, or perhaps a sun lounger?";
+    }
+    if (!state.capacity && state.purpose) {
+        const purposeQuestions = {
+            'dining': "How many people do you typically need to seat for dining?",
+            'lounge': "How many people would you like your lounge set to accommodate?",
+            'corner': "What size corner set are you thinking - 5 seater, 7 seater, or larger?",
+            'lounger': "Are you looking for a single sun lounger or a pair?"
+        };
+        return purposeQuestions[state.purpose] || "How many people do you need to seat?";
+    }
+    if (!state.material) {
+        return "What material appeals to you most? Teak wood has a classic natural look, aluminium is virtually maintenance-free, and rattan offers traditional woven style.";
+    }
+    if (!state.budget) {
+        return "What budget range are you working with? This helps me show you the best value options.";
+    }
+    if (!state.space) {
+        return "Do you have any space constraints I should know about? Rough dimensions of your patio or garden area would be helpful.";
+    }
+    
+    return null; // Fully qualified
+}
+
+function buildSearchCriteria(state) {
+    const criteria = {};
+    
+    if (state.purpose) {
+        criteria.furnitureType = state.purpose === 'corner' ? 'corner' : state.purpose;
+    }
+    if (state.capacity) {
+        criteria.seatCount = state.capacity;
+    }
+    if (state.material) {
+        criteria.material = state.material;
+    }
+    if (state.budget) {
+        criteria.maxPrice = state.budget;
+    }
+    
+    criteria.maxResults = 3;
+    return criteria;
 }
 
 function generateBundleOffer(mainProduct, bundleData, pricingData) {
@@ -1041,6 +1112,132 @@ function detectProductCategory(customerMessage) {
   return null;
 }
 
+
+// SMART PRODUCT MATCHING WITH ALTERNATIVES
+function findBestMatches(criteria, allProducts) {
+    let exactMatches = [];
+    let closeMatches = [];
+    let alternatives = [];
+    
+    allProducts.forEach(product => {
+        let matchScore = 0;
+        let matchReasons = [];
+        
+        // Check each criterion
+        if (criteria.furnitureType) {
+            const productType = detectProductType(product);
+            if (productType === criteria.furnitureType) {
+                matchScore += 3;
+                matchReasons.push('type match');
+            } else if (isCompatibleType(productType, criteria.furnitureType)) {
+                matchScore += 1;
+                matchReasons.push('compatible type');
+            }
+        }
+        
+        if (criteria.seatCount) {
+            const seats = getProductSeats(product.sku);
+            if (seats === criteria.seatCount) {
+                matchScore += 3;
+                matchReasons.push('exact capacity');
+            } else if (Math.abs(seats - criteria.seatCount) <= 1) {
+                matchScore += 2;
+                matchReasons.push('close capacity');
+            } else if (Math.abs(seats - criteria.seatCount) <= 2) {
+                matchScore += 1;
+                matchReasons.push('alternative capacity');
+            }
+        }
+        
+        if (criteria.material) {
+            const materials = getProductMaterials(product.sku);
+            if (materials.includes(criteria.material)) {
+                matchScore += 3;
+                matchReasons.push('material match');
+            } else if (hasSimilarMaintenance(materials, criteria.material)) {
+                matchScore += 1;
+                matchReasons.push('similar maintenance');
+            }
+        }
+        
+        if (criteria.maxPrice) {
+            const price = parseFloat(product.price || 0);
+            if (price <= criteria.maxPrice) {
+                matchScore += 2;
+                matchReasons.push('within budget');
+            } else if (price <= criteria.maxPrice * 1.2) {
+                matchScore += 1;
+                matchReasons.push('slightly over budget - bundle discount available');
+            }
+        }
+        
+        // Categorize matches
+        if (matchScore >= 9) {
+            exactMatches.push({ ...product, matchScore, matchReasons });
+        } else if (matchScore >= 6) {
+            closeMatches.push({ ...product, matchScore, matchReasons });
+        } else if (matchScore >= 3) {
+            alternatives.push({ ...product, matchScore, matchReasons });
+        }
+    });
+    
+    // Sort by match score
+    const sortByScore = (a, b) => b.matchScore - a.matchScore;
+    exactMatches.sort(sortByScore);
+    closeMatches.sort(sortByScore);
+    alternatives.sort(sortByScore);
+    
+    // Return best options
+    if (exactMatches.length > 0) {
+        return exactMatches.slice(0, 3);
+    } else if (closeMatches.length > 0) {
+        return closeMatches.slice(0, 3);
+    } else {
+        return alternatives.slice(0, 3);
+    }
+}
+
+function detectProductType(product) {
+    const title = product.product_title.toLowerCase();
+    if (title.includes('corner')) return 'corner';
+    if (title.includes('dining')) return 'dining';
+    if (title.includes('lounger') || title.includes('sunbed')) return 'lounger';
+    if (title.includes('lounge') || title.includes('sofa')) return 'lounge';
+    return 'unknown';
+}
+
+function isCompatibleType(type1, type2) {
+    const compatible = {
+        'lounge': ['corner'],
+        'corner': ['lounge'],
+        'dining': []
+    };
+    return compatible[type1]?.includes(type2) || false;
+}
+
+function getProductSeats(sku) {
+    const seatInfo = seatingMaster.find(s => s.sku === sku);
+    return seatInfo?.seats || 0;
+}
+
+function getProductMaterials(sku) {
+    const materialInfo = productMaterialIndex.find(p => p.sku === sku);
+    if (!materialInfo) return [];
+    return materialInfo.materials.map(m => m.material_name);
+}
+
+function hasSimilarMaintenance(materials, targetMaterial) {
+    const lowMaintenance = ['aluminium', 'steel', 'poly_rattan'];
+    const mediumMaintenance = ['teak', 'eucalyptus'];
+    
+    if (lowMaintenance.includes(targetMaterial)) {
+        return materials.some(m => lowMaintenance.includes(m));
+    }
+    if (mediumMaintenance.includes(targetMaterial)) {
+        return materials.some(m => mediumMaintenance.includes(m));
+    }
+    return false;
+}
 
 
 function searchRealProducts(criteria) {
@@ -1255,7 +1452,11 @@ function searchRealProducts(criteria) {
         console.log(`   Price: ${product.price}`);
         console.log(`   Stock: ${product.stockStatus.message}`);
     });
-
+if (finalResults.length === 0) {
+    console.log('🔄 No exact matches - finding alternatives...');
+    const alternatives = findBestMatches(criteria, productData);
+    return alternatives;
+}
     return finalResults;
 }
 
@@ -1839,7 +2040,38 @@ const messages = [{
     role: "system",
     content: `You are Gwen Johnson, an expert outdoor furniture specialist at MINT Outdoor. Your primary goal is to understand a customer's needs and find the perfect product for them using your tools.
 
-**--- CRITICAL INSTRUCTIONS ---**
+**QUALIFICATION PROCESS (CRITICAL - FOLLOW THIS EXACTLY):**
+
+Before showing ANY products, you MUST qualify the customer's needs:
+
+1. **NEVER show products on the first interaction** unless customer mentions a specific SKU or product name
+2. **Use detectFuzzyProductIntent** to check what information is missing
+3. **Ask qualifying questions in this priority order:**
+   - PURPOSE: What will they use it for? (dining/lounge/sun lounger)
+   - CAPACITY: How many people? (this determines product size)
+   - MATERIAL: Preference for teak/aluminium/rattan based on maintenance tolerance
+   - BUDGET: Price range (helps filter to appropriate products)
+   - SPACE: Available dimensions (ensures it will fit)
+
+4. **Track qualification progress** in session.qualificationState
+5. **Only call search_products** when you have at least PURPOSE/CAPACITY + MATERIAL/BUDGET
+
+**Example Conversation Flow:**
+Customer: "I need outdoor furniture"
+You: "I'd love to help you find the perfect outdoor furniture! Are you looking for a dining set for meals, a lounge set for relaxing, or perhaps a sun lounger?"
+Customer: "A lounge set"
+You: "Perfect! How many people would you like your lounge set to accommodate?"
+Customer: "About 6 people"
+You: "Great choice for family and friends! What material appeals to you most? Teak wood has a classic natural look, aluminium is virtually maintenance-free, and rattan offers traditional woven style."
+Customer: "Something low maintenance"
+You: NOW search with {furnitureType: "lounge", seatCount: 6, material: "aluminium"}
+
+**SMART ALTERNATIVES SYSTEM:**
+If no exact match exists, ALWAYS suggest the closest alternatives:
+- No 6-seater? Show 5-seater and 7-seater options
+- No aluminium lounges? Show rattan with "easy maintenance" messaging
+- Over budget? Show product with bundle discount opportunity
+- Wrong dimensions? Show modular or configurable options
 
 **1. Displaying Products (VERY IMPORTANT):**
 - When the \`search_products\` tool returns items, you MUST format the response using this EXACT template for each product. This is not optional; it triggers the visual UI.

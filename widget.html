@@ -309,6 +309,15 @@ body {
             </div>
             
             <div class="gwen-messages" id="gwenMessages">
+                <div id="qualificationProgress" style="display: none; padding: 10px; background: #f0f9f5; border-radius: 8px; margin: 10px;">
+    <div style="font-size: 12px; color: #2E6041; margin-bottom: 5px;">Finding your perfect match...</div>
+    <div style="display: flex; gap: 5px;">
+        <div class="qual-step" id="qual-purpose" style="flex: 1; height: 4px; background: #e0e0e0; border-radius: 2px;"></div>
+        <div class="qual-step" id="qual-capacity" style="flex: 1; height: 4px; background: #e0e0e0; border-radius: 2px;"></div>
+        <div class="qual-step" id="qual-material" style="flex: 1; height: 4px; background: #e0e0e0; border-radius: 2px;"></div>
+        <div class="qual-step" id="qual-budget" style="flex: 1; height: 4px; background: #e0e0e0; border-radius: 2px;"></div>
+    </div>
+</div>
                 <div class="gwen-message bot">
                     <div class="gwen-avatar">G</div>
                     <div class="gwen-bubble">
@@ -325,7 +334,12 @@ body {
                     <span class="gwen-typing-dot"></span>
                 </span>
             </div>
-            
+            <!-- Quick Response Buttons -->
+<div id="quickResponses" style="display: none; padding: 10px; background: white; border-top: 1px solid #eaeaea;">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <!-- Buttons will be dynamically added here -->
+    </div>
+</div>
             <div class="gwen-input-area">
                 <textarea class="gwen-input" id="gwenInput" placeholder="Type your message here..." rows="1"></textarea>
                 <button class="gwen-send-button" id="gwenSendButton">Send</button>
@@ -429,7 +443,66 @@ body {
                 const topPos = messageDiv.offsetTop;
                 messagesContainer.scrollTo({ top: topPos - 24, behavior: 'smooth' });
             }
+            if (!isUser) {
+    const quickResponses = detectQuickResponseContext(message);
+    if (quickResponses) {
+        showQuickResponses(quickResponses);
+    }
+}
         }
+
+        // Show quick response buttons based on context
+function showQuickResponses(responses) {
+    const container = document.getElementById('quickResponses');
+    const buttonContainer = container.querySelector('div');
+    
+    buttonContainer.innerHTML = '';
+    
+    responses.forEach(response => {
+        const button = document.createElement('button');
+        button.textContent = response;
+        button.style.cssText = `
+            padding: 8px 16px;
+            background: #9FDCC2;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.2s;
+        `;
+        button.onmouseover = () => button.style.background = '#2E6041';
+        button.onmouseout = () => button.style.background = '#9FDCC2';
+        button.onclick = () => {
+            input.value = response;
+            sendMessage();
+            container.style.display = 'none';
+        };
+        buttonContainer.appendChild(button);
+    });
+    
+    container.style.display = 'block';
+}
+
+// Detect when to show quick responses
+function detectQuickResponseContext(message) {
+    const lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.includes('are you looking for')) {
+        return ['Dining set', 'Lounge set', 'Corner sofa', 'Sun lounger'];
+    }
+    if (lowerMessage.includes('how many people')) {
+        return ['2 people', '4 people', '6 people', '8+ people'];
+    }
+    if (lowerMessage.includes('what material')) {
+        return ['Teak wood', 'Aluminium', 'Rattan', 'No preference'];
+    }
+    if (lowerMessage.includes('budget')) {
+        return ['Under £300', '£300-500', '£500-1000', 'Limited Editions'];
+    }
+    
+    return null;
+}
         
         function formatProductMessage(message) {
             let formatted = message;
