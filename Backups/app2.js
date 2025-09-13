@@ -1,11 +1,14 @@
 // MINT OUTDOOR AI SYSTEM - NATURAL PACKAGE DEAL APPROACH
-// Implementing Gemini's feedback: Remove artificial delays, use immediate expert consultation
+// Implementing feedback: Remove artificial delays, use immediate expert consultation
+// Pagination fix applied - test commit and new location
 
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const OpenAI = require('openai');
 const fs = require('fs');
+
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -55,6 +58,7 @@ async function logChat(sessionId, role, message) {
 }
 
 const app = express();
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 const ENABLE_SALES_MODE = process.env.ENABLE_SALES_MODE === 'true';
 const sessions = new Map();
@@ -88,15 +92,36 @@ let stoneCompositesMaster = [];
 let taxonomyData = {};
 let product_faqs = [];
 let productMaterialIndex = [];
-let productFamilies = loadDataFile('product_families.json', {});
-
 
 // Enhanced data loading with structure detection
 function loadDataFile(filename, defaultValue = []) {
+  const filePath = `./data/${filename}`; // Full path for clarity
+  console.log(`🔍 Starting to load file: ${filename} (path: ${filePath})`); // NEW: Log start
+
   try {
-    const data = JSON.parse(fs.readFileSync(`./data/${filename}`, 'utf8'));
-    
-    // Handle different data structures intelligently
+    // NEW: Check if file exists first
+    if (!fs.existsSync(filePath)) {
+      console.error(`❌ File not found: ${filePath}`);
+      return defaultValue;
+    }
+    console.log(`✅ File exists: ${filePath}`);
+
+    // NEW: Read raw content and log its length
+    const raw = fs.readFileSync(filePath, 'utf8');
+    console.log(`📄 Raw file content length: ${raw.length} characters`);
+    if (raw.length === 0) {
+      console.warn(`⚠️ File is empty: ${filename}`);
+      return defaultValue;
+    }
+    if (raw.length < 50) {
+      console.log(`📄 Raw content preview: ${raw.substring(0, 50)}...`); // Show first 50 chars if small
+    }
+
+    // Original parsing code (with extra logging)
+    const data = JSON.parse(raw);
+    console.log(`🛠️ Successfully parsed JSON for ${filename}`);
+
+    // ... (keep the rest of your original processing code here unchanged)
     let processedData;
     let recordCount;
     
@@ -104,7 +129,6 @@ function loadDataFile(filename, defaultValue = []) {
       processedData = data;
       recordCount = data.length;
     } else if (data && typeof data === 'object') {
-      // Handle nested structures like product_database.json
       if (data.products && Array.isArray(data.products)) {
         processedData = data.products;
         recordCount = data.products.length;
@@ -112,7 +136,6 @@ function loadDataFile(filename, defaultValue = []) {
         processedData = data.inventory;
         recordCount = data.inventory.length;
       } else {
-        // It's an object (like material_maintenance.json)
         processedData = data;
         recordCount = Object.keys(data).length;
       }
@@ -124,7 +147,12 @@ function loadDataFile(filename, defaultValue = []) {
     console.log(`✅ Loaded ${filename}: ${recordCount} records`);
     return processedData;
   } catch (error) {
-    console.warn(`⚠️ Could not load ${filename}: ${error.message}`);
+    console.error(`❌ Error loading ${filename}: ${error.message}`); // CHANGED: Use error (shows in red) and full message
+    if (error.message.includes('Unexpected token')) {
+      console.error(`❌ Looks like a JSON format error in ${filename}`);
+    } else if (error.message.includes('no such file')) {
+      console.error(`❌ File path issue - confirm exact name and case`);
+    }
     return defaultValue;
   }
 }
@@ -179,7 +207,6 @@ console.log(`   🧪 Synthetics data: ${Array.isArray(syntheticsMaster) ? synthe
 console.log(`   🪨 Stone/composites: ${Array.isArray(stoneCompositesMaster) ? stoneCompositesMaster.length : 'N/A'}`);
 console.log(`   🏷️ Taxonomy categories: ${Object.keys(taxonomyData.product_categories || {}).length}`);
 console.log('🧪 DEBUG: Taxonomy data keys:', Object.keys(taxonomyData));
-console.log(`   👨‍👩‍👧‍👦 Product families: ${Object.keys(productFamilies.furniture_families || {}).length}`);
 
 // FIND the detectCustomerInterest function and add better logging:
 
@@ -386,10 +413,21 @@ function detectMarketingHandoff(message, conversationHistory) {
     return hasMarketingTrigger;
 }
 
-// REPLACE your existing sendChatToMarketing function with this:
-
 async function sendChatToMarketing(sessionId, reason, conversationHistory, customerDetails = null) {
     const session = sessions.get(sessionId);
+    
+    // Extract customer email from conversation history if not provided
+    if (!customerDetails || !customerDetails.email) {
+        conversationHistory.forEach(msg => {
+            if (msg.role === 'user') {
+                const emailMatch = msg.content.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
+                if (emailMatch && (!customerDetails || !customerDetails.email)) {
+                    customerDetails = customerDetails || {};
+                    customerDetails.email = emailMatch[0];
+                }
+            }
+        });
+    }
     
     // Format conversation history for email
     let chatTranscript = '\n=== CHAT TRANSCRIPT ===\n';
@@ -403,28 +441,34 @@ async function sendChatToMarketing(sessionId, reason, conversationHistory, custo
     chatTranscript += '\n=== END TRANSCRIPT ===\n';
 
     // Create customer info section
-    let customerInfo = '';
-    if (customerDetails) {
-        customerInfo = `
+    const customerEmail = customerDetails?.email || 'Not provided - CHECK CONVERSATION FOR CONTACT DETAILS';
+    const customerPostcode = customerDetails?.postcode || 'Not provided';
+    
+    let customerInfo = `
 === CUSTOMER DETAILS ===
-Email: ${customerDetails.email || 'Not provided'}
-Postcode: ${customerDetails.postcode || 'Not provided'}
+Customer Email: ${customerEmail}
+Postcode: ${customerPostcode}
+Session ID: ${sessionId}
 ========================
         `;
-    }
 
     // Email subject based on reason
     let subject = 'Gwen AI - Customer Inquiry';
     let priority = 'Normal';
     
+    // Add customer email to subject if available
+    if (customerDetails?.email) {
+        subject = `Gwen AI - Customer Inquiry from ${customerDetails.email}`;
+    }
+    
     if (reason.toLowerCase().includes('bundle') || reason.toLowerCase().includes('purchase')) {
-        subject = '🎯 HIGH PRIORITY - Customer Ready to Purchase';
+        subject = `🎯 HIGH PRIORITY - Customer Ready to Purchase${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'High';
     } else if (reason.toLowerCase().includes('complaint') || reason.toLowerCase().includes('issue')) {
-        subject = '⚠️ URGENT - Customer Service Issue';
+        subject = `⚠️ URGENT - Customer Service Issue${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'High';
     } else if (reason.toLowerCase().includes('callback') || reason.toLowerCase().includes('human')) {
-        subject = '📞 Customer Requests Human Contact';
+        subject = `📞 Customer Requests Human Contact${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
         priority = 'Normal';
     }
 
@@ -438,6 +482,20 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
         </div>
         
         <div style="padding: 20px; background: #f8f9fa;">
+            ${customerDetails?.email ? `
+            <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h2 style="color: #856404; margin-top: 0;">⚠️ CUSTOMER EMAIL - RESPOND TO THIS ADDRESS</h2>
+                <p style="font-size: 20px; font-weight: bold; color: #856404; margin: 5px 0;">
+                    📧 ${customerDetails.email}
+                </p>
+            </div>
+            ` : `
+            <div style="background: #f8d7da; border: 2px solid #f5c6cb; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h2 style="color: #721c24; margin-top: 0;">⚠️ NO EMAIL CAPTURED</h2>
+                <p style="color: #721c24; font-weight: bold;">Check conversation transcript for any contact details the customer may have provided.</p>
+            </div>
+            `}
+            
             <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #9FDCC2;">
                 <h2 style="color: #2E6041; margin-top: 0;">📋 Inquiry Details</h2>
                 <p><strong>Session ID:</strong> ${sessionId}</p>
@@ -463,28 +521,37 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
         
         <div style="background: #2E6041; color: white; padding: 15px; text-align: center; font-size: 14px;">
             <p style="margin: 0;">This email was automatically generated by the Gwen AI system</p>
+            ${customerDetails?.email ? 
+                `<p style="margin: 5px 0; font-size: 16px; font-weight: bold;">Customer Email: ${customerDetails.email}</p>` : 
+                ''
+            }
         </div>
     </body>
     </html>
     `;
 
+    // CRITICAL FIX: Use environment variable for escalation email
+    const ESCALATION_EMAIL = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
+    
     // Email configuration
     const mailOptions = {
         from: `"MINT Outdoor - Gwen AI" <${process.env.EMAIL_USER}>`,
-        to: 'marketing@mint-outdoor.com',
+        to: ESCALATION_EMAIL,  // NOW USES THE ENVIRONMENT VARIABLE!
         subject: subject,
         html: emailHTML,
         priority: priority.toLowerCase(),
         headers: {
             'X-Priority': priority === 'High' ? '1' : '3',
             'X-MSMail-Priority': priority,
-            'Importance': priority
+            'Importance': priority,
+            'X-Customer-Email': customerDetails?.email || 'not-provided'
         }
     };
 
     try {
         console.log('\n📧 ========== SENDING EMAIL ==========');
-        console.log(`📋 To: marketing@mint-outdoor.com`);
+        console.log(`📋 To: ${ESCALATION_EMAIL}`);  // Updated logging
+        console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`📋 Subject: ${subject}`);
         console.log(`📋 Priority: ${priority}`);
         console.log(`🆔 Session ID: ${sessionId}`);
@@ -494,17 +561,20 @@ Postcode: ${customerDetails.postcode || 'Not provided'}
         
         console.log('✅ EMAIL SENT SUCCESSFULLY!');
         console.log(`📧 Message ID: ${info.messageId}`);
+        console.log(`📧 Sent to: ${ESCALATION_EMAIL}`);
         console.log('📧 ====================================\n');
         
         return true;
         
     } catch (error) {
         console.error('❌ EMAIL SENDING FAILED:', error.message);
+        console.log(`📧 Was trying to send to: ${ESCALATION_EMAIL}`);
         console.log('📧 ====================================\n');
         
         // Still log the conversation for manual follow-up
         console.log('\n📝 ========== BACKUP LOG (Email Failed) ==========');
         console.log(`📋 Reason: ${reason}`);
+        console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`🆔 Session ID: ${sessionId}`);
         console.log(`⏰ Timestamp: ${new Date().toLocaleString('en-GB')}`);
         console.log(chatTranscript);
@@ -713,6 +783,110 @@ function detectProductCategoryForBundle(product) {
   return null;
 }
 
+function detectFuzzyProductIntent(customerMessage) {
+    const message = customerMessage.toLowerCase();
+    
+    // Comprehensive category detection patterns
+    const categoryPatterns = {
+        'corner': {
+            triggers: ['corner', 'l-shaped', 'l shaped', 'sectional'],
+            furnitureType: 'corner',
+            confidence: 0
+        },
+        'dining': {
+            triggers: ['dining', 'table', 'eat', 'dinner', 'meal', 'dining set', 'dining table'],
+            furnitureType: 'dining',
+            confidence: 0
+        },
+        'lounge': {
+            triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
+            furnitureType: 'lounge',
+            confidence: 0
+        },
+        'lounger': {
+            triggers: ['lounger', 'sun lounger', 'sunbed', 'daybed', 'recliner', 'lie down'],
+            furnitureType: 'lounger',
+            confidence: 0
+        },
+        'parasol': {
+            triggers: ['parasol', 'umbrella', 'shade', 'sun protection'],
+            furnitureType: 'parasol',
+            confidence: 0
+        },
+        'storage': {
+            triggers: ['storage', 'box', 'chest', 'store'],
+            furnitureType: 'storage',
+            confidence: 0
+        }
+    };
+    
+    // Material detection
+    const materials = {
+        'rattan': ['rattan', 'wicker', 'weave', 'woven'],
+        'teak': ['teak', 'wood', 'wooden', 'hardwood'],
+        'aluminium': ['aluminium', 'aluminum', 'metal', 'steel'],
+        'fabric': ['fabric', 'textile', 'cushion']
+    };
+    
+    // Calculate confidence scores
+    let detectedCategory = null;
+    let detectedMaterial = null;
+    let maxConfidence = 0;
+    
+    // Check category patterns
+    for (const [key, pattern] of Object.entries(categoryPatterns)) {
+        pattern.confidence = pattern.triggers.filter(trigger => 
+            message.includes(trigger)
+        ).length;
+        
+        if (pattern.confidence > maxConfidence) {
+            maxConfidence = pattern.confidence;
+            detectedCategory = key;
+        }
+    }
+    
+    // Check materials
+    for (const [material, keywords] of Object.entries(materials)) {
+        if (keywords.some(keyword => message.includes(keyword))) {
+            detectedMaterial = material;
+            break;
+        }
+    }
+    
+    // Build search criteria
+    const searchCriteria = {};
+    
+    if (detectedCategory) {
+        // Special handling for corner sets
+        if (detectedCategory === 'corner') {
+            searchCriteria.productName = 'corner';
+            searchCriteria.furnitureType = 'corner';
+        } else {
+            searchCriteria.furnitureType = categoryPatterns[detectedCategory].furnitureType;
+        }
+    }
+    
+    if (detectedMaterial) {
+        searchCriteria.material = detectedMaterial;
+    }
+    
+    // Detect seat count
+    const seatMatch = message.match(/(\d+)\s*(?:seater|seat|person|people)/);
+    if (seatMatch) {
+        searchCriteria.seatCount = parseInt(seatMatch[1]);
+    }
+    
+    console.log(`🎯 Fuzzy detection results:`, {
+        input: customerMessage,
+        detectedCategory,
+        detectedMaterial,
+        confidence: maxConfidence,
+        searchCriteria
+    });
+    
+    return searchCriteria;
+}
+
 function generateBundleOffer(mainProduct, bundleData, pricingData) {
   const urgencyMinutes = Math.floor(Math.random() * 15) + 5; // 5-20 minutes
   
@@ -736,7 +910,6 @@ function generateBundleOffer(mainProduct, bundleData, pricingData) {
   return offer;
 }
 
-// ===== END OF HELPER FUNCTIONS =====
 
 
 // ENHANCED: Stock checking function with better error handling
@@ -795,224 +968,288 @@ function detectProductCategory(customerMessage) {
 }
 
 
-async function identifyBundleOpportunities(productInterest, customerBudget) {
-  // 1. Check direct bundle matches from data
-  const matchingBundles = bundleSuggestions.filter(bundle => 
-    bundle.name.toLowerCase().includes(productInterest.toLowerCase()) || 
-    bundle.description.toLowerCase().includes(productInterest.toLowerCase())
-  );
 
-  // 2. Analyze product family relationships (check items in bundle_items.json)
-  const familyMatches = matchingBundles.filter(bundle => {
-    const items = bundleItems.filter(item => item.bundle_id === bundle.bundle_id);
-    return items.some(item => item.product_sku.toLowerCase().includes(productInterest.toLowerCase()));
-  });
-
-  // 3. Consider customer budget constraints (prices from Shopify, so estimate or skip if no budget)
-  const budgetFiltered = familyMatches; // Placeholder: Integrate Shopify price fetch if needed for exact filtering
-
-  // 4. Apply seasonal/promotional logic
-  const currentMonth = new Date().getMonth();
-  const isPeakSeason = currentMonth >= 4 && currentMonth <= 8; // May to September for outdoor peak
-  const promoBundles = isPeakSeason ? budgetFiltered : budgetFiltered.slice(0, 2); // Limit in off-season
-
-  // 5. ALWAYS suggest if bundle exists
-  return promoBundles.length > 0 ? promoBundles : [];
-}
-
-// ENHANCED: Better product search with taxonomy
 function searchRealProducts(criteria) {
-  if (!Array.isArray(productData) || productData.length === 0) {
-    return [];
-  }
-
-  const { material, furnitureType, seatCount, productName, sku, maxResults = 3 } = criteria;
-  let filtered = productData;
-
-  console.log('🔍 Starting search with criteria:', criteria);
-
-  // ENHANCED: Use taxonomy for better product name matching
-  if (productName) {
-    // First detect if this is a category request
-    const detectedCategory = detectProductCategory(productName);
-    
-    if (detectedCategory) {
-      console.log('📂 Using taxonomy search terms:', detectedCategory.searchTerms);
-      
-      // Search using all the category's search terms
-      filtered = filtered.filter(product => {
-        const title = (product.product_title || '').toLowerCase();
-        const description = (product.description || '').toLowerCase();
-        const searchText = `${title} ${description}`;
-        
-        // Check if any of the search terms match
-        const hasMatch = detectedCategory.searchTerms.some(term => 
-          searchText.includes(term.toLowerCase())
-        );
-        
-        if (hasMatch) {
-          console.log(`✅ Taxonomy match found: ${product.product_title}`);
-        }
-        
-        return hasMatch;
-      });
-    } else {
-      // Original product name search
-      filtered = filtered.filter(product => {
-        const title = (product.product_title || '').toLowerCase();
-        const productSku = (product.sku || '').toLowerCase();
-        const description = (product.description || '').toLowerCase();
-        const searchName = productName.toLowerCase();
-        
-        if (title.includes(searchName) || productSku.includes(searchName) || description.includes(searchName)) {
-          return true;
-        }
-        
-        const searchWords = searchName.split(' ').filter(word => word.length > 2);
-        const titleWords = title.split(' ');
-        const descWords = description.split(' ');
-        const allProductWords = [...titleWords, ...descWords];
-        
-        const matchedWords = searchWords.filter(searchWord => 
-          allProductWords.some(productWord => 
-            productWord.includes(searchWord) || searchWord.includes(productWord)
-          )
-        );
-        
-        return matchedWords.length >= Math.ceil(searchWords.length * 0.6);
-      });
+    if (!Array.isArray(productData) || productData.length === 0) {
+        console.log('❌ No product data available');
+        return [];
     }
-  }
 
-  // Exact SKU search
-  if (sku) {
-    const exactMatch = filtered.find(product => 
-      (product.sku || '').toLowerCase() === sku.toLowerCase()
-    );
-    if (exactMatch) return [exactMatch];
-  }
+    const { material, furnitureType, seatCount, productName, sku, maxResults = 3 } = criteria;
+    let filtered = [...productData]; // Create a copy to avoid mutations
 
-  // Material search
-  if (material) {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes(material.toLowerCase());
-    });
-  }
+    console.log('🔍 Starting enhanced search with criteria:', criteria);
 
-  // Furniture type search
-  if (furnitureType === 'dining') {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes('dining') || 
-             searchText.includes('table') || 
-             (searchText.includes('chair') && !searchText.includes('armchair'));
-    });
-  } else if (furnitureType === 'lounge') {
-    filtered = filtered.filter(product => {
-      const title = (product.product_title || '').toLowerCase();
-      const description = (product.description || '').toLowerCase();
-      const searchText = `${title} ${description}`;
-      return searchText.includes('sofa') || 
-             searchText.includes('lounge') || 
-             searchText.includes('seating') || 
-             searchText.includes('armchair') ||
-             searchText.includes('corner') ||
-             (searchText.includes('set') && !searchText.includes('dining'));
-    });
-  }
+    // EXACT SKU MATCH - Highest priority
+    if (sku) {
+        const exactMatch = productData.find(product => 
+            (product.sku || '').toLowerCase() === sku.toLowerCase()
+        );
+        if (exactMatch) {
+            console.log(`✅ Exact SKU match found: ${exactMatch.product_title}`);
+            return [exactMatch];
+        }
+    }
 
-   // Enhanced seat count detection
-    if (seatCount) {
-        console.log(`🪑 Looking for ${seatCount} seater furniture...`);
+    // PRODUCT NAME SEARCH - Improved fuzzy matching
+    if (productName) {
+        const searchQuery = productName.toLowerCase();
+        
+        // Special handling for known product lines
+        const productLineMap = {
+            'barcelona': ['barcelona'],
+            'palma': ['palma', 'faro'], // Palma products might have Faro SKUs
+            'malai': ['malai'],
+            'reva': ['reva'],
+            'alex': ['alex'],
+            'santorini': ['santorini'],
+            'marbella': ['marbella']
+        };
+        
+        // Extract product line if mentioned
+        let productLine = null;
+        for (const [key, values] of Object.entries(productLineMap)) {
+            if (searchQuery.includes(key)) {
+                productLine = values;
+                break;
+            }
+        }
         
         filtered = filtered.filter(product => {
             const title = (product.product_title || '').toLowerCase();
+            const productSku = (product.sku || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
-            const searchText = `${title} ${description}`;
+            const searchText = `${title} ${productSku} ${description}`;
             
-            const seatPatterns = [
-                /(\d+)\s*seater/gi,
-                /for\s*(\d+)\s*people/gi,
-                /seat\s*(\d+)/gi,
-                /(\d+)\s*person/gi,
-                /(\d+)\s*people/gi
-            ];
-            
-            for (const pattern of seatPatterns) {
-                const matches = searchText.match(pattern);
-                if (matches) {
-                    const foundSeats = parseInt(matches[0].match(/\d+/)[0]);
-                    if (foundSeats >= seatCount) {
-                        console.log(`✅ Found ${foundSeats} seater: ${product.product_title}`);
-                        return true;
-                    }
+            // If we identified a product line, prioritize those
+            if (productLine) {
+                const hasProductLine = productLine.some(line => 
+                    title.includes(line) || productSku.includes(line)
+                );
+                if (hasProductLine) {
+                    console.log(`✅ Product line match: ${product.product_title}`);
+                    return true;
                 }
             }
             
-            const titleNumbers = product.product_title.match(/\d+/g);
-            if (titleNumbers) {
-                const hasMatchingNumber = titleNumbers.some(num => parseInt(num) >= seatCount);
-                if (hasMatchingNumber) {
-                    console.log(`✅ Found number match: ${product.product_title}`);
-                    return true;
-                }
+            // Otherwise, do intelligent word matching
+            const searchWords = searchQuery.split(' ')
+                .filter(word => word.length > 2 && !['the', 'and', 'for'].includes(word));
+            
+            // Count how many search words appear in the product
+            const matchedWords = searchWords.filter(word => searchText.includes(word));
+            const matchPercentage = matchedWords.length / searchWords.length;
+            
+            // Require at least 60% of words to match
+            if (matchPercentage >= 0.6) {
+                console.log(`✅ Fuzzy match (${Math.round(matchPercentage * 100)}%): ${product.product_title}`);
+                return true;
             }
             
             return false;
         });
     }
 
-    // Add stock information to each product
-    const productsWithStock = filtered.map(product => {
-        const stockStatus = getStockStatus(product.sku); // Assumes getStockStatus is defined elsewhere
+    // SEAT COUNT FILTER - Multiple patterns
+    if (seatCount) {
+        console.log(`🪑 Filtering for ${seatCount} seater furniture...`);
+        
+        filtered = filtered.filter(product => {
+            const title = (product.product_title || '').toLowerCase();
+            const description = (product.description || '').toLowerCase();
+            const searchText = `${title} ${description}`;
+            
+            // Multiple regex patterns to catch different formats
+            const patterns = [
+                new RegExp(`\\b${seatCount}\\s*seater\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*seat\\b`, 'i'),
+                new RegExp(`\\bseats?\\s*${seatCount}\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*person\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*people\\b`, 'i'),
+                new RegExp(`\\b${seatCount}\\s*pax\\b`, 'i')
+            ];
+            
+            const matches = patterns.some(pattern => pattern.test(searchText));
+            if (matches) {
+                console.log(`✅ Seat count match: ${product.product_title}`);
+            }
+            return matches;
+        });
+    }
+
+    // MATERIAL FILTER - Handle variations
+    if (material) {
+        console.log(`🧱 Filtering for ${material} material...`);
+        
+        const materialMap = {
+            'rattan': ['rattan', 'wicker', 'weave', 'poly rattan', 'synthetic rattan'],
+            'teak': ['teak', 'hardwood', 'solid wood'],
+            'aluminium': ['aluminium', 'aluminum', 'metal', 'alloy'],
+            'wood': ['wood', 'timber', 'hardwood', 'teak', 'eucalyptus'],
+            'metal': ['metal', 'steel', 'iron', 'aluminium', 'aluminum']
+        };
+        
+        const searchTerms = materialMap[material.toLowerCase()] || [material.toLowerCase()];
+        
+        filtered = filtered.filter(product => {
+            const title = (product.product_title || '').toLowerCase();
+            const description = (product.description || '').toLowerCase();
+            const searchText = `${title} ${description}`;
+            
+            const matches = searchTerms.some(term => searchText.includes(term));
+            if (matches) {
+                console.log(`✅ Material match: ${product.product_title}`);
+            }
+            return matches;
+        });
+    }
+
+    // FURNITURE TYPE FILTER
+    if (furnitureType) {
+        console.log(`🪑 Filtering for ${furnitureType} furniture...`);
+        
+        const typeMap = {
+            'dining': {
+                include: ['dining', 'table', 'dinner', 'meal'],
+                exclude: ['coffee', 'side', 'lounge', 'sofa']
+            },
+            'lounge': {
+                include: ['lounge', 'sofa', 'corner', 'seating', 'relaxing', 'conversation'],
+                exclude: ['dining', 'table']
+            }
+        };
+        
+        const typeConfig = typeMap[furnitureType.toLowerCase()];
+        if (typeConfig) {
+            filtered = filtered.filter(product => {
+                const title = (product.product_title || '').toLowerCase();
+                const description = (product.description || '').toLowerCase();
+                const searchText = `${title} ${description}`;
+                
+                const hasInclude = typeConfig.include.some(term => searchText.includes(term));
+                const hasExclude = typeConfig.exclude.some(term => searchText.includes(term));
+                
+                const matches = hasInclude && !hasExclude;
+                if (matches) {
+                    console.log(`✅ Type match: ${product.product_title}`);
+                }
+                return matches;
+            });
+        }
+    }
+
+    // ENHANCE RESULTS WITH STOCK STATUS
+    const enhancedResults = filtered.map(product => {
+        const stockStatus = getStockStatus(product.sku);
         return {
             ...product,
-            stockStatus: stockStatus
+            stockStatus: stockStatus,
+            // Handle missing prices gracefully
+            price: product.price || product.variant_price || 'Contact for pricing'
         };
     });
 
-    // Filter to only include in-stock products
-    const inStockProducts = productsWithStock.filter(product => product.stockStatus.inStock);
-
-    // Sort by price (lowest first)
-    inStockProducts.sort((a, b) => {
-        const aPrice = parseFloat(a.price || a.variant_price || 0);
-        const bPrice = parseFloat(b.price || b.variant_price || 0);
+    // SORT RESULTS
+    // 1. In-stock first
+    // 2. Then by relevance (exact matches scored higher)
+    // 3. Then by price (lowest first)
+    enhancedResults.sort((a, b) => {
+        // Stock status priority
+        if (a.stockStatus.inStock !== b.stockStatus.inStock) {
+            return a.stockStatus.inStock ? -1 : 1;
+        }
+        
+        // Price comparison (if both have prices)
+        const aPrice = parseFloat(a.price) || Infinity;
+        const bPrice = parseFloat(b.price) || Infinity;
         return aPrice - bPrice;
     });
 
-    // Log the results for debugging
-    console.log(`🔍 Search Results: Found ${inStockProducts.length} in-stock products`);
-    inStockProducts.forEach((product, index) => {
-        const price = parseFloat(product.price || product.variant_price || 0);
-        console.log(`  ${index + 1}. ${product.product_title} - Stock: ${product.stockStatus.stockLevel}, Price: £${price.toFixed(2)}`);
+    // LIMIT RESULTS
+    const finalResults = enhancedResults.slice(0, maxResults);
+
+    // LOG RESULTS
+    console.log(`\n📊 Search Results Summary:`);
+    console.log(`   Total products searched: ${productData.length}`);
+    console.log(`   Products matching criteria: ${filtered.length}`);
+    console.log(`   In-stock products: ${finalResults.filter(p => p.stockStatus.inStock).length}`);
+    console.log(`   Returning: ${finalResults.length} products\n`);
+    
+    finalResults.forEach((product, index) => {
+        console.log(`${index + 1}. ${product.product_title}`);
+        console.log(`   SKU: ${product.sku}`);
+        console.log(`   Price: ${product.price}`);
+        console.log(`   Stock: ${product.stockStatus.message}`);
     });
 
-    // Return the final, sliced results
-    return inStockProducts.slice(0, maxResults);
+    return finalResults;
 }
 
-// Find and replace this entire function in app.js
+// HELPER FUNCTION - Ensure this exists
+function getStockStatus(sku) {
+    if (!inventoryData || !Array.isArray(inventoryData) || inventoryData.length === 0) {
+        return { 
+            inStock: true, 
+            stockLevel: 'unknown', 
+            message: 'Stock information not available'
+        };
+    }
+    
+    const stockInfo = inventoryData.find(item => item.sku === sku);
+    
+    if (!stockInfo) {
+        return { 
+            inStock: true, 
+            stockLevel: 'unknown', 
+            message: 'Stock information not available'
+        };
+    }
+    
+    const available = parseInt(stockInfo.available) || 0;
+    const inStock = available > 0;
+    
+    return {
+        inStock: inStock,
+        stockLevel: available,
+        message: inStock ? `In stock (${available} available)` : 'Currently out of stock'
+    };
+}
+
+
 // PASTE THIS ENTIRE CORRECTED FUNCTION INTO YOUR APP.JS FILE
+
+// REPLACE the entire searchShopifyProducts function with this enhanced version
+// This goes in your app.js file, replacing lines approximately 1650-1900
 
 async function searchShopifyProducts(criteria) {
     try {
-        console.log('🛒 Trying Shopify products with new enhanced logic...');
-        console.log('🔍 Initial search criteria:', criteria);
+        console.log('🛒 Enhanced Shopify search with improved categorization...');
+        console.log('🔍 Search criteria:', criteria);
 
+        // SKU search logic remains the same
         if (criteria.sku) {
-            const response = await fetch(`https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`, {
-                headers: { 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN, 'Content-Type': 'application/json' }
-            });
-            if (!response.ok) { return searchRealProducts(criteria); }
-            const data = await response.json();
-            const product = (data.products || []).find(p => p.variants.some(v => v.sku === criteria.sku));
+            let allProducts = [];
+            let url = `https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`;
+            while (url) {
+                const response = await fetch(url, {
+                    headers: { 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN, 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    console.log('⚠️ Shopify API failed, using JSON backup');
+                    return searchRealProducts(criteria);
+                }
+                const data = await response.json();
+                allProducts = allProducts.concat(data.products || []);
+                const linkHeader = response.headers.get('Link');
+                if (linkHeader) {
+                    const nextLinkMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/);
+                    url = nextLinkMatch ? nextLinkMatch[1] : null;
+                } else {
+                    url = null;
+                }
+            }
 
+            const product = allProducts.find(p => p.variants.some(v => v.sku === criteria.sku));
             if (!product) {
                 console.log(`❌ No product found for SKU: ${criteria.sku}`);
                 return [];
@@ -1029,6 +1266,7 @@ async function searchShopifyProducts(criteria) {
             }];
         }
 
+        // Fetch all products
         const response = await fetch(`https://${SHOPIFY_DOMAIN}/admin/api/2024-01/products.json?limit=250`, {
             headers: {
                 'X-Shopify-Access-Token': SHOPIFY_ACCESS_TOKEN,
@@ -1047,153 +1285,154 @@ async function searchShopifyProducts(criteria) {
 
         let filteredProducts = allProducts;
 
-        const productMatchesText = (product, searchText) => {
-            const title = (product.title || '').toLowerCase();
-            const description = (product.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
-            const productText = `${title} ${description}`;
-            const searchWords = searchText.toLowerCase().split(' ').filter(w => w.length > 1);
-            return searchWords.every(word => productText.includes(word));
-        };
-
+        // ENHANCED FURNITURE TYPE DETECTION
         if (criteria.furnitureType) {
-            console.log(`📂 Filtering for furnitureType: ${criteria.furnitureType}`);
+            console.log(`🔂 Enhanced filtering for furnitureType: ${criteria.furnitureType}`);
             const type = criteria.furnitureType.toLowerCase();
-            const diningTerms = ['dining', 'table'];
-            const nonDiningTerms = ['lounge', 'sofa', 'parasol', 'daybed', 'conversation'];
-            const loungeTerms = ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'corner'];
-            const nonLoungeTerms = ['dining'];
-            filteredProducts = filteredProducts.filter(p => {
-                const title = (p.title || '').toLowerCase();
-                if (type === 'dining') {
-                    return diningTerms.some(term => title.includes(term)) && !nonDiningTerms.some(term => title.includes(term));
+            
+            // Comprehensive category mappings
+            const categoryMappings = {
+                'dining': {
+                    include: ['dining', 'table', 'chair set', 'dining set'],
+                    exclude: ['coffee', 'side', 'lounge', 'sofa', 'corner', 'parasol', 'lounger']
+                },
+                'lounge': {
+                    include: ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'relax'],
+                    exclude: ['dining', 'corner set', 'corner sofa', 'lounger', 'sun lounger']
+                },
+                'corner': {
+                    include: ['corner set', 'corner sofa', 'corner dining', 'corner lounge', 'l-shaped'],
+                    exclude: ['sun lounger', 'lounger', 'parasol', 'single', 'armchair']
+                },
+                'lounger': {
+                    include: ['lounger', 'sun lounger', 'daybed', 'recliner'],
+                    exclude: ['corner', 'dining', 'sofa set']
                 }
-                if (type === 'lounge') {
-                    return loungeTerms.some(term => title.includes(term)) && !nonLoungeTerms.some(term => title.includes(term));
-                }
-                return true;
-            });
-            console.log(`  ➡️ Found ${filteredProducts.length} products after type filter.`);
+            };
+            
+            // Check if we have a mapping for this type
+            const mapping = categoryMappings[type];
+            if (mapping) {
+                filteredProducts = filteredProducts.filter(p => {
+                    const title = (p.title || '').toLowerCase();
+                    const hasInclude = mapping.include.some(term => title.includes(term));
+                    const hasExclude = mapping.exclude.some(term => title.includes(term));
+                    return hasInclude && !hasExclude;
+                });
+            }
+            
+            console.log(`  ➡️ Found ${filteredProducts.length} products after enhanced type filter.`);
         }
         
+        // ENHANCED PRODUCT NAME SEARCH
         if (criteria.productName) {
-             console.log(`🏷️ Filtering for productName: "${criteria.productName}"`);
-             filteredProducts = filteredProducts.filter(p => productMatchesText(p, criteria.productName));
-             console.log(`  ➡️ Found ${filteredProducts.length} products after name filter.`);
+            console.log(`🏷️ Filtering for productName: "${criteria.productName}"`);
+            const searchQuery = criteria.productName.toLowerCase();
+            
+            // Handle special cases
+            if (searchQuery.includes('corner') && (searchQuery.includes('rattan') || searchQuery.includes('set'))) {
+                // Special handling for corner sets
+                filteredProducts = filteredProducts.filter(p => {
+                    const title = (p.title || '').toLowerCase();
+                    const hasCorner = title.includes('corner');
+                    const hasMaterial = searchQuery.includes('rattan') ? title.includes('rattan') : true;
+                    return hasCorner && hasMaterial && !title.includes('lounger');
+                });
+            } else {
+                // Standard product name matching
+                filteredProducts = filteredProducts.filter(p => {
+                    const title = (p.title || '').toLowerCase();
+                    const description = (p.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
+                    const productText = `${title} ${description}`;
+                    const searchWords = searchQuery.split(' ').filter(w => w.length > 1);
+                    return searchWords.every(word => productText.includes(word));
+                });
+            }
+            console.log(`  ➡️ Found ${filteredProducts.length} products after name filter.`);
         }
 
+        // MATERIAL FILTER
         if (criteria.material) {
-             console.log(`🧱 Filtering for material: "${criteria.material}"`);
-             filteredProducts = filteredProducts.filter(p => productMatchesText(p, criteria.material));
-             console.log(`  ➡️ Found ${filteredProducts.length} products after material filter.`);
+            console.log(`🧱 Filtering for material: "${criteria.material}"`);
+            const materialMappings = {
+                'rattan': ['rattan', 'wicker', 'weave', 'poly rattan'],
+                'teak': ['teak', 'hardwood'],
+                'aluminium': ['aluminium', 'aluminum', 'metal']
+            };
+            
+            const searchTerms = materialMappings[criteria.material.toLowerCase()] || [criteria.material.toLowerCase()];
+            
+            filteredProducts = filteredProducts.filter(p => {
+                const title = (p.title || '').toLowerCase();
+                const description = (p.body_html || '').toLowerCase().replace(/<[^>]*>/g, '');
+                const productText = `${title} ${description}`;
+                return searchTerms.some(term => productText.includes(term));
+            });
+            console.log(`  ➡️ Found ${filteredProducts.length} products after material filter.`);
         }
 
+        // STOCK AND PRICE VALIDATION
         let validProducts = filteredProducts.filter(product => {
             const variant = product.variants[0] || {};
             const price = parseFloat(variant.price || 0);
             const stock = parseInt(variant.inventory_quantity || 0);
             const isAvailable = variant.available !== false;
-            if (stock <= 0) {
-                console.log(`❌ Filtering out [OUT OF STOCK]: "${product.title}" (Shopify stock: ${stock})`);
-                return false;
-            }
-            if (price <= 0) {
-                console.log(`❌ Filtering out [NO PRICE]: "${product.title}" (Shopify price: ${price})`);
-                return false;
-            }
-            if (!isAvailable) {
-                console.log(`❌ Filtering out [NOT AVAILABLE]: "${product.title}" (Shopify 'available' flag: ${isAvailable})`);
+            
+            if (stock <= 0 || price <= 0 || !isAvailable) {
+                console.log(`❌ Filtering out: "${product.title}" (Stock: ${stock}, Price: ${price})`);
                 return false;
             }
             return true;
         });
-        console.log(`✅ Found ${validProducts.length} products with valid stock & price.`);
 
-        // --- THIS IS THE CODE YOU COULDN'T SEE ---
-        const getProductSeatCount = (product) => {
-            const title = (product.title || '');
-            const text = `${title}`.toLowerCase();
-            const patterns = [ /(\d+)\s*seater/i, /(\d+)\s*seat/i, /for\s*(\d+)\s*people/i ];
-            for(const pattern of patterns) {
-                const match = text.match(pattern);
-                if (match && match[1]) {
-                    if (title.toLowerCase().includes('parasol') || title.toLowerCase().includes('cover')) {
-                        return 0;
-                    }
-                    return parseInt(match[1], 10);
-                }
-            }
-            return 0;
-        };
-        
-        validProducts = validProducts.map(product => {
-            return { ...product, extractedSeatCount: getProductSeatCount(product) };
-        });
-
+        // SEAT COUNT FILTER
         if (criteria.seatCount) {
-            console.log(`🪑 Applying strict seat count filter for: ${criteria.seatCount}`);
+            console.log(`🪑 Applying seat count filter for: ${criteria.seatCount}`);
             validProducts = validProducts.filter(product => {
-                const hasMatch = product.extractedSeatCount >= criteria.seatCount;
-                if (!hasMatch) {
-                     console.log(`❌ Seat count mismatch: ${product.title} (Extracted: ${product.extractedSeatCount})`);
-                }
-                return hasMatch;
+                const title = (product.title || '').toLowerCase();
+                const patterns = [
+                    new RegExp(`\\b${criteria.seatCount}\\s*seater\\b`, 'i'),
+                    new RegExp(`\\b${criteria.seatCount}\\s*seat\\b`, 'i'),
+                    new RegExp(`seats?\\s*${criteria.seatCount}\\b`, 'i')
+                ];
+                return patterns.some(pattern => pattern.test(title));
             });
-             console.log(`  ➡️ Found ${validProducts.length} products after seat count filter.`);
+            console.log(`  ➡️ Found ${validProducts.length} products after seat count filter.`);
         }
-        // --- END OF THE CODE YOU COULDN'T SEE ---
 
+        // SORT BY PRICE
         validProducts.sort((a, b) => {
-            if (criteria.seatCount) {
-                const aIsExactMatch = a.extractedSeatCount === criteria.seatCount;
-                const bIsExactMatch = b.extractedSeatCount === criteria.seatCount;
-                if (aIsExactMatch && !bIsExactMatch) return -1;
-                if (!aIsExactMatch && bIsExactMatch) return 1;
-            }
-
             const aPrice = parseFloat(a.variants[0]?.price || 99999);
             const bPrice = parseFloat(b.variants[0]?.price || 99999);
             return aPrice - bPrice;
         });
 
-        console.log('🔍 FINAL SORTED PRODUCTS:');
-        validProducts.slice(0, 5).forEach((product, index) => {
-            const variant = product.variants[0] || {};
-            const stock = variant.inventory_quantity || 0;
-            const price = parseFloat(variant.price || 0);
-            const seatInfo = product.extractedSeatCount ? ` (Seats: ${product.extractedSeatCount})` : '';
-            console.log(`  ${index + 1}. ${product.title} - Price: £${price.toFixed(2)}, Stock: ${stock}${seatInfo}`);
-        });
-
+        // CONVERT TO GWEN FORMAT
         const gwenProducts = validProducts.slice(0, criteria.maxResults || 3).map(product => {
             const variant = product.variants[0] || {};
             const image = product.images[0] || {};
             const stockLevel = parseInt(variant.inventory_quantity || 0);
-            const productForAI = {
+            
+            return {
                 product_title: product.title,
                 sku: variant.sku,
                 price: parseFloat(variant.price || '0').toFixed(2),
                 website_url: `https://mint-outdoor.com/products/${product.handle}`,
                 stockStatus: {
                     message: stockLevel > 0 ? 'In stock' : 'Out of stock'
-                }
+                },
+                image_url: image.src || null
             };
-            if (image && image.src) {
-                productForAI.image_url = image.src;
-            }
-            return productForAI;
         });
 
-        console.log(`🎯 Returning ${gwenProducts.length} valid Shopify products to the AI.`);
+        console.log(`🎯 Returning ${gwenProducts.length} valid products to AI.`);
         return gwenProducts;
 
     } catch (error) {
-        console.error('❌ Shopify search failed dramatically:', error.message);
-        console.log('📁 Falling back to local JSON product search.');
+        console.error('❌ Shopify search failed:', error.message);
         return searchRealProducts(criteria);
     }
 }
-
-
 
 // ENHANCED AI TOOLS - Now includes all knowledge base access
 const aiTools = [
@@ -1201,7 +1440,7 @@ const aiTools = [
     type: "function",
     function: {
       name: "search_products",
-      description: "Search for REAL products in our inventory by criteria OR specific product name/SKU. Returns products with current stock status.",
+      description: "Search for REAL products in our inventory by criteria OR specific product name/SKU. Returns products with current stock status. Use furnitureType='corner' for corner sets, 'dining' for dining sets, 'lounge' for regular sofas, 'lounger' for sun loungers. Always combine material + furnitureType when both are mentioned.",
       parameters: {
         type: "object",
         properties: {
@@ -1212,8 +1451,28 @@ const aiTools = [
           },
           furnitureType: {
             type: "string",
-            enum: ["dining", "lounge"],
-            description: "Type of furniture"
+            enum: ["dining", "lounge", "corner", "lounger", "parasol", "storage"],
+            description: "Type of furniture - use 'corner' for corner sets/sofas"
+          },
+          'lounge': {
+            triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
+            furnitureType: 'lounge',
+            confidence: 0
+          },
+          'lounger': {
+            triggers: ['lounger', 'sun lounger', 'sunbed', 'daybed', 'recliner', 'lie down'],
+            furnitureType: 'lounger',
+            confidence: 0
+          },
+          'parasol': {
+            triggers: ['parasol', 'umbrella', 'shade', 'sun protection'],
+            furnitureType: 'parasol',
+            confidence: 0
+          },
+          'storage': {
+            triggers: ['storage', 'box', 'chest', 'store'],
+            furnitureType: 'storage',
+            confidence: 0
           },
           seatCount: {
             type: "integer",
@@ -1246,23 +1505,6 @@ const aiTools = [
       }
     }
     },
-    {
-  type: "function",
-  function: {
-    name: "suggest_cover_with_furniture",
-    description: "Suggest covers ONLY as add-ons to matching furniture families. Never standalone.",
-    parameters: {
-      type: "object",
-      properties: {
-        furniture_sku: {
-          type: "string",
-          description: "SKU of the furniture being discussed"
-        }
-      },
-      required: ["furniture_sku"]
-    }
-  }
-},
 {
   type: "function",
   function: {
@@ -1452,33 +1694,6 @@ const aiTools = [
       required: ["mainProductSku", "productCategory"]
     }
   }
-},
-
-{
-  type: "function",
-  function: {
-    name: "trigger_bundle_check",
-    description: "Automatically check for bundles on product views, cart adds, budget talks, or seasonal prompts",
-    parameters: {
-      type: "object",
-      properties: {
-        trigger_type: {
-          type: "string",
-          enum: ["product_view", "cart_add", "budget_discussion", "seasonal_prompt"],
-          description: "Type of trigger for bundle check"
-        },
-        product_sku: {
-          type: "string",
-          description: "SKU of the product being discussed"
-        },
-        customer_budget: {
-          type: "number",
-          description: "Customer's mentioned budget (optional)"
-        }
-      },
-      required: ["trigger_type", "product_sku"]
-    }
-  }
 }
 ];
 
@@ -1508,6 +1723,25 @@ const messages = [{
 - When the \`search_products\` tool returns items, you MUST format the response using this EXACT template for each product. This is not optional; it triggers the visual UI.
 - Use the exact data fields provided in the tool's JSON output (e.g., product_title, price, stockStatus.message, image_url, website_url).
 
+**CRITICAL CATEGORY DETECTION:**
+- "corner set" or "corner rattan" or "corner sofa" → use furnitureType="corner" 
+- "dining set" or "dining table" → use furnitureType="dining"
+- "lounge set" or "sofa" (NOT corner) → use furnitureType="lounge"  
+- "sun lounger" or "lounger" → use furnitureType="lounger"
+- NEVER confuse corner sets with sun loungers!
+
+**Smart Search Examples:**
+- "corner rattan sets" → search: {furnitureType: "corner", material: "rattan"}
+- "teak dining set for 6" → search: {furnitureType: "dining", material: "teak", seatCount: 6}
+- "aluminium lounge furniture" → search: {furnitureType: "lounge", material: "aluminium"}
+- "rattan sun loungers" → search: {furnitureType: "lounger", material: "rattan"}
+
+**Material + Type Combinations:**
+- ALWAYS use both material AND furnitureType when customer mentions both
+- If customer says "corner" ALWAYS set furnitureType="corner"
+- If no corner sets found, explain and offer regular lounge sets as alternative
+
+
 **TEMPLATE START**
 **{{product_title}}**
 SKU: {{sku}}
@@ -1530,6 +1764,11 @@ Stock Status: {{stockStatus.message}}
 **3. Handoff Rules:**
 - **Existing Orders:** If a message contains an order number or asks about delivery/tracking/returns for a past purchase, respond with this exact text and stop: "I can see you're asking about an existing order. Our order handling team can help with that. Please visit our <a href='https://mint-outdoor-support-cf235e896ea9.herokuapp.com/' style='color: #9FDCC2; font-weight: bold;' target='_blank'>ORDER HELPDESK</a> for assistance."
 - **Human/Purchase Request:** If a customer wants to speak to a human or place an order, use the \`marketing_handoff\` tool.
+
+- **Email Capture for Escalations:**
+- When a customer requests human contact, callback, or wants to place an order, ALWAYS ask for their email address first if not already provided
+- Say: "I'll connect you with our team right away. What's the best email address to reach you at?"
+- Only proceed with escalation after capturing email
 
 **--- YOUR PERSONA & KNOWLEDGE ---**
 - You are an expert, friendly, and efficient.
@@ -1559,15 +1798,6 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
   3. Third step: If they want it, forward to marketing
 - NEVER mention "managers" or "checking with anyone" - this is immediate service
 - Keep the tone natural and helpful, not pushy
-- Use 'trigger_bundle_check' for mandatory triggers: product pages, cart analysis, budget discussions, seasonal prompts.
-- When triggered, ALWAYS call identifyBundleOpportunities and suggest if bundles exist (pull prices/images from Shopify for display as product cards).
-
-**Intelligent Cover Suggestion Logic:**
-- NEVER suggest covers standalone. Use 'suggest_cover_with_furniture' tool first.
-- ONLY suggest if matching furniture family interest.
-- Frame as: "Complete your [FAMILY] set with matching protection" (pull price/image from Shopify).
-- Always bundle with furniture.
-- Check parent existence.
 
     **PRICE ACCURACY REQUIREMENTS:**
     - Always display real prices from the product data (e.g., "£299.00", "£450.50")
@@ -1786,6 +2016,10 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
 if (toolCall.function.name === "search_products") {
     const args = JSON.parse(toolCall.function.arguments);
 
+console.log('🚨 SEARCH DEBUG: Which search are we using?');
+console.log('🔍 Search criteria:', args);
+console.log('🏪 Shopify token exists?', !!process.env.SHOPIFY_ACCESS_TOKEN);
+
     console.log('🔍 Search criteria received:', args);
 
     const enhancedCriteria = {
@@ -1812,64 +2046,6 @@ if (toolCall.function.name === "search_products") {
             enhancedCriteria.material = 'rattan';
             console.log('🎯 Enhanced search: Detected rattan request');
         }
-
-if (toolCall.function.name === "suggest_cover_with_furniture") {
-  const args = JSON.parse(toolCall.function.arguments);
-  let coverSuggestion = null;
-  
-  for (const [family, data] of Object.entries(productFamilies.furniture_families || {})) {
-    if (data.furniture_skus.includes(args.furniture_sku) && data.cover_sku) {
-      const shopifyCover = await searchShopifyProducts({ sku: data.cover_sku, maxResults: 1 });
-      if (shopifyCover.length > 0) {
-        coverSuggestion = {
-          family: family,
-          cover: shopifyCover[0], // For card display
-          message: `Matching cover for ${family}`
-        };
-      }
-      break;
-    }
-  }
-  
-  toolResults.push({
-    tool_call_id: toolCall.id,
-    output: JSON.stringify({
-      success: !!coverSuggestion,
-      suggestion: coverSuggestion,
-      note: coverSuggestion ? "Suggest as add-on card" : "No cover - do not suggest"
-    })
-  });
-}
-
-
-
-if (toolCall.function.name === "trigger_bundle_check") {
-    const args = JSON.parse(toolCall.function.arguments);
-    const bundles = await identifyBundleOpportunities(args.product_sku, args.customer_budget || Infinity);
-    
-    // Fetch Shopify details for display (no hardcoded prices)
-    const bundleProducts = [];
-    for (const bundle of bundles) {
-      const items = bundleItems.filter(item => item.bundle_id === bundle.bundle_id);
-      for (const item of items) {
-        const shopifyProduct = await searchShopifyProducts({ sku: item.product_sku, maxResults: 1 });
-        if (shopifyProduct.length > 0) {
-          bundleProducts.push(shopifyProduct[0]);
-        }
-      }
-    }
-    
-    toolResults.push({
-      tool_call_id: toolCall.id,
-      output: JSON.stringify({
-        success: bundles.length > 0,
-        bundles: bundles,
-        products: bundleProducts, // For card display with Shopify prices
-        message: bundles.length > 0 ? "Bundles available - suggest them as cards" : "No bundles found"
-      })
-    });
-  }
-
     }
 
     console.log('🎯 Final enhanced criteria:', enhancedCriteria);
@@ -2063,8 +2239,8 @@ if (toolCall.function.name === "marketing_handoff") {
         output: JSON.stringify({
             success: emailSent,
             message: emailSent ? 
-                "Perfect! I've sent your details to our team. Someone will contact you within 2 hours to help with your inquiry." :
-                "I'm having trouble with our email system right now. Please email marketing@mint-outdoor.com directly or call us, and mention session ID: " + sessionId
+                "Perfect! I've sent your details to our team. Someone will contact you within a few hours to help with your inquiry." :
+                "I'm having trouble with our email system right now. Please email help@mint-outdoor.com directly and mention session ID: " + sessionId
         })
     });
 }
@@ -2537,7 +2713,28 @@ session.conversationHistory.push({
       }
       session.context.mode = 'order';
     } else {
-      // Sales mode
+
+// Check for promo code inquiries
+const promoKeywords = ['promo code', 'discount code', 'voucher code', 'deal code', 'affiliate code', 'coupon code'];
+const isPromoQuery = promoKeywords.some(keyword => message.toLowerCase().includes(keyword));
+
+if (isPromoQuery) {
+  response = "Sorry, I am not able to check on promo codes so you would need to refer back to the publication you found the promo code. Sometimes they are time sensitive and othertimes they are not real promo codes issued by us but other companies attempting to get you to visit their website.";
+  
+  session.conversationHistory.push({ role: 'user', content: message, timestamp: new Date() });
+  session.conversationHistory.push({ role: 'assistant', content: response, timestamp: new Date() });
+  
+  await logChat(sessionId, 'user', message);
+  await logChat(sessionId, 'assistant', response);
+  
+  return res.json({
+    response: response,
+    sessionId: sessionId,
+    suggestions: ["Continue shopping", "Product recommendations"]
+  });
+}
+
+      // Sales mode test
       mode = 'sales';
       session.context.mode = 'sales';
 
@@ -2674,16 +2871,16 @@ session.conversationHistory.push({
       mode: mode
     });
 
- } catch (error) {
-  console.error('AI Error Details:', {
-    message: error.message,
-    stack: error.stack,
-    code: error.code,
-    response: error.response ? error.response.data : null
-  });
-  return "Apologies, but I am encountering a connection issue. Please try again shortly.";
-}
+  } catch (error) {
+    console.error('Chat error:', error);
+    res.status(500).json({
+      response: "I apologize, but I'm experiencing a technical issue. Please try again in a moment.",
+      suggestions: ["Try again", "Contact support"]
+    });
+  }
 });
+
+
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -2747,6 +2944,16 @@ app.get('/widget', (req, res) => {
   res.sendFile(path.join(__dirname, 'widget.html'));
 });
 
+// Bundle system test
+app.get('/test-bundles', (req, res) => {
+    res.json({
+        bundle_suggestions_loaded: bundleSuggestions ? bundleSuggestions.length : 0,
+        bundle_items_loaded: bundleItems ? bundleItems.length : 0,
+        sample_bundle: bundleSuggestions ? bundleSuggestions[0] : null,
+        sample_items: bundleItems ? bundleItems.slice(0, 3) : null
+    });
+});
+
 // Temporary endpoint to check product data
 app.get('/debug-products', (req, res) => {
   const products = productData.slice(0, 20).map(p => ({
@@ -2775,6 +2982,17 @@ setInterval(() => {
   }
   if (cleaned > 0) console.log(`Cleaned ${cleaned} expired sessions`);
 }, 60 * 60 * 1000);
+
+// Bundle debug endpoint
+app.get('/bundle-debug', (req, res) => {
+    res.json({
+        bundles_loaded: bundleSuggestions ? bundleSuggestions.length : 0,
+        items_loaded: bundleItems ? bundleItems.length : 0,
+        first_bundle: bundleSuggestions && bundleSuggestions[0] ? bundleSuggestions[0] : 'No bundles',
+        first_items: bundleItems ? bundleItems.slice(0, 3) : 'No items'
+    });
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

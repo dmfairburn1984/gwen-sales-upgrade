@@ -208,79 +208,71 @@ console.log(`   🪨 Stone/composites: ${Array.isArray(stoneCompositesMaster) ? 
 console.log(`   🏷️ Taxonomy categories: ${Object.keys(taxonomyData.product_categories || {}).length}`);
 console.log('🧪 DEBUG: Taxonomy data keys:', Object.keys(taxonomyData));
 
-// FIND the detectCustomerInterest function and add better logging:
-
 function detectCustomerInterest(message, session) {
   const strongBuyingSignals = [
-    // Original signals
-    'love this', 'love it', 'perfect for', 'exactly what i need', 'exactly what we need',
-    'this is perfect', 'looks perfect', 'that\'s perfect', 'i want this', 'i want that',
-    'how much', 'what\'s the price', 'cost', 'when can i get', 'when can we get',
-    'i\'m interested in buying', 'interested in purchasing', 'ready to buy',
-    'looks great', 'that looks great', 'beautiful', 'gorgeous', 'stunning',
-    'i need this', 'we need this', 'this would be ideal', 'this would work',
-    'delivery', 'assembly', 'how long', 'available', 'in stock','would like to buy', 'i would like to buy', 'would like to purchase',
-'i\'d like this', 'i\'d like to buy', 'i\'ll take it', 'let\'s do it',
-'want to order', 'ready to order', 'looks good', 'sounds good',
-    // MISSING SIGNALS THAT CAUSED THE BUG
-    'i like', 'like this', 'like that', 'like the', 'i want to buy', 'want to buy',
-    'want to purchase', 'interested in this', 'interested in that',
-    'this looks good', 'that looks good', 'this one', 'that one'
+    // Enhanced signals for better detection
+    'love this', 'love it', 'perfect', 'exactly what', 'looks great',
+    'beautiful', 'gorgeous', 'stunning', 'ideal', 'this would work',
+    'i need this', 'we need this', 'i want this', 'i want that',
+    'how much', 'price', 'cost', 'delivery', 'assembly', 'available',
+    'in stock', 'when can', 'how long', 'i like', 'like this', 
+    'like that', 'like the', 'interested', 'this one', 'that one',
+    'want to buy', 'want to order', 'ready to buy', 'ready to order',
+    'i\'ll take', 'let\'s do it', 'sounds good', 'looks good'
   ];
   
   const lowerMessage = message.toLowerCase();
   
-  // Add debugging
-  console.log(`🔍 Interest detection for: "${message}"`);
-  console.log(`🔍 Lowercased: "${lowerMessage}"`);
+  // Skip if message too short
+  if (message.length < 4) return false;
   
-  // FIXED - Reduce minimum length requirement (was blocking "i like the malai")
-  if (message.length < 5) {
-    console.log(`❌ Message too short: ${message.length} characters`);
-    return false;
-  }
+  // Exclude pure browsing questions
+  const browsingPhrases = ['what about', 'do you have', 'show me', 'tell me about'];
+  if (browsingPhrases.some(phrase => lowerMessage.startsWith(phrase))) return false;
   
-  // Exclude browsing questions
-  const browsingPhrases = [
-    'what about', 'do you have', 'got any', 'show me', 'tell me about',
-    'what is', 'what\'s', 'how about', 'any other', 'anything else'
-  ];
+  // Check for buying signals
+  const hasInterest = strongBuyingSignals.some(signal => lowerMessage.includes(signal));
   
-  const isBrowsing = browsingPhrases.some(phrase => lowerMessage.includes(phrase));
-  if (isBrowsing) {
-    console.log(`❌ Browsing phrase detected: excluded`);
-    return false;
-  }
+  // Also check if they're asking about a specific product they've seen
+  const hasSeenProducts = session.conversationHistory.some(msg => 
+    msg.role === 'assistant' && msg.content.includes('Price: £')
+  );
   
-  const matchedSignals = strongBuyingSignals.filter(signal => lowerMessage.includes(signal));
-  console.log(`🎯 Matched signals:`, matchedSignals);
-  
-  const hasInterest = matchedSignals.length > 0;
-  console.log(`✅ Customer interest detected: ${hasInterest}`);
-  
-  return hasInterest;
+  return hasInterest && hasSeenProducts;
 }
 
 function shouldOfferBundleNaturally(session) {
+  // Check if we've shown products
   const hasShownProducts = session.conversationHistory.some(msg => 
     msg.role === 'assistant' && msg.content.includes('Price: £')
   );
   
+  // Check conversation length (reduced threshold)
   const conversationLength = session.conversationHistory.length;
-  const alreadyOfferedBundle = session.context.offeredBundle || false;
-  const hasAskedQuestions = conversationLength >= 3; // Reduced from 4 to 3
   
-  console.log(`🎯 Bundle check:`, {
+  // Check if already offered
+  const alreadyOffered = session.context.offeredBundle || 
+                         session.context.waitingForPackageResponse || 
+                         session.context.packageDealProduct;
+  
+  // Minimum engagement check
+  const hasEngagement = conversationLength >= 4;
+  
+  // Customer shows interest
+  const lastMessage = session.conversationHistory[session.conversationHistory.length - 1];
+  const showsInterest = lastMessage && detectCustomerInterest(lastMessage.content, session);
+  
+  console.log(`🎯 Bundle Check:`, {
     hasShownProducts,
     conversationLength,
-    alreadyOfferedBundle,
-    hasAskedQuestions,
-    shouldOffer: hasShownProducts && hasAskedQuestions && !alreadyOfferedBundle
+    alreadyOffered,
+    hasEngagement,
+    showsInterest,
+    shouldOffer: hasShownProducts && hasEngagement && !alreadyOffered && showsInterest
   });
   
-  return hasShownProducts && hasAskedQuestions && !alreadyOfferedBundle;
+  return hasShownProducts && hasEngagement && !alreadyOffered && showsInterest;
 }
-
 
 function extractCustomerDetails(message) {
     const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
@@ -946,6 +938,67 @@ function getStockStatus(sku) {
   };
 }
 
+
+function getDeliveryEstimate(stockStatus) {
+  if (!stockStatus.inStock) {
+    // Check PO arrivals for pre-order items
+    const poArrival = orderData.find(po => 
+      po.sku === stockStatus.sku && po.arrival_date
+    );
+    
+    if (poArrival) {
+      const arrivalDate = new Date(poArrival.arrival_date);
+      const formattedDate = arrivalDate.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short'
+      });
+      return `Pre-order - Expected ${formattedDate}`;
+    }
+    return 'Currently unavailable - Contact for details';
+  }
+  
+  // In stock items
+  const stockLevel = stockStatus.stockLevel;
+  
+  if (stockLevel > 10) {
+    return '✓ Ships in 5-7 business days';
+  } else if (stockLevel > 0) {
+    return `⚡ Only ${stockLevel} left - Ships tomorrow if ordered by 2pm`;
+  } else {
+    return '✓ Ships in 5-7 business days';
+  }
+}
+
+function generateCheckoutLink(product, session) {
+  // Basic Shopify checkout URL structure
+  const baseUrl = 'https://bb69ce-b5.myshopify.com';
+  
+  // Check if customer deserves a discount
+  const conversationLength = session.conversationHistory.length;
+  const hasEngaged = conversationLength >= 6;
+  const hasAskedQuestions = session.conversationHistory.some(msg => 
+    msg.role === 'user' && msg.content.includes('?')
+  );
+  
+  let discountCode = '';
+  let discountMessage = '';
+  
+  // Automatic discount for engaged customers
+  if (hasEngaged && hasAskedQuestions) {
+    discountCode = 'GWEN10';  // You need to create this in Shopify
+    discountMessage = '🎁 10% discount automatically applied!';
+  }
+  
+  // Generate the checkout URL
+  const checkoutUrl = `${baseUrl}/cart/${product.variant_id || product.sku}:1${discountCode ? '?discount=' + discountCode : ''}`;
+  
+  return {
+    url: checkoutUrl,
+    discountMessage: discountMessage,
+    directBuyUrl: `https://mint-outdoor.com/products/${product.handle}?add-to-cart=true`
+  };
+}
+
 // NEW: Detect product category from customer message using taxonomy
 function detectProductCategory(customerMessage) {
   const message = customerMessage.toLowerCase();
@@ -1215,12 +1268,7 @@ function getStockStatus(sku) {
     };
 }
 
-
-// PASTE THIS ENTIRE CORRECTED FUNCTION INTO YOUR APP.JS FILE
-
-// REPLACE the entire searchShopifyProducts function with this enhanced version
-// This goes in your app.js file, replacing lines approximately 1650-1900
-
+// ENHANCED: Shopify product search with improved categorization and error handling
 async function searchShopifyProducts(criteria) {
     try {
         console.log('🛒 Enhanced Shopify search with improved categorization...');
@@ -1413,16 +1461,31 @@ async function searchShopifyProducts(criteria) {
             const image = product.images[0] || {};
             const stockLevel = parseInt(variant.inventory_quantity || 0);
             
-            return {
-                product_title: product.title,
-                sku: variant.sku,
-                price: parseFloat(variant.price || '0').toFixed(2),
-                website_url: `https://mint-outdoor.com/products/${product.handle}`,
-                stockStatus: {
-                    message: stockLevel > 0 ? 'In stock' : 'Out of stock'
-                },
-                image_url: image.src || null
-            };
+    const stockInfo = {
+    message: stockLevel > 0 ? 'In stock' : 'Out of stock',
+    inStock: stockLevel > 0,
+    stockLevel: stockLevel,
+    sku: variant.sku
+};
+
+// Generate checkout link
+const checkoutData = generateCheckoutLink({
+    variant_id: variant.id,
+    sku: variant.sku,
+    handle: product.handle
+}, session);
+
+return {
+    product_title: product.title,
+    sku: variant.sku,
+    price: parseFloat(variant.price || '0').toFixed(2),
+    website_url: `https://mint-outdoor.com/products/${product.handle}`,
+    stockStatus: stockInfo,
+    deliveryEstimate: getDeliveryEstimate(stockInfo),
+    checkoutUrl: checkoutData.url,
+    discountMessage: checkoutData.discountMessage,
+    image_url: image.src || null
+};
         });
 
         console.log(`🎯 Returning ${gwenProducts.length} valid products to AI.`);
@@ -1747,8 +1810,10 @@ const messages = [{
 SKU: {{sku}}
 Price: £{{price}}
 Stock Status: {{stockStatus.message}}
+Delivery: {{deliveryEstimate}}
 <img src="{{image_url}}" alt="{{product_title}}" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px; margin: 10px 0;">
 [View Product]({{website_url}})
+[Buy Now]({{checkoutUrl}}) {{discountMessage}}
 **TEMPLATE END**
 
 - **CRITICAL RULE:** If a product in the JSON data has no \`image_url\` or it is null, you MUST omit the entire \`![Image of...]\` line for that product. Do not invent one.
