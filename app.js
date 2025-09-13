@@ -938,6 +938,27 @@ function getStockStatus(sku) {
   };
 }
 
+function verifyStockWithLocalData(sku) {
+    // Double-check against your local inventory data
+    if (!inventoryData || inventoryData.length === 0) {
+        console.log('⚠️ No local inventory data to verify');
+        return null;
+    }
+    
+    const localStock = inventoryData.find(item => 
+        item.sku === sku || 
+        item.SKU === sku || 
+        item.product_sku === sku
+    );
+    
+    if (localStock) {
+        const available = parseInt(localStock.available || localStock.stock || 0);
+        console.log(`📊 Local inventory check for ${sku}: ${available} units`);
+        return available > 0;
+    }
+    
+    return null;
+}
 
 function getDeliveryEstimate(stockStatus) {
   if (!stockStatus.inStock) {
@@ -1426,11 +1447,10 @@ let validProducts = filteredProducts.filter(product => {
     const stock = parseInt(variant.inventory_quantity || 0);
     const isAvailable = variant.available !== false;
     
-    // CRITICAL: Only show products that are ACTUALLY in stock
-    if (stock <= 0) {
-        console.log(`❌ OUT OF STOCK - Removing: "${product.title}" (Stock: ${stock})`);
-        return false;
-    }
+    if (!actuallyInStock) {
+    console.log(`❌ OUT OF STOCK - Removing: "${product.title}"`);
+    return false;
+}
     
     if (price <= 0 || !isAvailable) {
         console.log(`❌ Invalid product: "${product.title}" (Price: ${price}, Available: ${isAvailable})`);
@@ -1470,11 +1490,34 @@ validProducts.sort((a, b) => {
             return aPrice - bPrice;
         });
 
-        // CONVERT TO GWEN FORMAT
+       validProducts = validProducts.filter(product => {
+    const localStockCheck = verifyStockWithLocalData(product.sku);
+    if (localStockCheck === false) {
+        console.log(`❌ Local data confirms OUT OF STOCK: ${product.product_title}`);
+        return false;
+    }
+    return true;
+});
         const gwenProducts = validProducts.slice(0, criteria.maxResults || 3).map(product => {
             const variant = product.variants[0] || {};
             const image = product.images[0] || {};
-            const stockLevel = parseInt(variant.inventory_quantity || 0);
+            // CRITICAL: Check multiple stock indicators
+const stockLevel = parseInt(variant.inventory_quantity || 0);
+const trackingEnabled = variant.inventory_management === 'shopify';
+const inventoryPolicy = variant.inventory_policy || 'deny';
+const isAvailable = variant.available !== false;
+
+// Product is ONLY in stock if ALL conditions are met
+const actuallyInStock = stockLevel > 0 && isAvailable && 
+                        (!trackingEnabled || inventoryPolicy === 'continue' || stockLevel > 0);
+
+console.log(`📦 Stock Check for ${product.title}:`, {
+    stockLevel,
+    trackingEnabled,
+    inventoryPolicy,
+    isAvailable,
+    actuallyInStock
+});
             
     const stockInfo = {
     message: stockLevel > 0 ? 'In stock' : 'Out of stock',
@@ -1510,6 +1553,7 @@ return {
         console.error('❌ Shopify search failed:', error.message);
         return searchRealProducts(criteria);
     }
+    
 }
 
 // ENHANCED AI TOOLS - Now includes all knowledge base access
@@ -1842,7 +1886,6 @@ Stock Status: {{stockStatus.message}}
 Delivery: {{deliveryEstimate}}
 <img src="{{image_url}}" alt="{{product_title}}" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px; margin: 10px 0;">
 [View Product]({{website_url}})
-[Buy Now]({{checkoutUrl}}) {{discountMessage}}
 **TEMPLATE END**
 
 - **CRITICAL RULE:** If a product in the JSON data has no \`image_url\` or it is null, you MUST omit the entire \`![Image of...]\` line for that product. Do not invent one.
