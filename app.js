@@ -767,168 +767,693 @@ function detectProductCategoryForBundle(product) {
   return null;
 }
 
-// ENHANCED CUSTOMER QUALIFICATION SYSTEM
-function detectFuzzyProductIntent(customerMessage, session) {
-    const message = customerMessage.toLowerCase();
+// DYNAMIC ADAPTIVE QUERY BUILDER
+function buildDynamicSearchQuery(conversationHistory, currentMessage) {
+    console.log('🧠 Building dynamic query from conversation...');
     
-    // Initialize qualification state if not exists
-    if (!session.qualificationState) {
-        session.qualificationState = {
-            purpose: null,      // dining, lounge, lounger, corner
-            capacity: null,     // number of seats
-            space: null,        // dimensions available
-            material: null,     // teak, aluminium, rattan
-            budget: null,       // price range
-            maintenance: null,  // low, medium, high tolerance
-            qualified: false
-        };
-    }
+    // Combine all messages to understand full context
+    const fullContext = conversationHistory
+        .map(msg => msg.content)
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
     
-    // DETECT WHAT CUSTOMER ALREADY KNOWS
-    const detectedInfo = {
-        purpose: detectPurpose(message),
-        capacity: detectCapacity(message),
-        material: detectMaterial(message),
-        budget: detectBudget(message),
-        space: detectSpace(message)
+    // Initialize dynamic criteria
+    const criteria = {
+        categories: [],
+        materials: [],
+        seatRange: null,
+        colors: [],
+        features: [],
+        priceRange: null,
+        dimensions: null
     };
     
-    // Update qualification state
-    Object.keys(detectedInfo).forEach(key => {
-        if (detectedInfo[key] && !session.qualificationState[key]) {
-            session.qualificationState[key] = detectedInfo[key];
+    // 1. DETECT FURNITURE CATEGORIES (can be multiple)
+    const categoryPatterns = {
+        'dining_sets': ['dining', 'eating', 'meal', 'dinner', 'lunch', 'table and chairs', 'dining table', 'dining set'],
+        'lounge_sets': ['lounge', 'sofa', 'seating', 'relaxing', 'conversation', 'living', 'sitting area'],
+        'corner_sets': ['corner', 'l-shaped', 'l shaped', 'sectional', 'corner sofa', 'corner set'],
+        'sun_loungers': ['sun lounger', 'lounger', 'sunbed', 'daybed', 'tanning', 'poolside', 'lie down'],
+        'hybrid_sets': ['casual dining', 'dining and lounging', 'versatile', 'multi-purpose'],
+        'parasols': ['parasol', 'umbrella', 'shade', 'sun protection'],
+        'storage': ['storage', 'cushion box', 'box']
+    };
+    
+    Object.entries(categoryPatterns).forEach(([category, patterns]) => {
+        if (patterns.some(pattern => fullContext.includes(pattern))) {
+            criteria.categories.push(category);
         }
     });
     
-    // Check if we have enough info to search
-    const hasMinimumInfo = (session.qualificationState.purpose || session.qualificationState.capacity) 
-                           && (session.qualificationState.material || session.qualificationState.budget);
+    // 2. DETECT MATERIALS (can be multiple)
+    const materialPatterns = {
+        'rattan': ['rattan', 'wicker', 'weave', 'woven', 'synthetic rattan', 'poly rattan'],
+        'teak': ['teak', 'hardwood', 'wood', 'wooden', 'natural wood'],
+        'aluminium': ['aluminium', 'aluminum', 'metal', 'steel', 'iron'],
+        'fabric': ['fabric', 'textile', 'cushioned', 'upholstered']
+    };
     
-    if (hasMinimumInfo) {
-        session.qualificationState.qualified = true;
-        return buildSearchCriteria(session.qualificationState);
+    Object.entries(materialPatterns).forEach(([material, patterns]) => {
+        if (patterns.some(pattern => fullContext.includes(pattern))) {
+            criteria.materials.push(material);
+        }
+    });
+    
+    // 3. DETECT SEAT COUNT/CAPACITY
+    const seatPatterns = [
+        { regex: /(\d+)\s*(?:seater|seat|person|people)/, extract: match => parseInt(match[1]) },
+        { regex: /seats?\s*(\d+)/, extract: match => parseInt(match[1]) },
+        { regex: /for\s*(\d+)/, extract: match => parseInt(match[1]) }
+    ];
+    
+    for (const pattern of seatPatterns) {
+        const match = fullContext.match(pattern.regex);
+        if (match) {
+            const seats = pattern.extract(match);
+            criteria.seatRange = {
+                min: Math.max(1, seats - 1),
+                ideal: seats,
+                max: seats + 2
+            };
+            break;
+        }
     }
     
-    // Return what we need to ask next
+    // Handle descriptive seat counts
+    if (!criteria.seatRange) {
+        if (fullContext.includes('couple') || fullContext.includes('two of us')) {
+            criteria.seatRange = { min: 2, ideal: 2, max: 3 };
+        } else if (fullContext.includes('small family')) {
+            criteria.seatRange = { min: 3, ideal: 4, max: 5 };
+        } else if (fullContext.includes('large family') || fullContext.includes('big family')) {
+            criteria.seatRange = { min: 6, ideal: 8, max: 10 };
+        } else if (fullContext.includes('entertaining') || fullContext.includes('guests')) {
+            criteria.seatRange = { min: 6, ideal: 8, max: 10 };
+        } else if (fullContext.includes('more than')) {
+            const moreMatch = fullContext.match(/more than\s*(\d+)/);
+            if (moreMatch) {
+                const min = parseInt(moreMatch[1]) + 1;
+                criteria.seatRange = { min, ideal: min + 2, max: min + 4 };
+            }
+        }
+    }
+    
+    // 4. DETECT COLORS
+    const colors = ['white', 'grey', 'gray', 'black', 'beige', 'brown', 'taupe', 'green', 'blue'];
+    colors.forEach(color => {
+        if (fullContext.includes(color)) {
+            criteria.colors.push(color);
+        }
+    });
+    
+    // 5. DETECT FEATURES/REQUIREMENTS
+    const featurePatterns = {
+        'low_maintenance': ['low maintenance', 'no maintenance', 'easy care', 'maintenance free', 'easy to clean'],
+        'weather_resistant': ['weatherproof', 'all weather', 'weather resistant', 'waterproof'],
+        'space_saving': ['compact', 'small space', 'balcony', 'limited space'],
+        'premium': ['luxury', 'premium', 'high end', 'best quality'],
+        'budget': ['budget', 'affordable', 'cheap', 'economical', 'value']
+    };
+    
+    Object.entries(featurePatterns).forEach(([feature, patterns]) => {
+        if (patterns.some(pattern => fullContext.includes(pattern))) {
+            criteria.features.push(feature);
+        }
+    });
+    
+    // 6. DETECT PRICE RANGE
+    const priceMatch = fullContext.match(/[£$](\d+)(?:\s*-\s*[£$]?(\d+))?/);
+    if (priceMatch) {
+        criteria.priceRange = {
+            min: parseInt(priceMatch[1]),
+            max: priceMatch[2] ? parseInt(priceMatch[2]) : parseInt(priceMatch[1]) * 1.5
+        };
+    } else if (fullContext.includes('under')) {
+        const underMatch = fullContext.match(/under\s*[£$]?(\d+)/);
+        if (underMatch) {
+            criteria.priceRange = { min: 0, max: parseInt(underMatch[1]) };
+        }
+    }
+    
+    // 7. BUILD SEARCH PARAMETERS
+    const searchParams = {};
+    
+    // Map categories to furnitureType
+    if (criteria.categories.includes('dining_sets')) {
+        searchParams.furnitureType = 'dining';
+    } else if (criteria.categories.includes('lounge_sets') || criteria.categories.includes('corner_sets')) {
+        searchParams.furnitureType = criteria.categories.includes('corner_sets') ? 'corner' : 'lounge';
+    } else if (criteria.categories.includes('sun_loungers')) {
+        searchParams.furnitureType = 'lounger';
+    }
+    
+    // Add material if specified
+    if (criteria.materials.length > 0) {
+        searchParams.material = criteria.materials[0]; // Primary material
+    }
+    
+    // Add seat count if specified
+    if (criteria.seatRange) {
+        searchParams.seatCount = criteria.seatRange.ideal;
+        searchParams.seatRange = criteria.seatRange; // Pass full range for flexibility
+    }
+    
+    // Add features
+    if (criteria.features.includes('low_maintenance')) {
+        searchParams.maintenance_level = 'very low';
+    }
+    
+    // Add price
+    if (criteria.priceRange) {
+        searchParams.maxPrice = criteria.priceRange.max;
+    }
+    
+    // Add color preference
+    if (criteria.colors.length > 0) {
+        searchParams.color = criteria.colors[0];
+    }
+    
+    console.log('📊 Dynamic criteria built:', criteria);
+    console.log('🔍 Search parameters:', searchParams);
+    
+    return searchParams;
+}
+
+// INTELLIGENT PRODUCT SCORING SYSTEM
+function scoreProductMatch(product, searchParams, enhancedCategories) {
+    let score = 0;
+    const matches = [];
+    const mismatches = [];
+    
+    // 1. CATEGORY MATCHING (30 points max)
+    if (searchParams.furnitureType) {
+        const productCategories = findProductCategories(product.sku, enhancedCategories);
+        
+        if (searchParams.furnitureType === 'dining' && productCategories.includes('dining_sets')) {
+            score += 30;
+            matches.push('✓ Dining set');
+        } else if (searchParams.furnitureType === 'lounge' && productCategories.includes('lounge_sets')) {
+            score += 30;
+            matches.push('✓ Lounge set');
+        } else if (searchParams.furnitureType === 'corner' && productCategories.includes('corner_sets')) {
+            score += 30;
+            matches.push('✓ Corner set');
+        } else if (searchParams.furnitureType === 'lounger' && productCategories.includes('sun_loungers')) {
+            score += 30;
+            matches.push('✓ Sun lounger');
+        } else if (productCategories.includes('hybrid_sets')) {
+            score += 20; // Partial credit for hybrid
+            matches.push('✓ Multi-purpose set');
+        } else {
+            mismatches.push('✗ Wrong furniture type');
+        }
+    }
+    
+    // 2. MATERIAL MATCHING (25 points max)
+    if (searchParams.material && product.materials) {
+        const hasMaterial = product.materials.some(m => {
+            const materialName = m.material_name.toLowerCase();
+            if (searchParams.material === 'rattan') {
+                return materialName.includes('rattan') || materialName.includes('poly_rattan');
+            }
+            return materialName.includes(searchParams.material);
+        });
+        
+        if (hasMaterial) {
+            score += 25;
+            matches.push(`✓ ${searchParams.material} material`);
+        } else {
+            // Check for similar maintenance level
+            if (searchParams.maintenance_level === 'very low') {
+                const hasLowMaintenance = product.materials.some(m => 
+                    ['aluminium', 'poly_rattan', 'steel'].includes(m.material_name)
+                );
+                if (hasLowMaintenance) {
+                    score += 15;
+                    matches.push('✓ Low maintenance alternative');
+                }
+            }
+        }
+    }
+    
+    // 3. CAPACITY MATCHING (25 points max)
+    if (searchParams.seatCount && product.seats) {
+        const requestedSeats = searchParams.seatCount;
+        const productSeats = product.seats;
+        
+        if (productSeats === requestedSeats) {
+            score += 25;
+            matches.push(`✓ Exactly ${requestedSeats} seats`);
+        } else if (searchParams.seatRange) {
+            if (productSeats >= searchParams.seatRange.min && productSeats <= searchParams.seatRange.max) {
+                score += 20;
+                matches.push(`✓ ${productSeats} seats (acceptable range)`);
+            }
+        } else if (Math.abs(productSeats - requestedSeats) === 1) {
+            score += 15;
+            matches.push(`✓ ${productSeats} seats (close match)`);
+        } else {
+            mismatches.push(`✗ ${productSeats} seats (requested ${requestedSeats})`);
+        }
+    }
+    
+    // 4. COLOR MATCHING (10 points max)
+    if (searchParams.color) {
+        const productText = `${product.title} ${product.description}`.toLowerCase();
+        if (productText.includes(searchParams.color)) {
+            score += 10;
+            matches.push(`✓ ${searchParams.color} color`);
+        }
+    }
+    
+    // 5. STOCK BONUS (10 points)
+    if (product.inStock && product.stockLevel > 5) {
+        score += 10;
+        matches.push(`✓ Good stock (${product.stockLevel} units)`);
+    } else if (product.inStock) {
+        score += 5;
+        matches.push(`✓ In stock (${product.stockLevel} units)`);
+    } else {
+        score -= 50; // Heavy penalty for out of stock
+        mismatches.push('✗ OUT OF STOCK');
+    }
+    
+    // 6. PRICE MATCHING (10 points max)
+    if (searchParams.maxPrice && product.price) {
+        const price = parseFloat(product.price);
+        if (price <= searchParams.maxPrice) {
+            score += 10;
+            matches.push('✓ Within budget');
+        } else if (price <= searchParams.maxPrice * 1.2) {
+            score += 5;
+            matches.push('✓ Slightly over budget (20%)');
+        } else {
+            mismatches.push('✗ Over budget');
+        }
+    }
+    
     return {
-        needsMoreInfo: true,
-        nextQuestion: getNextQualifyingQuestion(session.qualificationState),
-        currentState: session.qualificationState
+        score,
+        matches,
+        mismatches,
+        totalPossible: 100
     };
 }
 
-function detectPurpose(message) {
+function findProductCategories(sku, enhancedCategories) {
+    const categories = [];
+    
+    // Check primary categories
+    Object.entries(enhancedCategories.primary_categories).forEach(([catId, catData]) => {
+        if (catData.skus && catData.skus.includes(sku)) {
+            categories.push(catId);
+        } else if (catData.subcategories) {
+            Object.values(catData.subcategories).forEach(subcat => {
+                if (subcat.skus && subcat.skus.includes(sku)) {
+                    categories.push(catId);
+                }
+            });
+        }
+    });
+    
+    return categories;
+}
+
+
+// ============= ENHANCED DETECTION SYSTEM V2 =============
+// Works with full conversation context, not just single messages
+
+function detectPurpose(conversationHistory, currentMessage = '') {
+    // Combine all messages for context
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
     const purposes = {
-        'dining': ['dining', 'eating', 'meals', 'dinner', 'lunch', 'table and chairs'],
-        'lounge': ['lounge', 'sofa', 'relaxing', 'sitting', 'conversation', 'living'],
-        'corner': ['corner', 'l-shaped', 'l shaped', 'sectional'],
-        'lounger': ['sun lounger', 'sunbed', 'tanning', 'lying down', 'daybed']
+        'dining': {
+            keywords: ['dining', 'eating', 'meals', 'dinner', 'lunch', 'breakfast', 'table and chairs', 'outdoor dining', 'al fresco', 'dine outside'],
+            weight: 0
+        },
+        'lounge': {
+            keywords: ['lounge', 'sofa', 'relaxing', 'sitting', 'conversation', 'living', 'seating area', 'chill', 'relax', 'comfortable seating'],
+            weight: 0
+        },
+        'corner': {
+            keywords: ['corner', 'l-shaped', 'l shaped', 'sectional', 'corner sofa', 'corner set', 'l-shape'],
+            weight: 0
+        },
+        'lounger': {
+            keywords: ['sun lounger', 'sunbed', 'tanning', 'lying down', 'daybed', 'poolside', 'sunbathing', 'recline'],
+            weight: 0
+        },
+        'hybrid': {
+            keywords: ['both dining and lounging', 'casual dining', 'versatile', 'multi-purpose', 'flexible use'],
+            weight: 0
+        }
     };
     
-    for (const [key, keywords] of Object.entries(purposes)) {
-        if (keywords.some(kw => message.includes(kw))) {
-            return key;
+    // Calculate weights based on keyword matches
+    Object.entries(purposes).forEach(([key, data]) => {
+        data.keywords.forEach(keyword => {
+            if (fullContext.includes(keyword)) {
+                purposes[key].weight += keyword.split(' ').length; // Multi-word phrases get more weight
+            }
+        });
+    });
+    
+    // Find the purpose with highest weight
+    let maxWeight = 0;
+    let detectedPurpose = null;
+    
+    Object.entries(purposes).forEach(([key, data]) => {
+        if (data.weight > maxWeight) {
+            maxWeight = data.weight;
+            detectedPurpose = key;
+        }
+    });
+    
+    // Special case: if "corner" has any weight, it overrides "lounge"
+    if (purposes.corner.weight > 0) {
+        detectedPurpose = 'corner';
+    }
+    
+    return detectedPurpose;
+}
+
+function detectCapacity(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
+    // Direct number patterns
+    const patterns = [
+        /(\d+)\s*(?:seater|seat|person|people|pax)/,
+        /seats?\s*(\d+)/,
+        /for\s*(\d+)\s*(?:people|person|guests)?/,
+        /accommodate\s*(\d+)/,
+        /capacity\s*(?:of|for)?\s*(\d+)/
+    ];
+    
+    for (const pattern of patterns) {
+        const match = fullContext.match(pattern);
+        if (match) {
+            return parseInt(match[1]);
         }
     }
+    
+    // Descriptive patterns with specific numbers
+    const descriptivePatterns = {
+        2: ['couple', 'two of us', 'me and my partner', 'bistro', 'intimate'],
+        4: ['small family', 'family of four', 'four of us'],
+        6: ['six people', 'family of six', 'medium family'],
+        8: ['large family', 'extended family', 'entertaining', 'parties', 'big gatherings', 'eight people'],
+        10: ['very large', 'huge family', 'big parties', 'ten people']
+    };
+    
+    for (const [capacity, phrases] of Object.entries(descriptivePatterns)) {
+        if (phrases.some(phrase => fullContext.includes(phrase))) {
+            return parseInt(capacity);
+        }
+    }
+    
+    // Range patterns
+    if (fullContext.includes('more than')) {
+        const moreMatch = fullContext.match(/more than\s*(\d+)/);
+        if (moreMatch) {
+            return parseInt(moreMatch[1]) + 2; // Return a reasonable number above the minimum
+        }
+    }
+    
+    if (fullContext.includes('at least')) {
+        const leastMatch = fullContext.match(/at least\s*(\d+)/);
+        if (leastMatch) {
+            return parseInt(leastMatch[1]);
+        }
+    }
+    
     return null;
 }
 
-function detectCapacity(message) {
-    const match = message.match(/(\d+)\s*(?:seater|seat|person|people|pax)/);
-    if (match) return parseInt(match[1]);
+function detectMaterial(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
     
-    // Common descriptions
-    if (message.includes('couple') || message.includes('two')) return 2;
-    if (message.includes('small family')) return 4;
-    if (message.includes('large family') || message.includes('extended family')) return 8;
-    if (message.includes('entertaining') || message.includes('parties')) return 8;
-    
-    return null;
-}
-
-function detectMaterial(message) {
     const materials = {
-        'teak': ['teak', 'wood', 'wooden', 'hardwood'],
-        'aluminium': ['aluminium', 'aluminum', 'metal'],
-        'rattan': ['rattan', 'wicker', 'weave']
+        'teak': {
+            keywords: ['teak', 'hardwood', 'solid wood', 'natural wood', 'wooden'],
+            maintenance_keywords: ['natural', 'classic', 'traditional', 'warm'],
+            weight: 0
+        },
+        'aluminium': {
+            keywords: ['aluminium', 'aluminum', 'metal', 'steel'],
+            maintenance_keywords: ['no maintenance', 'low maintenance', 'maintenance free', 'easy care', 'rust proof'],
+            weight: 0
+        },
+        'rattan': {
+            keywords: ['rattan', 'wicker', 'weave', 'woven', 'synthetic rattan', 'poly rattan'],
+            maintenance_keywords: ['traditional style', 'classic look'],
+            weight: 0
+        }
     };
     
-    for (const [key, keywords] of Object.entries(materials)) {
-        if (keywords.some(kw => message.includes(kw))) {
-            return key;
+    // Check direct material mentions
+    Object.entries(materials).forEach(([material, data]) => {
+        data.keywords.forEach(keyword => {
+            if (fullContext.includes(keyword)) {
+                materials[material].weight += 2; // Direct mention gets high weight
+            }
+        });
+        
+        // Check maintenance preferences
+        data.maintenance_keywords.forEach(keyword => {
+            if (fullContext.includes(keyword)) {
+                materials[material].weight += 1;
+            }
+        });
+    });
+    
+    // Find material with highest weight
+    let maxWeight = 0;
+    let detectedMaterial = null;
+    
+    Object.entries(materials).forEach(([material, data]) => {
+        if (data.weight > maxWeight) {
+            maxWeight = data.weight;
+            detectedMaterial = material;
+        }
+    });
+    
+    return detectedMaterial;
+}
+
+function detectBudget(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
+    // Direct price mentions
+    const pricePatterns = [
+        /[£$](\d+(?:,\d{3})*(?:\.\d{2})?)/,
+        /(\d+(?:,\d{3})*)\s*(?:pounds|dollars|gbp|usd)/,
+        /budget\s*(?:of|is)?\s*[£$]?(\d+)/,
+        /up\s*to\s*[£$]?(\d+)/,
+        /under\s*[£$]?(\d+)/,
+        /max(?:imum)?\s*[£$]?(\d+)/
+    ];
+    
+    for (const pattern of pricePatterns) {
+        const match = fullContext.match(pattern);
+        if (match) {
+            const amount = parseInt(match[1].replace(/,/g, ''));
+            return amount;
         }
     }
     
-    // Maintenance-based detection
-    if (message.includes('no maintenance') || message.includes('low maintenance')) {
-        return 'aluminium';
-    }
-    if (message.includes('natural') || message.includes('classic')) {
-        return 'teak';
+    // Price range patterns
+    const rangeMatch = fullContext.match(/[£$]?(\d+)\s*(?:to|-)\s*[£$]?(\d+)/);
+    if (rangeMatch) {
+        return parseInt(rangeMatch[2].replace(/,/g, '')); // Return the upper limit
     }
     
-    return null;
-}
-
-function detectBudget(message) {
-    const priceMatch = message.match(/[£$](\d+)/);
-    if (priceMatch) return parseInt(priceMatch[1]);
-    
-    if (message.includes('budget') || message.includes('cheap') || message.includes('affordable')) {
-        return 1000;
+    // Descriptive budget levels
+    if (fullContext.includes('budget') || fullContext.includes('cheap') || fullContext.includes('affordable') || fullContext.includes('economical')) {
+        return 1500;
     }
-    if (message.includes('premium') || message.includes('luxury') || message.includes('best')) {
+    if (fullContext.includes('mid-range') || fullContext.includes('middle')) {
+        return 3000;
+    }
+    if (fullContext.includes('premium') || fullContext.includes('luxury') || fullContext.includes('high-end') || fullContext.includes('best quality')) {
         return 5000;
     }
+    if (fullContext.includes('no budget') || fullContext.includes('price no object')) {
+        return 10000;
+    }
     
     return null;
 }
 
-function detectSpace(message) {
-    const sizeMatch = message.match(/(\d+)\s*(?:x|by)\s*(\d+)/);
-    if (sizeMatch) {
-        return {
-            width: parseInt(sizeMatch[1]),
-            depth: parseInt(sizeMatch[2])
-        };
+function detectSpace(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
+    // Direct dimension patterns
+    const dimensionPatterns = [
+        /(\d+)\s*(?:m|meters?|metres?)\s*(?:x|by)\s*(\d+)\s*(?:m|meters?|metres?)/,
+        /(\d+)\s*(?:ft|feet|foot)\s*(?:x|by)\s*(\d+)\s*(?:ft|feet|foot)/,
+        /(\d+)\s*(?:cm|centimeters?)\s*(?:x|by)\s*(\d+)\s*(?:cm|centimeters?)/
+    ];
+    
+    for (const pattern of dimensionPatterns) {
+        const match = fullContext.match(pattern);
+        if (match) {
+            let width = parseInt(match[1]);
+            let depth = parseInt(match[2]);
+            
+            // Convert to cm if needed
+            if (pattern.source.includes('meters')) {
+                width *= 100;
+                depth *= 100;
+            } else if (pattern.source.includes('feet')) {
+                width *= 30; // Rough conversion
+                depth *= 30;
+            }
+            
+            return { width, depth };
+        }
     }
     
-    if (message.includes('small') || message.includes('compact') || message.includes('balcony')) {
+    // Descriptive space sizes
+    if (fullContext.includes('small') || fullContext.includes('compact') || fullContext.includes('balcony') || fullContext.includes('tiny')) {
         return { width: 200, depth: 200 };
     }
-    if (message.includes('large') || message.includes('spacious')) {
+    if (fullContext.includes('medium') || fullContext.includes('average')) {
+        return { width: 350, depth: 350 };
+    }
+    if (fullContext.includes('large') || fullContext.includes('spacious') || fullContext.includes('big garden')) {
         return { width: 500, depth: 500 };
+    }
+    if (fullContext.includes('huge') || fullContext.includes('vast') || fullContext.includes('enormous')) {
+        return { width: 700, depth: 700 };
     }
     
     return null;
 }
 
-function getNextQualifyingQuestion(state) {
+function detectColor(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
+    const colors = ['white', 'grey', 'gray', 'black', 'beige', 'brown', 'taupe', 'green', 'blue', 'natural'];
+    
+    for (const color of colors) {
+        if (fullContext.includes(color)) {
+            // Normalize grey/gray
+            return color === 'gray' ? 'grey' : color;
+        }
+    }
+    
+    return null;
+}
+
+function detectFeatures(conversationHistory, currentMessage = '') {
+    const fullContext = conversationHistory
+        .map(msg => typeof msg === 'string' ? msg : msg.content || '')
+        .concat(currentMessage)
+        .join(' ')
+        .toLowerCase();
+    
+    const features = [];
+    
+    const featurePatterns = {
+        'low_maintenance': ['low maintenance', 'no maintenance', 'easy care', 'maintenance free', 'easy to clean', 'easy to look after'],
+        'weather_resistant': ['weatherproof', 'all weather', 'weather resistant', 'waterproof', 'outdoor', 'rain proof'],
+        'space_saving': ['compact', 'small space', 'balcony', 'limited space', 'foldable', 'stackable'],
+        'modular': ['modular', 'configurable', 'flexible', 'rearrange', 'customizable'],
+        'with_storage': ['storage', 'cushion box', 'storage space'],
+        'quick_delivery': ['quick delivery', 'fast delivery', 'need soon', 'urgent', 'asap'],
+        'assembly_service': ['assembly', 'installation', 'set up for me', 'assembled']
+    };
+    
+    Object.entries(featurePatterns).forEach(([feature, keywords]) => {
+        if (keywords.some(keyword => fullContext.includes(keyword))) {
+            features.push(feature);
+        }
+    });
+    
+    return features.length > 0 ? features : null;
+}
+
+function getNextQualifyingQuestion(state, conversationHistory) {
+    // Check what we already know from full conversation
+    if (!state.purpose) {
+        state.purpose = detectPurpose(conversationHistory);
+    }
+    if (!state.capacity) {
+        state.capacity = detectCapacity(conversationHistory);
+    }
+    if (!state.material) {
+        state.material = detectMaterial(conversationHistory);
+    }
+    if (!state.budget) {
+        state.budget = detectBudget(conversationHistory);
+    }
+    if (!state.space) {
+        state.space = detectSpace(conversationHistory);
+    }
+    
     // Priority order of questions
-    if (!state.purpose && !state.capacity) {
+    if (!state.purpose) {
         return "I'd love to help you find the perfect outdoor furniture! Are you looking for a dining set for meals, a lounge set for relaxing, or perhaps a sun lounger?";
     }
-    if (!state.capacity && state.purpose) {
+    
+    if (!state.capacity) {
         const purposeQuestions = {
-            'dining': "How many people do you typically need to seat for dining?",
-            'lounge': "How many people would you like your lounge set to accommodate?",
-            'corner': "What size corner set are you thinking - 5 seater, 7 seater, or larger?",
-            'lounger': "Are you looking for a single sun lounger or a pair?"
+            'dining': "Perfect! How many people do you typically need to seat for dining?",
+            'lounge': "Great choice! How many people would you like your lounge set to accommodate?",
+            'corner': "Corner sets are fantastic for maximizing space! What size are you thinking - 5 seater, 7 seater, or larger?",
+            'lounger': "Sun loungers are perfect for relaxation! Are you looking for a single lounger or a pair?",
+            'hybrid': "Versatile choice! How many people do you need to accommodate?"
         };
         return purposeQuestions[state.purpose] || "How many people do you need to seat?";
     }
+    
     if (!state.material) {
         return "What material appeals to you most? Teak wood has a classic natural look, aluminium is virtually maintenance-free, and rattan offers traditional woven style.";
     }
-    if (!state.budget) {
-        return "What budget range are you working with? This helps me show you the best value options.";
+    
+    if (!state.budget && state.capacity >= 4) { // Only ask budget for larger sets
+        return "To show you the best options in your range, what's your approximate budget?";
     }
-    if (!state.space) {
-        return "Do you have any space constraints I should know about? Rough dimensions of your patio or garden area would be helpful.";
+    
+    if (!state.space && state.capacity >= 6) { // Only ask space for larger sets
+        return "For larger sets, space can be important. Roughly how much space do you have available? (e.g., 'small patio', '4m x 4m', or 'large garden')";
+    }
+    
+    // Check for color preference if not detected
+    if (!state.color) {
+        state.color = detectColor(conversationHistory);
     }
     
     return null; // Fully qualified
 }
+
+// ============= END OF ENHANCED DETECTION SYSTEM =============
 
 function buildSearchCriteria(state) {
     const criteria = {};
@@ -2381,92 +2906,81 @@ This triggers the visual product cards in the widget. NEVER use plain text for p
       let toolResults = [];
       
       for (const toolCall of aiMessage.tool_calls) {
-  // FIXED: Enhanced search_products tool call handler
+
+        
 if (toolCall.function.name === "search_products") {
     const args = JSON.parse(toolCall.function.arguments);
-
-console.log('🚨 SEARCH DEBUG: Which search are we using?');
-console.log('🔍 Search criteria:', args);
-console.log('🏪 Shopify token exists?', !!process.env.SHOPIFY_ACCESS_TOKEN);
-
-    console.log('🔍 Search criteria received:', args);
-
-    const enhancedCriteria = {
+    console.log('🔍 Advanced search request:', args);
+    
+    // Build comprehensive search using conversation context
+    const searchCriteria = {
         ...args,
-        maxResults: args.maxResults || 3
+        // Add detected context
+        purpose: args.furnitureType || detectPurpose(session.conversationHistory, message),
+        capacity: args.seatCount || detectCapacity(session.conversationHistory, message),
+        material: args.material || detectMaterial(session.conversationHistory, message),
+        budget: args.maxPrice || detectBudget(session.conversationHistory, message),
+        space: detectSpace(session.conversationHistory, message),
+        color: detectColor(session.conversationHistory, message),
+        features: detectFeatures(session.conversationHistory, message)
     };
-
-    if (args.productName) {
-        const searchName = args.productName.toLowerCase();
-        if (searchName.includes('teak') && (searchName.includes('lounge') || searchName.includes('sofa'))) {
-            enhancedCriteria.material = 'teak';
-            enhancedCriteria.furnitureType = 'lounge';
-            console.log('🎯 Enhanced search: Detected teak lounge request');
-        }
-        if (searchName.includes('dining') && !enhancedCriteria.furnitureType) {
-            enhancedCriteria.furnitureType = 'dining';
-            console.log('🎯 Enhanced search: Detected dining request');
-        }
-        if (searchName.includes('aluminium') && !enhancedCriteria.material) {
-            enhancedCriteria.material = 'aluminium';
-            console.log('🎯 Enhanced search: Detected aluminium request');
-        }
-        if (searchName.includes('rattan') && !enhancedCriteria.material) {
-            enhancedCriteria.material = 'rattan';
-            console.log('🎯 Enhanced search: Detected rattan request');
-        }
+    
+    // Map purpose to furnitureType
+    if (searchCriteria.purpose && !searchCriteria.furnitureType) {
+        const purposeMap = {
+            'dining': 'dining',
+            'lounge': 'lounge',
+            'corner': 'corner',
+            'lounger': 'lounger',
+            'hybrid': 'lounge'
+        };
+        searchCriteria.furnitureType = purposeMap[searchCriteria.purpose];
     }
-
-    console.log('🎯 Final enhanced criteria:', enhancedCriteria);
-
-    // This function now returns a clean array of objects ready for the AI
-    const products = await searchShopifyProducts(enhancedCriteria);
-
-    // --- THIS IS THE NEW, SIMPLIFIED 'if/else' BLOCK ---
-
+    
+    // Set seatCount from capacity
+    if (searchCriteria.capacity && !searchCriteria.seatCount) {
+        searchCriteria.seatCount = searchCriteria.capacity;
+    }
+    
+    console.log('📊 Final search criteria:', searchCriteria);
+    
+    // Use the searchRealProducts function
+    const products = searchRealProducts(searchCriteria);
+    
     if (products.length > 0) {
-        // The 'products' variable is already perfect. We pass it directly to the AI.
-        // NO MORE REMAPPING.
         toolResults.push({
             tool_call_id: toolCall.id,
             output: JSON.stringify({
                 success: true,
-                products: products, // Pass the 'products' array directly
+                products: products,
                 count: products.length,
-                note: "Products found. Format them using the template."
+                searchCriteria: searchCriteria,
+                note: `Found ${products.length} products matching your requirements`
             })
         });
-
-        // The logger is now updated to use the correct keys from our clean data object.
-        console.log('✅ PRODUCTS BEING SENT TO AI (Corrected Log):');
-        products.forEach((product, index) => {
-            console.log(`  ${index + 1}. ${product.product_title}`);
-            console.log(`     Price: £${product.price}`);
-            console.log(`     Stock: ${product.stockStatus.message}`);
-            if (product.image_url) console.log(`     Image: ${product.image_url}`);
-            console.log(`     URL: ${product.website_url}`);
-        });
-
+        
+        console.log(`✅ Returning ${products.length} products to AI`);
     } else {
-        // This is the existing 'else' block for when no products are found
+        // Suggest alternatives
         const suggestions = [];
-        if (enhancedCriteria.material) suggestions.push(`Try Browse all ${enhancedCriteria.material} products`);
-        if (enhancedCriteria.furnitureType) suggestions.push(`Try Browse all ${enhancedCriteria.furnitureType} furniture`);
-        if (enhancedCriteria.productName) suggestions.push(`Try searching for similar products`);
-
+        if (searchCriteria.material) {
+            suggestions.push(`Try browsing all ${searchCriteria.material} products`);
+        }
+        if (searchCriteria.furnitureType) {
+            suggestions.push(`View all ${searchCriteria.furnitureType} options`);
+        }
+        suggestions.push("Adjust your requirements slightly");
+        
         toolResults.push({
             tool_call_id: toolCall.id,
             output: JSON.stringify({
                 success: false,
-                message: "No in-stock products found matching these criteria",
+                message: "No exact matches found, but I can show you similar options",
                 suggestions: suggestions,
-                note: "Search filtered for in-stock items only. Out-of-stock products were excluded."
+                searchCriteria: searchCriteria
             })
         });
-
-        console.log('❌ No products found for criteria:', enhancedCriteria);
     }
-    // --- END OF THE NEW BLOCK ---
 }
 
 if (toolCall.function.name === "offer_bundle_naturally") {
