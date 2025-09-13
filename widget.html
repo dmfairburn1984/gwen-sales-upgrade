@@ -465,9 +465,14 @@ formatted = formatted.replace(/^(SKU|Price|Stock Status|Delivery):(.+)$/gm, (mat
     return `<div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: ${color}; font-weight: ${weight}; margin: 6px 0;">${icon}${key}: ${value}</div>`;
 });
 
-            // View in Store Button (Forest Green CTA) 
-            formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, '<a href="$1" target="_blank" style="display: inline-block; margin-top: 15px; padding: 12px 24px; background: #2E6041; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: \'Montserrat\', sans-serif;">View in Store</a>');
-
+            // View in Store Button - FIXED URL HANDLING
+formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, function(match, url) {
+    // Ensure URL is absolute
+    if (!url.startsWith('http')) {
+        url = 'https://mint-outdoor.com' + (url.startsWith('/') ? '' : '/') + url;
+    }
+    return '<a href="' + url + '" target="_blank" onclick="event.stopPropagation(); window.open(\'' + url + '\', \'_blank\'); return false;" style="display: inline-block; margin-top: 15px; padding: 12px 24px; background: #2E6041; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: \'Montserrat\', sans-serif;">View in Store</a>';
+});
         
             // Buy Now Button (Prominent CTA)
 formatted = formatted.replace(/\[Buy Now\]\((.*?)\)/g, '<a href="$1" target="_blank" style="display: inline-block; margin-top: 8px; margin-left: 10px; padding: 12px 24px; background: #DC2626; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: \'Montserrat\', sans-serif;">Buy Now →</a>');

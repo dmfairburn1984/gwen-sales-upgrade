@@ -1345,9 +1345,9 @@ async function searchShopifyProducts(criteria) {
                     exclude: ['coffee', 'side', 'lounge', 'sofa', 'corner', 'parasol', 'lounger']
                 },
                 'lounge': {
-                    include: ['lounge', 'sofa', 'conversation', 'armchair', 'seating', 'relax'],
-                    exclude: ['dining', 'corner set', 'corner sofa', 'lounger', 'sun lounger']
-                },
+    include: ['lounge set', 'lounge', 'sofa set', 'sofa', 'conversation', 'seating'],
+    exclude: ['dining', 'corner', 'lounger', 'sun lounger', 'daybed', 'sunbed']
+},
                 'corner': {
                     include: ['corner set', 'corner sofa', 'corner dining', 'corner lounge', 'l-shaped'],
                     exclude: ['sun lounger', 'lounger', 'parasol', 'single', 'armchair']
@@ -1419,19 +1419,34 @@ async function searchShopifyProducts(criteria) {
             console.log(`  ➡️ Found ${filteredProducts.length} products after material filter.`);
         }
 
-        // STOCK AND PRICE VALIDATION
-        let validProducts = filteredProducts.filter(product => {
-            const variant = product.variants[0] || {};
-            const price = parseFloat(variant.price || 0);
-            const stock = parseInt(variant.inventory_quantity || 0);
-            const isAvailable = variant.available !== false;
-            
-            if (stock <= 0 || price <= 0 || !isAvailable) {
-                console.log(`❌ Filtering out: "${product.title}" (Stock: ${stock}, Price: ${price})`);
-                return false;
-            }
-            return true;
-        });
+       // STOCK AND PRICE VALIDATION - STRICT IN-STOCK ONLY
+let validProducts = filteredProducts.filter(product => {
+    const variant = product.variants[0] || {};
+    const price = parseFloat(variant.price || 0);
+    const stock = parseInt(variant.inventory_quantity || 0);
+    const isAvailable = variant.available !== false;
+    
+    // CRITICAL: Only show products that are ACTUALLY in stock
+    if (stock <= 0) {
+        console.log(`❌ OUT OF STOCK - Removing: "${product.title}" (Stock: ${stock})`);
+        return false;
+    }
+    
+    if (price <= 0 || !isAvailable) {
+        console.log(`❌ Invalid product: "${product.title}" (Price: ${price}, Available: ${isAvailable})`);
+        return false;
+    }
+    
+    console.log(`✅ IN STOCK: "${product.title}" (Stock: ${stock})`);
+    return true;
+});
+
+// Sort by stock level (highest stock first - likely bestsellers)
+validProducts.sort((a, b) => {
+    const aStock = parseInt(a.variants[0]?.inventory_quantity || 0);
+    const bStock = parseInt(b.variants[0]?.inventory_quantity || 0);
+    return bStock - aStock;  // Higher stock first
+});
 
         // SEAT COUNT FILTER
         if (criteria.seatCount) {
@@ -1512,10 +1527,10 @@ const aiTools = [
             enum: ["teak", "aluminium", "rattan"],
             description: "Material type"
           },
-          furnitureType: {
-            type: "string",
-            enum: ["dining", "lounge", "corner", "lounger", "parasol", "storage"],
-            description: "Type of furniture - use 'corner' for corner sets/sofas"
+         furnitureType: {
+         type: "string",
+         enum: ["dining", "lounge", "corner", "lounger", "parasol", "storage"],
+         description: "Type of furniture - use 'lounge' for sofas/lounge sets, 'lounger' for sun loungers/daybeds"
           },
           'lounge': {
             triggers: ['lounge', 'sofa', 'relax', 'conversation', 'seating', 'chill', 'sitting'],
@@ -1786,12 +1801,26 @@ const messages = [{
 - When the \`search_products\` tool returns items, you MUST format the response using this EXACT template for each product. This is not optional; it triggers the visual UI.
 - Use the exact data fields provided in the tool's JSON output (e.g., product_title, price, stockStatus.message, image_url, website_url).
 
-**CRITICAL CATEGORY DETECTION:**
-- "corner set" or "corner rattan" or "corner sofa" → use furnitureType="corner" 
+**CRITICAL CATEGORY DETECTION (MUST GET RIGHT):**
+- "lounge set" or "lounge furniture" or "sofa" → use furnitureType="lounge" (NOT lounger!)
+- "sun lounger" or "lounger" or "daybed" → use furnitureType="lounger" 
+- "corner set" or "corner sofa" → use furnitureType="corner"
 - "dining set" or "dining table" → use furnitureType="dining"
-- "lounge set" or "sofa" (NOT corner) → use furnitureType="lounge"  
-- "sun lounger" or "lounger" → use furnitureType="lounger"
-- NEVER confuse corner sets with sun loungers!
+
+**NEVER CONFUSE THESE:**
+- Lounge = sofas, seating sets for conversation
+- Lounger = lie-flat sunbeds for tanning/relaxing
+
+**Smart Search Examples:**
+- "rattan lounge sets" → search: {furnitureType: "lounge", material: "rattan"} 
+- "rattan sun loungers" → search: {furnitureType: "lounger", material: "rattan"}
+- "grey rattan sets" → search: {material: "rattan"} + filter for grey in results
+- "8 person lounge set" → search: {furnitureType: "lounge", seatCount: 8}
+
+**CRITICAL STOCK RULE:**
+- ONLY show products where stockStatus.message includes "In stock"
+- NEVER show "Out of stock" products unless customer specifically asks
+- Sort by stock level to show bestsellers (high stock = popular)
 
 **Smart Search Examples:**
 - "corner rattan sets" → search: {furnitureType: "corner", material: "rattan"}
