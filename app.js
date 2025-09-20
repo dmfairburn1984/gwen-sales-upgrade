@@ -341,25 +341,84 @@ function detectCustomerInterest(message, session) {
   return hasInterest && hasSeenProducts;
 }
 
+// Enhanced interest scoring system
+function calculateCustomerInterestScore(session) {
+    let score = 0;
+    
+    // Check last 3 messages for buying signals
+    const recentMessages = session.conversationHistory.slice(-6);
+    const buyingSignals = [
+        'love', 'perfect', 'like', 'nice', 'beautiful', 
+        'ideal', 'exactly', 'great', 'amazing', 'interested'
+    ];
+    
+    recentMessages.forEach(msg => {
+        if (msg.role === 'user') {
+            const msgLower = msg.content.toLowerCase();
+            
+            // Strong buying signals
+            if (msgLower.includes('love this') || 
+                msgLower.includes('perfect') || 
+                msgLower.includes('exactly what')) {
+                score += 3;
+            }
+            
+            // Medium buying signals
+            buyingSignals.forEach(signal => {
+                if (msgLower.includes(signal)) score += 1;
+            });
+            
+            // Specific product mention
+            if (msgLower.includes('malai') || 
+                msgLower.includes('marbella') || 
+                msgLower.includes('lima')) {
+                score += 2;
+            }
+        }
+    });
+    
+    // Must have seen actual products with prices
+    const productsSeen = session.conversationHistory.filter(msg => 
+        msg.role === 'assistant' && 
+        msg.content.includes('£') &&
+        (msg.content.includes('Price:') || msg.content.includes('at just £'))
+    ).length;
+    
+    score += Math.min(productsSeen * 2, 6); // Max 6 points from products
+    
+    // Length of engagement
+    if (session.conversationHistory.length >= 8) score += 2;
+    if (session.conversationHistory.length >= 12) score += 2;
+    
+    // Time spent (if tracking)
+    if (session.context.startTime) {
+        const minutesEngaged = (Date.now() - session.context.startTime) / 60000;
+        if (minutesEngaged > 3) score += 2;
+    }
+    
+    return score;
+}
+
 function shouldOfferBundleNaturally(session) {
-    const isQualified = session.qualificationState?.qualified || false;
+    // Calculate interest score
+    const interestScore = calculateCustomerInterestScore(session);
     
-    const hasShownProducts = session.conversationHistory.some(msg => 
-        msg.role === 'assistant' && msg.content.includes('Price: £')
-    );
+    // Already offered?
+    if (session.context.offeredBundle || 
+        session.context.waitingForPackageResponse) {
+        return false;
+    }
     
-    const lastMessage = session.conversationHistory[session.conversationHistory.length - 1];
-    const showsProductInterest = lastMessage && (
-        lastMessage.content.toLowerCase().includes('this one') ||
-        lastMessage.content.toLowerCase().includes('i like') ||
-        lastMessage.content.toLowerCase().includes('tell me more') ||
-        lastMessage.content.toLowerCase().includes('perfect')
-    );
+    // Log for debugging
+    console.log(`💰 Bundle Decision - Interest Score: ${interestScore}/15`);
     
-    const alreadyOffered = session.context.offeredBundle || 
-                           session.context.waitingForPackageResponse;
+    // Need score of 8+ to offer bundle (shows real interest)
+    if (interestScore >= 8) {
+        session.context.bundleReady = true;
+        return true;
+    }
     
-    return isQualified && hasShownProducts && showsProductInterest && !alreadyOffered;
+    return false;
 }
 
 function extractCustomerDetails(message) {
@@ -446,6 +505,51 @@ const questionVariations = {
     ]
   }
 };
+
+// Smart engagement tracking
+function initializeSessionTracking(session) {
+    if (!session.context.tracking) {
+        session.context.tracking = {
+            startTime: Date.now(),
+            productsViewed: [],
+            questionsAsked: 0,
+            engagementLevel: 'browsing',
+            lastActivity: Date.now()
+        };
+    }
+}
+
+function updateEngagementLevel(session, action, data) {
+    if (!session.context.tracking) {
+        initializeSessionTracking(session);
+    }
+    
+    const tracking = session.context.tracking;
+    tracking.lastActivity = Date.now();
+    
+    if (action === 'viewed_product') {
+        tracking.productsViewed.push(data);
+        
+        // Upgrade engagement based on product views
+        if (tracking.productsViewed.length >= 2) {
+            tracking.engagementLevel = 'interested';
+        }
+        if (tracking.productsViewed.length >= 4) {
+            tracking.engagementLevel = 'highly_engaged';
+        }
+    }
+    
+    if (action === 'asked_specific') {
+        tracking.engagementLevel = 'qualified';
+    }
+    
+    if (action === 'showed_buying_signal') {
+        tracking.engagementLevel = 'ready_to_buy';
+    }
+    
+    console.log(`📊 Engagement: ${tracking.engagementLevel}`);
+    return tracking.engagementLevel;
+}
 
 function getPersonaAwareQuestion(type, persona = 'default', usedQuestions = []) {
   const variations = questionVariations[type] || {};
@@ -1196,46 +1300,31 @@ function detectFeatures(conversationHistory, currentMessage = '') {
 }
 
 function getNextQualifyingQuestion(state, conversationHistory) {
-    // Check what we already know from full conversation
-    if (!state.purpose) {
-        state.purpose = detectPurpose(conversationHistory);
-    }
-    if (!state.capacity) {
-        state.capacity = detectCapacity(conversationHistory);
-    }
-    if (!state.material) {
-        state.material = detectMaterial(conversationHistory);
-    }
-    if (!state.budget) {
-        state.budget = detectBudget(conversationHistory);
-    }
-    if (!state.space) {
-        state.space = detectSpace(conversationHistory);
+    // NEW LOGIC: Only ONE question, then show products
+    
+    // If we know ANYTHING, don't ask questions - show products!
+    if (state.purpose || state.capacity || state.material || 
+        conversationHistory.length > 2) {
+        state.qualified = true;
+        return null; // No more questions - time to sell!
     }
     
-    // Priority order of questions
-    if (!state.purpose) {
-        return "I'd love to help you find the perfect outdoor furniture! Are you looking for a dining set for meals, a lounge set for relaxing, or perhaps a sun lounger?";
-    }
+    // Customer just arrived - ONE engaging opener only
+    const conversationalOpeners = [
+        "What kind of outdoor vibe are you going for?",
+        "Is this more for dining or lounging?",
+        "Tell me about your dream outdoor space!",
+        "Family BBQs or sunset cocktails - what's your scene?",
+        "What brings you to MINT today?"
+    ];
     
-    if (!state.capacity) {
-        const purposeQuestions = {
-            'dining': "Perfect! How many people do you typically need to seat for dining?",
-            'lounge': "Great choice! How many people would you like your lounge set to accommodate?",
-            'corner': "Corner sets are fantastic for maximizing space! What size are you thinking - 5 seater, 7 seater, or larger?",
-            'lounger': "Sun loungers are perfect for relaxation! Are you looking for a single lounger or a pair?",
-            'hybrid': "Versatile choice! How many people do you need to accommodate?"
-        };
-        return purposeQuestions[state.purpose] || "How many people do you need to seat?";
-    }
+    // Random opener to keep it fresh
+    const opener = conversationalOpeners[Math.floor(Math.random() * conversationalOpeners.length)];
     
-    if (!state.material) {
-        return "What material would work best for you - teak for natural beauty, aluminium for low maintenance, or rattan for comfort?";
-    }
+    // Mark that we've asked our ONE question
+    state.askedOpener = true;
     
-    // If we have all key info, mark as qualified
-    state.qualified = true;
-    return null;
+    return opener;
 }
 
 // ============================================
@@ -1610,24 +1699,112 @@ async function generateAISalesResponse(message, sessionId, session) {
     session.context.detectedPersona = customerPersona;
     console.log(`🎭 Detected customer persona: ${customerPersona}`);
     
-    const messages = [{
-      role: "system",
-      content: `You are Gwen Johnson, an expert outdoor furniture specialist at MINT Outdoor. Your primary goal is to understand a customer's needs and find the perfect product for them using your tools.
+const messages = [{
+  role: "system",
+  content: `You are Gwen Johnson, a warm and knowledgeable outdoor furniture expert at MINT Outdoor who loves helping customers discover their perfect outdoor space.
 
-**QUALIFICATION PROCESS (CRITICAL - FOLLOW THIS EXACTLY):**
+**🎯 YOUR SELLING PHILOSOPHY - THE MINT METHOD:**
 
-Before showing ANY products, you MUST qualify the customer's needs:
+**1. INSTANT VALUE PRINCIPLE**
+- ALWAYS show 2-3 relevant products within your FIRST or SECOND response
+- Use whatever information you have (even just "teak sets" = show teak immediately)
+- Products create conversation - questions create friction
 
-1. **NEVER show products on the first interaction** unless customer mentions a specific SKU or product name
-2. Ask qualifying questions in this priority order:
-   - PURPOSE: What will they use it for? (dining/lounge/sun lounger)
-   - CAPACITY: How many people? (this determines product size)
-   - MATERIAL: Preference for teak/aluminium/rattan based on maintenance tolerance
-   - BUDGET: Price range (helps filter to appropriate products)
-   - SPACE: Available dimensions (ensures it will fit)
+**2. ONE QUESTION RULE**
+When customer first arrives, ask ONLY ONE conversational opener:
+- "Are you thinking more dining or lounging?"
+- "What kind of outdoor space are you working with?"
+- "Is this for family meals or entertaining friends?"
+NEVER ask multiple questions or use numbered lists
 
-3. Track qualification progress in session.qualificationState
-4. Only search and show products once you have at least PURPOSE and CAPACITY
+**3. PRODUCT-FIRST SELLING**
+The moment they answer ANYTHING, show products:
+Customer: "Looking for teak"
+You: "Excellent choice! Let me show you our stunning Malai teak lounge set..."
+[Show 2-3 products with images and prices]
+"The Malai seats 5 comfortably - is that about the right size for you?"
+
+**4. WEAVE DISCOVERY NATURALLY**
+Gather information WHILE showing products:
+- "This seats 6 - would you need larger?"
+- "The teak version is £1,299 - I also have rattan at £899"
+- "This needs about 3x3 meters - how's your space?"
+
+**5. PRICE DISPLAY RULES**
+- Always show REAL prices: "£1,299" not "£[amount]"
+- Lead with value: "At just £899, this is incredible value"
+- Create urgency: "We have 3 left at this price"
+
+**6. IMAGE DISPLAY FORMAT**
+When showing products, format like this:
+Product Name
+[Product Image]
+Key benefit that matches their need
+Price: £XXX
+Stock: Available/Limited
+[View in Store button]
+
+**7. BUNDLE TIMING INTELLIGENCE**
+Only mention bundles when ALL are true:
+- Customer has seen products (prices shown)
+- Shows genuine interest ("I like this", "perfect", "tell me more")
+- At least 6 messages exchanged
+- Use the offer_package_deal tool to check timing
+
+**8. SEARCH INTELLIGENCE**
+Be smart with search terms:
+- "teak sets" → search: material="teak"
+- "malai" → search: productName="malai"
+- "dining for 6" → search: furnitureType="dining", seatCount=6
+- "outdoor sofa" → search: furnitureType="lounge"
+- Always combine criteria for better results
+
+**9. NATURAL LANGUAGE RULES**
+BANNED PHRASES:
+- "To help you find the perfect..."
+- "I need to ask a few questions..."
+- "Let me gather some information..."
+- Any numbered list of questions
+
+REQUIRED PHRASES:
+- "Let me show you..."
+- "You'll love this one..."
+- "This is popular because..."
+- "Between you and me..."
+
+**10. CUSTOMER PERSONA AWARENESS**
+Current customer type: ${customerPersona}
+- entertainer: Focus on impressive pieces, hosting capacity
+- family: Emphasize durability, safety, easy cleaning
+- style_conscious: Highlight design, modern aesthetics
+- budget_conscious: Show value, deals, long-term savings
+
+**YOUR TOOLS:**
+- search_products: Find products by any criteria
+- get_product_availability: Check specific stock
+- offer_package_deal: Check if bundle timing is right
+- get_comprehensive_warranty: Build trust with warranty info
+- marketing_handoff: When ready to purchase
+
+Remember: You're not qualifying leads, you're SELLING DREAMS of perfect outdoor living
+
+**PRODUCT DISPLAY TEMPLATE:**
+When showing products from search results, format EXACTLY like this:
+
+**[Product Name]**
+[Use the image_display field here]
+
+✨ [One key benefit that matches their stated need]
+
+💰 Price: [Use price_display field]
+📦 [Use stock_display field]
+📏 [Key dimension if relevant]
+
+[Use view_button field here]
+
+---
+
+Never use markdown image syntax ![](). Always use the pre-formatted fields.
 
 **CRITICAL FIXES FOR PRODUCT SEARCH & DISPLAY:**
 
@@ -1750,18 +1927,18 @@ Current customer appears to be: ${customerPersona}
           const products = await searchShopifyProducts(searchCriteria);
           
           if (products.length > 0) {
-            toolResults.push({
-              tool_call_id: toolCall.id,
-              output: JSON.stringify({
-                success: true,
-                products: products,
-                count: products.length,
-                searchCriteria: searchCriteria,
-                note: `Found ${products.length} products matching your requirements`
-              })
-            });
-            
-            console.log(`✅ Returning ${products.length} products to AI`);
+    toolResults.push({
+        tool_call_id: toolCall.id,
+        output: JSON.stringify({
+            success: true,
+            products: products,
+            count: products.length,
+            searchCriteria: searchCriteria,
+            note: `Found ${products.length} products matching your requirements`
+        })
+    });
+    
+    console.log(`✅ Returning ${products.length} products to AI`);
           } else {
             // Suggest alternatives
             const suggestions = [];
