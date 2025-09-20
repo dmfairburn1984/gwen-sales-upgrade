@@ -195,9 +195,18 @@
         
         .message-bubble img {
             max-width: 100%;
+            max-height: 400px;
+            width: auto;
             border-radius: var(--border-radius);
             margin: 12px 0;
             border: 1px solid var(--border-color);
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .message-bubble img:hover {
+            transform: scale(1.02);
         }
         
         .product-detail {
@@ -209,6 +218,17 @@
         .product-detail.price {
             color: var(--color-forest-green);
             font-weight: 700;
+            font-size: 17px;
+        }
+        
+        .product-detail.stock {
+            color: #059669;
+            font-weight: 600;
+        }
+        
+        .product-detail.out-of-stock {
+            color: #DC2626;
+            font-weight: 600;
         }
         
         .product-cta {
@@ -475,38 +495,92 @@
         
         sendButton.addEventListener('click', sendMessage);
         
-        // Format product messages with brand styling
+        // CRITICAL FIX: Enhanced format function that handles markdown images
         function formatProductMessage(message) {
             let formatted = message;
             
-            // Product Title (Bold with brand font)
-            formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<h3>$1</h3>');
-            
-            // Product Images
-            formatted = formatted.replace(/<img src="([^"]+)"[^>]*>/g, '<img src="$1" alt="Product Image">');
-            
-            // Key-Value Pairs (SKU, Price, Stock Status)
-            formatted = formatted.replace(/^(SKU|Price|Stock Status):(.+)$/gm, (match, key, value) => {
-                const className = key === 'Price' ? 'product-detail price' : 'product-detail';
-                return `<div class="${className}">${key}:${value}</div>`;
+            // STEP 1: Convert Markdown images to HTML FIRST (before other replacements)
+            // This handles ![alt text](image_url) format
+            formatted = formatted.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
+                // Clean up the alt text - remove any extra formatting
+                const cleanAlt = alt || 'Product Image';
+                // Ensure URL is clean
+                const cleanUrl = url.trim();
+                console.log('Converting markdown image:', cleanUrl);
+                return `<img src="${cleanUrl}" alt="${cleanAlt}" style="max-width: 100%; max-height: 400px; width: auto; border-radius: 8px; margin: 12px 0; display: block;">`;
             });
             
-            // View Product Links (CTA Buttons)
-            formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, 
-                '<a href="$1" target="_blank" class="product-cta">View in Store</a>');
+            // STEP 2: Product Title (Bold with brand font)
+            formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<h3>$1</h3>');
             
-            // Assembly Instructions
+            // STEP 3: Handle any existing HTML img tags (preserve them)
+            formatted = formatted.replace(/<img\s+([^>]*src="[^"]+)"[^>]*>/g, function(match, srcPart) {
+                // Extract the src value
+                const srcMatch = srcPart.match(/src="([^"]+)"/);
+                if (srcMatch) {
+                    const src = srcMatch[1];
+                    console.log('Found HTML image:', src);
+                    return `<img src="${src}" alt="Product Image" style="max-width: 100%; max-height: 400px; width: auto; border-radius: 8px; margin: 12px 0; display: block;">`;
+                }
+                return match;
+            });
+            
+            // STEP 4: Price formatting with special styling
+            formatted = formatted.replace(/💰\s*Price:\s*(£[\d,]+\.?\d*)/g, function(match, price) {
+                return `<div class="product-detail price">💰 Price: ${price}</div>`;
+            });
+            
+            // STEP 5: Stock Status formatting
+            formatted = formatted.replace(/📦\s*([^<\n]+)/g, function(match, status) {
+                const className = status.includes('out of stock') ? 'product-detail out-of-stock' : 'product-detail stock';
+                return `<div class="${className}">📦 ${status}</div>`;
+            });
+            
+            // STEP 6: Key-Value Pairs (other details)
+            formatted = formatted.replace(/^(SKU|Dimensions|Material|Seats):(.+)$/gm, function(match, key, value) {
+                return `<div class="product-detail">${key}: ${value}</div>`;
+            });
+            
+            // STEP 7: View in Store Links (as buttons)
+            formatted = formatted.replace(/\[View in Store\]\((.*?)\)/g, function(match, url) {
+                // Ensure URL is absolute
+                let finalUrl = url;
+                if (!url.startsWith('http')) {
+                    finalUrl = 'https://mint-outdoor.com' + (url.startsWith('/') ? url : '/' + url);
+                }
+                return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
+            });
+            
+            // STEP 8: View Product Links (legacy support)
+            formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, function(match, url) {
+                let finalUrl = url;
+                if (!url.startsWith('http')) {
+                    finalUrl = 'https://mint-outdoor.com' + (url.startsWith('/') ? url : '/' + url);
+                }
+                return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
+            });
+            
+            // STEP 9: Assembly Instructions
             formatted = formatted.replace(/\[View Assembly Guide\]\((.*?)\)/g, 
                 '<a href="$1" target="_blank" class="product-cta assembly-guide">📋 Assembly Instructions</a>');
             
-            // General Links
-            formatted = formatted.replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, (match, href, text) => {
+            // STEP 10: General Links
+            formatted = formatted.replace(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g, function(match, href, text) {
                 if (match.includes('class=')) return match;
                 return `<a href="${href}" target="_blank" style="color: var(--color-forest-green); text-decoration: underline;">${text}</a>`;
             });
             
-            // Convert newlines to breaks
+            // STEP 11: Special formatting for emojis with text
+            formatted = formatted.replace(/✨\s*([^<\n]+)/g, '<div style="color: #059669; font-style: italic; margin: 8px 0;">✨ $1</div>');
+            formatted = formatted.replace(/📏\s*([^<\n]+)/g, '<div class="product-detail">📏 $1</div>');
+            
+            // STEP 12: Horizontal rules for product separation
+            formatted = formatted.replace(/---/g, '<hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">');
+            
+            // STEP 13: Convert newlines to breaks
             formatted = formatted.replace(/\n/g, '<br>');
+            
+            console.log('Formatted message:', formatted.substring(0, 200));
             
             return formatted;
         }
@@ -524,8 +598,19 @@
             bubbleDiv.className = 'message-bubble';
             
             if (!isUser) {
+                // Bot messages get formatted
                 bubbleDiv.innerHTML = formatProductMessage(message);
+                
+                // Add click-to-enlarge for images
+                const images = bubbleDiv.querySelectorAll('img');
+                images.forEach(img => {
+                    img.style.cursor = 'pointer';
+                    img.onclick = function() {
+                        window.open(this.src, '_blank');
+                    };
+                });
             } else {
+                // User messages are plain text
                 bubbleDiv.textContent = message;
             }
             
@@ -639,7 +724,7 @@
             }
         }
         
-        console.log('MINT Outdoor Chat System Loaded - Enhanced Version');
+        console.log('MINT Outdoor Chat System Loaded - Enhanced Image Rendering v2.0');
     </script>
 </body>
 </html>

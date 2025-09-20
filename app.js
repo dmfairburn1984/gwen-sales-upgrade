@@ -399,6 +399,52 @@ function calculateCustomerInterestScore(session) {
     return score;
 }
 
+// Add right after calculateCustomerInterestScore function:
+
+function hasShownProductInterest(session) {
+    const recentMessages = session.conversationHistory.slice(-3);
+    const interestPhrases = [
+        'i prefer', 'i like', 'perfect', 'love it', 'looks good',
+        'tell me more', 'interested', 'this one', 'the palma', 
+        'the lima', 'the marbella', 'beautiful', 'nice'
+    ];
+    
+    return recentMessages.some(msg => 
+        msg.role === 'user' && 
+        interestPhrases.some(phrase => 
+            msg.content.toLowerCase().includes(phrase)
+        )
+    );
+}
+
+// Update shouldOfferBundleNaturally function to use this
+function shouldOfferBundleNaturally(session) {
+    // Must have shown specific interest first
+    if (!hasShownProductInterest(session)) {
+        return false;
+    }
+    
+    // Then check interest score
+    const interestScore = calculateCustomerInterestScore(session);
+    
+    // Already offered?
+    if (session.context.offeredBundle || 
+        session.context.waitingForPackageResponse) {
+        return false;
+    }
+    
+    console.log(`💰 Bundle Decision - Interest Score: ${interestScore}/15`);
+    console.log(`💰 Has shown product interest: ${hasShownProductInterest(session)}`);
+    
+    // Need BOTH interest score AND specific product interest
+    if (interestScore >= 8 && hasShownProductInterest(session)) {
+        session.context.bundleReady = true;
+        return true;
+    }
+    
+    return false;
+}
+
 function shouldOfferBundleNaturally(session) {
     // Calculate interest score
     const interestScore = calculateCustomerInterestScore(session);
@@ -1300,33 +1346,32 @@ function detectFeatures(conversationHistory, currentMessage = '') {
 }
 
 function getNextQualifyingQuestion(state, conversationHistory) {
-    // NEW LOGIC: Only ONE question, then show products
-    
-    // If we know ANYTHING, don't ask questions - show products!
+    // If we have ANY information or conversation is beyond greeting, show products
     if (state.purpose || state.capacity || state.material || 
-        conversationHistory.length > 2) {
+        conversationHistory.length > 2 ||
+        state.qualified || state.askedOpener) {
         state.qualified = true;
-        return null; // No more questions - time to sell!
+        return null; // No questions - show products!
     }
     
-    // Customer just arrived - ONE engaging opener only
+    // Customer just arrived - ONE warm opener only
     const conversationalOpeners = [
-        "What kind of outdoor vibe are you going for?",
-        "Is this more for dining or lounging?",
-        "Tell me about your dream outdoor space!",
-        "Family BBQs or sunset cocktails - what's your scene?",
-        "What brings you to MINT today?"
+        "What's bringing you to MINT today - dining or lounging?",
+        "Are you dreaming of dinner parties or lazy Sunday lounging?",
+        "Tell me about your perfect outdoor setup!",
+        "What kind of outdoor moments are you looking to create?",
+        "Is this for entertaining friends or family relaxation?"
     ];
     
-    // Random opener to keep it fresh
-    const opener = conversationalOpeners[Math.floor(Math.random() * conversationalOpeners.length)];
+    // Use varied openers to keep fresh
+    const index = new Date().getSeconds() % conversationalOpeners.length;
+    const opener = conversationalOpeners[index];
     
-    // Mark that we've asked our ONE question
+    // Mark that we've asked
     state.askedOpener = true;
     
     return opener;
 }
-
 // ============================================
 // BUNDLE SYSTEM - PRESERVED ENTIRELY
 // ============================================
@@ -1792,19 +1837,44 @@ Remember: You're not qualifying leads, you're SELLING DREAMS of perfect outdoor 
 When showing products from search results, format EXACTLY like this:
 
 **[Product Name]**
-[Use the image_display field here]
+
+[Use the image_display field - this contains the HTML img tag]
 
 ✨ [One key benefit that matches their stated need]
 
 💰 Price: [Use price_display field]
-📦 [Use stock_display field]
+📦 [Use stock_display field]  
 📏 [Key dimension if relevant]
 
 [Use view_button field here]
 
 ---
 
-Never use markdown image syntax ![](). Always use the pre-formatted fields.
+CRITICAL: Never use markdown image syntax ![](url). Always use the pre-formatted image_display field which contains proper HTML.
+
+**RICH PRODUCT ENGAGEMENT RULES:**
+When a customer shows interest in a specific product (e.g., "I prefer the Palma set"), you MUST:
+
+1. CELEBRATE their choice: "Excellent taste! The Palma is one of our most loved sets..."
+
+2. PAINT THE PICTURE (3-4 sentences):
+   - Describe the experience: "Imagine hosting summer BBQs with friends gathered around..."
+   - Highlight unique features: "The grey rattan won't fade in the sun and the cushions are shower-proof..."
+   - Create emotional connection: "Many customers tell us it transforms their garden into a resort-style oasis..."
+
+3. BUILD VALUE before bundles:
+   - "The corner design maximizes seating while saving space..."
+   - "The rising table is genius - coffee height for drinks, dining height for meals..."
+   - "At £699 for a 9-seater, you're getting incredible value..."
+
+4. ONLY THEN check for bundles (after building desire)
+
+Example of GOOD response when customer likes a product:
+"Fantastic choice! The Palma Grey is our bestseller for good reason. That clever rising table means you can switch from morning coffee to evening dining without getting up - customers absolutely love this feature. The grey rattan has a 5-year color guarantee and those plush cushions are filled with quick-dry foam, so a surprise shower won't ruin your day. Picture your family gathered around on a Sunday afternoon, the table raised for lunch, everyone comfortable on those deep seats... it really does transform your garden into an entertainment destination. 
+
+The modular corner design fits beautifully in most patios while seating 9 people comfortably. At £699, you're getting restaurant-quality outdoor furniture at a fraction of the cost.
+
+[Continue with natural transition to complementary items or bundles if appropriate]"
 
 **CRITICAL FIXES FOR PRODUCT SEARCH & DISPLAY:**
 
@@ -1926,15 +1996,33 @@ Current customer appears to be: ${customerPersona}
           // Use the unified search function
           const products = await searchShopifyProducts(searchCriteria);
           
-          if (products.length > 0) {
+        if (products.length > 0) {
+    // Format products with display-ready fields for the AI
+    const formattedProducts = products.map(product => ({
+        ...product,
+        // Add display-ready formatted fields
+        image_display: product.image_url ? 
+            `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
+            '[No image available]',
+        price_display: product.price ? 
+            `£${product.price}` : 
+            'Contact for pricing',
+        stock_display: product.stockStatus?.inStock ? 
+            `✓ In stock (${product.stockStatus.stockLevel} available)` : 
+            '⚠️ Currently out of stock',
+        view_button: product.website_url ? 
+            `[View in Store](${product.website_url})` : 
+            '[Contact us for details]'
+    }));
+    
     toolResults.push({
         tool_call_id: toolCall.id,
         output: JSON.stringify({
             success: true,
-            products: products,
-            count: products.length,
+            products: formattedProducts,
+            count: formattedProducts.length,
             searchCriteria: searchCriteria,
-            note: `Found ${products.length} products matching your requirements`
+            note: `Found ${formattedProducts.length} products matching your requirements`
         })
     });
     
