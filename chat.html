@@ -498,46 +498,31 @@
         // CRITICAL FIX: Enhanced format function that handles markdown images
         function formatProductMessage(message) {
             let formatted = message;
-
-              // STEP 7 & 8: Handle ALL link formats for View in Store / View Product
-// This catches both [View in Store] and [View Product] formats
-formatted = formatted.replace(/\[(View in Store|View Product)\]\(([^)]+)\)/g, function(match, text, url) {
-    // Clean and ensure URL is absolute
-    let finalUrl = url.trim();
-    if (!finalUrl.startsWith('http')) {
-        finalUrl = 'https://mint-outdoor.com' + (finalUrl.startsWith('/') ? finalUrl : '/' + finalUrl);
-    }
-    console.log('Converting link to button:', text, finalUrl);
-    return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
-});
-
-// Also catch any remaining markdown links [text](url) format
-formatted = formatted.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, text, url) {
-    // Only process if it looks like a product link
-    if (text.toLowerCase().includes('view') || text.toLowerCase().includes('store') || text.toLowerCase().includes('product')) {
-        let finalUrl = url.trim();
-        if (!finalUrl.startsWith('http')) {
-            finalUrl = 'https://mint-outdoor.com' + (finalUrl.startsWith('/') ? finalUrl : '/' + finalUrl);
-        }
-        return `<a href="${finalUrl}" target="_blank" class="product-cta">${text}</a>`;
-    }
-    // Return unchanged if not a product link
-    return match;
+            
+            // STEP 1: Convert Markdown images to CLICKABLE HTML images
+formatted = formatted.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
+    const cleanAlt = alt || 'Product Image';
+    const cleanUrl = url.trim();
+    
+    // Extract the product URL if it's in the message
+    // Look ahead for the [View in Store] link
+    const linkMatch = formatted.match(/\[View in Store\]\(([^)]+)\)/);
+    const productUrl = linkMatch ? linkMatch[1] : '#';
+    
+    console.log('Making image clickable to:', productUrl);
+    return `<a href="${productUrl}" target="_blank"><img src="${cleanUrl}" alt="${cleanAlt}" style="max-width: 100%; max-height: 400px; width: auto; border-radius: 8px; margin: 12px 0; display: block; cursor: pointer;"></a>`;
 });
             
-            // STEP 1: Convert Markdown images to HTML FIRST (before other replacements)
-            // This handles ![alt text](image_url) format
-            formatted = formatted.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
-                // Clean up the alt text - remove any extra formatting
-                const cleanAlt = alt || 'Product Image';
-                // Ensure URL is clean
-                const cleanUrl = url.trim();
-                console.log('Converting markdown image:', cleanUrl);
-                return `<img src="${cleanUrl}" alt="${cleanAlt}" style="max-width: 100%; max-height: 400px; width: auto; border-radius: 8px; margin: 12px 0; display: block;">`;
-            });
-            
-            // STEP 2: Product Title (Bold with brand font)
-            formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<h3>$1</h3>');
+           
+            // STEP 2: Product Title - Make it CLICKABLE
+formatted = formatted.replace(/\*\*(.+?)\*\*/g, function(match, title) {
+    // Look for the next [View in Store] link in the message
+    const remainingText = formatted.substring(formatted.indexOf(match));
+    const linkMatch = remainingText.match(/\[View in Store\]\(([^)]+)\)/);
+    const productUrl = linkMatch ? linkMatch[1] : '#';
+    
+    return `<h3><a href="${productUrl}" target="_blank" style="color: inherit; text-decoration: none;">${title}</a></h3>`;
+});
             
             // STEP 3: Handle any existing HTML img tags (preserve them)
             formatted = formatted.replace(/<img\s+([^>]*src="[^"]+)"[^>]*>/g, function(match, srcPart) {
@@ -567,8 +552,7 @@ formatted = formatted.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, text, 
                 return `<div class="product-detail">${key}: ${value}</div>`;
             });
             
-          
-            
+                
             // STEP 9: Assembly Instructions
             formatted = formatted.replace(/\[View Assembly Guide\]\((.*?)\)/g, 
                 '<a href="$1" target="_blank" class="product-cta assembly-guide">📋 Assembly Instructions</a>');
