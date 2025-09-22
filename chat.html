@@ -541,24 +541,31 @@
                 return `<div class="product-detail">${key}: ${value}</div>`;
             });
             
-            // STEP 7: View in Store Links (as buttons)
-            formatted = formatted.replace(/\[View in Store\]\((.*?)\)/g, function(match, url) {
-                // Ensure URL is absolute
-                let finalUrl = url;
-                if (!url.startsWith('http')) {
-                    finalUrl = 'https://mint-outdoor.com' + (url.startsWith('/') ? url : '/' + url);
-                }
-                return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
-            });
-            
-            // STEP 8: View Product Links (legacy support)
-            formatted = formatted.replace(/\[View Product\]\((.*?)\)/g, function(match, url) {
-                let finalUrl = url;
-                if (!url.startsWith('http')) {
-                    finalUrl = 'https://mint-outdoor.com' + (url.startsWith('/') ? url : '/' + url);
-                }
-                return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
-            });
+            // STEP 7 & 8: Handle ALL link formats for View in Store / View Product
+// This catches both [View in Store] and [View Product] formats
+formatted = formatted.replace(/\[(View in Store|View Product)\]\(([^)]+)\)/g, function(match, text, url) {
+    // Clean and ensure URL is absolute
+    let finalUrl = url.trim();
+    if (!finalUrl.startsWith('http')) {
+        finalUrl = 'https://mint-outdoor.com' + (finalUrl.startsWith('/') ? finalUrl : '/' + finalUrl);
+    }
+    console.log('Converting link to button:', text, finalUrl);
+    return `<a href="${finalUrl}" target="_blank" class="product-cta">View in Store</a>`;
+});
+
+// Also catch any remaining markdown links [text](url) format
+formatted = formatted.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, text, url) {
+    // Only process if it looks like a product link
+    if (text.toLowerCase().includes('view') || text.toLowerCase().includes('store') || text.toLowerCase().includes('product')) {
+        let finalUrl = url.trim();
+        if (!finalUrl.startsWith('http')) {
+            finalUrl = 'https://mint-outdoor.com' + (finalUrl.startsWith('/') ? finalUrl : '/' + finalUrl);
+        }
+        return `<a href="${finalUrl}" target="_blank" class="product-cta">${text}</a>`;
+    }
+    // Return unchanged if not a product link
+    return match;
+});
             
             // STEP 9: Assembly Instructions
             formatted = formatted.replace(/\[View Assembly Guide\]\((.*?)\)/g, 
