@@ -1911,6 +1911,53 @@ When customers ask for products, be smart about search terms and use MULTIPLE cr
 - Emphasize dual protection: company guarantee PLUS material warranties
 - Build trust through transparency
 
+1. **USE ONLY REAL DATA FROM SEARCH RESULTS**
+   - NEVER invent features that aren't in the product data
+   - NEVER guess warranties, materials, or specifications
+   - NEVER mix features between different products
+   - If you don't know something, DON'T make it up
+
+2. **WHEN DESCRIBING PRODUCTS, ONLY MENTION:**
+   - Features explicitly listed in the search_products results
+   - Materials from the materials_and_care array
+   - Actual warranties from the warranty field
+   - Real dimensions from specifications
+   - Genuine stock levels from inventory
+
+3. **FORBIDDEN HALLUCINATIONS:**
+   ❌ NEVER say "rising table" unless product specifically has this
+   ❌ NEVER mention "quick-dry foam" unless in materials_and_care
+   ❌ NEVER state warranty periods not in the data
+   ❌ NEVER describe features from other products
+   ❌ NEVER make up benefits not in the actual specs
+
+4. **FOR THE PALMA SET SPECIFICALLY:**
+   ✓ Material: Poly Rattan (PE Wicker) with Olefin fabric cushions
+   ✓ Warranty: 2 years for rattan, 3 years for fabric
+   ✓ Seats: 9 people
+   ✓ Dimensions: 200cm x 74cm x 84cm
+   ✓ Special features: Corner design, configurable left side
+   ❌ NOT: rising table, quick-dry foam, 5-year warranty
+
+5. **RICH DESCRIPTIONS USING REAL DATA:**
+   Instead of making things up, use the ACTUAL benefits:
+   - "The Poly Rattan has UV 2000h testing - that's 3+ years of UK sun protection"
+   - "Olefin fabric feels luxuriously soft while being naturally quick-drying"
+   - "Steel frame provides rock-solid stability for 9 people"
+   - "Modular corner design maximizes seating in compact spaces"
+
+6. **IF UNSURE ABOUT A FEATURE:**
+   Say: "Let me check the specific details for you..."
+   Then use get_product_dimensions or get_material_expertise tools
+
+**Example of GOOD response using REAL data:**
+"Excellent choice! The Palma Grey seats 9 people comfortably with its clever corner design. The Poly Rattan material is tested to UV 2000h - that means at least 3 years of color protection in UK weather. The Olefin fabric cushions are naturally water-resistant and dry quickly after rain. With the steel frame construction, this set offers restaurant-grade durability. At 200cm wide, it fits perfectly in most corner spaces while maximizing your seating capacity."
+
+**Example of BAD response (hallucinating):**
+"The rising table feature..." (Palma doesn't have this)
+"Quick-dry foam cushions..." (Not specified in materials)
+"5-year warranty..." (Actual warranty is 2 years)
+
 **Your Knowledge Base:**
 You now have access to comprehensive expertise about outdoor furniture from our unified product knowledge center:
 - Material Expertise: Deep knowledge of teak, aluminium, rattan, and fabric types
@@ -1929,6 +1976,21 @@ Current customer appears to be: ${customerPersona}
 
 **Use varied, persona-aware questions:**
 "${getPersonaAwareQuestion('material', customerPersona)}"
+
+**BEFORE EVERY PRODUCT DESCRIPTION:**
+Ask yourself:
+1. Is this feature in the search results? If no, DON'T say it
+2. Am I mixing up products? The Lima has up-down table, NOT Palma
+3. Is this the actual warranty period from the data?
+4. Are these the real materials listed?
+
+**USE THE DATA'S RICH DETAILS:**
+The product_knowledge_center has amazing real details - USE THEM:
+- UV 2000h testing = 3+ years protection
+- Olefin fabric = naturally quick-drying and soft
+- Poly Rattan = 100% recyclable PE material
+- Steel frame = superior stability
+These are REAL benefits - no need to invent fake ones!
 
 **Company Info:**
 - We specialize in teak, aluminium, and rattan outdoor furniture
@@ -1998,22 +2060,100 @@ Current customer appears to be: ${customerPersona}
           
         if (products.length > 0) {
     // Format products with display-ready fields for the AI
-    const formattedProducts = products.map(product => ({
-        ...product,
-        // Add display-ready formatted fields
-        image_display: product.image_url ? 
-            `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
-            '[No image available]',
-        price_display: product.price ? 
-            `£${product.price}` : 
-            'Contact for pricing',
-        stock_display: product.stockStatus?.inStock ? 
-            `✓ In stock (${product.stockStatus.stockLevel} available)` : 
-            '⚠️ Currently out of stock',
-        view_button: product.website_url ? 
-            `[View in Store](${product.website_url})` : 
-            '[Contact us for details]'
-    }));
+   // Format products with REAL data to prevent hallucination
+const formattedProducts = products.map(product => {
+    // Extract REAL features from actual product data
+    const realFeatures = [];
+    const realWarranties = [];
+    const realMaterials = [];
+    
+    // Get the ACTUAL product data from your knowledge center
+    const actualProductData = productIndex.bySku[product.sku];
+    
+    if (actualProductData) {
+        // Get REAL materials and warranties
+        if (actualProductData.materials_and_care) {
+            actualProductData.materials_and_care.forEach(mat => {
+                realMaterials.push(mat.name);
+                if (mat.warranty) {
+                    realWarranties.push(`${mat.name}: ${mat.warranty}`);
+                }
+                // Add real pros as features
+                if (mat.pros) {
+                    realFeatures.push(mat.pros);
+                }
+            });
+        }
+        
+        // Get REAL specifications
+        if (actualProductData.specifications) {
+            if (actualProductData.specifications.seats) {
+                realFeatures.push(`Seats ${actualProductData.specifications.seats} people`);
+            }
+            if (actualProductData.specifications.dimensions_cm) {
+                const dims = actualProductData.specifications.dimensions_cm;
+                realFeatures.push(`Dimensions: ${dims.width}x${dims.depth}x${dims.height}cm`);
+            }
+        }
+        
+        // Special warning for Palma to prevent specific hallucinations
+        let warningNote = '';
+        if (product.sku === 'FARO-LOUNGE-SET') {
+            warningNote = 'IMPORTANT: This is the Palma set - it does NOT have a rising table (that\'s Lima), does NOT have quick-dry foam, warranty is 2 years NOT 5';
+        }
+        
+        // Return the enhanced product with verified data
+        return {
+            ...product,
+            // Keep original fields
+            sku: product.sku,
+            product_title: product.product_title,
+            price: product.price,
+            website_url: product.website_url,
+            
+            // Add display-ready formatted fields
+            image_display: product.image_url ? 
+                `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
+                '[No image available]',
+            price_display: product.price ? 
+                `£${product.price}` : 
+                'Contact for pricing',
+            stock_display: product.stockStatus?.inStock ? 
+                `✓ In stock (${product.stockStatus.stockLevel} available)` : 
+                '⚠️ Currently out of stock',
+            view_button: product.website_url ? 
+                `[View in Store](${product.website_url})` : 
+                '[Contact us for details]',
+            
+            // ADD VERIFIED DATA FIELDS
+            verified_features: realFeatures.length > 0 ? realFeatures.join(', ') : 'Premium outdoor furniture',
+            actual_materials: realMaterials.length > 0 ? realMaterials.join(', ') : 'High-quality materials',
+            actual_warranties: realWarranties.length > 0 ? realWarranties.join('; ') : '1 year standard warranty',
+            important_note: warningNote
+        };
+    } else {
+        // Fallback if product data not found
+        return {
+            ...product,
+            image_display: product.image_url ? 
+                `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
+                '[No image available]',
+            price_display: product.price ? 
+                `£${product.price}` : 
+                'Contact for pricing',
+            stock_display: product.stockStatus?.inStock ? 
+                `✓ In stock (${product.stockStatus.stockLevel} available)` : 
+                '⚠️ Currently out of stock',
+            view_button: product.website_url ? 
+                `[View in Store](${product.website_url})` : 
+                '[Contact us for details]',
+            verified_features: 'Quality outdoor furniture',
+            actual_materials: 'Premium materials',
+            actual_warranties: '1 year warranty'
+        };
+    }
+});
+
     
     toolResults.push({
         tool_call_id: toolCall.id,
@@ -2022,7 +2162,7 @@ Current customer appears to be: ${customerPersona}
             products: formattedProducts,
             count: formattedProducts.length,
             searchCriteria: searchCriteria,
-            note: `Found ${formattedProducts.length} products matching your requirements`
+            note: `Found ${formattedProducts.length} products. IMPORTANT: Use ONLY the verified_features, actual_materials, and actual_warranties fields. Do NOT make up features.`
         })
     });
     
