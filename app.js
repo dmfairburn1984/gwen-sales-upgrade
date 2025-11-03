@@ -682,51 +682,67 @@ Session ID: ${sessionId}
 ========================
         `;
 
-    // Email subject based on reason
+    // ENHANCED: Email subject based on discount/bundle requests
     let subject = 'Gwen AI - Customer Inquiry';
     let priority = 'Normal';
     
-    // Add customer email to subject if available
-    if (customerDetails?.email) {
-        subject = `Gwen AI - Customer Inquiry from ${customerDetails.email}`;
-    }
+    // Check if this is a discount request
+    const isDiscountRequest = reason.toLowerCase().includes('10% discount') || 
+                              reason.toLowerCase().includes('discount request');
+    const isBundleDiscount = reason.toLowerCase().includes('20% bundle') ||
+                            reason.toLowerCase().includes('bundle discount');
     
-    if (reason.toLowerCase().includes('bundle') || reason.toLowerCase().includes('purchase')) {
-        subject = `🎯 HIGH PRIORITY - Customer Ready to Purchase${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
+    if (isBundleDiscount) {
+        subject = `🎁 URGENT - 20% Bundle Discount Request - ${customerEmail}`;
+        priority = 'High';
+    } else if (isDiscountRequest) {
+        subject = `💰 10% Discount Request - ${customerEmail}`;
+        priority = 'High';
+    } else if (reason.toLowerCase().includes('bundle') || reason.toLowerCase().includes('purchase')) {
+        subject = `🎯 HIGH PRIORITY - Customer Ready to Purchase - ${customerEmail}`;
         priority = 'High';
     } else if (reason.toLowerCase().includes('complaint') || reason.toLowerCase().includes('issue')) {
-        subject = `⚠️ URGENT - Customer Service Issue${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
+        subject = `⚠️ URGENT - Customer Service Issue - ${customerEmail}`;
         priority = 'High';
-    } else if (reason.toLowerCase().includes('callback') || reason.toLowerCase().includes('human')) {
-        subject = `📞 Customer Requests Human Contact${customerDetails?.email ? ' - ' + customerDetails.email : ''}`;
+    } else if (customerDetails?.email) {
+        subject = `📞 Customer Inquiry - ${customerEmail}`;
         priority = 'Normal';
     }
 
-    // HTML Email content
+    // HTML Email content with DISCOUNT HIGHLIGHTING
     const emailHTML = `
     <html>
     <body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #9FDCC2, #2E6041); color: white; padding: 20px; text-align: center;">
             <h1>🌿 MINT Outdoor - Gwen AI Handoff</h1>
-            <p style="margin: 0; font-size: 16px;">${reason}</p>
+            <p style="margin: 0; font-size: 18px; font-weight: bold;">${reason}</p>
         </div>
         
-        <div style="padding: 20px; background: #f8f9fa;">
-            ${customerDetails?.email ? 
-                `<p style="margin: 5px 0; font-size: 16px; font-weight: bold;">Customer Email: ${customerDetails.email}</p>` : 
-                ''
-            }
+        <div style="padding: 20px; background: ${isBundleDiscount ? '#fff3cd' : (isDiscountRequest ? '#d1ecf1' : '#f8f9fa')}; border-left: 5px solid ${isBundleDiscount ? '#ffc107' : (isDiscountRequest ? '#0dcaf0' : '#6c757d')};">
+            ${isBundleDiscount ? '<h2 style="color: #856404; margin-top: 0;">⚡ 20% BUNDLE DISCOUNT REQUESTED</h2>' : ''}
+            ${isDiscountRequest && !isBundleDiscount ? '<h2 style="color: #055160; margin-top: 0;">💰 10% DISCOUNT REQUESTED</h2>' : ''}
+            
+            <p style="margin: 5px 0; font-size: 18px; font-weight: bold;">
+                📧 Customer Email: <span style="color: #2E6041;">${customerEmail}</span>
+            </p>
             ${customerDetails?.postcode ? 
-                `<p style="margin: 5px 0;">Postcode: ${customerDetails.postcode}</p>` :
+                `<p style="margin: 5px 0; font-size: 16px;">📍 Postcode: ${customerDetails.postcode}</p>` :
                 ''
             }
-            <p style="margin: 5px 0;">Session ID: ${sessionId}</p>
-            <p style="margin: 5px 0;">Timestamp: ${new Date().toLocaleString('en-GB')}</p>
+            <p style="margin: 5px 0;">🆔 Session ID: ${sessionId}</p>
+            <p style="margin: 5px 0;">⏰ Timestamp: ${new Date().toLocaleString('en-GB')}</p>
+            
+            ${isBundleDiscount ? 
+                '<p style="background: #ffc107; padding: 10px; border-radius: 5px; margin-top: 15px;"><strong>ACTION REQUIRED:</strong> Send payment link with 20% discount applied to bundle (Set + Accessories)</p>' 
+                : ''}
+            ${isDiscountRequest && !isBundleDiscount ? 
+                '<p style="background: #0dcaf0; padding: 10px; border-radius: 5px; margin-top: 15px;"><strong>ACTION REQUIRED:</strong> Send payment link with 10% discount applied</p>' 
+                : ''}
         </div>
         
         <div style="padding: 20px;">
             <h2>Conversation History</h2>
-            <pre style="white-space: pre-wrap; font-family: Consolas, monospace; background: #f4f4f4; padding: 15px; border-radius: 5px;">
+            <pre style="white-space: pre-wrap; font-family: Consolas, monospace; background: #f4f4f4; padding: 15px; border-radius: 5px; max-height: 500px; overflow-y: auto;">
 ${chatTranscript}
             </pre>
         </div>
@@ -737,17 +753,21 @@ ${chatTranscript}
 ${customerInfo}
             </pre>
         </div>
+        
+        <div style="background: #2E6041; color: white; padding: 15px; text-align: center; margin-top: 20px;">
+            <p style="margin: 0;">⚡ Respond within 2 hours for best conversion rate</p>
+        </div>
     </body>
     </html>
     `;
 
-    // CRITICAL FIX: Use environment variable for escalation email
-    const ESCALATION_EMAIL = process.env.ESCALATION_EMAIL || 'marketing@mint-outdoor.com';
+    // SEND TO BOTH RACHEL AND MARKETING
+    const ESCALATION_EMAILS = ['rachel@mint-outdoor.com', 'marketing@mint-outdoor.com'];
     
     // Email configuration
     const mailOptions = {
         from: `"MINT Outdoor - Gwen AI" <${process.env.EMAIL_USER}>`,
-        to: ESCALATION_EMAIL,
+        to: ESCALATION_EMAILS.join(', '),
         subject: subject,
         html: emailHTML,
         priority: priority.toLowerCase(),
@@ -755,16 +775,18 @@ ${customerInfo}
             'X-Priority': priority === 'High' ? '1' : '3',
             'X-MSMail-Priority': priority,
             'Importance': priority,
-            'X-Customer-Email': customerDetails?.email || 'not-provided'
+            'X-Customer-Email': customerDetails?.email || 'not-provided',
+            'X-Discount-Type': isBundleDiscount ? '20-percent-bundle' : (isDiscountRequest ? '10-percent' : 'none')
         }
     };
 
     try {
-        console.log('\n📧 ========== SENDING EMAIL ==========');
-        console.log(`📋 To: ${ESCALATION_EMAIL}`);
+        console.log('\n📧 ========== SENDING ESCALATION EMAIL ==========');
+        console.log(`📋 To: ${ESCALATION_EMAILS.join(', ')}`);
         console.log(`👤 Customer Email: ${customerDetails?.email || 'Not captured'}`);
         console.log(`📋 Subject: ${subject}`);
         console.log(`📋 Priority: ${priority}`);
+        console.log(`💰 Discount Type: ${isBundleDiscount ? '20% Bundle' : (isDiscountRequest ? '10% Standard' : 'None')}`);
         console.log(`🆔 Session ID: ${sessionId}`);
         
         // Send the actual email
@@ -772,15 +794,15 @@ ${customerInfo}
         
         console.log('✅ EMAIL SENT SUCCESSFULLY!');
         console.log(`📧 Message ID: ${info.messageId}`);
-        console.log(`📧 Sent to: ${ESCALATION_EMAIL}`);
-        console.log('📧 ====================================\n');
+        console.log(`📧 Sent to: ${ESCALATION_EMAILS.join(', ')}`);
+        console.log('📧 ===============================================\n');
         
         return true;
         
     } catch (error) {
         console.error('❌ EMAIL SENDING FAILED:', error.message);
-        console.log(`📧 Was trying to send to: ${ESCALATION_EMAIL}`);
-        console.log('📧 ====================================\n');
+        console.log(`📧 Was trying to send to: ${ESCALATION_EMAILS.join(', ')}`);
+        console.log('📧 ===============================================\n');
         
         // Still log the conversation for manual follow-up
         console.log('\n📝 ========== BACKUP LOG (Email Failed) ==========');
@@ -792,12 +814,11 @@ ${customerInfo}
         if (customerDetails) {
             console.log(customerInfo);
         }
-        console.log('📝 ================================================\n');
+        console.log('📝 =================================================\n');
         
         return false;
     }
 }
-
 // ============================================
 // UPDATED SEARCH FUNCTION - USES UNIFIED DATA
 // ============================================
@@ -960,11 +981,47 @@ function enrichProductWithCompatibleData(product) {
     const localPrice = product.product_identity?.price_gbp;
     const formattedLocalPrice = localPrice ? `£${parseFloat(localPrice).toFixed(2)}` : null;
     
+    // ENHANCED: Extract accessory information
+    const accessories = [];
+    if (product.related_products) {
+        if (product.related_products.matching_cover_sku) {
+            // Find cover details
+            const coverProduct = productIndex.bySku[product.related_products.matching_cover_sku];
+            if (coverProduct) {
+                accessories.push({
+                    type: 'cover',
+                    sku: product.related_products.matching_cover_sku,
+                    name: coverProduct.product_identity?.product_name || 'Matching Cover',
+                    price: coverProduct.product_identity?.price_gbp || 89,
+                    benefit: 'Protects from bird droppings, heavy rain, and UV damage'
+                });
+            }
+        }
+        
+        if (product.related_products.accessories && Array.isArray(product.related_products.accessories)) {
+            product.related_products.accessories.forEach(accessorySku => {
+                const accessoryProduct = productIndex.bySku[accessorySku];
+                if (accessoryProduct) {
+                    const isStorage = accessoryProduct.product_identity?.product_name?.toLowerCase().includes('cushion box') ||
+                                     accessoryProduct.product_identity?.product_name?.toLowerCase().includes('storage');
+                    
+                    accessories.push({
+                        type: isStorage ? 'storage' : 'accessory',
+                        sku: accessorySku,
+                        name: accessoryProduct.product_identity?.product_name || 'Accessory',
+                        price: accessoryProduct.product_identity?.price_gbp || 99,
+                        benefit: isStorage ? 'Keeps cushions dry, organized, and protected from mildew' : 'Completes your outdoor setup'
+                    });
+                }
+            });
+        }
+    }
+    
     return {
         // Original fields expected by old code
         sku: sku,
         product_title: product.product_identity?.product_name,
-        price: formattedLocalPrice || 'Check Shopify', // Use local price, fallback to Shopify
+        price: formattedLocalPrice || 'Check Shopify',
         website_url: product.product_identity?.image_url ? 
             `https://mint-outdoor.com/search?q=${sku}` : 
             `https://mint-outdoor.com/search?q=${sku}`,
@@ -978,11 +1035,17 @@ function enrichProductWithCompatibleData(product) {
         material: product.description_and_category?.material_type,
         seats: product.specifications?.seats,
         dimensions: product.specifications?.dimensions_cm,
-        assembly_required: product.specifications?.assembly?.required === "Yes"
+        assembly_required: product.specifications?.assembly?.required === "Yes",
+        
+        // ENHANCED: Accessory information for upselling
+        accessories: accessories,
+        hasAccessories: accessories.length > 0,
+        totalBundlePrice: accessories.length > 0 ? 
+            (parseFloat(localPrice) + accessories.reduce((sum, acc) => sum + parseFloat(acc.price), 0)).toFixed(2) : 
+            null
     };
 }
 
-// HELPER FUNCTION - Stock status checking
 function getStockStatus(sku) {
     // First check inventory data
     if (inventoryData && Array.isArray(inventoryData) && inventoryData.length > 0) {
@@ -992,10 +1055,23 @@ function getStockStatus(sku) {
             const available = parseInt(stockInfo.available) || 0;
             const inStock = available > 0;
             
+            // DYNAMIC STOCK MESSAGING
+            let stockMessage = '';
+            if (available > 60) {
+                stockMessage = '⚠️ Low stock - this is a bestseller';
+            } else if (available >= 20 && available <= 60) {
+                stockMessage = `⚠️ Only ${available} left in stock`;
+            } else if (available < 20 && available > 0) {
+                stockMessage = `🚨 URGENT: Only ${available} remaining - next shipment 8+ weeks`;
+            } else {
+                stockMessage = '❌ Currently out of stock - next shipment 8+ weeks';
+            }
+            
             return {
                 inStock: inStock,
                 stockLevel: available,
-                message: inStock ? `In stock (${available} available)` : 'Currently out of stock'
+                message: stockMessage,
+                urgency: available < 60 ? 'high' : 'medium'
             };
         }
     }
@@ -1006,10 +1082,23 @@ function getStockStatus(sku) {
         const inv = product.logistics_and_inventory.inventory;
         const available = parseInt(inv.available) || 0;
         
+        // DYNAMIC STOCK MESSAGING  
+        let stockMessage = '';
+        if (available > 60) {
+            stockMessage = '⚠️ Low stock - this is a bestseller';
+        } else if (available >= 20 && available <= 60) {
+            stockMessage = `⚠️ Only ${available} left in stock`;
+        } else if (available < 20 && available > 0) {
+            stockMessage = `🚨 URGENT: Only ${available} remaining - next shipment 8+ weeks`;
+        } else {
+            stockMessage = '❌ Currently out of stock - next shipment 8+ weeks';
+        }
+        
         return {
             inStock: available > 0,
             stockLevel: available,
-            message: available > 0 ? `In stock (${available} available)` : 'Currently out of stock',
+            message: stockMessage,
+            urgency: available < 60 ? 'high' : 'medium',
             lowStockWarning: inv.low_stock_warning
         };
     }
@@ -1018,7 +1107,8 @@ function getStockStatus(sku) {
     return { 
         inStock: true, 
         stockLevel: 'unknown', 
-        message: 'Contact for current stock status'
+        message: '✓ Available - contact for current stock status',
+        urgency: 'low'
     };
 }
 
@@ -1767,86 +1857,125 @@ async function generateAISalesResponse(message, sessionId, session) {
 
   **1. INSTANT VALUE PRINCIPLE**
   - ALWAYS show 2-3 relevant products within your FIRST or SECOND response
-  - Use whatever information you have (even just "teak sets" = show teak immediately)
+  - Use whatever information you have (even just "rattan sets" = show rattan immediately)
   - Products create conversation - questions create friction
+  - The moment they mention ANY product type, material, or need → SHOW PRODUCTS
 
-  **2. ONE QUESTION RULE**
-  When customer first arrives, ask ONLY ONE conversational opener:
-  - "Are you thinking more dining or lounging?"
-  - "What kind of outdoor space are you working with?"
-  - "Is this for family meals or entertaining friends?"
-  NEVER ask multiple questions or use numbered lists
+  **2. ONE QUESTION RULE - MAXIMUM**
+  When customer first arrives, ask ONLY ONE warm opener:
+  - "What brings you to MINT today - dining or lounging?"
+  - "Tell me about your perfect outdoor space!"
+  - "Are you thinking family meals or entertaining friends?"
+  
+  THEN IMMEDIATELY SHOW PRODUCTS. Never ask multiple questions.
 
-  **3. PRODUCT-FIRST SELLING**
-  The moment they answer ANYTHING, show products:
-  Customer: "Looking for teak"
-  You: "Excellent choice! Let me show you our stunning Malai teak lounge set..."
-  [Show 2-3 products with images and prices]
-  "The Malai seats 5 comfortably - is that about the right size for you?"
+  **3. PRODUCT-FIRST SELLING WITH IMMEDIATE VALUE**
+  The moment they answer ANYTHING, show 2-3 products with this structure:
 
-  **4. WEAVE DISCOVERY NATURALLY**
-  Gather information WHILE showing products:
-  - "This seats 6 - would you need larger?"
-  - "The teak version is £1,299 - I also have rattan at £899"
-  - "This needs about 3x3 meters - how's your space?"
+  **[Product Name]**
+  [image_display]
+  
+  ✨ [One emotional benefit - "Imagine summer BBQs with 9 friends gathered around..."]
+  
+  💪 **Why customers love this:**
+  • [Material benefit from actual_materials - e.g., "Rattan tested to UV 2000h - 3+ years UK protection"]
+  • [Maintenance benefit - e.g., "Zero maintenance - just cover in harsh winter"]
+  • [Warranty confidence - e.g., "Up to 4 years warranty across materials"]
+  
+  💰 Price: [price_display] 
+  📦 [stock_display]
+  
+  🛡️ **Smart adds that 89% of customers get:**
+  • Matching cover (£[price]) - protects from bird droppings & heavy rain
+  • Cushion storage box (£[price]) - keeps cushions dry and organized
+  
+  [view_button]
 
-  **5. PRICE DISPLAY RULES**
-  - Always show REAL prices: "£1,299" not "£[amount]"
-  - Lead with value: "At just £899, this is incredible value"
-  - Create urgency: "We have 3 left at this price"
+  **4. ACCESSORY INTRODUCTION TIMING (7/10 Aggressiveness)**
+  - **FIRST MENTION:** When showing the main product (as per template above)
+  - **SECOND MENTION:** When customer shows interest ("I like this" / "tell me more")
+    - "Brilliant choice! Two quick things that'll save you hassle: the matching cover and cushion box. Want me to explain why 89% of customers add these?"
+  
+  **5. DISCOUNT STRATEGY - EMAIL CAPTURE SYSTEM**
+  
+  **When customer shows price resistance (says "expensive", "discount", "cheaper"):**
+  
+  Response: "I completely understand - let me see what I can do for you. If you're serious about this set, I can get you 10% off - that brings it to £[discounted_price]. To arrange this, I just need your email address so our manager can send you a secure payment link with the discount applied."
+  
+  **When customer agrees to bundle (set + cover + cushion box):**
+  
+  Response: "Fantastic decision! Because you're getting the complete setup, I can do even better - 20% off the total package instead of 10%. That's a saving of £[amount]. Give me your email and I'll have our manager send you the payment link with this exclusive bundle discount."
+  
+  **CRITICAL:** Once email received, use the marketing_handoff tool with reason: "10% discount request - email: [customer_email]" OR "20% bundle discount - email: [customer_email]"
 
-  **6. IMAGE DISPLAY FORMAT**
-  When showing products, format like this:
-  Product Name
-  [Product Image]
-  Key benefit that matches their need
-  Price: £XXX
-  Stock: Available/Limited
-  [View in Store button]
+  **6. STOCK SCARCITY MESSAGING**
+  - If stock > 60 units: "⚠️ Low stock - this is a bestseller"
+  - If stock 20-60 units: "⚠️ Only [X] left in stock"  
+  - If stock < 20 units: "🚨 URGENT: Only [X] remaining - next shipment 8+ weeks"
+  
+  **7. SEAT CAPACITY UPSELL**
+  When customer likes a 6-seater or smaller:
+  
+  "Perfect for everyday use! Quick thought though - when you have friends round for BBQs or family gatherings, do you ever find yourself squeezing people in? The [larger set name] seats [X] people for only £[price difference] more, so you're never turning guests away. Worth considering?"
+  
+  Only ask this ONCE. If they say no, move on.
 
-  **7. BUNDLE TIMING INTELLIGENCE**
-  Only mention bundles when ALL are true:
-  - Customer has seen products (prices shown)
-  - Shows genuine interest ("I like this", "perfect", "tell me more")
-  - At least 6 messages exchanged
-  - Use the offer_package_deal tool to check timing
+  **8. MATERIAL EXPERTISE - AUTOMATIC OBJECTION HANDLING**
+  
+  When showing ANY product, automatically address the #1 concern for that material:
+  
+  **RATTAN/WICKER PRODUCTS:**
+  "💡 *Maintenance worry? Don't be - this rattan is UV-tested to 2000 hours, which means 3+ years of British sun protection. Just cover it during harsh winter storms and it'll last for years. We even keep replacement parts on hand.*"
+  
+  **ALUMINIUM PRODUCTS:**
+  "💡 *Virtually zero maintenance needed - aluminium doesn't rust, doesn't rot, doesn't need treatment. Wipe with soapy water once a month and you're done.*"
+  
+  **TEAK PRODUCTS:**
+  "💡 *Teak naturally weathers to a beautiful silver-grey patina - or oil it annually to keep the golden honey colour. Either way, it lasts 25+ years outdoors.*"
 
-  **8. SEARCH INTELLIGENCE**
-  Be smart with search terms:
-  - "teak sets" → search: material="teak"
-  - "malai" → search: productName="malai"
-  - "dining for 6" → search: furnitureType="dining", seatCount=6
-  - "outdoor sofa" → search: furnitureType="lounge"
-  - Always combine criteria for better results
+  **9. WARRANTY BREAKDOWN - BUILD TRUST**
+  
+  When customer asks about warranty OR when they're considering purchase:
+  
+  "Let me break down your protection:
+  • [Material 1]: [X] years warranty
+  • [Material 2]: [X] years warranty  
+  • [Material 3]: [X] years warranty
+  
+  Plus our 1-year guarantee covers any manufacturing defects. We're material specialists - we know these products inside out."
+  
+  Keep it succinct but comprehensive.
 
-  **9. NATURAL LANGUAGE RULES**
+  **10. NATURAL LANGUAGE - NEVER SOUND LIKE A BOT**
+  
   BANNED PHRASES:
   - "To help you find the perfect..."
   - "I need to ask a few questions..."
   - "Let me gather some information..."
   - Any numbered list of questions
-
-  REQUIRED PHRASES:
-  - "Let me show you..."
-  - "You'll love this one..."
-  - "This is popular because..."
-  - "Between you and me..."
-
-  **10. CUSTOMER PERSONA AWARENESS**
-  Current customer type: ${customerPersona}
-  - entertainer: Focus on impressive pieces, hosting capacity
-  - family: Emphasize durability, safety, easy cleaning
-  - style_conscious: Highlight design, modern aesthetics
-  - budget_conscious: Show value, deals, long-term savings
+  
+  REQUIRED STYLE:
+  - "Let me show you our bestsellers..."
+  - "You'll love this one because..."
+  - "Most customers go for this when..."
+  - "Between you and me, this is incredible value..."
 
   **YOUR TOOLS:**
-  - search_products: Find products by any criteria
-  - get_product_availability: Check specific stock
-  - offer_package_deal: Check if bundle timing is right
-  - get_comprehensive_warranty: Build trust with warranty info
-  - marketing_handoff: When ready to purchase
+  - search_products: Find products by ANY criteria (material, name, seats, type)
+  - get_product_availability: Check specific stock  
+  - offer_package_deal: ONLY use when customer shows strong interest
+  - get_comprehensive_warranty: Build trust with warranty details
+  - marketing_handoff: When collecting email for discount OR when ready to purchase
 
-  Remember: You're not qualifying leads, you're SELLING DREAMS of perfect outdoor living
+  **CRITICAL CONVERSION RULES:**
+  1. Show products within 2 messages maximum
+  2. Mention accessories TWICE (with products, then when they show interest)
+  3. Use REAL stock numbers to create urgency
+  4. Capture email for ANY discount request
+  5. Address maintenance concerns automatically based on material
+  6. Break down warranty by material when asked or when closing
+
+  Remember: You're not qualifying leads, you're SELLING DREAMS of perfect outdoor living while solving practical concerns
 
  **PRODUCT DISPLAY TEMPLATE - MANDATORY FORMAT:**
 You MUST use this EXACT structure for EVERY product, NO EXCEPTIONS:
@@ -2855,9 +2984,67 @@ app.post('/chat', async (req, res) => {
         });
       }
       
-      // Sales mode
+    // Sales mode
       mode = 'sales';
       session.context.mode = 'sales';
+      
+      // ============================================
+      // DISCOUNT & EMAIL CAPTURE SYSTEM
+      // ============================================
+      
+      // Detect discount requests
+      const discountKeywords = ['discount', 'cheaper', 'expensive', 'too much', 'price high', 'reduce price', 'lower price'];
+      const isDiscountRequest = discountKeywords.some(keyword => lowerMessage.includes(keyword));
+      
+      // Detect if customer is providing email for discount
+      const emailMatch = message.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
+      
+      if (session.context.waitingForDiscountEmail && emailMatch) {
+          // Customer provided email for discount
+          const customerEmail = emailMatch[0];
+          const discountType = session.context.discountType || '10%';
+          const productDetails = session.context.discountProduct || 'Selected product';
+          
+          const reason = discountType === '20%' ? 
+              `20% Bundle Discount Request - Customer Email: ${customerEmail} - Product: ${productDetails}` :
+              `10% Discount Request - Customer Email: ${customerEmail} - Product: ${productDetails}`;
+          
+          const emailSent = await sendChatToMarketing(
+              sessionId,
+              reason,
+              session.conversationHistory,
+              { email: customerEmail }
+          );
+          
+          if (emailSent) {
+              response = `Perfect! I've sent your request to our manager Rachel.\n\n📧 Your email: ${customerEmail}\n💰 Discount: ${discountType} off\n\nYou'll receive a secure payment link within the next 2 hours with your discount applied. Check your inbox (and spam folder just in case)!\n\nAnything else I can help you with while we process this?`;
+          } else {
+              response = `I've noted your email (${customerEmail}) but I'm having a technical issue sending it through. Please email rachel@mint-outdoor.com directly with:\n\n- Subject: "${discountType} Discount Request from Gwen"\n- Your session ID: ${sessionId}\n- Product you're interested in\n\nRachel will sort you out within 2 hours!`;
+          }
+          
+          // Clear the waiting flag
+          session.context.waitingForDiscountEmail = false;
+          delete session.context.discountType;
+          delete session.context.discountProduct;
+          
+          session.conversationHistory.push({ role: 'user', content: message, timestamp: new Date() });
+          session.conversationHistory.push({ role: 'assistant', content: response, timestamp: new Date() });
+          
+          await logChat(sessionId, 'user', message);
+          await logChat(sessionId, 'assistant', response);
+          
+          return res.json({
+              response: response,
+              sessionId: sessionId,
+              suggestions: ["Continue shopping", "Tell me more"]
+          });
+      }
+      
+      // Mark that we detected discount interest (AI will handle the actual offer)
+      if (isDiscountRequest && !session.context.discountOffered) {
+          session.context.discountInterest = true;
+          console.log(`💰 Discount interest detected - AI will handle offer`);
+      }
       
       // Handle bundle responses
       if (session.context.waitingForPackageResponse) {
