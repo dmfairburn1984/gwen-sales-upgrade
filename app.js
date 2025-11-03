@@ -206,8 +206,7 @@ const productData = productKnowledgeCenter.map(p => ({
     price: 'Check Shopify', // Will be updated by Shopify
     category: p.description_and_category?.primary_category,
     material: p.description_and_category?.material_type,
-    seats: p.specifications?.seats,
-    stockStatus: getStockStatus(p.product_identity?.sku)
+    seats: p.specifications?.seats
 })).filter(p => p.sku); // Only include products with SKUs
 
 const productMaterialIndex = productKnowledgeCenter.map(p => ({
@@ -417,33 +416,6 @@ function hasShownProductInterest(session) {
     );
 }
 
-// Update shouldOfferBundleNaturally function to use this
-function shouldOfferBundleNaturally(session) {
-    // Must have shown specific interest first
-    if (!hasShownProductInterest(session)) {
-        return false;
-    }
-    
-    // Then check interest score
-    const interestScore = calculateCustomerInterestScore(session);
-    
-    // Already offered?
-    if (session.context.offeredBundle || 
-        session.context.waitingForPackageResponse) {
-        return false;
-    }
-    
-    console.log(`💰 Bundle Decision - Interest Score: ${interestScore}/15`);
-    console.log(`💰 Has shown product interest: ${hasShownProductInterest(session)}`);
-    
-    // Need BOTH interest score AND specific product interest
-    if (interestScore >= 8 && hasShownProductInterest(session)) {
-        session.context.bundleReady = true;
-        return true;
-    }
-    
-    return false;
-}
 
 function shouldOfferBundleNaturally(session) {
     // Calculate interest score
@@ -2993,6 +2965,7 @@ app.post('/chat', async (req, res) => {
       // ============================================
       
       // Detect discount requests
+      const lowerMessage = message.toLowerCase();
       const discountKeywords = ['discount', 'cheaper', 'expensive', 'too much', 'price high', 'reduce price', 'lower price'];
       const isDiscountRequest = discountKeywords.some(keyword => lowerMessage.includes(keyword));
       
