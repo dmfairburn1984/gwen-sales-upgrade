@@ -2112,18 +2112,18 @@ const formattedProducts = products.map(product => {
             website_url: product.website_url,
             
             // Add display-ready formatted fields
-            image_display: product.image_url ? 
-                `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
-                '[No image available]',
-            price_display: product.price ? 
-                `£${product.price}` : 
-                'Contact for pricing',
+            image_display: product.image_url && product.website_url ? 
+    `<a href="${product.website_url}" target="_blank" style="display: block; text-decoration: none;"><img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></a>` : 
+    (product.image_url ? `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : '[No image available]'),
+            price_display: product.price && product.price !== 'Check Shopify' ? 
+    (product.price.includes('£') ? product.price : `£${product.price}`) : 
+    'Contact for pricing',
             stock_display: product.stockStatus?.inStock ? 
                 `✓ In stock (${product.stockStatus.stockLevel} available)` : 
                 '⚠️ Currently out of stock',
             view_button: product.website_url ? 
-                `[View in Store](${product.website_url})` : 
-                '[Contact us for details]',
+    `<a href="${product.website_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2E6041; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px;">View in Store →</a>` : 
+    '<span style="color: #666;">Contact us for details</span>',
             
             // ADD VERIFIED DATA FIELDS
             verified_features: realFeatures.length > 0 ? realFeatures.join(', ') : 'Premium outdoor furniture',
@@ -2135,18 +2135,18 @@ const formattedProducts = products.map(product => {
         // Fallback if product data not found
         return {
             ...product,
-            image_display: product.image_url ? 
-                `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : 
-                '[No image available]',
-            price_display: product.price ? 
-                `£${product.price}` : 
-                'Contact for pricing',
+            image_display: product.image_url && product.website_url ? 
+    `<a href="${product.website_url}" target="_blank" style="display: block; text-decoration: none;"><img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></a>` : 
+    (product.image_url ? `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : '[No image available]'),
+            price_display: product.price && product.price !== 'Check Shopify' ? 
+    (product.price.includes('£') ? product.price : `£${product.price}`) : 
+    'Contact for pricing',
             stock_display: product.stockStatus?.inStock ? 
                 `✓ In stock (${product.stockStatus.stockLevel} available)` : 
                 '⚠️ Currently out of stock',
             view_button: product.website_url ? 
-                `[View in Store](${product.website_url})` : 
-                '[Contact us for details]',
+    `<a href="${product.website_url}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #2E6041; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px;">View in Store →</a>` : 
+    '<span style="color: #666;">Contact us for details</span>',
             verified_features: 'Quality outdoor furniture',
             actual_materials: 'Premium materials',
             actual_warranties: '1 year warranty'
