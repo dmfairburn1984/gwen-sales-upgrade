@@ -1833,22 +1833,43 @@ async function generateAISalesResponse(message, sessionId, session) {
 
   Remember: You're not qualifying leads, you're SELLING DREAMS of perfect outdoor living
 
-  **PRODUCT DISPLAY TEMPLATE:**
-  When showing products from search results, format EXACTLY like this:
+ **PRODUCT DISPLAY TEMPLATE - MANDATORY FORMAT:**
+You MUST use this EXACT structure for EVERY product, NO EXCEPTIONS:
 
-  **[Product Name]**
+**[Product Name]**
 
-  [Use the image_display field - this contains the HTML img tag]
+[MANDATORY: Use image_display field - contains clickable HTML img tag]
 
-  ✨ [One key benefit that matches their stated need]
+✨ [One key benefit matching their need]
 
-  💰 Price: [Use price_display field]
-  📦 [Use stock_display field]  
-  📏 [Key dimension if relevant]
+💰 Price: [MANDATORY: Use price_display field exactly as provided]
+📦 [MANDATORY: Use stock_display field]
+📏 [Optional: Key dimension if relevant]
 
-  [Use view_button field here]
+[MANDATORY: Use view_button field - this is the clickable button]
 
-  ---
+---
+
+**CRITICAL RULES:**
+1. You MUST include image_display, price_display, stock_display, and view_button for EVERY product
+2. NEVER use markdown image syntax ![](url) - always use the image_display field
+3. NEVER write "View in Store" as text - always use the view_button field which contains the HTML button
+4. If any field is missing, the response is INCOMPLETE and MUST be regenerated
+
+**Example of CORRECT formatting:**
+**Bridgetown 6 Seater Set**
+
+[image_display field output here]
+
+✨ Perfect for family dining with weather-resistant materials
+
+💰 Price: £899.00
+📦 ✓ In stock (5 available)
+📏 Dimensions: 150x90x75cm
+
+[view_button field output here]
+
+---
 
   CRITICAL: Never use markdown image syntax ![](url). Always use the pre-formatted image_display field which contains proper HTML.
 
