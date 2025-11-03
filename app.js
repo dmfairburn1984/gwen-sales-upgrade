@@ -952,17 +952,22 @@ function searchRealProducts(criteria) {
     return finalResults;
 }
 
-// Helper function to enrich product data for backwards compatibility
 function enrichProductWithCompatibleData(product) {
     const sku = product.product_identity?.sku;
     const stockStatus = getStockStatus(sku);
+    
+    // Get price from product_knowledge_center.json FIRST
+    const localPrice = product.product_identity?.price_gbp;
+    const formattedLocalPrice = localPrice ? `£${parseFloat(localPrice).toFixed(2)}` : null;
     
     return {
         // Original fields expected by old code
         sku: sku,
         product_title: product.product_identity?.product_name,
-        price: 'Check Shopify', // Will be updated by Shopify integration
-        website_url: `https://mint-outdoor.com/search?q=${sku}`,
+        price: formattedLocalPrice || 'Check Shopify', // Use local price, fallback to Shopify
+        website_url: product.product_identity?.image_url ? 
+            `https://mint-outdoor.com/search?q=${sku}` : 
+            `https://mint-outdoor.com/search?q=${sku}`,
         image_url: product.product_identity?.image_url || null,
         
         // Stock information
@@ -1119,16 +1124,26 @@ async function searchShopifyProducts(criteria) {
         // First try local search with unified data
         const localResults = searchRealProducts(criteria);
         
-        // Then enrich with Shopify data
-        for (let product of localResults) {
-            const shopifyData = await getShopifyProductBySku(product.sku);
-            if (shopifyData) {
-                product.price = `£${parseFloat(shopifyData.price).toFixed(2)}`;
-                product.website_url = shopifyData.url;
-                product.variant_id = shopifyData.variant_id;
-                product.image_url = shopifyData.image_url || product.image_url;
-            }
+       // Then enrich with Shopify data (but keep local price if Shopify fails)
+for (let product of localResults) {
+    const shopifyData = await getShopifyProductBySku(product.sku);
+    if (shopifyData) {
+        // Only update price if Shopify price is valid
+        if (shopifyData.price && parseFloat(shopifyData.price) > 0) {
+            product.price = `£${parseFloat(shopifyData.price).toFixed(2)}`;
         }
+        // Update URL if Shopify has better one
+        if (shopifyData.url) {
+            product.website_url = shopifyData.url;
+        }
+        product.variant_id = shopifyData.variant_id;
+        product.image_url = shopifyData.image_url || product.image_url;
+    }
+    // Ensure EVERY product has a website_url
+    if (!product.website_url) {
+        product.website_url = `https://mint-outdoor.com/search?q=${product.sku}`;
+    }
+}
         
         return localResults;
     } catch (error) {
@@ -2136,8 +2151,8 @@ const formattedProducts = products.map(product => {
             image_display: product.image_url && product.website_url ? 
     `<a href="${product.website_url}" target="_blank" style="display: block; text-decoration: none;"><img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></a>` : 
     (product.image_url ? `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : '[No image available]'),
-            price_display: product.price && product.price !== 'Check Shopify' ? 
-    (product.price.includes('£') ? product.price : `£${product.price}`) : 
+    price_display: product.price && product.price !== 'Check Shopify' ? 
+    product.price : 
     'Contact for pricing',
             stock_display: product.stockStatus?.inStock ? 
                 `✓ In stock (${product.stockStatus.stockLevel} available)` : 
@@ -2159,8 +2174,8 @@ const formattedProducts = products.map(product => {
             image_display: product.image_url && product.website_url ? 
     `<a href="${product.website_url}" target="_blank" style="display: block; text-decoration: none;"><img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></a>` : 
     (product.image_url ? `<img src="${product.image_url}" alt="${product.product_title}" style="max-width: 100%; border-radius: 8px; margin: 12px 0;">` : '[No image available]'),
-            price_display: product.price && product.price !== 'Check Shopify' ? 
-    (product.price.includes('£') ? product.price : `£${product.price}`) : 
+    price_display: product.price && product.price !== 'Check Shopify' ? 
+    product.price : 
     'Contact for pricing',
             stock_display: product.stockStatus?.inStock ? 
                 `✓ In stock (${product.stockStatus.stockLevel} available)` : 
