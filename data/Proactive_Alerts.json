@@ -1,10 +1,17 @@
 {
-  "dateGenerated": "2025-12-03T03:56:05.184Z",
+  "dateGenerated": "2025-12-04T03:56:05.669Z",
   "proactiveAlerts": [
     {
       "alertType": "✅ PO Tag Confirmed",
+      "skuOrOrderId": "4177",
+      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Order Recommendation).",
+      "recommendedAction": "No action needed unless this association is incorrect.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4176",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Order Recommendation).",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -81,7 +88,7 @@
     {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4168",
-      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Order Recommendation).",
+      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -109,14 +116,14 @@
     {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4165",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Order Recommendation).",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
     {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4164",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Order Recommendation).",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -660,11 +667,11 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4105",
-      "issue": "SKU STOCKHOLM-CHAISE-LOUNGE (Order 4105) is available in warehouse (231 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ NO ISSUES",
@@ -25371,6 +25378,64 @@
     },
     {
       "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4138",
+      "issue": "Order (SLA Start from JOB date: 23/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 21/11/2025.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "MALAGA-LOUNGE-SET",
+          "name": "Chesterton Grey 5 Seater Corner Rattan Garden Sofa Lounge Set",
+          "qty": 1
+        },
+        {
+          "sku": "CHESTERTON-COVER",
+          "name": "Chesterton Custom-Fitted Furniture Cover",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12035613000012"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4138",
+      "issue": "Order (SLA Start from JOB date: 23/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 21/11/2025.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "MALAGA-LOUNGE-SET",
+          "name": "Chesterton Grey 5 Seater Corner Rattan Garden Sofa Lounge Set",
+          "qty": 1
+        },
+        {
+          "sku": "CHESTERTON-COVER",
+          "name": "Chesterton Custom-Fitted Furniture Cover",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12035613000012"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4136",
+      "issue": "Order (SLA Start from JOB date: 21/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 19/11/2025.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "name": "Stockholm 6 Seater Black Rattan Corner Garden Dining and Lounge Set",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12030835982668"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4133",
       "issue": "Order (SLA Start from JOB date: 19/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/11/2025.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
@@ -25388,10 +25453,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4110",
-      "issue": "Order (SLA Start from JOB date: 11/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 09/11/2025. Overdue by: 5 days.",
+      "issue": "Order (SLA Start from JOB date: 11/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 09/11/2025. Overdue by: 6 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 5,
+      "overdueByDays": 6,
       "items": [
         {
           "sku": "FARO-LOUNGE-SET",
@@ -25403,27 +25468,11 @@
     },
     {
       "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4105",
-      "issue": "Order (SLA Start from JOB date: 08/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 06/11/2025. Overdue by: 7 days.",
-      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
-      "riskLevel": "High",
-      "overdueByDays": 7,
-      "items": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "name": "Stockholm Rattan Grey 4 Seater Garden Chaise Lounge Set with Armchair",
-          "qty": 1
-        }
-      ],
-      "adminOrderUrl": "https://admin.shopify.com/orders/12002163294540"
-    },
-    {
-      "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4100",
-      "issue": "Order (SLA Start from JOB date: 06/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 04/11/2025. Overdue by: 8 days.",
+      "issue": "Order (SLA Start from JOB date: 06/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 04/11/2025. Overdue by: 9 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 8,
+      "overdueByDays": 9,
       "items": [
         {
           "sku": "SANTORINI-GREY",
@@ -25436,10 +25485,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4069",
-      "issue": "Order (SLA Start from JOB date: 14/10/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 12/10/2025. Overdue by: 26 days.",
+      "issue": "Order (SLA Start from JOB date: 14/10/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 12/10/2025. Overdue by: 27 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 26,
+      "overdueByDays": 27,
       "items": [
         {
           "sku": "CHESTERTON-COVER",
@@ -25452,10 +25501,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "3945",
-      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 47 days.",
+      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 48 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 47,
+      "overdueByDays": 48,
       "items": [
         {
           "sku": "HAVANA-8S",
