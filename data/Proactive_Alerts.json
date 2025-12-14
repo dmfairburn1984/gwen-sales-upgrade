@@ -1,6 +1,48 @@
 {
-  "dateGenerated": "2025-12-13T03:55:43.262Z",
+  "dateGenerated": "2025-12-14T03:55:48.678Z",
   "proactiveAlerts": [
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4199",
+      "issue": "SKU PALMA-CUSHION-BOX (Order 4199) is available in warehouse (2 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4198",
+      "issue": "SKU CHESTERTON-COVER (Order 4198) is available in warehouse (208 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4198",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4198) is available in warehouse (18 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "❗ High-Risk Order Alert",
+      "skuOrOrderId": "4197",
+      "issue": "No assigned PO for SKU FARO-LOUNGE-SET-BEIGE, no recommended PO for order, and SKU not available on any open POs or in inventory.",
+      "recommendedAction": "Urgently verify order, check future POs, or contact customer.",
+      "riskLevel": "High"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4197",
+      "issue": "SKU PALMA-COVER (Order 4197) is available in warehouse (74 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4196",
+      "issue": "SKU MARBELLA-COVER (Order 4196) is available in warehouse (15 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4195",
@@ -11,7 +53,7 @@
     {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4193",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Order Recommendation).",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER associated with PO 14/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -20,13 +62,6 @@
       "skuOrOrderId": "4192",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4192 | SKU: PALMA-COVER",
-      "issue": "Order 4192 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -41,13 +76,6 @@
       "skuOrOrderId": "4191",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4191 | SKU: PALMA-COVER",
-      "issue": "Order 4191 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -109,14 +137,14 @@
     {
       "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4187",
-      "issue": "Order already in POD.",
+      "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
       "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4187",
-      "issue": "Order already in POD.",
+      "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
@@ -125,13 +153,6 @@
       "skuOrOrderId": "4186",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4186 | SKU: PALMA-COVER",
-      "issue": "Order 4186 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -268,24 +289,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4174 | SKU: PALMA-COVER",
-      "issue": "Order 4174 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4173",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4173 | SKU: PALMA-COVER",
-      "issue": "Order 4173 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -314,13 +321,6 @@
       "skuOrOrderId": "4170",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4170 | SKU: PALMA-COVER",
-      "issue": "Order 4170 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -356,13 +356,6 @@
       "skuOrOrderId": "4166",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4166 | SKU: PALMA-COVER",
-      "issue": "Order 4166 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -408,13 +401,6 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4161 | SKU: PALMA-COVER",
-      "issue": "Order 4161 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4161",
       "issue": "SKU FARO-LOUNGE-SET associated with PO 13/2026. (Source: Direct Assignment).",
@@ -433,13 +419,6 @@
       "skuOrOrderId": "4160",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4160 | SKU: PALMA-COVER",
-      "issue": "Order 4160 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -492,13 +471,6 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4153 | SKU: PALMA-COVER",
-      "issue": "Order 4153 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4153",
       "issue": "SKU FARO-LOUNGE-SET associated with PO 13/2026. (Source: Direct Assignment).",
@@ -517,13 +489,6 @@
       "skuOrOrderId": "4152",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4152 | SKU: PALMA-COVER",
-      "issue": "Order 4152 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -548,24 +513,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4150 | SKU: PALMA-COVER",
-      "issue": "Order 4150 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4149",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4149 | SKU: PALMA-COVER",
-      "issue": "Order 4149 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -611,13 +562,6 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4145 | SKU: PALMA-COVER",
-      "issue": "Order 4145 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4145",
       "issue": "SKU FARO-LOUNGE-SET associated with PO 13/2026. (Source: Direct Assignment).",
@@ -632,13 +576,6 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4144 | SKU: PALMA-COVER",
-      "issue": "Order 4144 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
-      "riskLevel": "Low"
-    },
-    {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4144",
       "issue": "SKU FARO-LOUNGE-SET associated with PO 13/2026. (Source: Direct Assignment).",
@@ -650,13 +587,6 @@
       "skuOrOrderId": "4143",
       "issue": "SKU PALMA-COVER associated with PO 13/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4143 | SKU: PALMA-COVER",
-      "issue": "Order 4143 (SKU PALMA-COVER) is on a soft allocation log. PO 13/2026 was overallocated by 16 for this SKU. Current inventory for SKU: 74.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 16 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -776,13 +706,6 @@
       "skuOrOrderId": "4131",
       "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 16/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
-    },
-    {
-      "alertType": "✅ PO Overallocated (Soft Allocation Logged)",
-      "skuOrOrderId": "Order 4131 | SKU: STOCKHOLM-LOUNGE-SET",
-      "issue": "Order 4131 (SKU STOCKHOLM-LOUNGE-SET) is on a soft allocation log. PO 16/2026 was overallocated by 1 for this SKU. Current inventory for SKU: -7.",
-      "recommendedAction": "Item found in Silent Soft Allocations / Inventory Ringfence. Verify context of this soft allocation. The PO overallocation by 1 may be intentional.",
       "riskLevel": "Low"
     },
     {
@@ -1047,7 +970,7 @@
     {
       "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4100",
-      "issue": "Order already in POD.",
+      "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
@@ -25881,15 +25804,8 @@
     },
     {
       "alertType": "⚠️ Balance Payment Required",
-      "skuOrOrderId": "4179",
-      "issue": "Order 4179 (PO 14/2026) is partially paid. PO ETA: 22/12/2025 (9 days).",
-      "recommendedAction": "Collect final balance before dispatch deadline.",
-      "riskLevel": "High"
-    },
-    {
-      "alertType": "⚠️ Balance Payment Required",
       "skuOrOrderId": "4178",
-      "issue": "Order 4178 (PO 14/2026) is partially paid. PO ETA: 22/12/2025 (9 days).",
+      "issue": "Order 4178 (PO 14/2026) is partially paid. PO ETA: 22/12/2025 (8 days).",
       "recommendedAction": "Collect final balance before dispatch deadline.",
       "riskLevel": "High"
     }
