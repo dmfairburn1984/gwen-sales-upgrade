@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-12T07:29:55.390Z",
+  "generated_at": "2025-12-14T07:31:57.663Z",
   "source": "Mint Ops Dashboard v1.4.0",
   "working_day_definition": [
     "Mon",
@@ -101452,7 +101452,7 @@
       "order_id": 12061361144140,
       "customer": {},
       "financial_status": "paid",
-      "fulfillment_status": "",
+      "fulfillment_status": "fulfilled",
       "tag": "w3os:Delivery Booking in Progress",
       "is_preorder": false,
       "stock_date_source": "order_created",
@@ -101975,7 +101975,7 @@
       "order_number": "4194",
       "order_id": 12174131921228,
       "customer": {},
-      "financial_status": "paid",
+      "financial_status": "refunded",
       "fulfillment_status": "",
       "tag": "w3os:Delivery Booking in Progress",
       "is_preorder": false,
@@ -102059,13 +102059,13 @@
         "expected_complete_by": null
       },
       "courier": "Right Road Logistics",
-      "courier_received_at": null,
-      "courier_has_order": false,
+      "courier_received_at": "2025-12-13",
+      "courier_has_order": true,
       "sla_working_days": 10,
-      "sla_due_date": null,
+      "sla_due_date": "2025-12-26",
       "working_days_elapsed": 0,
-      "working_days_remaining": null,
-      "sla_status": null,
+      "working_days_remaining": 10,
+      "sla_status": "within_sla",
       "overdue_by_days": 0,
       "items": [
         {
@@ -102076,6 +102076,47 @@
       ],
       "shopify_order_status_url": "https://mint-outdoor.com/83377389900/orders/317ce0b9a1db5fb3f327419929f736b2/authenticate?key=389a2efc98d6dd8dda9380f17fc02343",
       "admin_order_url": "https://admin.shopify.com/orders/12175072526668",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "order_number": "4198",
+      "order_id": 12176327999820,
+      "customer": {},
+      "financial_status": "paid",
+      "fulfillment_status": "",
+      "tag": "w3os:Delivery Booking in Progress",
+      "is_preorder": false,
+      "stock_date_source": "order_created",
+      "stock_available_at": null,
+      "inventory_check": {
+        "status": "complete",
+        "warehouse_received_at": null,
+        "expected_complete_by": null
+      },
+      "courier": "Right Road Logistics",
+      "courier_received_at": "2025-12-13",
+      "courier_has_order": true,
+      "sla_working_days": 10,
+      "sla_due_date": "2025-12-26",
+      "working_days_elapsed": 0,
+      "working_days_remaining": 10,
+      "sla_status": "within_sla",
+      "overdue_by_days": 0,
+      "items": [
+        {
+          "sku": "CHESTERTON-COVER",
+          "name": "Chesterton Custom-Fitted Furniture Cover",
+          "qty": 1
+        },
+        {
+          "sku": "MALAGA-LOUNGE-SET",
+          "name": "Chesterton Grey 5 Seater Corner Rattan Garden Sofa Lounge Set",
+          "qty": 1
+        }
+      ],
+      "shopify_order_status_url": "https://mint-outdoor.com/83377389900/orders/8d43a4a36e4effc40aaa9ee34f1d9b62/authenticate?key=8e7fd3d21ba017c026be2f74efd49c50",
+      "admin_order_url": "https://admin.shopify.com/orders/12176327999820",
       "created_at": null,
       "updated_at": null
     }
