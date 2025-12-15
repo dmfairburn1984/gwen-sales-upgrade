@@ -1,6 +1,13 @@
 {
-  "dateGenerated": "2025-12-14T03:55:48.678Z",
+  "dateGenerated": "2025-12-15T03:55:38.267Z",
   "proactiveAlerts": [
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4200",
+      "issue": "SKU PALMA-COVER (Order 4200) is available in warehouse (74 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4199",
@@ -205,11 +212,11 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4182",
-      "issue": "SKU STOCKHOLM-CHAISE-LOUNGE (Order 4182) is available in warehouse (228 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -25805,7 +25812,7 @@
     {
       "alertType": "⚠️ Balance Payment Required",
       "skuOrOrderId": "4178",
-      "issue": "Order 4178 (PO 14/2026) is partially paid. PO ETA: 22/12/2025 (8 days).",
+      "issue": "Order 4178 (PO 14/2026) is partially paid. PO ETA: 22/12/2025 (7 days).",
       "recommendedAction": "Collect final balance before dispatch deadline.",
       "riskLevel": "High"
     }
