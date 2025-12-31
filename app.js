@@ -670,6 +670,124 @@ function detectMarketingHandoff(message, conversationHistory) {
 }
 
 // ============================================
+// SECTION 4B: SMART QUERY ANALYZER
+// ============================================
+
+function analyzeQueryCompleteness(conversationHistory, currentMessage) {
+    // Detect what info we already have from the conversation
+    const detectedSeats = detectCapacity(conversationHistory, currentMessage);
+    const detectedMaterial = detectMaterial(conversationHistory, currentMessage);
+    const detectedBudget = detectBudget(conversationHistory, currentMessage);
+    const detectedPurpose = detectPurpose(conversationHistory, currentMessage);
+    const detectedSpace = detectSpace(conversationHistory, currentMessage);
+    const detectedFeatures = detectFeatures(conversationHistory, currentMessage);
+    
+    // Check for specific product request (e.g., "Barcelona 9 seater", "Palma corner")
+    const lowerMessage = currentMessage.toLowerCase();
+    const productNames = ['barcelona', 'palma', 'marbella', 'stockholm', 'santorini', 'chesterton', 'kiki', 'faro', 'malaga', 'tenerife', 'lyon', 'cannes'];
+    const isSpecificProductRequest = productNames.some(name => lowerMessage.includes(name));
+    
+    // Count how many key criteria we have
+    const infoGathered = {
+        seats: detectedSeats,
+        material: detectedMaterial,
+        budget: detectedBudget,
+        purpose: detectedPurpose,
+        space: detectedSpace,
+        features: detectedFeatures,
+        specificProduct: isSpecificProductRequest
+    };
+    
+    const infoCount = [
+        detectedSeats !== null,
+        detectedMaterial !== null,
+        detectedBudget !== null,
+        detectedPurpose !== null
+    ].filter(Boolean).length;
+    
+    // Determine what's missing (priority order)
+    const missing = [];
+    if (detectedSeats === null) missing.push('seats');
+    if (detectedMaterial === null) missing.push('material');
+    // Budget is lower priority - we can infer from behavior
+    
+    // Determine readiness to show products
+    let readyToShowProducts = false;
+    let qualificationNeeded = null;
+    
+    // READY TO SHOW PRODUCTS IF:
+    // 1. Specific product requested by name
+    // 2. Have 2+ pieces of info (seats + material, or seats + purpose, etc.)
+    // 3. Customer gave seats AND material
+    // 4. Second or later message in conversation (they've engaged)
+    
+    if (isSpecificProductRequest) {
+        readyToShowProducts = true;
+        qualificationNeeded = null;
+    } else if (detectedSeats !== null && detectedMaterial !== null) {
+        readyToShowProducts = true;
+        qualificationNeeded = null;
+    } else if (infoCount >= 2) {
+        readyToShowProducts = true;
+        qualificationNeeded = null;
+    } else if (conversationHistory.length >= 4) {
+        // After 2 exchanges, show products anyway with best guess
+        readyToShowProducts = true;
+        qualificationNeeded = null;
+    } else {
+        // Need to ask ONE qualifying question
+        readyToShowProducts = false;
+        
+        // Priority: Seats first (easiest), then material
+        if (detectedSeats === null && detectedPurpose !== null) {
+            qualificationNeeded = 'seats';
+        } else if (detectedPurpose === null) {
+            qualificationNeeded = 'purpose_with_seats';
+        } else if (detectedMaterial === null) {
+            qualificationNeeded = 'material';
+        } else {
+            qualificationNeeded = 'seats';
+        }
+    }
+    
+    return {
+        gathered: infoGathered,
+        infoCount: infoCount,
+        missing: missing,
+        readyToShowProducts: readyToShowProducts,
+        qualificationNeeded: qualificationNeeded,
+        isSpecificProduct: isSpecificProductRequest,
+        summary: `Seats: ${detectedSeats || 'unknown'}, Material: ${detectedMaterial || 'unknown'}, Purpose: ${detectedPurpose || 'unknown'}, Budget: ${detectedBudget || 'unknown'}`
+    };
+}
+
+function getSmartQualificationQuestion(qualificationType, detectedPurpose) {
+    const questions = {
+        'seats': [
+            "How many people do you typically need to seat? Are you thinking 4-6 for everyday use, or 8+ for entertaining?",
+            "Quick question - how many seats are you looking for?",
+            "What size are you thinking - cosy 4-seater or bigger for hosting friends?"
+        ],
+        'purpose_with_seats': [
+            "Are you looking for a dining setup or more of a lounge/relaxation area? And roughly how many people?",
+            "What's the main use - dining, lounging, or both? And for how many people typically?"
+        ],
+        'material': [
+            "Do you have a material preference? We have modern aluminium (zero maintenance), natural rattan (classic look), or premium teak (ages beautifully).",
+            "Any preference on material - aluminium, rattan, or teak? Each has different maintenance levels.",
+            "What's more important - the sleek modern look of aluminium, the warmth of natural rattan, or the premium feel of solid teak?"
+        ],
+        'material_with_maintenance': [
+            "How much maintenance are you up for? Aluminium is zero effort, rattan needs occasional cleaning, teak can be left natural or oiled.",
+            "Do you want something low maintenance (aluminium) or are you happy with a bit of care for that premium teak look?"
+        ]
+    };
+    
+    const options = questions[qualificationType] || questions['seats'];
+    return options[Math.floor(Math.random() * options.length)];
+}
+
+// ============================================
 // SECTION 5: PERSONA QUESTIONS
 // ============================================
 
@@ -1645,29 +1763,88 @@ async function generateAISalesResponse(message, sessionId, session) {
         session.context.detectedPersona = customerPersona;
         console.log(`🎭 Detected customer persona: ${customerPersona}`);
         
+        // SMART QUERY ANALYSIS - Detect what info we have vs need
+        const queryAnalysis = analyzeQueryCompleteness(conversation, message);
+        console.log(`🔍 Query Analysis: ${queryAnalysis.summary}`);
+        console.log(`📊 Ready to show products: ${queryAnalysis.readyToShowProducts}`);
+        console.log(`❓ Qualification needed: ${queryAnalysis.qualificationNeeded || 'none'}`);
+        
+        // Store gathered info in session context
+        session.context.gatheredInfo = {
+            ...session.context.gatheredInfo,
+            ...queryAnalysis.gathered
+        };
+        
         // Log persona detection event
         if (conversation.length === 1) {
             await logEvent(sessionId, 'persona_detected', { persona: customerPersona });
             await updateSessionSummary(sessionId, { persona_detected: customerPersona });
         }
         
+        // Log query analysis for analytics
+        await logEvent(sessionId, 'query_analyzed', {
+            ready_to_show: queryAnalysis.readyToShowProducts,
+            qualification_needed: queryAnalysis.qualificationNeeded,
+            info_count: queryAnalysis.infoCount,
+            specific_product: queryAnalysis.isSpecificProduct,
+            gathered: queryAnalysis.summary
+        });
+        
+        // Generate smart qualification guidance for AI
+        let qualificationGuidance = '';
+        if (queryAnalysis.isSpecificProduct) {
+            qualificationGuidance = `
+🎯 SPECIFIC PRODUCT REQUESTED - Show it immediately! Customer asked for a specific product by name.
+DO NOT ask qualifying questions. Use search_products to find and display the requested product NOW.`;
+        } else if (queryAnalysis.readyToShowProducts) {
+            qualificationGuidance = `
+🎯 READY TO SHOW PRODUCTS - We have enough info to make recommendations.
+Gathered info: ${queryAnalysis.summary}
+Use search_products NOW with these criteria and show 2-3 relevant options.`;
+        } else {
+            const smartQuestion = getSmartQualificationQuestion(queryAnalysis.qualificationNeeded, queryAnalysis.gathered.purpose);
+            qualificationGuidance = `
+🎯 NEED ONE QUALIFYING QUESTION - Ask this naturally, then show products in your NEXT response.
+Missing: ${queryAnalysis.missing.join(', ')}
+Suggested question: "${smartQuestion}"
+
+IMPORTANT: Ask ONLY this ONE question. Do NOT interrogate with multiple questions.
+After they answer, IMMEDIATELY show products - don't ask more questions.`;
+        }
+        
         const messages = [{
             role: "system",
             content: `You are Gwen, an outdoor furniture expert at MINT Outdoor.
 
-🎯 PRIMARY MISSION: Show products + accessories + 20% bundle offer within 2 messages.
+${qualificationGuidance}
 
-📋 MANDATORY PRODUCT DISPLAY FORMAT (FOLLOW EXACTLY, NO EXCEPTIONS):
+🧠 SMART QUALIFICATION RULES:
+
+1. **SPECIFIC PRODUCT REQUEST** (customer mentions "Barcelona", "Palma", etc.)
+   → Show that product IMMEDIATELY. No questions needed.
+
+2. **HAVE 2+ PIECES OF INFO** (e.g., seats + material, or purpose + seats)
+   → Show products IMMEDIATELY. No questions needed.
+   
+3. **VAGUE REQUEST** ("do you have lounge furniture?", "what dining sets do you have?")
+   → Ask ONE smart question about what's missing (usually seats or material)
+   → Then show products in your NEXT response
+   
+4. **NEVER ask more than ONE qualifying question per response**
+
+5. **By message 3, you MUST be showing products** - no more questions after that
+
+📋 WHEN SHOWING PRODUCTS - USE THIS FORMAT:
 
 **[Product Name]**
 [image_display field here]
 
-✨ [Emotional hook: "Picture hosting 9 friends for summer BBQs..."]
+✨ [Emotional hook based on seat count: "Picture hosting 9 friends for summer BBQs..."]
 
 💪 **Why customers love this:**
-- [Use verified_features - real material benefits like "UV 2000h tested = 3+ years protection"]
-- [Maintenance ease - "Just cover during harsh winter" or "Zero maintenance"]
-- [Use actual_warranties - "2-4 year warranties across materials"]
+- [Use verified_features - real material benefits]
+- [Maintenance ease]
+- [Warranty info from actual_warranties]
 
 💰 Price: [price_display field]
 📦 [stock_display field]
@@ -1700,7 +1877,7 @@ Set (£[actual_set_price]) + [Accessory names with actual prices from accessorie
 
 💬 **Closing question:**
 - If bundle was shown: "This setup protects your investment for years - what do you think?"
-- If NO bundle available: "What do you think of this option? Any questions about the [material/warranty/delivery]?"
+- If NO bundle available: "What do you think? Any questions about the [material/warranty/delivery]?"
 
 🚨 CRITICAL BUNDLE RULES:
 
@@ -1760,6 +1937,7 @@ Set (£[actual_set_price]) + [Accessory names with actual prices from accessorie
 - "To help you find the perfect..."
 - "I need to ask a few questions..."
 - "Let me gather some information..."
+- "What's your budget?" (too intrusive)
 
 ✅ REQUIRED STYLE:
 - "Let me show you..."
@@ -1785,8 +1963,8 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
 - verified_features = Real benefits only
 - actual_materials = Actual materials
 - actual_warranties = Real warranty periods
-- **accessories** = Array of upsell products
-- **hasAccessories** = If true, MUST show bundle
+- **accessories** = Array of upsell products (may be empty!)
+- **hasAccessories** = If true, MUST show bundle. If false, NO bundle mention.
 
 **Company Info:**
 - Free UK delivery
