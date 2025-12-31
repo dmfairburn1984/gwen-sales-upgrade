@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gwen AI Analytics Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .header { background: linear-gradient(135deg, #2E6041, #9FDCC2); color: white; padding: 30px; border-radius: 10px; margin-bottom: 20px; }
+        .header h1 { margin-bottom: 10px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .metric-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .metric-value { font-size: 32px; font-weight: bold; color: #2E6041; }
+        .metric-label { color: #666; margin-top: 5px; }
+        .section { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .section h2 { color: #2E6041; margin-bottom: 15px; border-bottom: 2px solid #9FDCC2; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f8f8f8; color: #333; }
+        tr:hover { background: #f5f5f5; }
+        .status-good { color: #2E6041; }
+        .status-warning { color: #f0ad4e; }
+        .status-bad { color: #d9534f; }
+        .refresh-btn { background: #2E6041; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .refresh-btn:hover { background: #1d4029; }
+        .timeframe-select { padding: 8px; border-radius: 5px; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌿 GWEN AI Analytics Dashboard</h1>
+        <p>MINT Outdoor Chatbot Performance Metrics</p>
+        <div style="margin-top: 15px;">
+            <button class="refresh-btn" onclick="loadAllData()">🔄 Refresh Data</button>
+            <select class="timeframe-select" id="timeframe" onchange="loadAllData()">
+                <option value="7">Last 7 Days</option>
+                <option value="14">Last 14 Days</option>
+                <option value="30">Last 30 Days</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="metrics-grid" id="kpi-cards">
+        <div class="metric-card">
+            <div class="metric-value" id="total-sessions">--</div>
+            <div class="metric-label">Total Sessions</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="engaged-rate">--%</div>
+            <div class="metric-label">Engaged Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="product-rate">--%</div>
+            <div class="metric-label">Product Display Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="bundle-offer-rate">--%</div>
+            <div class="metric-label">Bundle Offer Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="bundle-accept-rate">--%</div>
+            <div class="metric-label">Bundle Acceptance</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="email-rate">--%</div>
+            <div class="metric-label">Email Capture Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="handoff-rate">--%</div>
+            <div class="metric-label">Handoff Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="avg-messages">--</div>
+            <div class="metric-label">Avg Messages/Session</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📦 Top Products Displayed</h2>
+        <table id="top-products-table">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Product Name</th>
+                    <th>Display Count</th>
+                    <th>Unique Sessions</th>
+                </tr>
+            </thead>
+            <tbody id="top-products-body">
+                <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>📋 Recent Sessions</h2>
+        <table id="sessions-table">
+            <thead>
+                <tr>
+                    <th>Session ID</th>
+                    <th>Started</th>
+                    <th>Messages</th>
+                    <th>Products</th>
+                    <th>Bundle</th>
+                    <th>Email</th>
+                    <th>Handoff</th>
+                </tr>
+            </thead>
+            <tbody id="sessions-body">
+                <tr><td colspan="7">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        async function loadKPISummary() {
+            const days = document.getElementById('timeframe').value;
+            try {
+                const response = await fetch(`${API_BASE}/analytics/kpi-summary?days=${days}`);
+                const data = await response.json();
+                
+                if (data.metrics) {
+                    document.getElementById('total-sessions').textContent = data.metrics.total_sessions;
+                    document.getElementById('engaged-rate').textContent = data.metrics.engaged_rate;
+                    document.getElementById('product-rate').textContent = data.metrics.product_display_rate;
+                    document.getElementById('bundle-offer-rate').textContent = data.metrics.bundle_offer_rate;
+                    document.getElementById('bundle-accept-rate').textContent = data.metrics.bundle_acceptance_rate;
+                    document.getElementById('email-rate').textContent = data.metrics.email_capture_rate;
+                    document.getElementById('handoff-rate').textContent = data.metrics.handoff_rate;
+                    document.getElementById('avg-messages').textContent = data.metrics.avg_messages_per_session;
+                }
+            } catch (error) {
+                console.error('Error loading KPIs:', error);
+            }
+        }
+        
+        async function loadTopProducts() {
+            const days = document.getElementById('timeframe').value;
+            try {
+                const response = await fetch(`${API_BASE}/analytics/top-products?days=${days}`);
+                const data = await response.json();
+                
+                const tbody = document.getElementById('top-products-body');
+                if (data.top_products && data.top_products.length > 0) {
+                    tbody.innerHTML = data.top_products.map(p => `
+                        <tr>
+                            <td>${p.sku || 'N/A'}</td>
+                            <td>${p.product_name || 'Unknown'}</td>
+                            <td>${p.display_count}</td>
+                            <td>${p.unique_sessions}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4">No product data available</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+        
+        async function loadRecentSessions() {
+            try {
+                const response = await fetch(`${API_BASE}/analytics/recent-sessions?limit=20`);
+                const data = await response.json();
+                
+                const tbody = document.getElementById('sessions-body');
+                if (data.recent_sessions && data.recent_sessions.length > 0) {
+                    tbody.innerHTML = data.recent_sessions.map(s => `
+                        <tr onclick="viewSession('${s.session_id}')" style="cursor:pointer;">
+                            <td>${s.session_id.substring(0, 8)}...</td>
+                            <td>${new Date(s.started_at).toLocaleString()}</td>
+                            <td>${s.message_count || 0}</td>
+                            <td>${s.products_viewed || 0}</td>
+                            <td>${s.bundle_accepted ? '✅' : (s.bundle_offered ? '📤' : '❌')}</td>
+                            <td>${s.email_captured ? '✅' : '❌'}</td>
+                            <td>${s.handoff_triggered ? '✅' : '❌'}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7">No sessions available</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+            }
+        }
+        
+        function viewSession(sessionId) {
+            window.open(`${API_BASE}/analytics/session/${sessionId}`, '_blank');
+        }
+        
+        function loadAllData() {
+            loadKPISummary();
+            loadTopProducts();
+            loadRecentSessions();
+        }
+        
+        // Initial load
+        loadAllData();
+        
+        // Auto-refresh every 5 minutes
+        setInterval(loadAllData, 300000);
+    </script>
+</body>
+</html>
