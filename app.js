@@ -2794,7 +2794,176 @@ app.get('/analytics/top-products', async (req, res) => {
     }
 });
 
-// Session Detail Endpoint
+// QUALITY ANALYSIS ENDPOINT - Kaizen Recommendations
+app.get('/analytics/quality-analysis', async (req, res) => {
+    if (!pool) {
+        return res.json({ 
+            error: 'Database not connected',
+            quality_score: 0,
+            issues_summary: { critical: 0, warnings: 0 },
+            recommendations: []
+        });
+    }
+    
+    try {
+        // Get recent assistant messages for analysis
+        const messagesResult = await pool.query(`
+            SELECT session_id, message, timestamp 
+            FROM chat_logs 
+            WHERE role = 'assistant' 
+            AND timestamp >= NOW() - INTERVAL '7 days'
+            ORDER BY timestamp DESC
+            LIMIT 100
+        `);
+        
+        const messages = messagesResult.rows;
+        
+        // Initialize issue counters
+        const issues = {
+            missing_price: [],
+            placeholder_text: [],
+            missing_bundle_calc: [],
+            no_image: [],
+            too_short: [],
+            no_cta: []
+        };
+        
+        // Analyze each message
+        messages.forEach(msg => {
+            const content = msg.message || '';
+            const sessionId = msg.session_id;
+            const timestamp = msg.timestamp;
+            
+            // Check for missing prices
+            if (content.includes('Contact for pricing') || 
+                content.includes('Check price') ||
+                content.includes('Price: Contact')) {
+                issues.missing_price.push({ sessionId, timestamp, detail: 'Price showing as "Contact for pricing"' });
+            }
+            
+            // Check for placeholder text that wasn't replaced
+            if (content.includes('[savings]') || 
+                content.includes('[price]') ||
+                content.includes('[total]') ||
+                content.includes('£[') ||
+                content.includes('= Total') ||
+                content.includes('= Discounted Total')) {
+                issues.placeholder_text.push({ sessionId, timestamp, detail: 'Unreplaced placeholder like £[savings]' });
+            }
+            
+            // Check for incomplete bundle calculations
+            if (content.includes('20% OFF') && 
+                (content.includes('Check price') || !content.match(/YOU SAVE £\d/))) {
+                issues.missing_bundle_calc.push({ sessionId, timestamp, detail: 'Bundle offer without calculated savings' });
+            }
+            
+            // Check for responses that should have images but don't mention them
+            if ((content.includes('Set') || content.includes('Sofa') || content.includes('Corner')) &&
+                content.includes('Price:') &&
+                !content.includes('View in Store')) {
+                issues.no_cta.push({ sessionId, timestamp, detail: 'Product missing View in Store link' });
+            }
+            
+            // Check for very short responses (might indicate errors)
+            if (content.length < 100 && content.includes('product')) {
+                issues.too_short.push({ sessionId, timestamp, detail: 'Response too short for product display' });
+            }
+        });
+        
+        // Calculate quality score
+        const totalMessages = messages.length || 1;
+        const totalIssues = Object.values(issues).reduce((sum, arr) => sum + arr.length, 0);
+        const qualityScore = Math.max(0, Math.round(100 - (totalIssues / totalMessages * 100)));
+        
+        // Count critical vs warnings
+        const criticalCount = issues.missing_price.length + issues.placeholder_text.length + issues.missing_bundle_calc.length;
+        const warningCount = issues.no_image.length + issues.too_short.length + issues.no_cta.length;
+        
+        // Build recommendations
+        const recommendations = [];
+        
+        if (issues.missing_price.length > 0) {
+            recommendations.push({
+                severity: 'critical',
+                title: 'Missing Product Prices',
+                count: issues.missing_price.length,
+                description: 'Products are showing "Contact for pricing" instead of actual prices. This kills conversion.',
+                action: 'Check Shopify API authentication. The logs show "401 Unauthorized" errors. Go to Heroku > Settings > Config Vars and verify SHOPIFY_ACCESS_TOKEN is correct. Generate a new token from Shopify Admin > Apps > Develop apps if needed.'
+            });
+        }
+        
+        if (issues.placeholder_text.length > 0) {
+            recommendations.push({
+                severity: 'critical',
+                title: 'Unreplaced Placeholder Text',
+                count: issues.placeholder_text.length,
+                description: 'Bundle savings showing as "£[savings]" or "= Total" instead of actual calculated amounts.',
+                action: 'This is caused by missing prices from Shopify. Fix the SHOPIFY_ACCESS_TOKEN first (see above), then bundle calculations will work automatically.'
+            });
+        }
+        
+        if (issues.missing_bundle_calc.length > 0) {
+            recommendations.push({
+                severity: 'warning',
+                title: 'Incomplete Bundle Calculations',
+                count: issues.missing_bundle_calc.length,
+                description: 'Bundle offers are being shown without the "YOU SAVE £X" calculation that drives conversions.',
+                action: 'Ensure accessory prices are available. Check bundle_items.json has correct SKUs that match Shopify inventory.'
+            });
+        }
+        
+        if (issues.no_cta.length > 0) {
+            recommendations.push({
+                severity: 'info',
+                title: 'Missing Call-to-Action',
+                count: issues.no_cta.length,
+                description: 'Some product displays are missing a clear next step for the customer.',
+                action: 'The AI prompt should always include "View in Store" link and "What do you think?" after showing products.'
+            });
+        }
+        
+        // Get recent issues for the table
+        const recentIssues = [];
+        Object.entries(issues).forEach(([type, issueList]) => {
+            issueList.slice(0, 5).forEach(issue => {
+                recentIssues.push({
+                    type: type.replace(/_/g, ' '),
+                    session_id: issue.sessionId,
+                    timestamp: issue.timestamp,
+                    detail: issue.detail,
+                    severity: ['missing_price', 'placeholder_text', 'missing_bundle_calc'].includes(type) ? 'critical' : 'warning'
+                });
+            });
+        });
+        
+        // Sort by timestamp
+        recentIssues.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        console.log('📊 Quality Analysis Complete:', {
+            score: qualityScore,
+            critical: criticalCount,
+            warnings: warningCount,
+            messagesAnalyzed: totalMessages
+        });
+        
+        res.json({
+            quality_score: qualityScore,
+            issues_summary: {
+                critical: criticalCount,
+                warnings: warningCount
+            },
+            recommendations: recommendations,
+            recent_issues: recentIssues.slice(0, 15),
+            analyzed_messages: totalMessages
+        });
+        
+    } catch (error) {
+        console.error('Quality Analysis Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Enhanced Session Detail Endpoint with Quality Issues
 app.get('/analytics/session/:sessionId', async (req, res) => {
     if (!pool) {
         return res.json({ error: 'Database not connected', data: null });
@@ -2818,10 +2987,32 @@ app.get('/analytics/session/:sessionId', async (req, res) => {
             [sessionId]
         );
         
+        // Analyze this session for quality issues
+        const qualityIssues = [];
+        messagesResult.rows.forEach(msg => {
+            if (msg.role === 'assistant') {
+                const content = msg.message || '';
+                
+                if (content.includes('Contact for pricing')) {
+                    qualityIssues.push('❌ CRITICAL: Missing price - showing "Contact for pricing" instead of actual £ amount. Fix: Check SHOPIFY_ACCESS_TOKEN in Heroku config.');
+                }
+                if (content.includes('[savings]') || content.includes('= Total') || content.includes('= Discounted Total')) {
+                    qualityIssues.push('❌ CRITICAL: Placeholder text not replaced - bundle calculation failed because prices are missing.');
+                }
+                if (content.includes('Check price')) {
+                    qualityIssues.push('❌ CRITICAL: Accessory price not loaded - "Check price" shown instead of £ amount.');
+                }
+                if (content.includes('20% OFF') && !content.match(/YOU SAVE £\d/)) {
+                    qualityIssues.push('⚠️ WARNING: Bundle discount mentioned but savings not calculated - will not convert.');
+                }
+            }
+        });
+        
         res.json({
             summary: summaryResult.rows[0] || null,
             events: eventsResult.rows,
-            messages: messagesResult.rows
+            messages: messagesResult.rows,
+            quality_issues: [...new Set(qualityIssues)] // Remove duplicates
         });
     } catch (error) {
         console.error('Session Detail Error:', error);
