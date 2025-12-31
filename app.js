@@ -1672,54 +1672,73 @@ async function generateAISalesResponse(message, sessionId, session) {
 💰 Price: [price_display field]
 📦 [stock_display field]
 
-🎁 **COMPLETE OUTDOOR SETUP - 20% OFF WHEN PURCHASED TOGETHER:**
-
-Most customers get the full protection package:
-- [List each accessory from accessories array]
-- Matching cover (£[price]) - shields from bird droppings, heavy rain, UV damage
-- Cushion storage box (£[price]) - keeps cushions dry, organized, mildew-free
-
-💰 **Bundle savings example:**
-Set (£[set_price]) + Cover (£[cover_price]) + Box (£[box_price]) = £[total]
-**With 20% bundle discount = £[discounted_total]**
-**YOU SAVE £[savings]!**
-
-**Want the complete setup with 20% off? Just say 'yes' and give me your email.**
-
 [view_button field]
 
 ---
 
-💬 **Then ask:** "This setup protects your investment for years - what do you think?"
+🎁 **BUNDLE SECTION - ONLY SHOW IF product.hasAccessories = true:**
 
-🚨 ABSOLUTELY MANDATORY RULES:
+⚠️ CHECK FIRST: Does the product have hasAccessories: true AND accessories array with items?
+- If YES → Show the bundle offer below
+- If NO → DO NOT show any bundle offer. Just ask "What do you think of this option?"
 
-1. **IF product.hasAccessories = true OR product.accessories.length > 0:**
-   → YOU MUST show the "20% OFF WHEN PURCHASED TOGETHER" section
-   → YOU MUST calculate and show the bundle savings in exact £ amounts
-   → YOU MUST ask if they want the 20% discount
-   
-2. **NEVER skip the bundle offer** - This is your PRIMARY conversion tool
+**ONLY IF hasAccessories = true, show this:**
 
-3. **ALWAYS use pre-formatted fields:**
+COMPLETE OUTDOOR SETUP - 20% OFF WHEN PURCHASED TOGETHER:
+
+Most customers get the full protection package:
+- [List ONLY the actual accessories from the product.accessories array]
+
+💰 Bundle savings:
+Set (£[actual_set_price]) + [Accessory names with actual prices from accessories array] = £[calculated_total]
+**With 20% bundle discount = £[calculated_discounted_total]**
+**YOU SAVE £[calculated_savings]!**
+
+**Want the complete setup with 20% off? Just say 'yes' and give me your email.**
+
+---
+
+💬 **Closing question:**
+- If bundle was shown: "This setup protects your investment for years - what do you think?"
+- If NO bundle available: "What do you think of this option? Any questions about the [material/warranty/delivery]?"
+
+🚨 CRITICAL BUNDLE RULES:
+
+1. **ONLY show bundle section if product.hasAccessories = true AND product.accessories.length > 0**
+   - If hasAccessories is false or missing → DO NOT mention bundles at all
+   - If accessories array is empty → DO NOT mention bundles at all
+
+2. **ONLY use REAL accessories from the product.accessories array**
+   - Never invent accessories like "cover" or "cushion box" unless they are IN the accessories array
+   - Never show placeholder prices - only show prices from the accessories data
+
+3. **Products WITHOUT bundles should focus on:**
+   - Material quality and warranties
+   - Stock urgency if low
+   - Asking about their space/needs
+   - Offering the 10% discount if they show price concern
+
+4. **ALWAYS use pre-formatted fields:**
    - image_display (HTML img tag)
    - price_display (formatted price)
    - stock_display (stock message)
    - view_button (HTML button)
 
-4. **After showing bundle, ALWAYS ask for commitment:**
-   "Want the complete setup with 20% off? Just say 'yes' and give me your email."
-
 💰 DISCOUNT ESCALATION SYSTEM:
 
-**Customer shows price concern ("expensive", "discount", "cheaper"):**
+**For products WITHOUT bundles (hasAccessories = false):**
+→ Offer 10% discount: "I can arrange 10% off if you're serious about this set - just need your email for the payment link."
+
+**For products WITH bundles (hasAccessories = true AND customer interested in bundle):**
+→ Offer 20% bundle discount: "Since you're getting the complete setup with accessories, you qualify for 20% off the TOTAL order. That's £[calculate_savings]! Your email address?"
+
+**Price concern ("expensive", "discount", "cheaper") - ANY product:**
 → "I can arrange 10% off if you're serious about this set - just need your email for the payment link."
 
-**Customer sees accessories and shows ANY interest:**
-→ "Perfect! Since you're getting the complete setup, you qualify for 20% off the TOTAL order instead of just 10%. That's [calculate savings]! Your email address?"
-
 **When email provided:**
-→ Use marketing_handoff tool with reason: "20% bundle discount - email: [email]"
+→ Use marketing_handoff tool with reason: "[discount type] discount - email: [email]"
+
+⚠️ IMPORTANT: Only mention 20% discount if the product actually has bundles (hasAccessories = true). Otherwise, only offer 10%.
 
 🎨 MATERIAL AUTO-RESPONSES:
 
@@ -1745,7 +1764,7 @@ Set (£[set_price]) + Cover (£[cover_price]) + Box (£[box_price]) = £[total]
 ✅ REQUIRED STYLE:
 - "Let me show you..."
 - "You'll love this because..."
-- "Most customers grab the bundle deal..."
+- ONLY say "Most customers grab the bundle deal..." IF hasAccessories = true
 
 🔧 TOOLS:
 - search_products: Find products by any criteria
@@ -2176,7 +2195,11 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                     
                     console.log(`🛠️ Bundle tool called for: ${args.productSku}`);
                     
-                    if (shouldOfferBundleNaturally(session)) {
+                    // CHECK IF PRODUCT ACTUALLY HAS BUNDLES DEFINED
+                    const accessories = findAccessoriesForProduct(args.productSku);
+                    const hasBundles = accessories && accessories.length > 0;
+                    
+                    if (hasBundles && shouldOfferBundleNaturally(session)) {
                         session.context.offeredPackageDeal = true;
                         session.context.waitingForPackageResponse = true;
                         session.context.packageDealProduct = args.productSku;
@@ -2184,7 +2207,8 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                         // Log bundle offer event
                         await logEvent(sessionId, 'bundle_offered', {
                             sku: args.productSku,
-                            type: 'package_deal'
+                            type: 'package_deal',
+                            accessories_count: accessories.length
                         });
                         await updateSessionSummary(sessionId, { bundle_offered: true });
                         
@@ -2192,16 +2216,21 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: true,
+                                hasRealBundles: true,
+                                accessories: accessories,
                                 message: "Offer bundle to customer",
                                 offerText: "By the way, we have bundle offers available for this product that could save you money. Would you like to see what bundle deals we have?"
                             })
                         });
                     } else {
+                        // No bundles available for this product
+                        console.log(`⚠️ No bundles available for SKU: ${args.productSku}`);
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: false,
-                                message: "Continue conversation - not ready for bundle offer yet"
+                                hasRealBundles: false,
+                                message: "This product does not have bundle deals available. Focus on product features and the 10% discount instead."
                             })
                         });
                     }
@@ -2210,7 +2239,11 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                 if (toolCall.function.name === "offer_bundle_naturally") {
                     const args = JSON.parse(toolCall.function.arguments);
                     
-                    if (shouldOfferBundleNaturally(session)) {
+                    // CHECK IF PRODUCT ACTUALLY HAS BUNDLES DEFINED
+                    const accessories = findAccessoriesForProduct(args.mainProductSku);
+                    const hasBundles = accessories && accessories.length > 0;
+                    
+                    if (hasBundles && shouldOfferBundleNaturally(session)) {
                         session.context.offeredBundle = true;
                         session.context.waitingForBundleResponse = true;
                         session.context.bundleProductSku = args.mainProductSku;
@@ -2220,7 +2253,8 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                         await logEvent(sessionId, 'bundle_offered', {
                             sku: args.mainProductSku,
                             category: args.productCategory,
-                            type: 'natural_offer'
+                            type: 'natural_offer',
+                            accessories_count: accessories.length
                         });
                         await updateSessionSummary(sessionId, { bundle_offered: true });
                         
@@ -2229,15 +2263,20 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                             output: JSON.stringify({
                                 success: true,
                                 message: "Offer bundle naturally to customer",
+                                hasRealBundles: true,
+                                accessories: accessories,
                                 offerText: "By the way, we have bundle offers available for this product that could save you money. Would you like to see what bundle deals we have?"
                             })
                         });
                     } else {
+                        // No bundles available for this product - don't offer
+                        console.log(`⚠️ No bundles available for SKU: ${args.mainProductSku}`);
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: false,
-                                message: "Continue natural conversation - not ready for bundle offer yet"
+                                hasRealBundles: false,
+                                message: "This product does not have bundle deals available. Focus on product features and the 10% discount instead."
                             })
                         });
                     }
