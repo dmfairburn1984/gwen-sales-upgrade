@@ -2100,10 +2100,33 @@ ${establishedContextString}
 
 📋 WHEN SHOWING PRODUCTS - USE THIS FORMAT:
 
+🚨🚨🚨 CRITICAL DISPLAY RULES - READ CAREFULLY 🚨🚨🚨
+
+1. **COUNT THE PRODUCTS** - The search results tell you exactly how many products (e.g., "count: 3")
+   - If count is 1 → Say "Here's a great option" (SINGULAR)
+   - If count is 2+ → Say "Here are [count] great options" (PLURAL)
+
+2. **DISPLAY EVERY SINGLE PRODUCT** - If search returns 3 products, you MUST show ALL 3 with full formatting
+   - Product 1: Full format with image, features, price, stock, button
+   - Product 2: Full format with image, features, price, stock, button  
+   - Product 3: Full format with image, features, price, stock, button
+   - DO NOT skip any products!
+
+3. **ONLY USE PRODUCTS FROM CURRENT SEARCH RESULTS**
+   - ❌ NEVER mention products from earlier in the conversation
+   - ❌ NEVER mention products that aren't in the current tool response
+   - ✅ ONLY display products that appear in the "products" array you just received
+
+4. **AFTER ALL PRODUCTS ARE DISPLAYED** → Ask ONE closing question, then STOP
+   - Do NOT add random product names after the closing question
+   - Do NOT reference products from previous messages
+
+FOR EACH PRODUCT (repeat this format for EVERY product in results):
+
 **[Product Name]**
 [image_display field here]
 
-✨ [Emotional hook based on seat count: "Picture hosting 9 friends for summer BBQs..."]
+✨ [Emotional hook based on seat count: "Picture hosting X friends for summer BBQs..."]
 
 💪 **Why customers love this:**
 - [Use verified_features - real material benefits]
@@ -2142,6 +2165,26 @@ Set (£[actual_set_price]) + [Accessory names with actual prices from accessorie
 💬 **Closing question:**
 - If bundle was shown: "This setup protects your investment for years - what do you think?"
 - If NO bundle available: "What do you think? Any questions about the [material/warranty/delivery]?"
+- If showing MULTIPLE products: "Which of these catches your eye? I can give you more details on any of them."
+
+🚫 **ABSOLUTE RULES - VIOLATIONS ARE UNACCEPTABLE:**
+- ❌ NEVER mention a product name without showing its full formatted display
+- ❌ NEVER say "Here are some options" then only show 1 product (check the count!)
+- ❌ NEVER add random product names at the end of your response
+- ❌ NEVER truncate product displays - show ALL products completely
+- ❌ NEVER mention products from PREVIOUS messages - only use current search results
+- ❌ NEVER hallucinate product names that aren't in the tool response you just received
+
+**SELF-CHECK BEFORE RESPONDING:**
+1. How many products did the search return? (Look at "count" in results)
+2. Am I displaying ALL of them with full formatting?
+3. Am I ONLY mentioning products from THIS search, not previous ones?
+4. Does my intro match the count? (1 product = singular, 2+ = plural)
+
+✅ **ALWAYS DO THIS:**
+- ✅ If search returns 3 products, display all 3 with full formatting
+- ✅ If search returns 1 product, say "Here's a great option" (singular)
+- ✅ End with ONE closing question, nothing after
 
 🚨 CRITICAL BUNDLE RULES:
 
@@ -2463,8 +2506,12 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                                 success: true,
                                 products: formattedProducts,
                                 count: formattedProducts.length,
+                                product_names_to_display: formattedProducts.map(p => p.product_title),
                                 searchCriteria: searchCriteria,
-                                note: `Found ${formattedProducts.length} products. Use ONLY the verified_features, actual_materials, and actual_warranties fields.`
+                                display_instruction: formattedProducts.length === 1 
+                                    ? `⚠️ DISPLAY EXACTLY 1 PRODUCT: "${formattedProducts[0].product_title}". Use SINGULAR intro: "Here's a great option"`
+                                    : `⚠️ DISPLAY ALL ${formattedProducts.length} PRODUCTS: ${formattedProducts.map(p => `"${p.product_title}"`).join(', ')}. Use PLURAL intro: "Here are ${formattedProducts.length} great options". Show EACH product with full formatting. Do NOT skip any. Do NOT mention other products.`,
+                                critical_warning: "ONLY display the products listed above. Do NOT mention any products from earlier in the conversation. Do NOT add random product names at the end."
                             })
                         });
                         
