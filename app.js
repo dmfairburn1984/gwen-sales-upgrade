@@ -1209,10 +1209,19 @@ function findAccessoriesForProduct(mainProductSku) {
             
             const accProduct = productIndex.bySku[item.product_sku];
             if (accProduct) {
+                // Check multiple price fields
+                const accPrice = accProduct.product_identity?.price || 
+                    accProduct.product_identity?.price_gbp || 
+                    null;
+                const formattedAccPrice = accPrice 
+                    ? (typeof accPrice === 'number' ? `£${accPrice.toFixed(2)}` : accPrice)
+                    : 'Check price';
+                    
                 accessories.push({
                     sku: item.product_sku,
                     name: accProduct.product_identity?.product_name || item.product_sku,
-                    price: accProduct.product_identity?.price || 'Check price',
+                    price: formattedAccPrice,
+                    rawPrice: accPrice,
                     benefit: bundle.description || 'Recommended accessory'
                 });
                 addedSkus.add(item.product_sku);
@@ -1230,14 +1239,30 @@ function enrichProductWithCompatibleData(product) {
     const stockStatus = getStockStatus(sku);
     const accessories = findAccessoriesForProduct(sku);
     
+    // Check multiple possible price field names
     const localPrice = product.product_identity?.price ||
+        product.product_identity?.price_gbp ||
         product.product_identity?.rrp ||
-        'Contact for pricing';
+        product.product_identity?.rrp_gbp ||
+        null;
+    
+    // Format price with £ if it's a number
+    let formattedPrice = 'Contact for pricing';
+    if (localPrice !== null && localPrice !== undefined) {
+        if (typeof localPrice === 'number') {
+            formattedPrice = `£${localPrice.toFixed(2)}`;
+        } else if (typeof localPrice === 'string' && !localPrice.includes('Contact')) {
+            formattedPrice = localPrice.startsWith('£') ? localPrice : `£${localPrice}`;
+        }
+    }
+    
+    console.log(`📦 Enriching ${sku}: price_gbp=${product.product_identity?.price_gbp}, price=${product.product_identity?.price}, formatted=${formattedPrice}`);
     
     return {
         sku: sku,
         product_title: product.product_identity?.product_name,
-        price: localPrice,
+        price: formattedPrice,
+        rawPrice: localPrice,
         website_url: product.product_identity?.url || `https://mint-outdoor.com/search?q=${sku}`,
         image_url: product.product_identity?.image_url || null,
         stockStatus: stockStatus,
@@ -1245,11 +1270,11 @@ function enrichProductWithCompatibleData(product) {
         material: product.description_and_category?.material_type,
         seats: product.specifications?.seats,
         dimensions: product.specifications?.dimensions_cm,
-        assembly_required: product.specifications?.assembly?.required === "Yes",
+        assembly_required: product.specifications?.assembly?.required === "Yes" || product.specifications?.assembly?.required === true,
         accessories: accessories,
         hasAccessories: accessories.length > 0,
-        totalBundlePrice: accessories.length > 0 ?
-            (parseFloat(localPrice) + accessories.reduce((sum, acc) => sum + parseFloat(acc.price), 0)).toFixed(2) :
+        totalBundlePrice: accessories.length > 0 && localPrice ?
+            (parseFloat(localPrice) + accessories.reduce((sum, acc) => sum + parseFloat(acc.price) || 0, 0)).toFixed(2) :
             null
     };
 }
@@ -1385,6 +1410,84 @@ function searchRealProducts(criteria) {
     return enriched.slice(0, maxResults);
 }
 
+// Find what alternatives ACTUALLY exist (for smart suggestions)
+async function findVerifiedAlternatives(originalCriteria) {
+    const alternatives = {
+        differentSeats: [],
+        differentMaterial: [],
+        sameCategory: []
+    };
+    
+    console.log('🔍 Finding verified alternatives for:', originalCriteria);
+    
+    // Try different seat counts
+    if (originalCriteria.seatCount) {
+        const seatOptions = [
+            originalCriteria.seatCount - 2,
+            originalCriteria.seatCount - 1,
+            originalCriteria.seatCount + 1,
+            originalCriteria.seatCount + 2
+        ].filter(s => s >= 2 && s <= 12);
+        
+        for (const seats of seatOptions) {
+            const results = await searchShopifyProducts({
+                ...originalCriteria,
+                seatCount: seats,
+                maxResults: 1
+            });
+            if (results.length > 0) {
+                alternatives.differentSeats.push({
+                    seats: seats,
+                    example: results[0].product_title,
+                    price: results[0].price
+                });
+            }
+        }
+    }
+    
+    // Try different materials
+    const materials = ['rattan', 'teak', 'aluminium'];
+    for (const mat of materials) {
+        if (mat !== originalCriteria.material?.toLowerCase()) {
+            const results = await searchShopifyProducts({
+                ...originalCriteria,
+                material: mat,
+                maxResults: 1
+            });
+            if (results.length > 0) {
+                alternatives.differentMaterial.push({
+                    material: mat,
+                    example: results[0].product_title,
+                    price: results[0].price,
+                    seats: results[0].seats
+                });
+            }
+        }
+    }
+    
+    // Try same category without filters
+    if (originalCriteria.furnitureType) {
+        const results = await searchShopifyProducts({
+            furnitureType: originalCriteria.furnitureType,
+            maxResults: 3
+        });
+        alternatives.sameCategory = results.map(p => ({
+            name: p.product_title,
+            price: p.price,
+            material: p.material,
+            seats: p.seats
+        }));
+    }
+    
+    console.log('✅ Found alternatives:', {
+        differentSeats: alternatives.differentSeats.length,
+        differentMaterial: alternatives.differentMaterial.length,
+        sameCategory: alternatives.sameCategory.length
+    });
+    
+    return alternatives;
+}
+
 async function getShopifyProductBySku(sku) {
     if (!SHOPIFY_ACCESS_TOKEN) return null;
     
@@ -1438,10 +1541,16 @@ async function searchShopifyProducts(criteria) {
         const modifiedCriteria = { ...criteria, includeOutOfStock: true };
         let localResults = searchRealProducts(modifiedCriteria);
         
+        console.log(`📦 Local search found ${localResults.length} products before Shopify enrichment`);
+        localResults.forEach(p => {
+            console.log(`   - ${p.sku}: local price = ${p.price}, stock = ${p.stockStatus?.stockLevel}`);
+        });
+        
         // Enrich with Shopify data (real prices and stock)
         for (let product of localResults) {
             const shopifyData = await getShopifyProductBySku(product.sku);
             if (shopifyData) {
+                console.log(`✅ Shopify found ${product.sku}: price=${shopifyData.price}, stock=${shopifyData.inventory_quantity}`);
                 // Update price from Shopify (real-time)
                 if (shopifyData.price && parseFloat(shopifyData.price) > 0) {
                     product.price = `£${parseFloat(shopifyData.price).toFixed(2)}`;
@@ -1466,6 +1575,8 @@ async function searchShopifyProducts(criteria) {
                         urgency: qty < 60 ? 'high' : 'medium'
                     };
                 }
+            } else {
+                console.log(`⚠️ Shopify NOT FOUND: ${product.sku} - using local price: ${product.price}`);
             }
             if (!product.website_url) {
                 product.website_url = `https://mint-outdoor.com/search?q=${product.sku}`;
@@ -2052,6 +2163,18 @@ Set (£[actual_set_price]) + [Accessory names with actual prices from accessorie
 - "Let me gather some information..."
 - "What's your budget?" (too intrusive)
 
+🚨 CRITICAL: NEVER SUGGEST UNVERIFIED OPTIONS
+
+When search returns no results, ONLY suggest alternatives that are in the "verified_alternatives" field:
+- ❌ NEVER say "Would you like to see a 7-seater?" unless you have PROOF one exists
+- ❌ NEVER guess or make up product options
+- ❌ NEVER suggest specific seat counts, materials, or products you haven't verified
+- ✅ ONLY offer alternatives from the "verified_alternatives" list returned by search_products
+- ✅ If verified_alternatives is empty, apologize and offer to check other categories
+
+If a customer asks for something you just suggested and it's not available, you look incompetent.
+ONLY suggest what you KNOW exists from tool results.
+
 ✅ REQUIRED STYLE:
 - "Let me show you..."
 - "You'll love this because..."
@@ -2228,36 +2351,55 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                             message: 'No available products found'
                         });
                         
-                        // Build smart suggestions based on what was searched
-                        const suggestions = [];
-                        let broadenMessage = "We only show products that are in stock with confirmed prices.";
+                        // Find VERIFIED alternatives (products that actually exist and are sellable)
+                        console.log('🔍 No results found - searching for verified alternatives...');
+                        const alternatives = await findVerifiedAlternatives(searchCriteria);
                         
-                        if (searchCriteria.seatCount) {
-                            const alternateSizes = searchCriteria.seatCount > 6 
-                                ? `${searchCriteria.seatCount - 2} or ${searchCriteria.seatCount + 2} seater`
-                                : `${searchCriteria.seatCount + 2} seater`;
-                            suggestions.push(`Try a ${alternateSizes} instead`);
+                        // Build suggestions from REAL alternatives only
+                        const verifiedSuggestions = [];
+                        let alternativeProducts = [];
+                        
+                        // Add seat alternatives if they exist
+                        if (alternatives.differentSeats.length > 0) {
+                            const seatOptions = alternatives.differentSeats.map(a => `${a.seats}-seater (${a.price})`).join(', ');
+                            verifiedSuggestions.push(`Available seat sizes: ${seatOptions}`);
                         }
-                        if (searchCriteria.material) {
-                            const otherMaterials = searchCriteria.material === 'aluminium' 
-                                ? 'rattan or teak' 
-                                : 'aluminium';
-                            suggestions.push(`Consider ${otherMaterials} options which have good availability`);
+                        
+                        // Add material alternatives if they exist
+                        if (alternatives.differentMaterial.length > 0) {
+                            alternatives.differentMaterial.forEach(alt => {
+                                verifiedSuggestions.push(`${alt.material.charAt(0).toUpperCase() + alt.material.slice(1)}: ${alt.example} - ${alt.price}`);
+                            });
+                            alternativeProducts = alternatives.differentMaterial;
                         }
-                        if (searchCriteria.furnitureType) {
-                            suggestions.push(`Show me all available ${searchCriteria.furnitureType} sets`);
+                        
+                        // Add same category products as fallback
+                        if (alternatives.sameCategory.length > 0 && verifiedSuggestions.length === 0) {
+                            verifiedSuggestions.push(`Available ${searchCriteria.furnitureType || 'lounge'} sets:`);
+                            alternatives.sameCategory.forEach(p => {
+                                verifiedSuggestions.push(`  • ${p.name} (${p.seats} seats) - ${p.price}`);
+                            });
                         }
-                        suggestions.push("Remove the material filter to see all options");
+                        
+                        // If we have NO alternatives at all
+                        if (verifiedSuggestions.length === 0) {
+                            verifiedSuggestions.push("Please try a broader search or contact us for special orders");
+                        }
+                        
+                        const noResultsMessage = searchCriteria.material 
+                            ? `We don't currently have ${searchCriteria.material} ${searchCriteria.furnitureType || 'sets'} with ${searchCriteria.seatCount || 'that many'} seats available with confirmed pricing.`
+                            : `No ${searchCriteria.furnitureType || 'products'} currently available matching those exact criteria.`;
                         
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: false,
-                                message: `No ${searchCriteria.material || ''} ${searchCriteria.furnitureType || 'products'} currently available with ${searchCriteria.seatCount || 'those'} seats. ${broadenMessage}`,
-                                reason: "All matching products are either out of stock or awaiting price confirmation",
-                                suggestions: suggestions,
+                                message: noResultsMessage,
+                                reason: "Products may be out of stock or awaiting price confirmation from supplier",
+                                verified_alternatives: verifiedSuggestions,
+                                alternative_products: alternativeProducts,
                                 searchCriteria: searchCriteria,
-                                recommendation: "Ask the customer if they'd like to see similar options or different materials"
+                                instruction: "ONLY suggest the alternatives listed above - these have been verified as available. Do NOT make up or guess other options."
                             })
                         });
                     }
@@ -3307,6 +3449,96 @@ app.get('/analytics/quality-analysis', async (req, res) => {
     }
 });
 
+// DEBUG ENDPOINT - Test a specific SKU to see all data sources
+app.get('/debug/sku/:sku', async (req, res) => {
+    const { sku } = req.params;
+    console.log(`\n🔍 DEBUG: Checking SKU "${sku}"`);
+    
+    const result = {
+        sku: sku,
+        timestamp: new Date().toISOString(),
+        local_json: null,
+        shopify: null,
+        enriched: null,
+        would_be_shown: false,
+        issues: []
+    };
+    
+    // 1. Check local JSON
+    const localProduct = productIndex.bySku[sku];
+    if (localProduct) {
+        result.local_json = {
+            found: true,
+            name: localProduct.product_identity?.product_name,
+            price: localProduct.product_identity?.price,
+            price_gbp: localProduct.product_identity?.price_gbp,
+            rrp: localProduct.product_identity?.rrp,
+            category: localProduct.description_and_category?.primary_category,
+            material: localProduct.description_and_category?.material_type,
+            seats: localProduct.specifications?.seats,
+            stock_available: localProduct.logistics_and_inventory?.inventory?.available,
+            all_price_fields: Object.keys(localProduct.product_identity || {}).filter(k => k.includes('price') || k.includes('rrp'))
+        };
+    } else {
+        result.local_json = { found: false };
+        result.issues.push('SKU not found in local product_knowledge_center.json');
+    }
+    
+    // 2. Check Shopify
+    try {
+        const shopifyData = await getShopifyProductBySku(sku);
+        if (shopifyData) {
+            result.shopify = {
+                found: true,
+                price: shopifyData.price,
+                inventory_quantity: shopifyData.inventory_quantity,
+                available: shopifyData.available,
+                url: shopifyData.url
+            };
+        } else {
+            result.shopify = { found: false };
+            result.issues.push('SKU not found in Shopify - check SKU matches exactly');
+        }
+    } catch (e) {
+        result.shopify = { found: false, error: e.message };
+        result.issues.push(`Shopify API error: ${e.message}`);
+    }
+    
+    // 3. Check what enriched product would look like
+    if (localProduct) {
+        const enriched = enrichProductWithCompatibleData(localProduct);
+        result.enriched = {
+            price: enriched?.price,
+            rawPrice: enriched?.rawPrice,
+            stockStatus: enriched?.stockStatus,
+            hasAccessories: enriched?.hasAccessories
+        };
+        
+        // 4. Check if it would be filtered out
+        const hasValidPrice = enriched?.price && 
+            enriched.price !== 'Contact for pricing' && 
+            !enriched.price.includes('Contact');
+        const inStock = enriched?.stockStatus?.inStock !== false;
+        
+        result.would_be_shown = hasValidPrice && inStock;
+        
+        if (!hasValidPrice) {
+            result.issues.push(`Would be FILTERED OUT: No valid price (showing "${enriched?.price}")`);
+        }
+        if (!inStock) {
+            result.issues.push(`Would be FILTERED OUT: Out of stock`);
+        }
+    }
+    
+    // Summary
+    result.summary = result.issues.length === 0 
+        ? '✅ Product would be shown to customers'
+        : `❌ Product has ${result.issues.length} issue(s) preventing it from being shown`;
+    
+    console.log(`📊 DEBUG result for ${sku}:`, JSON.stringify(result, null, 2));
+    res.json(result);
+});
+
 // INVENTORY HEALTH ENDPOINT - Check which products are sellable
 app.get('/analytics/inventory-health', async (req, res) => {
     try {
@@ -3335,7 +3567,15 @@ app.get('/analytics/inventory-health', async (req, res) => {
         for (const product of productKnowledgeCenter) {
             const sku = product.product_identity?.sku;
             const name = product.product_identity?.product_name || 'Unknown';
-            const localPrice = product.product_identity?.price;
+            // Check multiple price field names
+            const rawLocalPrice = product.product_identity?.price || 
+                product.product_identity?.price_gbp ||
+                product.product_identity?.rrp ||
+                product.product_identity?.rrp_gbp ||
+                null;
+            const localPrice = rawLocalPrice 
+                ? (typeof rawLocalPrice === 'number' ? `£${rawLocalPrice.toFixed(2)}` : rawLocalPrice)
+                : null;
             
             if (!sku) {
                 healthReport.unsellable.missing_sku.push({ name, reason: 'No SKU defined' });
@@ -3350,7 +3590,7 @@ app.get('/analytics/inventory-health', async (req, res) => {
                 // Ignore errors
             }
             
-            // Determine price
+            // Determine price - prefer Shopify, fallback to local
             const price = shopifyData?.price 
                 ? `£${parseFloat(shopifyData.price).toFixed(2)}`
                 : localPrice;
