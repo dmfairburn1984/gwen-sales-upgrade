@@ -2100,38 +2100,43 @@ ${establishedContextString}
 
 📋 WHEN SHOWING PRODUCTS - USE THIS FORMAT:
 
-🚨🚨🚨 CRITICAL DISPLAY RULES - READ CAREFULLY 🚨🚨🚨
+🚨🚨🚨 CRITICAL DISPLAY RULES - FOLLOW EXACTLY 🚨🚨🚨
 
-1. **COUNT THE PRODUCTS** - The search results tell you exactly how many products (e.g., "count: 3")
-   - If count is 1 → Say "Here's a great option" (SINGULAR)
-   - If count is 2+ → Say "Here are [count] great options" (PLURAL)
+**STEP 1: CHECK THE "DISPLAY_THESE_PRODUCTS_ONLY" LIST**
+The search results contain a field called "DISPLAY_THESE_PRODUCTS_ONLY" - this is your MASTER LIST.
+You MUST display EXACTLY the products in that list, in that order.
+You MUST NOT display any products NOT in that list.
 
-2. **DISPLAY EVERY SINGLE PRODUCT** - If search returns 3 products, you MUST show ALL 3 with full formatting
-   - Product 1: Full format with image, features, price, stock, button
-   - Product 2: Full format with image, features, price, stock, button  
-   - Product 3: Full format with image, features, price, stock, button
-   - DO NOT skip any products!
+**STEP 2: COUNT MUST MATCH**
+- If "count: 1" → Display exactly 1 product, say "Here's a great option"
+- If "count: 3" → Display exactly 3 products, say "Here are 3 great options"
+- If you display fewer or more products than the count, YOU HAVE FAILED
 
-3. **ONLY USE PRODUCTS FROM CURRENT SEARCH RESULTS**
-   - ❌ NEVER mention products from earlier in the conversation
-   - ❌ NEVER mention products that aren't in the current tool response
-   - ✅ ONLY display products that appear in the "products" array you just received
+**STEP 3: DISPLAY EACH PRODUCT IN ORDER**
+For each product in "DISPLAY_THESE_PRODUCTS_ONLY":
+- Show full formatting: name, image, features, price, stock, button
+- Then move to next product
+- Repeat until ALL products are displayed
 
-4. **AFTER ALL PRODUCTS ARE DISPLAYED** → Ask ONE closing question, then STOP
-   - Do NOT add random product names after the closing question
-   - Do NOT reference products from previous messages
+**STEP 4: IGNORE CONVERSATION HISTORY PRODUCTS**
+- Products mentioned earlier in the chat (like "Chesterton", "Santorini", etc.) are IRRELEVANT
+- ONLY the products in the CURRENT search result matter
+- If you see a product name in chat history that's NOT in "DISPLAY_THESE_PRODUCTS_ONLY", IGNORE IT
 
-FOR EACH PRODUCT (repeat this format for EVERY product in results):
+**STEP 5: STOP AFTER CLOSING QUESTION**
+- After displaying ALL products, ask ONE closing question
+- Then STOP WRITING - do not add anything else
+
+FOR EACH PRODUCT (repeat for EVERY product in DISPLAY_THESE_PRODUCTS_ONLY):
 
 **[Product Name]**
 [image_display field here]
 
-✨ [Emotional hook based on seat count: "Picture hosting X friends for summer BBQs..."]
+✨ [Emotional hook: "Picture hosting X friends for summer relaxation..."]
 
 💪 **Why customers love this:**
 - [Use verified_features - real material benefits]
 - [Maintenance ease]
-- [Warranty info from actual_warranties]
 
 💰 Price: [price_display field]
 📦 [stock_display field]
@@ -2189,12 +2194,26 @@ When search returns multiple products (count > 1), you MUST structure your respo
 7. Closing question: "Which catches your eye?"
 8. STOP - nothing more after the closing question
 
-**SELF-CHECK BEFORE RESPONDING:**
-1. How many products did the search return? (Look at "count" in results)
-2. Did I display EXACTLY that many products with full formatting?
-3. Did each product get: name, image, features, price, stock, button?
-4. Did I ONLY mention products from THIS search result?
-5. Is there anything after my closing question? (There shouldn't be!)
+**SELF-CHECK BEFORE SENDING YOUR RESPONSE:**
+Before you send your response, verify:
+1. ✓ How many products in "DISPLAY_THESE_PRODUCTS_ONLY"? I must show exactly that many.
+2. ✓ Did I show ALL of them with full formatting?
+3. ✓ Did EVERY product I mentioned come from "DISPLAY_THESE_PRODUCTS_ONLY"?
+4. ✓ Did I accidentally include a product from earlier in the chat? (DELETE IT!)
+5. ✓ Is there anything after my closing question? (DELETE IT!)
+
+**EXAMPLE OF WRONG RESPONSE:**
+"Here are 3 great options:
+[Stockholm display]
+[Malaga display]  
+[Chesterton display]" ← WRONG! Chesterton isn't in DISPLAY_THESE_PRODUCTS_ONLY
+
+**EXAMPLE OF CORRECT RESPONSE:**
+"Here are 3 great options:
+[Stockholm display] ← From DISPLAY_THESE_PRODUCTS_ONLY ✓
+[Malaga display] ← From DISPLAY_THESE_PRODUCTS_ONLY ✓
+[Lima display] ← From DISPLAY_THESE_PRODUCTS_ONLY ✓
+Which catches your eye?"
 
 ✅ **ALWAYS DO THIS:**
 - ✅ If search returns 3 products, display all 3 with full formatting
@@ -2329,7 +2348,7 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup options avai
             tools: aiTools,
             tool_choice: "auto",
             temperature: 0.4,
-            max_tokens: 600
+            max_tokens: 1500  // Increased to allow full display of multiple products
         });
         
         const aiMessage = response.choices[0].message;
@@ -2532,12 +2551,27 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup options avai
                                 success: true,
                                 products: formattedProducts,
                                 count: formattedProducts.length,
-                                product_names_to_display: formattedProducts.map(p => p.product_title),
+                                
+                                // EXPLICIT LIST - AI must display EXACTLY these products
+                                DISPLAY_THESE_PRODUCTS_ONLY: formattedProducts.map((p, i) => ({
+                                    number: i + 1,
+                                    name: p.product_title,
+                                    sku: p.sku
+                                })),
+                                
                                 searchCriteria: searchCriteria,
+                                
                                 display_instruction: formattedProducts.length === 1 
-                                    ? `⚠️ DISPLAY EXACTLY 1 PRODUCT: "${formattedProducts[0].product_title}". Use SINGULAR intro: "Here's a great option"`
-                                    : `⚠️ DISPLAY ALL ${formattedProducts.length} PRODUCTS: ${formattedProducts.map((p, i) => `${i+1}. "${p.product_title}"`).join(', ')}. Use PLURAL intro: "Here are ${formattedProducts.length} great options". Show EACH product with FULL formatting (name, image, features, price, stock, button). After showing ALL ${formattedProducts.length} products, ask ONE closing question, then STOP.`,
-                                critical_warning: "FORGET any products from previous messages. ONLY display the ${formattedProducts.length} products listed in 'product_names_to_display'. Do NOT add any other product names. After your closing question, STOP WRITING."
+                                    ? `DISPLAY EXACTLY 1 PRODUCT: "${formattedProducts[0].product_title}". Say "Here's a great option" (SINGULAR).`
+                                    : `DISPLAY ALL ${formattedProducts.length} PRODUCTS IN THIS EXACT ORDER: ${formattedProducts.map((p, i) => `\n${i+1}. ${p.product_title}`).join('')}\n\nShow EACH product with FULL formatting. After ALL ${formattedProducts.length} are displayed, ask ONE closing question, then STOP.`,
+                                
+                                CRITICAL_RULES: [
+                                    `You MUST display exactly ${formattedProducts.length} products`,
+                                    "ONLY display products listed in DISPLAY_THESE_PRODUCTS_ONLY",
+                                    "Do NOT display products from earlier in the conversation",
+                                    "Do NOT display 'Chesterton' or any other product not in this list",
+                                    "After your closing question, STOP - write nothing more"
+                                ]
                             })
                         });
                         
@@ -2970,7 +3004,7 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup options avai
                 model: "gpt-4o",
                 messages: finalMessages,
                 temperature: 0.4,
-                max_tokens: 600
+                max_tokens: 2000  // Increased to allow full display of 3+ products with formatting
             });
             
             let finalContent = finalResponse.choices[0].message.content;
