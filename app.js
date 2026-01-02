@@ -2234,13 +2234,25 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                 // SEARCH PRODUCTS HANDLER
                 if (toolCall.function.name === "search_products") {
                     const args = JSON.parse(toolCall.function.arguments);
-                    console.log('🔍 Search request:', args);
+                    console.log('\n========================================');
+                    console.log('🔍 SEARCH REQUEST FROM AI:');
+                    console.log('   Raw args:', JSON.stringify(args));
+                    
+                    // Detect from conversation if not provided
+                    const detectedPurpose = detectPurpose(session.conversationHistory, message);
+                    const detectedCapacity = detectCapacity(session.conversationHistory, message);
+                    const detectedMaterial = detectMaterial(session.conversationHistory, message);
+                    
+                    console.log('   Detected from conversation:');
+                    console.log('     - purpose:', detectedPurpose);
+                    console.log('     - capacity:', detectedCapacity);
+                    console.log('     - material:', detectedMaterial);
                     
                     const searchCriteria = {
                         ...args,
-                        purpose: args.furnitureType || detectPurpose(session.conversationHistory, message),
-                        capacity: args.seatCount || detectCapacity(session.conversationHistory, message),
-                        material: args.material || detectMaterial(session.conversationHistory, message),
+                        purpose: args.furnitureType || detectedPurpose,
+                        capacity: args.seatCount || detectedCapacity,
+                        material: args.material || detectedMaterial,
                         budget: args.maxPrice || detectBudget(session.conversationHistory, message)
                     };
                     
@@ -2256,7 +2268,11 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                         searchCriteria.seatCount = searchCriteria.capacity;
                     }
                     
-                    console.log('📊 Final search criteria:', searchCriteria);
+                    console.log('📊 FINAL SEARCH CRITERIA:');
+                    console.log('   - furnitureType:', searchCriteria.furnitureType);
+                    console.log('   - material:', searchCriteria.material);
+                    console.log('   - seatCount:', searchCriteria.seatCount);
+                    console.log('========================================\n');
                     
                     const products = await searchShopifyProducts(searchCriteria);
                     
@@ -3447,6 +3463,160 @@ app.get('/analytics/quality-analysis', async (req, res) => {
         console.error('Quality Analysis Error:', error);
         res.status(500).json({ error: error.message });
     }
+});
+
+// DIRECT SEARCH TEST - Bypass AI and test search directly
+app.get('/debug/search', async (req, res) => {
+    const { material, type, seats } = req.query;
+    console.log(`\n🧪 DEBUG SEARCH TEST: material=${material}, type=${type}, seats=${seats}`);
+    
+    const criteria = {
+        material: material || null,
+        furnitureType: type || null,
+        seatCount: seats ? parseInt(seats) : null,
+        maxResults: 10
+    };
+    
+    const result = {
+        criteria: criteria,
+        steps: [],
+        products_found: [],
+        final_count: 0
+    };
+    
+    // Step 1: Get ALL products matching basic criteria (before any filtering)
+    let filtered = [...productKnowledgeCenter].filter(p =>
+        p.product_identity?.sku &&
+        p.description_and_category?.primary_category
+    );
+    result.steps.push({ step: 1, description: 'All products with SKU and category', count: filtered.length });
+    
+    // Step 2: Material filter
+    if (material) {
+        const beforeMaterial = filtered.length;
+        filtered = filtered.filter(p => {
+            const materialType = p.description_and_category?.material_type?.toLowerCase() || '';
+            const title = p.product_identity?.product_name?.toLowerCase() || '';
+            return materialType.includes(material.toLowerCase()) || title.includes(material.toLowerCase());
+        });
+        result.steps.push({ 
+            step: 2, 
+            description: `Material filter "${material}"`, 
+            count: filtered.length,
+            removed: beforeMaterial - filtered.length,
+            matches: filtered.slice(0, 5).map(p => ({
+                name: p.product_identity?.product_name,
+                material: p.description_and_category?.material_type
+            }))
+        });
+    }
+    
+    // Step 3: Type filter
+    if (type) {
+        const beforeType = filtered.length;
+        const typeMatches = {
+            'dining': ['dining', 'table', 'chair'],
+            'lounge': ['lounge', 'sofa', 'seating'],
+            'corner': ['corner', 'sectional', 'l-shape'],
+            'lounger': ['lounger', 'sunbed', 'daybed']
+        };
+        const keywords = typeMatches[type.toLowerCase()] || [type.toLowerCase()];
+        
+        filtered = filtered.filter(p => {
+            const category = p.description_and_category?.primary_category?.toLowerCase() || '';
+            const taxonomy = p.description_and_category?.taxonomy_type?.toLowerCase() || '';
+            const title = p.product_identity?.product_name?.toLowerCase() || '';
+            return keywords.some(kw => category.includes(kw) || taxonomy.includes(kw) || title.includes(kw));
+        });
+        result.steps.push({ 
+            step: 3, 
+            description: `Type filter "${type}" (keywords: ${keywords.join(', ')})`, 
+            count: filtered.length,
+            removed: beforeType - filtered.length,
+            matches: filtered.slice(0, 5).map(p => ({
+                name: p.product_identity?.product_name,
+                category: p.description_and_category?.primary_category
+            }))
+        });
+    }
+    
+    // Step 4: Seat filter
+    if (seats) {
+        const beforeSeats = filtered.length;
+        const targetSeats = parseInt(seats);
+        filtered = filtered.filter(p => {
+            const productSeats = parseInt(p.specifications?.seats);
+            if (isNaN(productSeats)) return false;
+            return Math.abs(productSeats - targetSeats) <= 1;
+        });
+        result.steps.push({ 
+            step: 4, 
+            description: `Seat filter "${seats}" (matches ${targetSeats-1} to ${targetSeats+1})`, 
+            count: filtered.length,
+            removed: beforeSeats - filtered.length,
+            matches: filtered.slice(0, 5).map(p => ({
+                name: p.product_identity?.product_name,
+                seats: p.specifications?.seats
+            }))
+        });
+    }
+    
+    // Step 5: Enrich products
+    const enriched = filtered.map(p => enrichProductWithCompatibleData(p)).filter(Boolean);
+    result.steps.push({ 
+        step: 5, 
+        description: 'Enriched products', 
+        count: enriched.length,
+        products: enriched.map(p => ({
+            sku: p.sku,
+            name: p.product_title,
+            price: p.price,
+            stock: p.stockStatus?.stockLevel,
+            inStock: p.stockStatus?.inStock
+        }))
+    });
+    
+    // Step 6: Price filter
+    const beforePrice = enriched.length;
+    const withPrice = enriched.filter(p => {
+        const price = p.price;
+        return price && price !== 'Contact for pricing' && !price.includes('Contact');
+    });
+    result.steps.push({ 
+        step: 6, 
+        description: 'Price filter (has valid price)', 
+        count: withPrice.length,
+        removed: beforePrice - withPrice.length,
+        filtered_out: enriched.filter(p => !withPrice.includes(p)).map(p => ({
+            sku: p.sku,
+            price: p.price,
+            reason: 'No valid price'
+        }))
+    });
+    
+    // Step 7: Stock filter
+    const beforeStock = withPrice.length;
+    const inStock = withPrice.filter(p => p.stockStatus?.inStock !== false);
+    result.steps.push({ 
+        step: 7, 
+        description: 'Stock filter (in stock)', 
+        count: inStock.length,
+        removed: beforeStock - inStock.length
+    });
+    
+    result.products_found = inStock.map(p => ({
+        sku: p.sku,
+        name: p.product_title,
+        price: p.price,
+        stock: p.stockStatus?.stockLevel,
+        material: p.material,
+        seats: p.seats,
+        hasAccessories: p.hasAccessories
+    }));
+    result.final_count = inStock.length;
+    
+    console.log(`🧪 DEBUG SEARCH RESULT: ${result.final_count} products found`);
+    res.json(result);
 });
 
 // DEBUG ENDPOINT - Test a specific SKU to see all data sources
