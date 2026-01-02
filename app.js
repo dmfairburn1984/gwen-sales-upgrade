@@ -486,22 +486,29 @@ function detectCustomerPersona(conversationHistory) {
 }
 
 function detectPurpose(conversationHistory, currentMessage = '') {
-    const fullContext = conversationHistory
+    // IMPORTANT: Only look at USER messages, not Gwen's questions
+    // Otherwise Gwen asking "dining or lounge?" pollutes the detection
+    const userMessages = conversationHistory
+        .filter(msg => {
+            if (typeof msg === 'string') return true; // Simple strings are user messages
+            return msg.role === 'user'; // Filter to user role only
+        })
         .map(msg => typeof msg === 'string' ? msg : msg.content || '')
         .concat(currentMessage)
         .join(' ')
         .toLowerCase();
     
     const patterns = {
+        'lounge': ['lounge', 'loung', 'relax', 'sofa', 'couch', 'seating area', 'comfortable', 'chill', 'relaxation', 'lounge set', 'outdoor sofa', 'sitting', 'sit around'],
         'dining': ['dining', 'table', 'eat', 'meal', 'dinner', 'lunch', 'breakfast', 'chairs and table', 'dining set', 'dining table', 'outdoor dining'],
-        'lounge': ['lounge', 'relax', 'sofa', 'couch', 'seating area', 'comfortable', 'chill', 'relaxation', 'lounge set', 'outdoor sofa'],
-        'corner': ['corner', 'L-shape', 'sectional', 'modular', 'corner sofa', 'corner set'],
+        'corner': ['corner', 'L-shape', 'l-shape', 'sectional', 'modular', 'corner sofa', 'corner set'],
         'lounger': ['lounger', 'sunbed', 'tanning', 'lie down', 'pool', 'sunbathing', 'daybed', 'sun lounger'],
         'hybrid': ['both', 'dining and lounge', 'everything', 'complete', 'all']
     };
     
+    // Check patterns in priority order (lounge first since it's more specific)
     for (const [purpose, keywords] of Object.entries(patterns)) {
-        if (keywords.some(keyword => fullContext.includes(keyword))) {
+        if (keywords.some(keyword => userMessages.includes(keyword))) {
             return purpose;
         }
     }
@@ -509,12 +516,17 @@ function detectPurpose(conversationHistory, currentMessage = '') {
 }
 
 function detectCapacity(conversationHistory, currentMessage = '') {
-    const fullContext = conversationHistory
+    // Only look at USER messages, not Gwen's responses
+    const userMessages = conversationHistory
+        .filter(msg => {
+            if (typeof msg === 'string') return true;
+            return msg.role === 'user';
+        })
         .map(msg => typeof msg === 'string' ? msg : msg.content || '')
         .concat(currentMessage)
         .join(' ');
     
-    const numbers = fullContext.match(/\b(\d+)\s*(people|person|seater|seats|guests|seat)\b/gi);
+    const numbers = userMessages.match(/\b(\d+)\s*(people|person|seater|seats|guests|seat)\b/gi);
     if (numbers && numbers.length > 0) {
         const lastMatch = numbers[numbers.length - 1];
         const num = parseInt(lastMatch.match(/\d+/)[0]);
@@ -528,7 +540,7 @@ function detectCapacity(conversationHistory, currentMessage = '') {
     
     for (const [word, num] of Object.entries(sizeWords)) {
         const pattern = new RegExp(`\\b${word}\\s*(people|person|seater|seats|guests)\\b`, 'gi');
-        if (pattern.test(fullContext)) {
+        if (pattern.test(userMessages)) {
             return num;
         }
     }
@@ -536,7 +548,12 @@ function detectCapacity(conversationHistory, currentMessage = '') {
 }
 
 function detectMaterial(conversationHistory, currentMessage = '') {
-    const fullContext = conversationHistory
+    // Only look at USER messages, not Gwen's responses
+    const userMessages = conversationHistory
+        .filter(msg => {
+            if (typeof msg === 'string') return true;
+            return msg.role === 'user';
+        })
         .map(msg => typeof msg === 'string' ? msg : msg.content || '')
         .concat(currentMessage)
         .join(' ')
@@ -550,7 +567,7 @@ function detectMaterial(conversationHistory, currentMessage = '') {
     };
     
     for (const [material, keywords] of Object.entries(materials)) {
-        if (keywords.some(keyword => fullContext.includes(keyword))) {
+        if (keywords.some(keyword => userMessages.includes(keyword))) {
             return material;
         }
     }
@@ -2036,11 +2053,34 @@ IMPORTANT: Ask ONLY this ONE question. Do NOT interrogate with multiple question
 After they answer, IMMEDIATELY show products - don't ask more questions.`;
         }
         
+        // Build established context string for AI
+        let establishedContextString = '';
+        if (session.context.established) {
+            const est = session.context.established;
+            if (est.furnitureType || est.seatCount) {
+                establishedContextString = `
+🔒 CUSTOMER REQUIREMENTS ALREADY ESTABLISHED:
+${est.furnitureType ? `- Furniture type: ${est.furnitureType.toUpperCase()} (DO NOT CHANGE unless customer explicitly asks for different type)` : ''}
+${est.seatCount ? `- Seat count: ${est.seatCount} people (DO NOT CHANGE unless customer explicitly mentions different number)` : ''}
+${est.material ? `- Last material discussed: ${est.material}` : ''}
+
+⚠️ CRITICAL: When customer asks about different materials (e.g., "do you have teak?", "what about rattan?"):
+- KEEP the established furniture type (${est.furnitureType || 'unknown'})
+- KEEP the established seat count (${est.seatCount || 'unknown'})
+- ONLY change the material in your search
+
+Example: If customer established "lounge for 4 people" and then asks "do you have teak sets?":
+- Search for: furnitureType="lounge", seatCount=4, material="teak"
+- NOT: furnitureType="dining" (WRONG - they never changed this!)`;
+            }
+        }
+        
         const messages = [{
             role: "system",
             content: `You are Gwen, an outdoor furniture expert at MINT Outdoor.
 
 ${qualificationGuidance}
+${establishedContextString}
 
 🧠 SMART QUALIFICATION RULES:
 
@@ -2238,7 +2278,23 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                     console.log('🔍 SEARCH REQUEST FROM AI:');
                     console.log('   Raw args:', JSON.stringify(args));
                     
-                    // Detect from conversation if not provided
+                    // ============================================
+                    // SESSION CONTEXT MEMORY - Lock in requirements
+                    // ============================================
+                    
+                    // Initialize established requirements if not exists
+                    if (!session.context.established) {
+                        session.context.established = {
+                            furnitureType: null,
+                            seatCount: null,
+                            material: null,
+                            lockedAt: null
+                        };
+                    }
+                    
+                    const established = session.context.established;
+                    
+                    // Detect from conversation
                     const detectedPurpose = detectPurpose(session.conversationHistory, message);
                     const detectedCapacity = detectCapacity(session.conversationHistory, message);
                     const detectedMaterial = detectMaterial(session.conversationHistory, message);
@@ -2247,31 +2303,84 @@ ${customerPersona === 'entertainer' ? '→ EMPHASIZE complete setup and guest im
                     console.log('     - purpose:', detectedPurpose);
                     console.log('     - capacity:', detectedCapacity);
                     console.log('     - material:', detectedMaterial);
+                    console.log('   Previously established:');
+                    console.log('     - furnitureType:', established.furnitureType);
+                    console.log('     - seatCount:', established.seatCount);
+                    console.log('     - material:', established.material);
                     
+                    // LOCK IN furniture type - once set, don't change unless customer explicitly says different type
+                    let finalFurnitureType = args.furnitureType || established.furnitureType || detectedPurpose;
+                    
+                    // Check if customer explicitly mentioned a DIFFERENT furniture type in THIS message
+                    const currentMessageLower = message.toLowerCase();
+                    const mentionsDining = /\b(dining|dinner|eat|meal|table)\b/.test(currentMessageLower);
+                    const mentionsLounge = /\b(lounge|loung|sofa|relax|chill|sit)\b/.test(currentMessageLower);
+                    const mentionsCorner = /\b(corner|l-shape|sectional)\b/.test(currentMessageLower);
+                    
+                    // Only change furniture type if customer EXPLICITLY mentions a different type
+                    if (established.furnitureType) {
+                        if (established.furnitureType === 'lounge' && mentionsDining && !mentionsLounge) {
+                            finalFurnitureType = 'dining';
+                            console.log('   🔄 Customer explicitly switched to DINING');
+                        } else if (established.furnitureType === 'dining' && mentionsLounge && !mentionsDining) {
+                            finalFurnitureType = 'lounge';
+                            console.log('   🔄 Customer explicitly switched to LOUNGE');
+                        } else {
+                            // KEEP the established type - customer hasn't explicitly changed it
+                            finalFurnitureType = established.furnitureType;
+                            console.log('   🔒 KEEPING established furniture type:', established.furnitureType);
+                        }
+                    }
+                    
+                    // LOCK IN seat count - once set, don't change unless customer explicitly says different number
+                    let finalSeatCount = args.seatCount || established.seatCount || detectedCapacity;
+                    
+                    // Check if customer mentioned a new seat count in THIS message
+                    const currentMessageSeats = detectCapacity([], message);
+                    if (currentMessageSeats && established.seatCount && currentMessageSeats !== established.seatCount) {
+                        finalSeatCount = currentMessageSeats;
+                        console.log('   🔄 Customer changed seat count to:', currentMessageSeats);
+                    } else if (established.seatCount) {
+                        finalSeatCount = established.seatCount;
+                        console.log('   🔒 KEEPING established seat count:', established.seatCount);
+                    }
+                    
+                    // Material CAN change freely as customer explores
+                    let finalMaterial = args.material || detectedMaterial || established.material;
+                    if (detectedMaterial && detectedMaterial !== established.material) {
+                        finalMaterial = detectedMaterial;
+                        console.log('   🔄 Customer exploring new material:', detectedMaterial);
+                    }
+                    
+                    // UPDATE established context for future searches
+                    if (finalFurnitureType && !established.furnitureType) {
+                        established.furnitureType = finalFurnitureType;
+                        established.lockedAt = new Date().toISOString();
+                        console.log('   ✅ LOCKED IN furniture type:', finalFurnitureType);
+                    }
+                    if (finalSeatCount && !established.seatCount) {
+                        established.seatCount = finalSeatCount;
+                        console.log('   ✅ LOCKED IN seat count:', finalSeatCount);
+                    }
+                    if (finalMaterial) {
+                        established.material = finalMaterial;
+                    }
+                    
+                    // Build final search criteria using LOCKED values
                     const searchCriteria = {
                         ...args,
-                        purpose: args.furnitureType || detectedPurpose,
-                        capacity: args.seatCount || detectedCapacity,
-                        material: args.material || detectedMaterial,
+                        furnitureType: finalFurnitureType,
+                        seatCount: finalSeatCount,
+                        material: finalMaterial,
+                        purpose: finalFurnitureType,
+                        capacity: finalSeatCount,
                         budget: args.maxPrice || detectBudget(session.conversationHistory, message)
                     };
                     
-                    if (searchCriteria.purpose && !searchCriteria.furnitureType) {
-                        const purposeMap = {
-                            'dining': 'dining', 'lounge': 'lounge',
-                            'corner': 'corner', 'lounger': 'lounger', 'hybrid': 'lounge'
-                        };
-                        searchCriteria.furnitureType = purposeMap[searchCriteria.purpose];
-                    }
-                    
-                    if (searchCriteria.capacity && !searchCriteria.seatCount) {
-                        searchCriteria.seatCount = searchCriteria.capacity;
-                    }
-                    
-                    console.log('📊 FINAL SEARCH CRITERIA:');
-                    console.log('   - furnitureType:', searchCriteria.furnitureType);
+                    console.log('📊 FINAL SEARCH CRITERIA (with session memory):');
+                    console.log('   - furnitureType:', searchCriteria.furnitureType, established.furnitureType ? '(LOCKED)' : '');
                     console.log('   - material:', searchCriteria.material);
-                    console.log('   - seatCount:', searchCriteria.seatCount);
+                    console.log('   - seatCount:', searchCriteria.seatCount, established.seatCount ? '(LOCKED)' : '');
                     console.log('========================================\n');
                     
                     const products = await searchShopifyProducts(searchCriteria);
