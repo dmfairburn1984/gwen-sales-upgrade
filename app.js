@@ -1344,8 +1344,33 @@ app.post('/chat', async (req, res) => {
         const session = sessions.get(sessionId);
         session.messageCount++;
         
-        // Extract context from user message
+     // ============================================
+        // CONTEXT EXTRACTION WITH SMART WHITELIST CLEARING
+        // ============================================
         const msgLower = message.toLowerCase();
+        
+        // Store previous context to detect changes
+        const previousMaterial = session.context.material;
+        const previousType = session.context.furnitureType;
+        const previousSeats = session.context.seatCount;
+        
+        // Detect "change request" phrases - customer wants something DIFFERENT
+        const changeRequestPatterns = [
+            'what about', 'how about', 'any other', 'anything else',
+            'something else', 'different', 'alternative', 'other options',
+            'instead', 'rather than', 'prefer', 'switch to',
+            'cheaper', 'less expensive', 'more affordable', 'budget',
+            'smaller', 'bigger', 'larger', 'more seats', 'fewer seats',
+            'too expensive', 'too big', 'too small', 'too large'
+        ];
+        
+        const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
+        
+        if (isChangeRequest) {
+            console.log(`🔄 Change request detected`);
+        }
+        
+        // Extract material
         if (msgLower.includes('aluminium') || msgLower.includes('aluminum')) {
             session.context.material = 'aluminium';
             console.log(`📝 Context: material = aluminium`);
@@ -1358,6 +1383,14 @@ app.post('/chat', async (req, res) => {
             session.context.material = 'teak';
             console.log(`📝 Context: material = teak`);
         }
+        
+        // Clear whitelist if material changed
+        if (previousMaterial && session.context.material && previousMaterial !== session.context.material) {
+            console.log(`🔄 Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
+        // Extract furniture type
         if (msgLower.includes('dining')) {
             session.context.furnitureType = 'dining';
             console.log(`📝 Context: type = dining`);
@@ -1370,11 +1403,52 @@ app.post('/chat', async (req, res) => {
             session.context.furnitureType = 'corner';
             console.log(`📝 Context: type = corner`);
         }
+        if (msgLower.includes('lounger') || msgLower.includes('sun lounger')) {
+            session.context.furnitureType = 'lounger';
+            console.log(`📝 Context: type = lounger`);
+        }
+        
+        // Clear whitelist if furniture type changed
+        if (previousType && session.context.furnitureType && previousType !== session.context.furnitureType) {
+            console.log(`🔄 Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
         // Extract seat count
         const seatMatch = msgLower.match(/(\d+)\s*(?:people|person|seat|seater)/);
         if (seatMatch) {
             session.context.seatCount = parseInt(seatMatch[1]);
             console.log(`📝 Context: seats = ${session.context.seatCount}`);
+        }
+        
+        // Handle size change requests
+        if (msgLower.includes('smaller') || msgLower.includes('fewer seats')) {
+            console.log(`📝 Customer wants smaller - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        if (msgLower.includes('bigger') || msgLower.includes('larger') || msgLower.includes('more seats')) {
+            console.log(`📝 Customer wants bigger - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
+        // Clear whitelist if seat count changed
+        if (previousSeats && session.context.seatCount && previousSeats !== session.context.seatCount) {
+            console.log(`🔄 Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
+        // Handle price sensitivity
+        const priceWords = ['cheaper', 'less expensive', 'more affordable', 'budget', 'too expensive', 'too much'];
+        if (priceWords.some(word => msgLower.includes(word))) {
+            session.commercial.sentiment = 'price_concerned';
+            console.log(`💰 Price concern - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
+        // Generic change request with existing whitelist - force fresh search
+        if (isChangeRequest && session.currentWhitelist.length > 0) {
+            console.log(`🔄 Change request detected - clearing whitelist for fresh search`);
+            session.currentWhitelist = [];
         }
 
         // ============================================
