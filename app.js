@@ -1157,8 +1157,8 @@ function buildBundleOffer(session, mainProductSku, offerType) {
 // ============================================
 
 function validateAIOutput(aiOutput, whitelist, sessionId) {
-    if (!aiOutput.intent) {
-        console.log(`⚠️ [${sessionId}] Missing intent`);
+    if (!aiOutput || !aiOutput.intent) {
+        console.log(`⚠️ [${sessionId}] Missing aiOutput or intent`);
         return null;
     }
     
@@ -1690,6 +1690,112 @@ app.post('/chat', async (req, res) => {
                     } catch (e3) {
                         console.log(`⚠️ Object extraction failed`);
                     }
+                }
+            }
+            
+            // ============================================
+            // LAYER 4: CONTEXT-AWARE INTELLIGENT FALLBACK
+            // ============================================
+            if (!aiOutput) {
+                console.log(`🔄 Using context-aware fallback`);
+                const ctx = session.context;
+                const hasWhitelist = session.currentWhitelist && session.currentWhitelist.length > 0;
+                const hasContext = ctx.material || ctx.furnitureType || ctx.seatCount;
+                
+                // PRIORITY 1: Check if customer mentioned a SPECIFIC PRODUCT BY NAME
+                const productNamePatterns = [
+                    'stockholm', 'faro', 'malaga', 'palma', 'santorini', 'barcelona',
+                    'sorrento', 'valencia', 'milano', 'como', 'kiki', 'chesterton',
+                    'chaise', 'lounger', 'daybed', 'bistro'
+                ];
+                
+                const mentionedProduct = productNamePatterns.find(name => 
+                    msgLower.includes(name.toLowerCase())
+                );
+                
+                if (mentionedProduct) {
+                    console.log(`🔍 Fallback: Customer mentioned "${mentionedProduct}" - searching`);
+                    
+                    const productSearch = searchProducts({ 
+                        productName: mentionedProduct,
+                        maxResults: 3
+                    });
+                    
+                    if (productSearch.length > 0) {
+                        session.currentWhitelist = productSearch.map(p => p.sku);
+                        aiOutput = {
+                            intent: 'product_recommendation',
+                            intro_copy: `Here's what I found for "${mentionedProduct}":`,
+                            selected_skus: session.currentWhitelist.slice(0, 2),
+                            personalisation: '',
+                            closing_copy: "Would you like more details?"
+                        };
+                        console.log(`✅ Fallback: Found ${productSearch.length} products`);
+                    } else {
+                        aiOutput = {
+                            intent: 'question_answer',
+                            response_text: `I couldn't find "${mentionedProduct}" in stock. Would you like me to show similar alternatives?`
+                        };
+                    }
+                }
+                
+                // PRIORITY 2: Check if customer is asking a QUESTION
+                if (!aiOutput) {
+                    const questionPatterns = [
+                        'what happens', 'what if', 'what about', 'how do', 'how long',
+                        'can i', 'can you', 'do you', 'does it', 'will it', 'is it',
+                        'warranty', 'guarantee', 'return', 'refund', 'delivery', 'shipping',
+                        'wear', 'tear', 'break', 'damage', 'repair', 'maintenance', 'care',
+                        'clean', 'weather', 'rain', 'winter', 'made of', 'made from'
+                    ];
+                    
+                    const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
+                    
+                    if (isAskingQuestion) {
+                        console.log(`❓ Fallback: Detected question`);
+                        
+                        let helpfulResponse = "";
+                        
+                        if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
+                            helpfulResponse = "Great question! Our furniture is built to last:\n\n**Within warranty (2 years for rattan):** We repair or replace manufacturing defects free of charge.\n\n**After warranty:** Minor damage can often be repaired. We stock spare parts and replacement cushion covers.\n\n**Maximise lifespan:** Use a protective cover - extends life by 3-5 years!\n\nWould you like details on protective covers?";
+                        } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
+                            helpfulResponse = "Our warranty coverage:\n\n• **Rattan:** 2 years structural + colour\n• **Aluminium:** 10 years corrosion\n• **Teak:** 5 years structural\n• **Cushions:** 1 year\n\nAnything specific you'd like to know?";
+                        } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
+                            helpfulResponse = "We offer fast UK delivery:\n\n• 3-5 working days\n• Free on orders over £500\n• Tracking sent when shipped\n\nAnything else I can help with?";
+                        } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
+                            helpfulResponse = "Care is easy:\n\n• **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n• **Aluminium:** Just soapy water occasionally.\n• **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
+                        } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
+                            helpfulResponse = "Our furniture handles weather well:\n\n• **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\n• **Aluminium:** 100% rust-proof, year-round outdoor use.\n• **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
+                        } else {
+                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n• Warranty info\n• Delivery details\n• Care and maintenance\n• Product specifications\n\nWhat would you like to know?";
+                        }
+                        
+                        aiOutput = {
+                            intent: 'question_answer',
+                            response_text: helpfulResponse
+                        };
+                    }
+                }
+                
+                // PRIORITY 3: Show products if we have context
+                if (!aiOutput && hasWhitelist && hasContext) {
+                    aiOutput = {
+                        intent: 'product_recommendation',
+                        intro_copy: `Based on your interest in ${ctx.material || ''} ${ctx.furnitureType || ''} furniture:`.trim().replace(/\s+/g, ' '),
+                        selected_skus: session.currentWhitelist.slice(0, 3),
+                        personalisation: '',
+                        closing_copy: "Would any of these work for you?"
+                    };
+                    console.log(`✅ Fallback: Showing products with context`);
+                }
+                
+                // PRIORITY 4: Safety net
+                if (!aiOutput) {
+                    aiOutput = {
+                        intent: 'clarification',
+                        response_text: "I'd love to help! Are you looking for dining furniture, a lounge set, or perhaps a corner sofa?"
+                    };
+                    console.log(`✅ Fallback: Safety net`);
                 }
             }
         }
