@@ -1320,8 +1320,14 @@ app.post('/chat', async (req, res) => {
                 currentWhitelist: [],
                 context: {
                     furnitureType: null,
+                    subType: null,
                     seatCount: null,
-                    material: null
+                    sizePreference: null,
+                    material: null,
+                    colour: null,
+                    priceRange: null,
+                    maxPrice: null,
+                    minPrice: null
                 },
                commercial: {
                     bundlesOffered: 0,
@@ -1344,8 +1350,8 @@ app.post('/chat', async (req, res) => {
         const session = sessions.get(sessionId);
         session.messageCount++;
         
-     // ============================================
-        // CONTEXT EXTRACTION WITH SMART WHITELIST CLEARING
+        // ============================================
+        // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
         const msgLower = message.toLowerCase();
         
@@ -1354,34 +1360,66 @@ app.post('/chat', async (req, res) => {
         const previousType = session.context.furnitureType;
         const previousSeats = session.context.seatCount;
         
-        // Detect "change request" phrases - customer wants something DIFFERENT
+        // ============================================
+        // DETECT CHANGE REQUESTS - Clear whitelist if customer wants different products
+        // ============================================
         const changeRequestPatterns = [
             'what about', 'how about', 'any other', 'anything else',
             'something else', 'different', 'alternative', 'other options',
-            'instead', 'rather than', 'prefer', 'switch to',
+            'instead', 'rather than', 'switch to', 'prefer',
             'cheaper', 'less expensive', 'more affordable', 'budget',
             'smaller', 'bigger', 'larger', 'more seats', 'fewer seats',
             'too expensive', 'too big', 'too small', 'too large'
         ];
         
         const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
-        
         if (isChangeRequest) {
             console.log(`🔄 Change request detected`);
         }
         
-        // Extract material
-        if (msgLower.includes('aluminium') || msgLower.includes('aluminum')) {
-            session.context.material = 'aluminium';
-            console.log(`📝 Context: material = aluminium`);
-        }
-        if (msgLower.includes('rattan')) {
+        // ============================================
+        // MATERIAL EXTRACTION - All database values + synonyms
+        // ============================================
+        
+        // Rattan (and synonyms)
+        if (msgLower.includes('rattan') || msgLower.includes('wicker') || 
+            msgLower.includes('poly rattan') || msgLower.includes('pe rattan') ||
+            msgLower.includes('synthetic rattan')) {
             session.context.material = 'rattan';
             console.log(`📝 Context: material = rattan`);
         }
+        
+        // Teak
         if (msgLower.includes('teak')) {
             session.context.material = 'teak';
             console.log(`📝 Context: material = teak`);
+        }
+        
+        // Wood (and synonyms) - check this AFTER teak so teak doesn't get overwritten
+        if ((msgLower.includes('wood') || msgLower.includes('wooden') || 
+             msgLower.includes('acacia') || msgLower.includes('hardwood')) &&
+            !msgLower.includes('teak')) {
+            session.context.material = 'wood';
+            console.log(`📝 Context: material = wood`);
+        }
+        
+        // Aluminium (and synonyms)
+        if (msgLower.includes('aluminium') || msgLower.includes('aluminum') || 
+            msgLower.includes('alloy')) {
+            session.context.material = 'aluminium';
+            console.log(`📝 Context: material = aluminium`);
+        }
+        
+        // Metal (maps to aluminium for search, but also catches steel)
+        if (msgLower.includes('metal') || msgLower.includes('steel')) {
+            session.context.material = 'aluminium';
+            console.log(`📝 Context: material = aluminium (from metal/steel)`);
+        }
+        
+        // Woven
+        if (msgLower.includes('woven') && !msgLower.includes('rattan')) {
+            session.context.material = 'woven';
+            console.log(`📝 Context: material = woven`);
         }
         
         // Clear whitelist if material changed
@@ -1390,22 +1428,74 @@ app.post('/chat', async (req, res) => {
             session.currentWhitelist = [];
         }
         
-        // Extract furniture type
-        if (msgLower.includes('dining')) {
+        // ============================================
+        // FURNITURE TYPE EXTRACTION - All types + synonyms
+        // ============================================
+        
+        // Dining
+        if (msgLower.includes('dining') || msgLower.includes('dinner') || 
+            msgLower.includes('eating') || msgLower.includes('table and chair')) {
             session.context.furnitureType = 'dining';
             console.log(`📝 Context: type = dining`);
         }
-        if (msgLower.includes('lounge') || msgLower.includes('lounging')) {
+        
+        // Lounge (and synonyms)
+        if (msgLower.includes('lounge') || msgLower.includes('lounging') || 
+            msgLower.includes('sofa') || msgLower.includes('couch') ||
+            msgLower.includes('seating') || msgLower.includes('relax')) {
             session.context.furnitureType = 'lounge';
             console.log(`📝 Context: type = lounge`);
         }
-        if (msgLower.includes('corner')) {
+        
+        // Corner (and synonyms)
+        if (msgLower.includes('corner') || msgLower.includes('l-shape') || 
+            msgLower.includes('l shape') || msgLower.includes('l shaped')) {
             session.context.furnitureType = 'corner';
             console.log(`📝 Context: type = corner`);
         }
-        if (msgLower.includes('lounger') || msgLower.includes('sun lounger')) {
+        
+        // Sun lounger (and synonyms)
+        if (msgLower.includes('sun lounger') || msgLower.includes('sunlounger') ||
+            msgLower.includes('sunbed') || msgLower.includes('sun bed') ||
+            msgLower.includes('daybed') || msgLower.includes('day bed') ||
+            (msgLower.includes('lounger') && !msgLower.includes('lounge set'))) {
             session.context.furnitureType = 'lounger';
             console.log(`📝 Context: type = lounger`);
+        }
+        
+        // Chaise
+        if (msgLower.includes('chaise')) {
+            session.context.furnitureType = 'lounge';
+            session.context.subType = 'chaise';
+            console.log(`📝 Context: type = lounge (chaise)`);
+        }
+        
+        // Bistro (small sets)
+        if (msgLower.includes('bistro') || msgLower.includes('cafe') ||
+            msgLower.includes('balcony set') || msgLower.includes('2 person')) {
+            session.context.furnitureType = 'dining';
+            session.context.seatCount = 2;
+            console.log(`📝 Context: type = dining (bistro), seats = 2`);
+        }
+        
+        // Modular
+        if (msgLower.includes('modular') || msgLower.includes('configurable')) {
+            session.context.subType = 'modular';
+            console.log(`📝 Context: subType = modular`);
+        }
+        
+        // Accessories
+        if (msgLower.includes('cover') || msgLower.includes('parasol') || 
+            msgLower.includes('umbrella') || msgLower.includes('cushion') ||
+            msgLower.includes('storage') || msgLower.includes('accessory') ||
+            msgLower.includes('accessories')) {
+            session.context.furnitureType = 'accessories';
+            console.log(`📝 Context: type = accessories`);
+            
+            if (msgLower.includes('cover')) session.context.subType = 'cover';
+            if (msgLower.includes('parasol') || msgLower.includes('umbrella')) session.context.subType = 'parasol';
+            if (msgLower.includes('cushion')) session.context.subType = 'cushion';
+            if (msgLower.includes('storage')) session.context.subType = 'storage';
         }
         
         // Clear whitelist if furniture type changed
@@ -1414,20 +1504,71 @@ app.post('/chat', async (req, res) => {
             session.currentWhitelist = [];
         }
         
-        // Extract seat count
-        const seatMatch = msgLower.match(/(\d+)\s*(?:people|person|seat|seater)/);
+        // ============================================
+        // SEAT COUNT EXTRACTION - Numbers + descriptive words
+        // ============================================
+        
+        // Numeric patterns
+        const seatMatch = msgLower.match(/(\d+)\s*(?:people|person|seat|seater|guests?)/);
         if (seatMatch) {
             session.context.seatCount = parseInt(seatMatch[1]);
             console.log(`📝 Context: seats = ${session.context.seatCount}`);
         }
         
-        // Handle size change requests
-        if (msgLower.includes('smaller') || msgLower.includes('fewer seats')) {
-            console.log(`📝 Customer wants smaller - clearing whitelist`);
+        // Word-based numbers
+        const wordToNumber = {
+            'two': 2, 'couple': 2, 'pair': 2,
+            'three': 3,
+            'four': 4,
+            'five': 5,
+            'six': 6,
+            'seven': 7,
+            'eight': 8,
+            'nine': 9,
+            'ten': 10
+        };
+        
+        for (const [word, num] of Object.entries(wordToNumber)) {
+            if (msgLower.includes(word + ' people') || msgLower.includes(word + ' person') ||
+                msgLower.includes(word + ' seat') || msgLower.includes(word + ' guest') ||
+                msgLower.includes('for ' + word)) {
+                session.context.seatCount = num;
+                console.log(`📝 Context: seats = ${num} (from "${word}")`);
+                break;
+            }
+        }
+        
+        // Size descriptors
+        if (msgLower.includes('small') || msgLower.includes('compact') || 
+            msgLower.includes('cosy') || msgLower.includes('cozy') ||
+            msgLower.includes('tiny') || msgLower.includes('little')) {
+            if (!session.context.seatCount) {
+                session.context.sizePreference = 'small';
+                console.log(`📝 Context: size preference = small`);
+            }
             session.currentWhitelist = [];
         }
-        if (msgLower.includes('bigger') || msgLower.includes('larger') || msgLower.includes('more seats')) {
+        
+        if (msgLower.includes('large') || msgLower.includes('big') || 
+            msgLower.includes('spacious') || msgLower.includes('family') ||
+            msgLower.includes('entertaining') || msgLower.includes('party') ||
+            msgLower.includes('guests')) {
+            if (!session.context.seatCount) {
+                session.context.sizePreference = 'large';
+                console.log(`📝 Context: size preference = large`);
+            }
+            session.currentWhitelist = [];
+        }
+        
+        // Relative size changes
+        if (msgLower.includes('smaller') || msgLower.includes('fewer seat')) {
+            console.log(`📝 Customer wants smaller - clearing whitelist`);
+            session.context.sizePreference = 'smaller';
+            session.currentWhitelist = [];
+        }
+        if (msgLower.includes('bigger') || msgLower.includes('larger') || msgLower.includes('more seat')) {
             console.log(`📝 Customer wants bigger - clearing whitelist`);
+            session.context.sizePreference = 'larger';
             session.currentWhitelist = [];
         }
         
@@ -1437,20 +1578,82 @@ app.post('/chat', async (req, res) => {
             session.currentWhitelist = [];
         }
         
-        // Handle price sensitivity
-        const priceWords = ['cheaper', 'less expensive', 'more affordable', 'budget', 'too expensive', 'too much'];
-        if (priceWords.some(word => msgLower.includes(word))) {
+        // ============================================
+        // COLOUR EXTRACTION
+        // ============================================
+        if (msgLower.includes('grey') || msgLower.includes('gray')) {
+            session.context.colour = 'grey';
+            console.log(`📝 Context: colour = grey`);
+        }
+        if (msgLower.includes('black')) {
+            session.context.colour = 'black';
+            console.log(`📝 Context: colour = black`);
+        }
+        if (msgLower.includes('beige') || msgLower.includes('cream') || msgLower.includes('natural')) {
+            session.context.colour = 'beige';
+            console.log(`📝 Context: colour = beige`);
+        }
+        if (msgLower.includes('green')) {
+            session.context.colour = 'green';
+            console.log(`📝 Context: colour = green`);
+        }
+        if (msgLower.includes('taupe') || msgLower.includes('brown')) {
+            session.context.colour = 'taupe';
+            console.log(`📝 Context: colour = taupe`);
+        }
+        if (msgLower.includes('white')) {
+            session.context.colour = 'white';
+            console.log(`📝 Context: colour = white`);
+        }
+        
+        // ============================================
+        // PRICE SENSITIVITY EXTRACTION
+        // ============================================
+        const budgetWords = ['cheap', 'budget', 'affordable', 'inexpensive', 'low cost', 'bargain', 'value'];
+        const premiumWords = ['premium', 'luxury', 'high-end', 'high end', 'top quality', 'best quality', 'expensive'];
+        
+        if (budgetWords.some(word => msgLower.includes(word))) {
+            session.context.priceRange = 'budget';
             session.commercial.sentiment = 'price_concerned';
-            console.log(`💰 Price concern - clearing whitelist`);
+            console.log(`📝 Context: price range = budget`);
             session.currentWhitelist = [];
         }
         
-        // Generic change request with existing whitelist - force fresh search
-        if (isChangeRequest && session.currentWhitelist.length > 0) {
-            console.log(`🔄 Change request detected - clearing whitelist for fresh search`);
+        if (premiumWords.some(word => msgLower.includes(word))) {
+            session.context.priceRange = 'premium';
+            console.log(`📝 Context: price range = premium`);
+        }
+        
+        // Price threshold detection
+        const priceMatch = msgLower.match(/(?:under|below|less than|up to|max|maximum)\s*£?\s*(\d+)/);
+        if (priceMatch) {
+            session.context.maxPrice = parseInt(priceMatch[1]);
+            console.log(`📝 Context: max price = £${session.context.maxPrice}`);
             session.currentWhitelist = [];
         }
-
+        
+        const minPriceMatch = msgLower.match(/(?:over|above|more than|at least|minimum)\s*£?\s*(\d+)/);
+        if (minPriceMatch) {
+            session.context.minPrice = parseInt(minPriceMatch[1]);
+            console.log(`📝 Context: min price = £${session.context.minPrice}`);
+        }
+        
+        // "too expensive" detection
+        if (msgLower.includes('too expensive') || msgLower.includes('too much') || 
+            msgLower.includes('too pricey') || msgLower.includes('can\'t afford')) {
+            session.commercial.sentiment = 'price_concerned';
+            console.log(`💰 Price concern detected - clearing whitelist`);
+            session.currentWhitelist = [];
+        }
+        
+        // ============================================
+        // GENERIC CHANGE REQUEST - Clear whitelist
+        // ============================================
+        if (isChangeRequest && session.currentWhitelist.length > 0) {
+            console.log(`🔄 Change request with existing whitelist - clearing for fresh search`);
+            session.currentWhitelist = [];
+        }
+    
         // ============================================
         // DETECT CUSTOMER SENTIMENT AND PURCHASE INTENT
         // ============================================
