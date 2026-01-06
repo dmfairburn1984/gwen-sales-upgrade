@@ -1,5 +1,5 @@
 {
-  "dateGenerated": "2026-01-05T03:55:42.440Z",
+  "dateGenerated": "2026-01-06T03:55:44.917Z",
   "proactiveAlerts": [
     {
       "alertType": "✅ PO Tag Confirmed",
@@ -9,11 +9,11 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ PO Tag Confirmed",
+      "alertType": "⚠️ Inventory for Pre-Order (Ringfence)",
       "skuOrOrderId": "4229",
-      "issue": "SKU PALMA-CUSHION-BOX associated with PO 16/2026. (Source: Order Recommendation).",
-      "recommendedAction": "No action needed unless this association is incorrect.",
-      "riskLevel": "Low"
+      "issue": "SKU PALMA-CUSHION-BOX (Order 4229, associated with PO 16/2026) is in stock (10 units). Item itself has no PO in Gwen.",
+      "recommendedAction": "Ringfence 10 units of SKU PALMA-CUSHION-BOX from inventory to await arrival of PO 16/2026. Do NOT book for delivery yet.",
+      "riskLevel": "High"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -67,7 +67,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4222",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4222) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4222) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -102,7 +102,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4218",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4218) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4218) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -123,7 +123,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4217",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4217) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4217) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -143,8 +143,36 @@
     },
     {
       "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4215",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4215) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4215",
+      "issue": "SKU PALMA-CUSHION-BOX (Order 4215) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4214",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4214) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4213",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4213) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4213) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4212",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4212) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -158,7 +186,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4210",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4210) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4210) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -193,7 +221,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4206",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4206) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4206) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -214,7 +242,7 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4204",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4204) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4204) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -243,6 +271,13 @@
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4201",
       "issue": "SKU SANTORINI-GREY (Order 4201) is available in warehouse (39 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4200",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4200) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -298,7 +333,21 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4193",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4193) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4193) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4192",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4192) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4191",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4191) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -364,6 +413,13 @@
       "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4186",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4186) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
     },
     {
       "alertType": "✅ NO ISSUES",
@@ -445,14 +501,14 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4179",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4179) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4179) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4178",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4178) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4178) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -466,14 +522,28 @@
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4176",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4176) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4176) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4175",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4175) is available in warehouse (13 units). No PO assigned to item.",
+      "issue": "SKU MALAGA-LOUNGE-SET (Order 4175) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4174",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4174) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4173",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4173) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -490,6 +560,13 @@
       "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4170",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4170) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
     },
     {
       "alertType": "✅ PO Tag Confirmed",
@@ -514,15 +591,22 @@
     },
     {
       "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4166",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4166) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4165",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4165) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4165) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
       "skuOrOrderId": "4164",
-      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4164) is available in warehouse (55 units). No PO assigned to item.",
+      "issue": "SKU MARBELLA FIVE SEATER CORNER (Order 4164) is available in warehouse (10 units). No PO assigned to item.",
       "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
       "riskLevel": "Medium"
     },
@@ -539,6 +623,20 @@
       "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4161",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4161) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4160",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4160) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
     },
     {
       "alertType": "✅ NO ISSUES",
@@ -583,6 +681,34 @@
       "riskLevel": "Low"
     },
     {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4153",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4153) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4152",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4152) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4150",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4150) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4149",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4149) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
       "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4148",
       "issue": "Order already fulfilled.",
@@ -609,6 +735,27 @@
       "issue": "Order already fulfilled.",
       "recommendedAction": "No further action required.",
       "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4145",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4145) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4144",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4144) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4143",
+      "issue": "SKU FARO-LOUNGE-SET (Order 4143) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
     },
     {
       "alertType": "✅ NO ISSUES",
@@ -25652,10 +25799,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4209",
-      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025.",
+      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 1 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 0,
+      "overdueByDays": 1,
       "items": [
         {
           "sku": "OLIVIA-SICILY-8S-DINING",
@@ -25668,10 +25815,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4208",
-      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025.",
+      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 1 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 0,
+      "overdueByDays": 1,
       "items": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
@@ -25684,10 +25831,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4205",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 2 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 2,
+      "overdueByDays": 3,
       "items": [
         {
           "sku": "SANTORINI-COVER",
@@ -25700,10 +25847,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4204",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 2 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 2,
+      "overdueByDays": 3,
       "items": [
         {
           "sku": "CHESTERTON-COVER",
@@ -25721,10 +25868,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4204",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 2 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 2,
+      "overdueByDays": 3,
       "items": [
         {
           "sku": "CHESTERTON-COVER",
@@ -25742,10 +25889,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4203",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 2 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 2,
+      "overdueByDays": 3,
       "items": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
@@ -25758,10 +25905,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4201",
-      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 3 days.",
+      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 4 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 3,
+      "overdueByDays": 4,
       "items": [
         {
           "sku": "SANTORINI-COVER",
@@ -25779,10 +25926,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4201",
-      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 3 days.",
+      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 4 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 3,
+      "overdueByDays": 4,
       "items": [
         {
           "sku": "SANTORINI-COVER",
@@ -25800,10 +25947,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4196",
-      "issue": "Order (SLA Start from JOB date: 13/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/12/2025. Overdue by: 5 days.",
+      "issue": "Order (SLA Start from JOB date: 13/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/12/2025. Overdue by: 6 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 5,
+      "overdueByDays": 6,
       "items": [
         {
           "sku": "MARBELLA-COVER",
@@ -25816,10 +25963,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4175",
-      "issue": "Order (SLA Start from JOB date: 03/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 01/12/2025. Overdue by: 12 days.",
+      "issue": "Order (SLA Start from JOB date: 03/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 01/12/2025. Overdue by: 13 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 12,
+      "overdueByDays": 13,
       "items": [
         {
           "sku": "MALAGA-LOUNGE-SET",
@@ -25832,10 +25979,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4167",
-      "issue": "Order (SLA Start from JOB date: 02/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 13 days.",
+      "issue": "Order (SLA Start from JOB date: 02/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 14 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 13,
+      "overdueByDays": 14,
       "items": [
         {
           "sku": "STOCKHOLM-CORNER-COVER",
@@ -25848,10 +25995,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4151",
-      "issue": "Order (SLA Start from JOB date: 27/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 25/11/2025. Overdue by: 16 days.",
+      "issue": "Order (SLA Start from JOB date: 27/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 25/11/2025. Overdue by: 17 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 16,
+      "overdueByDays": 17,
       "items": [
         {
           "sku": "PALMA-COVER",
@@ -25864,10 +26011,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "3945",
-      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 70 days.",
+      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 71 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 70,
+      "overdueByDays": 71,
       "items": [
         {
           "sku": "HAVANA-8S",
