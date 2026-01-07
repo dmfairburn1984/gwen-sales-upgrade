@@ -422,7 +422,7 @@ async function renderDimensionCard(sku, options = {}) {
         return {
             type: 'dimension_missing',
             card: null,
-            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n🔗 [View ${name} →](${productUrl})\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
+            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">🔗 View ${name} →</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
             productUrl: productUrl,
             productName: name,
             sku: sku
@@ -445,7 +445,7 @@ async function renderDimensionCard(sku, options = {}) {
         card += `\n**Configuration:** This set can be arranged as left or right-hand facing - perfect for fitting your specific space layout!\n`;
     }
     
-    card += `\n🔗 [View detailed dimension diagram →](${productUrl})\n`;
+    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">🔗 View detailed dimension diagram →</a>\n`;
     
     // Box dimensions - only if explicitly requested
     if (showBoxDimensions) {
