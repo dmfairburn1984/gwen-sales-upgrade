@@ -337,6 +337,228 @@ function searchProducts(criteria) {
     }));
 }
 
+
+// ============================================
+// PRODUCT LOOKUP BY NAME - For dimension queries
+// ============================================
+
+function findProductByName(productName, productsShown = []) {
+    const searchTerm = productName.toLowerCase().trim();
+    
+    console.log(`🔍 Looking for product: "${searchTerm}"`);
+    console.log(`   Products shown this session: [${productsShown.join(', ')}]`);
+    
+    // PRIORITY 1: Check recently shown products first
+    if (productsShown.length > 0) {
+        for (const sku of productsShown) {
+            const product = productIndex.bySku[sku];
+            if (product) {
+                const name = product.product_identity?.product_name?.toLowerCase() || '';
+                const skuLower = sku.toLowerCase();
+                const family = product.product_identity?.product_family?.toLowerCase() || '';
+                
+                // Check if search term matches name, SKU, or family
+                if (name.includes(searchTerm) || 
+                    skuLower.includes(searchTerm) || 
+                    family.includes(searchTerm) ||
+                    searchTerm.includes(family)) {
+                    console.log(`   ✅ Found in shown products: ${sku}`);
+                    return { sku, product, source: 'shown' };
+                }
+            }
+        }
+    }
+    
+    // PRIORITY 2: Search entire database
+    for (const [sku, product] of Object.entries(productIndex.bySku)) {
+        const name = product.product_identity?.product_name?.toLowerCase() || '';
+        const skuLower = sku.toLowerCase();
+        const family = product.product_identity?.product_family?.toLowerCase() || '';
+        
+        if (name.includes(searchTerm) || 
+            skuLower.includes(searchTerm.replace(/\s+/g, '-')) ||
+            family.includes(searchTerm) ||
+            searchTerm.includes(family)) {
+            console.log(`   ✅ Found in database: ${sku}`);
+            return { sku, product, source: 'database' };
+        }
+    }
+    
+    console.log(`   ❌ Product not found: "${searchTerm}"`);
+    return null;
+}
+
+// ============================================
+// DIMENSION CARD RENDERING
+// ============================================
+
+async function renderDimensionCard(sku, options = {}) {
+    const { showBoxDimensions = false } = options;
+    
+    const productData = productIndex.bySku[sku];
+    if (!productData) {
+        console.log(`⚠️ No product data for SKU: ${sku}`);
+        return null;
+    }
+    
+    const name = productData.product_identity?.product_name || 'Product';
+    const dimensions = productData.specifications?.dimensions_cm;
+    const configurable = productData.specifications?.configurable_sides;
+    
+    // Get product URL (same logic as renderProductCard)
+    const shopifyData = await getCachedShopifyData(sku);
+    const productUrl = shopifyData?.url || `https://www.mint-outdoor.com/products/${sku.toLowerCase().replace(/\s+/g, '-')}`;
+    
+    // Check if dimensions are available
+    const width = dimensions?.width;
+    const depth = dimensions?.depth;
+    const length = dimensions?.length || dimensions?.height; // Support both field names
+    
+    const hasDimensions = width && depth && (length || dimensions?.height);
+    
+    if (!hasDimensions) {
+        // Missing dimensions - provide helpful fallback
+        console.log(`📐 Missing dimensions for ${sku}`);
+        return {
+            type: 'dimension_missing',
+            card: null,
+            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n🔗 [View ${name} →](${productUrl})\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
+            productUrl: productUrl,
+            productName: name,
+            sku: sku
+        };
+    }
+    
+    // Build dimension card
+    let card = `\n📐 **${name} - Dimensions**\n\n`;
+    card += `**Footprint:**\n`;
+    card += `• Width: ${width}cm\n`;
+    card += `• Depth: ${depth}cm\n`;
+    
+    // Use "Length" label for customer-facing (even if field is called height)
+    if (length) {
+        card += `• Length: ${length}cm\n`;
+    }
+    
+    // Configurable sides messaging
+    if (configurable && configurable !== 'N/A' && configurable !== '') {
+        card += `\n**Configuration:** This set can be arranged as left or right-hand facing - perfect for fitting your specific space layout!\n`;
+    }
+    
+    card += `\n🔗 [View detailed dimension diagram →](${productUrl})\n`;
+    
+    // Box dimensions - only if explicitly requested
+    if (showBoxDimensions) {
+        const boxCard = renderBoxDimensionCard(sku, productData, productUrl);
+        if (boxCard) {
+            card += boxCard;
+        }
+    }
+    
+    return {
+        type: 'dimension_card',
+        card: card,
+        productUrl: productUrl,
+        productName: name,
+        sku: sku,
+        dimensions: {
+            width: width,
+            depth: depth,
+            length: length
+        }
+    };
+}
+
+// ============================================
+// BOX DIMENSION CARD RENDERING
+// ============================================
+
+function renderBoxDimensionCard(sku, productData, productUrl) {
+    const components = productData.logistics_and_inventory?.components;
+    
+    if (!components || components.length === 0) {
+        return `\n📦 **Delivery Boxes:** Contact us for box dimensions - we'll measure and confirm before delivery.\n`;
+    }
+    
+    // Check if any boxes have dimensions
+    const boxesWithDimensions = components.filter(c => 
+        c.box_dimensions_cm?.length || c.box_dimensions_cm?.width || c.box_dimensions_cm?.height
+    );
+    
+    if (boxesWithDimensions.length === 0) {
+        return `\n📦 **Delivery Boxes:** This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}. Contact us for exact box dimensions.\n`;
+    }
+    
+    let boxCard = `\n📦 **Delivery Boxes:**\n`;
+    boxCard += `This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}:\n\n`;
+    
+    const productFamily = productData.product_identity?.product_family?.toLowerCase() || '';
+    const productName = productData.product_identity?.product_name?.toLowerCase() || '';
+    let hasNameMismatch = false;
+    
+    components.forEach((box, index) => {
+        const dims = box.box_dimensions_cm;
+        const boxSku = box.component_sku || '';
+        
+        // Check for name mismatch (e.g., Palma product has FARO box codes)
+        const boxFamily = boxSku.split('-')[0]?.toLowerCase() || '';
+        if (boxFamily && productFamily && boxFamily !== productFamily && !productName.includes(boxFamily)) {
+            hasNameMismatch = true;
+        }
+        
+        if (dims?.length && dims?.width && dims?.height) {
+            boxCard += `**Box ${index + 1}:** ${dims.length}cm × ${dims.width}cm × ${dims.height}cm\n`;
+        } else {
+            boxCard += `**Box ${index + 1}:** Dimensions not available\n`;
+        }
+    });
+    
+    // Add reassurance if box names don't match product name
+    if (hasNameMismatch) {
+        boxCard += `\n*Note: Your delivery boxes will be labelled with our internal stock code - this is the same product, just our warehouse reference. Don't worry, you're getting the correct set!*\n`;
+    }
+    
+    return boxCard;
+}
+
+// ============================================
+// SPACE FIT CHECKER - Filter products by dimensions
+// ============================================
+
+function filterProductsBySpace(products, maxWidth, maxLength) {
+    console.log(`📐 Filtering for space: ${maxWidth}cm × ${maxLength}cm`);
+    
+    const fitting = products.filter(p => {
+        const product = productIndex.bySku[p.sku || p];
+        if (!product) return false;
+        
+        const dims = product.specifications?.dimensions_cm;
+        if (!dims) return true; // Include if no dimensions (can't confirm)
+        
+        const width = parseInt(dims.width) || 0;
+        const length = parseInt(dims.length) || parseInt(dims.height) || 0;
+        const depth = parseInt(dims.depth) || 0;
+        
+        // Check if product fits (either orientation)
+        const fitsNormal = width <= maxWidth && (length || depth) <= maxLength;
+        const fitsRotated = width <= maxLength && (length || depth) <= maxWidth;
+        
+        const fits = fitsNormal || fitsRotated;
+        
+        if (fits) {
+            console.log(`   ✅ ${p.sku || p} fits (${width}×${length || depth}cm)`);
+        } else {
+            console.log(`   ❌ ${p.sku || p} too large (${width}×${length || depth}cm)`);
+        }
+        
+        return fits;
+    });
+    
+    console.log(`📐 ${fitting.length} of ${products.length} products fit the space`);
+    return fitting;
+}
+
+
 // ============================================
 // SERVER-SIDE PRODUCT CARD RENDERING
 // ============================================
@@ -529,9 +751,17 @@ RESPONDING TO SPECIFIC QUESTIONS:
 - Price: "The [Product] is **£XXX**" - always include the pound amount
 - Stock: "Yes, it's in stock with 3-5 day delivery"
 - Warranty: "We offer 1-year guarantee plus extended material warranties"
-- Dimensions: Include W x D x H in cm
+- Dimensions: Use the get_product_dimensions tool to get exact sizes
+- Box/Delivery size: Use get_product_dimensions with includeBoxDimensions=true
+- Will it fit: Use get_product_dimensions, then confirm if it fits their space
 - Eco questions: "Our teak is from sustainable plantations, aluminium is 100% recyclable"
 - Commercial/B2B: "We work with businesses - contact sales@mint-outdoor.com for volume pricing"
+
+DIMENSION QUERIES - IMPORTANT:
+When customer asks "how big is...", "what size...", "dimensions of...", "will it fit...", "measurements":
+1. Use get_product_dimensions tool with the product name
+2. If dimensions found, output intent: "dimension_query" with the response
+3. If product not found, ask customer to clarify which product they mean
 
 ═══════════════════════════════════════════════════════════
 OUTPUT FORMAT - ALWAYS VALID JSON
@@ -550,6 +780,14 @@ For showing products:
     "selected_skus": ["SKU-1", "SKU-2"],
     "personalisation": "Brief personalisation",
     "closing_copy": "Which style catches your eye?"
+}
+
+For dimension queries:
+{
+    "intent": "dimension_query",
+    "product_sku": "SKU-HERE",
+    "include_box_dimensions": false,
+    "response_text": "Optional intro text before dimension card"
 }
 
 ═══════════════════════════════════════════════════════════
@@ -678,7 +916,31 @@ const aiTools = [
                         description: "Whether customer wants the bundle deal"
                     }
                 },
-                required: ["productSku"]
+              required: ["productSku"]
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "get_product_dimensions",
+            description: "Get dimensions and footprint size of a specific product. Use when customer asks about size, dimensions, measurements, or whether a product will fit their space.",
+            parameters: {
+                type: "object",
+                properties: {
+                    productName: {
+                        type: "string",
+                        description: "Name of the product to get dimensions for (e.g., 'Marbella', 'Stockholm', 'Palma')"
+                    },
+                    productSku: {
+                        type: "string",
+                        description: "SKU of the product if known"
+                    },
+                    includeBoxDimensions: {
+                        type: "boolean",
+                        description: "Whether to include delivery box dimensions (only if customer asks about boxes, delivery size, or fitting through doors)"
+                    }
+                }
             }
         }
     }
@@ -1200,8 +1462,43 @@ async function assembleResponse(aiOutput, sessionId, session) {
         return aiOutput.response_text || aiOutput.text || "Let me help you complete your purchase!";
     }
     
-    if (intent === 'email_capture') {
+   if (intent === 'email_capture') {
         return aiOutput.response_text || aiOutput.text || "I'd be happy to email you the details!";
+    }
+    
+    // Handle dimension queries
+    if (intent === 'dimension_query') {
+        const sku = aiOutput.product_sku;
+        const includeBoxDimensions = aiOutput.include_box_dimensions || false;
+        
+        if (sku) {
+            const dimensionResult = await renderDimensionCard(sku, {
+                showBoxDimensions: includeBoxDimensions
+            });
+            
+            if (dimensionResult) {
+                let response = '';
+                
+                // Add intro text if provided
+                if (aiOutput.response_text) {
+                    response += aiOutput.response_text + '\n';
+                }
+                
+                if (dimensionResult.type === 'dimension_missing') {
+                    response += dimensionResult.fallbackMessage;
+                } else {
+                    response += dimensionResult.card;
+                    
+                    // Add helpful follow-up
+                    response += '\nWould this work for your space? Let me know if you have any other questions!';
+                }
+                
+                return response;
+            }
+        }
+        
+        // Fallback if SKU not found
+        return aiOutput.response_text || "I'd be happy to help with dimensions. Which product are you interested in?";
     }
     
     // For non-product intents, use AI's response text directly
@@ -1327,7 +1624,9 @@ app.post('/chat', async (req, res) => {
                     colour: null,
                     priceRange: null,
                     maxPrice: null,
-                    minPrice: null
+                    minPrice: null,
+                    queryType: null,
+                    customerSpace: null
                 },
                commercial: {
                     bundlesOffered: 0,
@@ -1645,6 +1944,55 @@ app.post('/chat', async (req, res) => {
             console.log(`💰 Price concern detected - clearing whitelist`);
             session.currentWhitelist = [];
         }
+
+        // ============================================
+        // DIMENSION QUERY DETECTION
+        // ============================================
+        const dimensionPatterns = [
+            'how big', 'what size', 'dimensions', 'measurements', 'measure',
+            'will it fit', 'does it fit', 'fit in my', 'fit my',
+            'how wide', 'how deep', 'how tall', 'how long', 'how small',
+            'footprint', 'floor space', 'how much room', 'space required',
+            'square metre', 'sq m', 'sqm'
+        ];
+        
+        const isDimensionQuery = dimensionPatterns.some(p => msgLower.includes(p));
+        
+        if (isDimensionQuery) {
+            session.context.queryType = 'dimensions';
+            console.log(`📐 Dimension query detected`);
+        }
+        
+        // Detect space size from customer (e.g., "my space is 200cm x 300cm")
+        const spaceMatch = msgLower.match(/(\d+)\s*(?:cm|m)?\s*(?:x|by)\s*(\d+)\s*(?:cm|m)?/);
+        if (spaceMatch) {
+            let dim1 = parseInt(spaceMatch[1]);
+            let dim2 = parseInt(spaceMatch[2]);
+            
+            // If numbers seem like metres, convert to cm
+            if (dim1 < 10) dim1 = dim1 * 100;
+            if (dim2 < 10) dim2 = dim2 * 100;
+            
+            session.context.customerSpace = {
+                width: Math.min(dim1, dim2),
+                length: Math.max(dim1, dim2)
+            };
+            console.log(`📐 Customer space detected: ${session.context.customerSpace.width}cm × ${session.context.customerSpace.length}cm`);
+        }
+        
+        // Detect box/delivery dimension queries
+        const boxDimensionPatterns = [
+            'box size', 'box dimension', 'delivery box', 'fit through',
+            'fit in my car', 'fit in car', 'door', 'entrance', 'how does it arrive',
+            'packaging', 'how many boxes'
+        ];
+        
+        const isBoxQuery = boxDimensionPatterns.some(p => msgLower.includes(p));
+        
+        if (isBoxQuery) {
+            session.context.queryType = 'box_dimensions';
+            console.log(`📦 Box dimension query detected`);
+        }
         
         // ============================================
         // GENERIC CHANGE REQUEST - Clear whitelist
@@ -1908,6 +2256,67 @@ app.post('/chat', async (req, res) => {
                         });
                     }
                 }
+if (toolCall.function.name === "get_product_dimensions") {
+                    console.log(`📐 Dimension query:`, args);
+                    
+                    // Find the product
+                    let productResult = null;
+                    
+                    if (args.productSku) {
+                        const product = productIndex.bySku[args.productSku];
+                        if (product) {
+                            productResult = { sku: args.productSku, product, source: 'sku' };
+                        }
+                    }
+                    
+                    if (!productResult && args.productName) {
+                        productResult = findProductByName(args.productName, session.commercial.productsShown);
+                    }
+                    
+                    if (!productResult) {
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                success: false,
+                                message: `I couldn't find a product matching "${args.productName || args.productSku}". Please ask the customer to clarify which product they're asking about.`
+                            })
+                        });
+                    } else {
+                        const dimensionResult = await renderDimensionCard(productResult.sku, {
+                            showBoxDimensions: args.includeBoxDimensions || false
+                        });
+                        
+                        if (dimensionResult.type === 'dimension_missing') {
+                            toolResults.push({
+                                tool_call_id: toolCall.id,
+                                output: JSON.stringify({
+                                    success: true,
+                                    hasDimensions: false,
+                                    productName: dimensionResult.productName,
+                                    productSku: dimensionResult.sku,
+                                    productUrl: dimensionResult.productUrl,
+                                    message: dimensionResult.fallbackMessage,
+                                    note: "Dimensions not available. Show the fallback message to the customer. They can check the product page or provide email for follow-up."
+                                })
+                            });
+                        } else {
+                            toolResults.push({
+                                tool_call_id: toolCall.id,
+                                output: JSON.stringify({
+                                    success: true,
+                                    hasDimensions: true,
+                                    productName: dimensionResult.productName,
+                                    productSku: dimensionResult.sku,
+                                    productUrl: dimensionResult.productUrl,
+                                    dimensions: dimensionResult.dimensions,
+                                    dimensionCard: dimensionResult.card,
+                                    note: "Dimension card ready. Output intent: dimension_query with product_sku set. The server will render the dimension card."
+                                })
+                            });
+                        }
+                    }
+                }
+
             }
             
             messages.push(aiMessage);
@@ -2053,6 +2462,104 @@ app.post('/chat', async (req, res) => {
                         };
                     }
                 }
+
+// PRIORITY 2: Check for DIMENSION queries
+                if (!aiOutput) {
+                    const dimensionPatterns = [
+                        'how big', 'what size', 'dimensions', 'measurements',
+                        'will it fit', 'does it fit', 'fit in my', 'how wide',
+                        'how deep', 'how tall', 'how long', 'how small',
+                        'footprint', 'floor space', 'space required'
+                    ];
+                    
+                    const isDimensionQuery = dimensionPatterns.some(p => msgLower.includes(p));
+                    
+                    if (isDimensionQuery) {
+                        console.log(`📐 Fallback: Detected dimension query`);
+                        
+                        // Try to identify which product they're asking about
+                        const productsShown = session.commercial.productsShown || [];
+                        let productFound = null;
+                        
+                        // Check for product names in the message
+                        const productFamilies = ['marbella', 'stockholm', 'palma', 'faro', 'lima', 'harbour', 
+                                                  'santorini', 'cora', 'bayswater', 'cove', 'oxford', 'chesterton',
+                                                  'kiki', 'linden', 'malaga', 'alanne', 'lark', 'havana', 'sloane'];
+                        
+                        for (const family of productFamilies) {
+                            if (msgLower.includes(family)) {
+                                productFound = findProductByName(family, productsShown);
+                                break;
+                            }
+                        }
+                        
+                        // If no specific product mentioned, try the most recently shown
+                        if (!productFound && productsShown.length > 0) {
+                            const lastShown = productsShown[productsShown.length - 1];
+                            productFound = { sku: lastShown, product: productIndex.bySku[lastShown], source: 'last_shown' };
+                            console.log(`📐 Using last shown product: ${lastShown}`);
+                        }
+                        
+                        if (productFound) {
+                            const includeBoxDimensions = session.context.queryType === 'box_dimensions';
+                            
+                            aiOutput = {
+                                intent: 'dimension_query',
+                                product_sku: productFound.sku,
+                                include_box_dimensions: includeBoxDimensions,
+                                response_text: ''
+                            };
+                            console.log(`✅ Fallback: Dimension query for ${productFound.sku}`);
+                        } else {
+                            aiOutput = {
+                                intent: 'clarification',
+                                response_text: "I'd be happy to help with dimensions! Which product would you like to know the size of?"
+                            };
+                            console.log(`❓ Fallback: Asking which product for dimensions`);
+                        }
+                    }
+                }
+
+                  // PRIORITY 3: Check if customer is asking a general QUESTION
+                if (!aiOutput) {
+                    const questionPatterns = [
+                        'what happens', 'what if', 'what about', 'how do', 'how long',
+                        'can i', 'can you', 'do you', 'does it', 'will it', 'is it',
+                        'warranty', 'guarantee', 'return', 'refund', 'delivery', 'shipping',
+                        'wear', 'tear', 'break', 'damage', 'repair', 'maintenance', 'care',
+                        'clean', 'weather', 'rain', 'winter', 'made of', 'made from'
+                    ];
+                    
+                    const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
+                    
+                    if (isAskingQuestion) {
+                        console.log(`❓ Fallback: Detected question`);
+                        
+                        let helpfulResponse = "";
+                        
+                        if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
+                            helpfulResponse = "Great question! Our furniture is built to last:\n\n**Within warranty (2 years for rattan):** We repair or replace manufacturing defects free of charge.\n\n**After warranty:** Minor damage can often be repaired. We stock spare parts and replacement cushion covers.\n\n**Maximise lifespan:** Use a protective cover - extends life by 3-5 years!\n\nWould you like details on protective covers?";
+                        } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
+                            helpfulResponse = "Our warranty coverage:\n\n• **Rattan:** 2 years structural + colour\n• **Aluminium:** 10 years corrosion\n• **Teak:** 5 years structural\n• **Cushions:** 1 year\n\nAnything specific you'd like to know?";
+                        } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
+                            helpfulResponse = "We offer fast UK delivery:\n\n• 3-5 working days\n• Free on orders over £500\n• Tracking sent when shipped\n\nAnything else I can help with?";
+                        } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
+                            helpfulResponse = "Care is easy:\n\n• **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n• **Aluminium:** Just soapy water occasionally.\n• **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
+                        } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
+                            helpfulResponse = "Our furniture handles weather well:\n\n• **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\n• **Aluminium:** 100% rust-proof, year-round outdoor use.\n• **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
+                        } else {
+                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n• Warranty info\n• Delivery details\n• Care and maintenance\n• Product dimensions and specifications\n\nWhat would you like to know?";
+                        }
+                        
+                        aiOutput = {
+                            intent: 'question_answer',
+                            response_text: helpfulResponse
+                        };
+                    }
+                }
+
+
+
                 
                 // PRIORITY 3: Show products if we have context
                 if (!aiOutput && hasWhitelist && hasContext) {
