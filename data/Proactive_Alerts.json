@@ -1,19 +1,19 @@
 {
-  "dateGenerated": "2026-01-06T03:55:44.917Z",
+  "dateGenerated": "2026-01-07T03:55:32.347Z",
   "proactiveAlerts": [
     {
       "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4230",
-      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Order Recommendation).",
+      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Direct Assignment).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
     {
-      "alertType": "⚠️ Inventory for Pre-Order (Ringfence)",
+      "alertType": "✅ PO Tag Confirmed",
       "skuOrOrderId": "4229",
-      "issue": "SKU PALMA-CUSHION-BOX (Order 4229, associated with PO 16/2026) is in stock (10 units). Item itself has no PO in Gwen.",
-      "recommendedAction": "Ringfence 10 units of SKU PALMA-CUSHION-BOX from inventory to await arrival of PO 16/2026. Do NOT book for delivery yet.",
-      "riskLevel": "High"
+      "issue": "SKU PALMA-CUSHION-BOX associated with PO 16/2026. (Source: Direct Assignment).",
+      "recommendedAction": "No action needed unless this association is incorrect.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -30,11 +30,11 @@
       "riskLevel": "Medium"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4226",
-      "issue": "SKU STOCKHOLM-CHAISE-LOUNGE (Order 4226) is available in warehouse (223 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -44,25 +44,18 @@
       "riskLevel": "Medium"
     },
     {
-      "alertType": "✅ PO Tag Confirmed",
-      "skuOrOrderId": "4224",
-      "issue": "SKU STOCKHOLM-LOUNGE-SET associated with PO 15/2026. (Source: Direct Assignment).",
-      "recommendedAction": "No action needed unless this association is incorrect.",
+      "alertType": "✅ NO ISSUES",
+      "skuOrOrderId": "4223",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4223",
-      "issue": "SKU STOCKHOLM-CHAISE-LOUNGE (Order 4223) is available in warehouse (223 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
-    },
-    {
-      "alertType": "✅ Inventory in Warehouse",
-      "skuOrOrderId": "4223",
-      "issue": "SKU STOCKHOLM-CHAISE-COVER (Order 4223) is available in warehouse (43 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -233,18 +226,18 @@
       "riskLevel": "Medium"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4204",
-      "issue": "SKU CHESTERTON-COVER (Order 4204) is available in warehouse (205 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4204",
-      "issue": "SKU MALAGA-LOUNGE-SET (Order 4204) is available in warehouse (10 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -261,18 +254,18 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4201",
-      "issue": "SKU SANTORINI-COVER (Order 4201) is available in warehouse (29 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4201",
-      "issue": "SKU SANTORINI-GREY (Order 4201) is available in warehouse (39 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -688,11 +681,25 @@
       "riskLevel": "Medium"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4152",
-      "issue": "SKU FARO-LOUNGE-SET (Order 4152) is available in warehouse (10 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ NO ISSUES",
+      "skuOrOrderId": "4152",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ NO ISSUES",
+      "skuOrOrderId": "4152",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ Inventory in Warehouse",
@@ -751,11 +758,18 @@
       "riskLevel": "Medium"
     },
     {
-      "alertType": "✅ Inventory in Warehouse",
+      "alertType": "✅ NO ISSUES",
       "skuOrOrderId": "4143",
-      "issue": "SKU FARO-LOUNGE-SET (Order 4143) is available in warehouse (10 units). No PO assigned to item.",
-      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
-      "riskLevel": "Medium"
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "✅ NO ISSUES",
+      "skuOrOrderId": "4143",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
+      "riskLevel": "Low"
     },
     {
       "alertType": "✅ NO ISSUES",
@@ -25798,11 +25812,69 @@
     },
     {
       "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4209",
-      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 1 days.",
+      "skuOrOrderId": "4212",
+      "issue": "Order (SLA Start from JOB date: 25/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 23/12/2025.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 1,
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "PALMA-COVER",
+          "name": "Palma Custom-Fitted Furniture Cover",
+          "qty": 1
+        },
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "name": "Palma Grey Corner Rattan Casual Garden Dining and Lounge Set 9 Seater",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12207524053324"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4212",
+      "issue": "Order (SLA Start from JOB date: 25/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 23/12/2025.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "PALMA-COVER",
+          "name": "Palma Custom-Fitted Furniture Cover",
+          "qty": 1
+        },
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "name": "Palma Grey Corner Rattan Casual Garden Dining and Lounge Set 9 Seater",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12207524053324"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4211",
+      "issue": "Order (SLA Start from JOB date: 25/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 23/12/2025.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "SANTORINI-COVER",
+          "name": "Santorini Custom-Fitted Furniture Cover",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12206980071756"
+    },
+    {
+      "alertType": "🚧 Potential Delivery Delay",
+      "skuOrOrderId": "4209",
+      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 2 days.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 2,
       "items": [
         {
           "sku": "OLIVIA-SICILY-8S-DINING",
@@ -25815,10 +25887,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4208",
-      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 1 days.",
+      "issue": "Order (SLA Start from JOB date: 19/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 17/12/2025. Overdue by: 2 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 1,
+      "overdueByDays": 2,
       "items": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
@@ -25831,10 +25903,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4205",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 4 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 3,
+      "overdueByDays": 4,
       "items": [
         {
           "sku": "SANTORINI-COVER",
@@ -25846,53 +25918,11 @@
     },
     {
       "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4204",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
-      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
-      "riskLevel": "High",
-      "overdueByDays": 3,
-      "items": [
-        {
-          "sku": "CHESTERTON-COVER",
-          "name": "Chesterton Custom-Fitted Furniture Cover",
-          "qty": 1
-        },
-        {
-          "sku": "MALAGA-LOUNGE-SET",
-          "name": "Chesterton Grey 5 Seater Corner Rattan Garden Sofa Lounge Set",
-          "qty": 1
-        }
-      ],
-      "adminOrderUrl": "https://admin.shopify.com/orders/12189064823116"
-    },
-    {
-      "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4204",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
-      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
-      "riskLevel": "High",
-      "overdueByDays": 3,
-      "items": [
-        {
-          "sku": "CHESTERTON-COVER",
-          "name": "Chesterton Custom-Fitted Furniture Cover",
-          "qty": 1
-        },
-        {
-          "sku": "MALAGA-LOUNGE-SET",
-          "name": "Chesterton Grey 5 Seater Corner Rattan Garden Sofa Lounge Set",
-          "qty": 1
-        }
-      ],
-      "adminOrderUrl": "https://admin.shopify.com/orders/12189064823116"
-    },
-    {
-      "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4203",
-      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 3 days.",
+      "issue": "Order (SLA Start from JOB date: 17/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/12/2025. Overdue by: 4 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 3,
+      "overdueByDays": 4,
       "items": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
@@ -25904,53 +25934,11 @@
     },
     {
       "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4201",
-      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 4 days.",
-      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
-      "riskLevel": "High",
-      "overdueByDays": 4,
-      "items": [
-        {
-          "sku": "SANTORINI-COVER",
-          "name": "Santorini Custom-Fitted Furniture Cover",
-          "qty": 1
-        },
-        {
-          "sku": "SANTORINI-GREY",
-          "name": "Santorini Grey 4 Seater Modular Aluminium Lounge Set with Side Cushions",
-          "qty": 1
-        }
-      ],
-      "adminOrderUrl": "https://admin.shopify.com/orders/12183376593228"
-    },
-    {
-      "alertType": "🚧 Potential Delivery Delay",
-      "skuOrOrderId": "4201",
-      "issue": "Order (SLA Start from JOB date: 16/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 14/12/2025. Overdue by: 4 days.",
-      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
-      "riskLevel": "High",
-      "overdueByDays": 4,
-      "items": [
-        {
-          "sku": "SANTORINI-COVER",
-          "name": "Santorini Custom-Fitted Furniture Cover",
-          "qty": 1
-        },
-        {
-          "sku": "SANTORINI-GREY",
-          "name": "Santorini Grey 4 Seater Modular Aluminium Lounge Set with Side Cushions",
-          "qty": 1
-        }
-      ],
-      "adminOrderUrl": "https://admin.shopify.com/orders/12183376593228"
-    },
-    {
-      "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4196",
-      "issue": "Order (SLA Start from JOB date: 13/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/12/2025. Overdue by: 6 days.",
+      "issue": "Order (SLA Start from JOB date: 13/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/12/2025. Overdue by: 7 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 6,
+      "overdueByDays": 7,
       "items": [
         {
           "sku": "MARBELLA-COVER",
@@ -25963,10 +25951,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4175",
-      "issue": "Order (SLA Start from JOB date: 03/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 01/12/2025. Overdue by: 13 days.",
+      "issue": "Order (SLA Start from JOB date: 03/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 01/12/2025. Overdue by: 14 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 13,
+      "overdueByDays": 14,
       "items": [
         {
           "sku": "MALAGA-LOUNGE-SET",
@@ -25979,10 +25967,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4167",
-      "issue": "Order (SLA Start from JOB date: 02/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 14 days.",
+      "issue": "Order (SLA Start from JOB date: 02/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 15 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 14,
+      "overdueByDays": 15,
       "items": [
         {
           "sku": "STOCKHOLM-CORNER-COVER",
@@ -25995,10 +25983,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "4151",
-      "issue": "Order (SLA Start from JOB date: 27/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 25/11/2025. Overdue by: 17 days.",
+      "issue": "Order (SLA Start from JOB date: 27/11/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 25/11/2025. Overdue by: 18 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 17,
+      "overdueByDays": 18,
       "items": [
         {
           "sku": "PALMA-COVER",
@@ -26011,10 +25999,10 @@
     {
       "alertType": "🚧 Potential Delivery Delay",
       "skuOrOrderId": "3945",
-      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 71 days.",
+      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 72 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 71,
+      "overdueByDays": 72,
       "items": [
         {
           "sku": "HAVANA-8S",
