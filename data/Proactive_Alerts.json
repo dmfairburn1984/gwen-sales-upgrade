@@ -1,6 +1,27 @@
 {
-  "dateGenerated": "2026-01-11T03:55:56.202Z",
+  "dateGenerated": "2026-01-12T03:55:40.451Z",
   "proactiveAlerts": [
+    {
+      "alertType": "✅ Inventory in Warehouse",
+      "skuOrOrderId": "4242",
+      "issue": "SKU MALAGA-COVER-BUNDLE (Order 4242) is available in warehouse (10 units). No PO assigned to item.",
+      "recommendedAction": "Move to tag 'delivery booking in progress'. Consider reserving stock.",
+      "riskLevel": "Medium"
+    },
+    {
+      "alertType": "❗ High-Risk Order Alert",
+      "skuOrOrderId": "4241",
+      "issue": "No assigned PO for SKU PALMA-CUSHION BOX-BUNDLE, no recommended PO for order, and SKU not available on any open POs or in inventory.",
+      "recommendedAction": "Urgently verify order, check future POs, or contact customer.",
+      "riskLevel": "High"
+    },
+    {
+      "alertType": "✅ PO Tag Confirmed",
+      "skuOrOrderId": "4240",
+      "issue": "SKU SORRENTO-7S-CNR-BEIGE associated with PO 21/2026. (Source: Order Recommendation).",
+      "recommendedAction": "No action needed unless this association is incorrect.",
+      "riskLevel": "Low"
+    },
     {
       "alertType": "❗ High-Risk Order Alert",
       "skuOrOrderId": "4239",
