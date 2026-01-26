@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-25T08:29:54.846Z",
+    "generatedAt": "2026-01-26T08:29:47.055Z",
     "version": "3.2",
-    "processingTimeSeconds": 14.614,
-    "totalLineItemsInData": 4024,
-    "fulfilledOrdersSkipped": 3087,
+    "processingTimeSeconds": 10.119,
+    "totalLineItemsInData": 4031,
+    "fulfilledOrdersSkipped": 3088,
     "refundedOrdersSkipped": 458,
-    "activeOrdersProcessed": 95,
+    "activeOrdersProcessed": 100,
     "arrivedPOs": [
       "13/2026",
       "14/2026"
@@ -375,8 +375,8 @@
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
           "tagMatch": false,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 18/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
         }
       ],
       "overallStatus": "allocated-cross-po",
@@ -549,8 +549,8 @@
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
           "tagMatch": false,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 18/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
         }
       ],
       "overallStatus": "allocated-cross-po",
@@ -977,8 +977,8 @@
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
           "tagMatch": false,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 18/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
         }
       ],
       "overallStatus": "allocated-cross-po",
@@ -1236,43 +1236,6 @@
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4259",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -3605,14 +3568,219 @@
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4330",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "37/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-03-20T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET-BEIGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "37/2026",
+          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
+          "tagMatch": "",
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 37/2026.",
+          "riskLevel": "Low-Medium"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4331",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 206,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4332",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 36,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4333",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 184,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4334",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "OXFORD-5S-CNR-BEIGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "tagMatch": "",
+          "currentInventory": 0,
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4335",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "tagMatch": "",
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 17/2026.",
+          "riskLevel": "Low-Medium"
+        },
+        {
+          "sku": "PALMA-CUSHION BOX-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": "",
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-CUSHION-BOX",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "16/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": "",
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 16/2026.",
+              "riskLevel": "Low-Medium"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
-    "totalActiveOrders": 95,
+    "totalActiveOrders": 100,
     "tagChangesRequired": 4,
     "noStockOrders": 6,
-    "inventoryOrders": 31,
-    "crossPOOrders": 45,
+    "inventoryOrders": 34,
+    "crossPOOrders": 47,
     "ordersRequiringTagChange": [
       {
         "orderNumber": "4127",
