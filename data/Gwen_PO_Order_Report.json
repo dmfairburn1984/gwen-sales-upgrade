@@ -1,12 +1,13 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-27T08:29:46.529Z",
-    "version": "3.2",
-    "processingTimeSeconds": 9.51,
-    "totalLineItemsInData": 4039,
-    "fulfilledOrdersSkipped": 3100,
+    "generatedAt": "2026-01-27T15:08:38.033Z",
+    "version": "3.4",
+    "processingTimeSeconds": 10.181,
+    "totalLineItemsInData": 4043,
+    "fulfilledOrdersSkipped": 3103,
     "refundedOrdersSkipped": 458,
     "activeOrdersProcessed": 97,
+    "deliveryBookingInProgressOrders": 38,
     "arrivedPOs": [
       "13/2026",
       "14/2026"
@@ -36,7 +37,7 @@
       "30/2026",
       "31/2026"
     ],
-    "note": "Fulfilled and refunded orders are EXCLUDED from this report. Only active orders shown."
+    "note": "Fulfilled and refunded orders are EXCLUDED. 'Delivery Booking in Progress' orders are protected from tag change suggestions."
   },
   "orders": [
     {
@@ -44,6 +45,8 @@
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -73,6 +76,8 @@
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -101,7 +106,9 @@
       "orderNumber": "1370",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "16/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -119,7 +126,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 16/2026.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -129,8 +136,10 @@
     {
       "orderNumber": "2704",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -147,8 +156,8 @@
           "riskLevel": "High"
         }
       ],
-      "overallStatus": "no-stock",
-      "actionRequired": "🚨 URGENT: No stock available. Contact customer immediately.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -160,6 +169,8 @@
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -187,8 +198,10 @@
     {
       "orderNumber": "3151",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -205,8 +218,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -216,8 +229,10 @@
     {
       "orderNumber": "3945",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -234,8 +249,8 @@
           "riskLevel": "High"
         }
       ],
-      "overallStatus": "no-stock",
-      "actionRequired": "🚨 URGENT: No stock available. Contact customer immediately.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -247,6 +262,8 @@
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -276,6 +293,8 @@
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -305,6 +324,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -334,6 +355,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -363,6 +386,8 @@
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -391,7 +416,9 @@
       "orderNumber": "4131",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "15/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -409,7 +436,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 15/2026 for accurate tracking. Stock from different PO: STOCKHOLM-LOUNGE-SET → 15/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -421,6 +448,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -450,6 +479,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -479,6 +510,8 @@
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -506,8 +539,10 @@
     {
       "orderNumber": "4174",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -544,8 +579,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -557,6 +592,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -586,6 +623,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -615,6 +654,8 @@
       "orderTagPO": "22/2026",
       "suggestedTagPO": "22/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-09T23:00:00.000Z",
       "lineItems": [
@@ -678,21 +719,23 @@
     {
       "orderNumber": "4197",
       "orderTagPO": "34/2026",
-      "suggestedTagPO": "37/2026",
+      "suggestedTagPO": "34/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-20T00:00:00.000Z",
+      "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET-BEIGE",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "37/2026",
-          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
-          "tagMatch": false,
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
+          "tagMatch": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 37/2026.",
+          "recommendedAction": "Stock from PO 34/2026.",
           "riskLevel": "Low-Medium"
         },
         {
@@ -708,7 +751,7 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-mixed",
+      "overallStatus": "allocated-inventory",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-04-19T23:00:00.000Z",
       "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
@@ -721,6 +764,8 @@
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -750,6 +795,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -779,6 +826,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -820,6 +869,8 @@
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -849,6 +900,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -878,6 +931,8 @@
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -905,8 +960,10 @@
     {
       "orderNumber": "4238",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -923,8 +980,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -936,6 +993,8 @@
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -963,8 +1022,10 @@
     {
       "orderNumber": "4244",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1012,8 +1073,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1025,6 +1086,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1065,7 +1128,9 @@
       "orderNumber": "4257",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1145,7 +1210,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026, FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -1155,8 +1220,10 @@
     {
       "orderNumber": "4260",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1192,8 +1259,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1205,6 +1272,8 @@
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1256,8 +1325,10 @@
     {
       "orderNumber": "4263",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1294,8 +1365,8 @@
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1307,6 +1378,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1334,8 +1407,10 @@
     {
       "orderNumber": "4266",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -1352,8 +1427,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1365,6 +1440,8 @@
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1390,47 +1467,12 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4270",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4271",
       "orderTagPO": "15/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1468,7 +1510,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -1480,6 +1522,8 @@
       "orderTagPO": "36/2026",
       "suggestedTagPO": "36/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
@@ -1507,8 +1551,10 @@
     {
       "orderNumber": "4281",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1533,8 +1579,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1544,8 +1590,10 @@
     {
       "orderNumber": "4284",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1581,8 +1629,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1592,8 +1640,10 @@
     {
       "orderNumber": "4285",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1618,8 +1668,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1629,8 +1679,10 @@
     {
       "orderNumber": "4287",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1666,8 +1718,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1677,8 +1729,10 @@
     {
       "orderNumber": "4288",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -1707,8 +1761,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1719,7 +1773,9 @@
       "orderNumber": "4289",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1768,7 +1824,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -1778,8 +1834,10 @@
     {
       "orderNumber": "4291",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -1796,8 +1854,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1808,7 +1866,9 @@
       "orderNumber": "4292",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1845,7 +1905,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -1855,8 +1915,10 @@
     {
       "orderNumber": "4293",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1892,37 +1954,8 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4294",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 197,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -1933,7 +1966,9 @@
       "orderNumber": "4295",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -1970,7 +2005,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -1981,7 +2016,9 @@
       "orderNumber": "4296",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2018,7 +2055,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2029,7 +2066,9 @@
       "orderNumber": "4297",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2066,7 +2105,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2077,7 +2116,9 @@
       "orderNumber": "4298",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2125,7 +2166,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2136,7 +2177,9 @@
       "orderNumber": "4299",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2184,7 +2227,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2195,7 +2238,9 @@
       "orderNumber": "4301",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "15/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2213,7 +2258,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 15/2026 for accurate tracking. Stock from different PO: STOCKHOLM-LOUNGE-SET → 15/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2224,7 +2269,9 @@
       "orderNumber": "4302",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2261,7 +2308,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2272,7 +2319,9 @@
       "orderNumber": "4304",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2309,7 +2358,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2319,8 +2368,10 @@
     {
       "orderNumber": "4305",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2337,8 +2388,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2349,7 +2400,9 @@
       "orderNumber": "4306",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2386,7 +2439,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2396,8 +2449,10 @@
     {
       "orderNumber": "4307",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2414,8 +2469,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2425,8 +2480,10 @@
     {
       "orderNumber": "4308",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2443,8 +2500,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2454,8 +2511,10 @@
     {
       "orderNumber": "4309",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2472,8 +2531,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2483,8 +2542,10 @@
     {
       "orderNumber": "4310",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2501,8 +2562,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2512,8 +2573,10 @@
     {
       "orderNumber": "4311",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2542,8 +2605,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2553,10 +2616,12 @@
     {
       "orderNumber": "4312",
       "orderTagPO": "34/2026",
-      "suggestedTagPO": "37/2026",
+      "suggestedTagPO": "34/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-20T00:00:00.000Z",
+      "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
@@ -2575,15 +2640,15 @@
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "37/2026",
-          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
-          "tagMatch": false,
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
+          "tagMatch": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 37/2026.",
+          "recommendedAction": "Stock from PO 34/2026.",
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-mixed",
+      "overallStatus": "allocated-inventory",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-04-19T23:00:00.000Z",
       "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
@@ -2594,8 +2659,10 @@
     {
       "orderNumber": "4313",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2612,8 +2679,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2623,8 +2690,10 @@
     {
       "orderNumber": "4314",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2641,8 +2710,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2652,8 +2721,10 @@
     {
       "orderNumber": "4315",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2682,8 +2753,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2694,7 +2765,9 @@
       "orderNumber": "4316",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2731,7 +2804,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2740,10 +2813,12 @@
     },
     {
       "orderNumber": "4317",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "17/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
+      "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -2757,7 +2832,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": false,
+              "tagMatch": "",
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -2768,7 +2843,7 @@
               "allocationSource": "inventory",
               "stockSourcePO": null,
               "stockSourceArrival": "",
-              "tagMatch": false,
+              "tagMatch": "",
               "currentInventory": 70,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
@@ -2776,21 +2851,47 @@
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
+        },
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 178,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        },
+        {
+          "sku": "STOCKHOLM-CORNER-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 92,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "2026-02-03T00:00:00.000Z",
-      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
-      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4318",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2807,8 +2908,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2818,8 +2919,10 @@
     {
       "orderNumber": "4319",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2836,8 +2939,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2847,8 +2950,10 @@
     {
       "orderNumber": "4320",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2865,8 +2970,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2877,7 +2982,9 @@
       "orderNumber": "4321",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2914,7 +3021,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -2924,8 +3031,10 @@
     {
       "orderNumber": "4322",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -2942,8 +3051,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -2954,7 +3063,9 @@
       "orderNumber": "4323",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -2991,7 +3102,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -3001,8 +3112,10 @@
     {
       "orderNumber": "4325",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3019,8 +3132,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3030,8 +3143,10 @@
     {
       "orderNumber": "4326",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3048,8 +3163,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3060,7 +3175,9 @@
       "orderNumber": "4327",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -3097,7 +3214,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -3107,8 +3224,10 @@
     {
       "orderNumber": "4328",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3125,8 +3244,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3137,7 +3256,9 @@
       "orderNumber": "4329",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -3174,7 +3295,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -3184,25 +3305,27 @@
     {
       "orderNumber": "4330",
       "orderTagPO": "34/2026",
-      "suggestedTagPO": "37/2026",
+      "suggestedTagPO": "34/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-20T00:00:00.000Z",
+      "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET-BEIGE",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "37/2026",
-          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
-          "tagMatch": false,
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
+          "tagMatch": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 37/2026.",
+          "recommendedAction": "Stock from PO 34/2026.",
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "fully-allocated",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-04-19T23:00:00.000Z",
       "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
@@ -3213,8 +3336,10 @@
     {
       "orderNumber": "4331",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3231,8 +3356,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3242,8 +3367,10 @@
     {
       "orderNumber": "4332",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3260,8 +3387,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3271,8 +3398,10 @@
     {
       "orderNumber": "4333",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3289,8 +3418,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3302,6 +3431,8 @@
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -3330,7 +3461,9 @@
       "orderNumber": "4335",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -3379,7 +3512,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -3390,7 +3523,9 @@
       "orderNumber": "4336",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
@@ -3427,7 +3562,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
@@ -3438,7 +3573,9 @@
       "orderNumber": "4337",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -3456,7 +3593,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 18/2026.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3467,7 +3604,9 @@
       "orderNumber": "4338",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -3485,7 +3624,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 18/2026.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3495,8 +3634,203 @@
     {
       "orderNumber": "4339",
       "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 178,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4340",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 197,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4341",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4342",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "cross-po",
+      "isDeliveryBookingInProgress": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4343",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "16/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "tagMatch": true,
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 16/2026.",
+          "riskLevel": "Low-Medium"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4344",
+      "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "",
       "lineItems": [
@@ -3522,44 +3856,17 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4340",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 197,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4341",
+      "orderNumber": "4345",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
       "taggedToArrivedPO": "",
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
-          "sku": "PALMA-COVER-BUNDLE",
+          "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
           "isBundle": true,
           "bundleComponents": [
@@ -3575,100 +3882,23 @@
               "riskLevel": "Low-Medium"
             },
             {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "currentInventory": 70,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4342",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
+              "sku": "PALMA-CUSHION-BOX",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "17/2026",
+              "stockSourcePO": "16/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
               "tagMatch": "",
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
+              "recommendedAction": "Stock from PO 16/2026.",
               "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "currentInventory": 70,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4343",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "16/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-CUSHION-BOX",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "16/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 16/2026.",
-          "riskLevel": "Low-Medium"
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 17/2026.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -3678,28 +3908,207 @@
   ],
   "summary": {
     "totalActiveOrders": 97,
-    "tagChangesRequired": 0,
-    "noStockOrders": 5,
-    "inventoryOrders": 32,
-    "crossPOOrders": 15,
-    "ordersRequiringTagChange": [],
+    "tagChangesRequired": 27,
+    "deliveryBookingInProgress": 38,
+    "noStockOrders": 3,
+    "inventoryOrders": 46,
+    "crossPOOrders": 10,
+    "ordersRequiringTagChange": [
+      {
+        "orderNumber": "1370",
+        "currentTag": "NO TAG",
+        "suggestedTag": "16/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 16/2026."
+      },
+      {
+        "orderNumber": "4131",
+        "currentTag": "16/2026",
+        "suggestedTag": "15/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 15/2026 for accurate tracking. Stock from different PO: STOCKHOLM-LOUNGE-SET → 15/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4257",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026, FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4271",
+        "currentTag": "15/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4289",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4292",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4295",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4296",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4297",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4298",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4299",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4301",
+        "currentTag": "16/2026",
+        "suggestedTag": "15/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 15/2026 for accurate tracking. Stock from different PO: STOCKHOLM-LOUNGE-SET → 15/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4302",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4304",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4306",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4316",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4321",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4323",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4327",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4329",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4335",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4336",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4337",
+        "currentTag": "NO TAG",
+        "suggestedTag": "18/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 18/2026."
+      },
+      {
+        "orderNumber": "4338",
+        "currentTag": "NO TAG",
+        "suggestedTag": "18/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 18/2026."
+      },
+      {
+        "orderNumber": "4341",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4342",
+        "currentTag": "16/2026",
+        "suggestedTag": "17/2026",
+        "reason": "cross-po",
+        "action": "Update tag to 17/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 17/2026. No delay to customer."
+      },
+      {
+        "orderNumber": "4345",
+        "currentTag": "NO TAG",
+        "suggestedTag": "17/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 17/2026."
+      }
+    ],
     "noStockOrdersList": [
       {
         "orderNumber": "1365",
         "skus": [
           "MARBELLA-COVER"
-        ]
-      },
-      {
-        "orderNumber": "2704",
-        "skus": [
-          "PALMA-CUSHION-COVERS-GREY"
-        ]
-      },
-      {
-        "orderNumber": "3945",
-        "skus": [
-          "HAVANA-8S"
         ]
       },
       {

@@ -1,17 +1,17 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-24T17:27:22.344Z",
+    "generatedAt": "2026-01-27T14:45:27.114Z",
     "version": "1.1",
-    "processingTimeMs": 9673,
-    "totalOrders": 92,
-    "totalLineItems": 138,
-    "fulfilledOrdersSkipped": 3729,
+    "processingTimeMs": 9886,
+    "totalOrders": 97,
+    "totalLineItems": 149,
+    "fulfilledOrdersSkipped": 3744,
     "refundedOrdersSkipped": 180,
     "arrivedPORingfenced": 0,
-    "crossPOAllocations": 29,
-    "inventoryRingfenceItems": 35,
-    "noStockItems": 9,
-    "bundlesExpanded": 31,
+    "crossPOAllocations": 24,
+    "inventoryRingfenceItems": 65,
+    "noStockItems": 8,
+    "bundlesExpanded": 33,
     "arrivedPOs": [
       "13/2026",
       "14/2026"
@@ -54,8 +54,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 206,
-          "inventoryAfterAllocation": 205,
+          "currentInventory": 197,
+          "inventoryAfterAllocation": 196,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -102,7 +102,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 77,
+          "availableAfterAllocation": 73,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
@@ -146,8 +146,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 205,
-          "inventoryAfterAllocation": 204,
+          "currentInventory": 196,
+          "inventoryAfterAllocation": 195,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -169,8 +169,8 @@
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 36,
-          "inventoryAfterAllocation": 35,
+          "currentInventory": 35,
+          "inventoryAfterAllocation": 34,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -305,9 +305,9 @@
     },
     {
       "orderNumber": "4127",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
         {
@@ -317,14 +317,13 @@
           "stockSourcePO": "18/2026",
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
           "plannedOnSourcePO": 5,
-          "availableAfterAllocation": 0,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "status": "overallocated",
+          "note": "⚠️ Overallocated - review stock levels",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Latest stock source arrives after current tag date.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -354,31 +353,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4151",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 61,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4157",
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
@@ -400,29 +374,6 @@
       ],
       "overallStatus": "fully-allocated",
       "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4167",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 93,
-          "inventoryAfterAllocation": 92,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -453,9 +404,9 @@
     },
     {
       "orderNumber": "4169",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
         {
@@ -470,8 +421,8 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Latest stock source arrives after current tag date.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -489,7 +440,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 35,
+          "availableAfterAllocation": 33,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -498,18 +449,16 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 60,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 70,
+          "inventoryAfterAllocation": 69,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -613,67 +562,43 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4196",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "MARBELLA-COVER",
-          "quantity": 1,
-          "allocationSource": "none",
-          "currentInventory": 0,
-          "status": "unallocated",
-          "note": "🚨 No stock available on any future PO",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "no-stock",
-      "actionRequired": "🚨 URGENT: No stock for MARBELLA-COVER. Contact customer.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4197",
-      "orderTagPO": "19/2026",
-      "suggestedTagPO": "37/2026",
+      "orderTagPO": "34/2026",
+      "suggestedTagPO": "34/2026",
       "tagChangeRequired": false,
-      "shipDate": "2026-03-20T00:00:00.000Z",
+      "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET-BEIGE",
           "quantity": 1,
           "allocationSource": "po",
-          "stockSourcePO": "37/2026",
-          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 43,
+          "availableAfterAllocation": 42,
           "status": "allocated",
-          "note": "Different PO from order tag",
+          "note": "",
           "isFromBundle": false
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 59,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 69,
+          "inventoryAfterAllocation": 68,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET-BEIGE → 37/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4199",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
@@ -685,7 +610,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 76,
+          "availableAfterAllocation": 72,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
@@ -770,7 +695,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 75,
+          "availableAfterAllocation": 71,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
@@ -808,9 +733,9 @@
     },
     {
       "orderNumber": "4237",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
         {
@@ -825,8 +750,8 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Latest stock source arrives after current tag date.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -841,8 +766,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 204,
-          "inventoryAfterAllocation": 203,
+          "currentInventory": 195,
+          "inventoryAfterAllocation": 194,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -855,9 +780,9 @@
     },
     {
       "orderNumber": "4240",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
         {
@@ -869,12 +794,12 @@
           "plannedOnSourcePO": 5,
           "availableAfterAllocation": 2,
           "status": "allocated",
-          "note": "Different PO from order tag",
+          "note": "",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Latest stock source arrives after current tag date.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -888,13 +813,11 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 58,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 68,
+          "inventoryAfterAllocation": 67,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         },
         {
@@ -904,7 +827,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 34,
+          "availableAfterAllocation": 32,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -917,15 +840,15 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 74,
+          "availableAfterAllocation": 70,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -974,13 +897,11 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 57,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 67,
+          "inventoryAfterAllocation": 66,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         },
         {
@@ -990,7 +911,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 33,
+          "availableAfterAllocation": 31,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1003,7 +924,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 32,
+          "availableAfterAllocation": 30,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1012,13 +933,11 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 56,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 66,
+          "inventoryAfterAllocation": 65,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         },
@@ -1029,41 +948,15 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 73,
+          "availableAfterAllocation": 69,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: PALMA-COVER → 17/2026, FARO-LOUNGE-SET → 17/2026, FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4259",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 31,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1081,7 +974,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 30,
+          "availableAfterAllocation": 29,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1090,42 +983,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 55,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 65,
+          "inventoryAfterAllocation": 64,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4261",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 184,
-          "inventoryAfterAllocation": 183,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1143,7 +1011,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 72,
+          "availableAfterAllocation": 68,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
@@ -1152,8 +1020,8 @@
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 35,
-          "inventoryAfterAllocation": 34,
+          "currentInventory": 34,
+          "inventoryAfterAllocation": 33,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -1162,8 +1030,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 203,
-          "inventoryAfterAllocation": 202,
+          "currentInventory": 194,
+          "inventoryAfterAllocation": 193,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -1188,7 +1056,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 29,
+          "availableAfterAllocation": 28,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1201,7 +1069,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 71,
+          "availableAfterAllocation": 67,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
@@ -1248,8 +1116,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 202,
-          "inventoryAfterAllocation": 201,
+          "currentInventory": 193,
+          "inventoryAfterAllocation": 192,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -1257,45 +1125,6 @@
       ],
       "overallStatus": "allocated-inventory",
       "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4267",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 28,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 54,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1325,71 +1154,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4269",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 27,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 53,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4270",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 26,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4271",
       "orderTagPO": "15/2026",
       "suggestedTagPO": "17/2026",
@@ -1403,7 +1167,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 25,
+          "availableAfterAllocation": 27,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1424,29 +1188,6 @@
       ],
       "overallStatus": "allocated-cross-po",
       "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4274",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 183,
-          "inventoryAfterAllocation": 182,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1473,30 +1214,70 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4278",
+      "orderNumber": "4281",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "shipDate": "",
+      "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
-          "sku": "STOCKHOLM-CORNER-BLACK",
+          "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 182,
-          "inventoryAfterAllocation": 181,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 26,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
-      "orderNumber": "4281",
+      "orderNumber": "4284",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 25,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 64,
+          "inventoryAfterAllocation": 63,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4285",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
@@ -1522,7 +1303,7 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4282",
+      "orderNumber": "4287",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
@@ -1544,123 +1325,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 52,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 63,
+          "inventoryAfterAllocation": 62,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4284",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 22,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 51,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4285",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 21,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4287",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 20,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 50,
-          "status": "allocated",
-          "note": "",
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1675,8 +1350,8 @@
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 34,
-          "inventoryAfterAllocation": 33,
+          "currentInventory": 33,
+          "inventoryAfterAllocation": 32,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -1685,8 +1360,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 201,
-          "inventoryAfterAllocation": 200,
+          "currentInventory": 192,
+          "inventoryAfterAllocation": 191,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -1711,7 +1386,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 19,
+          "availableAfterAllocation": 22,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1724,7 +1399,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 70,
+          "availableAfterAllocation": 66,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1733,18 +1408,16 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 49,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 62,
+          "inventoryAfterAllocation": 61,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1785,7 +1458,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 18,
+          "availableAfterAllocation": 21,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1798,7 +1471,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 69,
+          "availableAfterAllocation": 65,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1824,7 +1497,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 17,
+          "availableAfterAllocation": 20,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1833,42 +1506,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 48,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 61,
+          "inventoryAfterAllocation": 60,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4294",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 200,
-          "inventoryAfterAllocation": 199,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1886,7 +1534,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 16,
+          "availableAfterAllocation": 19,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1899,7 +1547,7 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 68,
+          "availableAfterAllocation": 64,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -1925,7 +1573,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 15,
+          "availableAfterAllocation": 18,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1934,19 +1582,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 47,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 60,
+          "inventoryAfterAllocation": 59,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1964,7 +1610,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 14,
+          "availableAfterAllocation": 17,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -1973,19 +1619,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 46,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 59,
+          "inventoryAfterAllocation": 58,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2003,7 +1647,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 13,
+          "availableAfterAllocation": 16,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -2012,13 +1656,11 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 45,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 58,
+          "inventoryAfterAllocation": 57,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         },
@@ -2029,15 +1671,15 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 67,
+          "availableAfterAllocation": 63,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2055,7 +1697,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 12,
+          "availableAfterAllocation": 15,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -2064,13 +1706,11 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 44,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 57,
+          "inventoryAfterAllocation": 56,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         },
@@ -2081,48 +1721,15 @@
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 66,
+          "availableAfterAllocation": 62,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4300",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 33,
-          "inventoryAfterAllocation": 32,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 199,
-          "inventoryAfterAllocation": 198,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-COVER, STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2165,7 +1772,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 11,
+          "availableAfterAllocation": 14,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -2174,19 +1781,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 43,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 56,
+          "inventoryAfterAllocation": 55,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2204,7 +1809,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 10,
+          "availableAfterAllocation": 13,
           "status": "allocated",
           "note": "Different PO from order tag",
           "isFromBundle": true,
@@ -2213,19 +1818,17 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 42,
-          "status": "allocated",
-          "note": "Different PO from order tag",
+          "allocationSource": "inventory",
+          "currentInventory": 55,
+          "inventoryAfterAllocation": 54,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026, PALMA-COVER → 17/2026. No delay to customer.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2240,8 +1843,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 198,
-          "inventoryAfterAllocation": 197,
+          "currentInventory": 191,
+          "inventoryAfterAllocation": 190,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2254,7 +1857,7 @@
     },
     {
       "orderNumber": "4306",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
@@ -2266,28 +1869,26 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 9,
+          "availableAfterAllocation": 12,
           "status": "allocated",
-          "note": "",
+          "note": "Different PO from order tag",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 41,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 54,
+          "inventoryAfterAllocation": 53,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2302,8 +1903,8 @@
           "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 181,
-          "inventoryAfterAllocation": 180,
+          "currentInventory": 178,
+          "inventoryAfterAllocation": 177,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2325,8 +1926,8 @@
           "sku": "BRIDGETOWN-200-6S",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 19,
-          "inventoryAfterAllocation": 18,
+          "currentInventory": 18,
+          "inventoryAfterAllocation": 17,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2348,8 +1949,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 197,
-          "inventoryAfterAllocation": 196,
+          "currentInventory": 190,
+          "inventoryAfterAllocation": 189,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2371,8 +1972,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 196,
-          "inventoryAfterAllocation": 195,
+          "currentInventory": 189,
+          "inventoryAfterAllocation": 188,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2404,8 +2005,8 @@
           "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 180,
-          "inventoryAfterAllocation": 179,
+          "currentInventory": 177,
+          "inventoryAfterAllocation": 176,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2418,38 +2019,36 @@
     },
     {
       "orderNumber": "4312",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "37/2026",
+      "orderTagPO": "34/2026",
+      "suggestedTagPO": "34/2026",
       "tagChangeRequired": false,
-      "shipDate": "2026-03-20T00:00:00.000Z",
+      "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 40,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 53,
+          "inventoryAfterAllocation": 52,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         },
         {
           "sku": "FARO-LOUNGE-SET-BEIGE",
           "quantity": 1,
           "allocationSource": "po",
-          "stockSourcePO": "37/2026",
-          "stockSourceArrival": "2026-03-20T00:00:00.000Z",
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 42,
+          "availableAfterAllocation": 41,
           "status": "allocated",
           "note": "",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2464,8 +2063,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 195,
-          "inventoryAfterAllocation": 194,
+          "currentInventory": 188,
+          "inventoryAfterAllocation": 187,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2487,8 +2086,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 194,
-          "inventoryAfterAllocation": 193,
+          "currentInventory": 187,
+          "inventoryAfterAllocation": 186,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2510,8 +2109,8 @@
           "sku": "CHESTERTON-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 205,
-          "inventoryAfterAllocation": 204,
+          "currentInventory": 204,
+          "inventoryAfterAllocation": 203,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2520,8 +2119,8 @@
           "sku": "MALAGA-LOUNGE-SET",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 10,
-          "inventoryAfterAllocation": 9,
+          "currentInventory": 9,
+          "inventoryAfterAllocation": 8,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2534,7 +2133,7 @@
     },
     {
       "orderNumber": "4316",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
@@ -2546,28 +2145,26 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 8,
+          "availableAfterAllocation": 11,
           "status": "allocated",
-          "note": "",
+          "note": "Different PO from order tag",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 39,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 52,
+          "inventoryAfterAllocation": 51,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2585,7 +2182,7 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 7,
+          "availableAfterAllocation": 10,
           "status": "allocated",
           "note": "",
           "isFromBundle": true,
@@ -2594,19 +2191,37 @@
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 38,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 51,
+          "inventoryAfterAllocation": 50,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 176,
+          "inventoryAfterAllocation": 175,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        },
+        {
+          "sku": "STOCKHOLM-CORNER-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 89,
+          "inventoryAfterAllocation": 88,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER, STOCKHOLM-CORNER-BLACK, STOCKHOLM-CORNER-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2621,8 +2236,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 193,
-          "inventoryAfterAllocation": 192,
+          "currentInventory": 186,
+          "inventoryAfterAllocation": 185,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2636,25 +2251,23 @@
     {
       "orderNumber": "4319",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "NO STOCK",
       "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 37,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 50,
+          "inventoryAfterAllocation": 49,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2669,8 +2282,8 @@
           "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 179,
-          "inventoryAfterAllocation": 178,
+          "currentInventory": 175,
+          "inventoryAfterAllocation": 174,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2683,7 +2296,7 @@
     },
     {
       "orderNumber": "4321",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
@@ -2695,59 +2308,55 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 6,
+          "availableAfterAllocation": 9,
           "status": "allocated",
-          "note": "",
+          "note": "Different PO from order tag",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 36,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 49,
+          "inventoryAfterAllocation": 48,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4322",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "NO STOCK",
       "tagChangeRequired": false,
-      "shipDate": "2026-02-03T00:00:00.000Z",
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 35,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 48,
+          "inventoryAfterAllocation": 47,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4323",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
@@ -2759,51 +2368,26 @@
           "stockSourcePO": "17/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 5,
+          "availableAfterAllocation": 8,
           "status": "allocated",
-          "note": "",
+          "note": "Different PO from order tag",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 34,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 47,
+          "inventoryAfterAllocation": 46,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4324",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 192,
-          "inventoryAfterAllocation": 191,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2818,8 +2402,8 @@
           "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 178,
-          "inventoryAfterAllocation": 177,
+          "currentInventory": 174,
+          "inventoryAfterAllocation": 173,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2841,8 +2425,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 191,
-          "inventoryAfterAllocation": 190,
+          "currentInventory": 185,
+          "inventoryAfterAllocation": 184,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "isFromBundle": false
@@ -2852,54 +2436,581 @@
       "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4327",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 7,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "availableAfterAllocation": 61,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "Stock from different POs: FARO-LOUNGE-SET → 17/2026. No delay to customer.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4328",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 184,
+          "inventoryAfterAllocation": 183,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4329",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 6,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 46,
+          "inventoryAfterAllocation": 45,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4330",
+      "orderTagPO": "34/2026",
+      "suggestedTagPO": "34/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-04-19T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET-BEIGE",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 40,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4331",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 183,
+          "inventoryAfterAllocation": 182,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4332",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 32,
+          "inventoryAfterAllocation": 31,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-COVER",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4333",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 173,
+          "inventoryAfterAllocation": 172,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4334",
+      "orderTagPO": "18/2026",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "OXFORD-5S-CNR-BEIGE",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "plannedOnSourcePO": 5,
+          "status": "overallocated",
+          "note": "⚠️ Overallocated - review stock levels",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4335",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 45,
+          "inventoryAfterAllocation": 44,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        },
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 5,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "availableAfterAllocation": 60,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4336",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 4,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 44,
+          "inventoryAfterAllocation": 43,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4337",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "HW-MARB-1S-A",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "plannedOnSourcePO": 1,
+          "status": "overallocated",
+          "note": "⚠️ Overallocated - review stock levels",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4338",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "HW-MARB-1S-A",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "plannedOnSourcePO": 1,
+          "status": "overallocated",
+          "note": "⚠️ Overallocated - review stock levels",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4339",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 172,
+          "inventoryAfterAllocation": 171,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4340",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 182,
+          "inventoryAfterAllocation": 181,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4341",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 3,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 43,
+          "inventoryAfterAllocation": 42,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4342",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 2,
+          "status": "allocated",
+          "note": "Different PO from order tag",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 42,
+          "inventoryAfterAllocation": 41,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "Mixed allocation. Review stock sources.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4343",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "16/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "availableAfterAllocation": 59,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4344",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 171,
+          "inventoryAfterAllocation": 170,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4345",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 1,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "availableAfterAllocation": 58,
+          "status": "allocated",
+          "note": "",
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
     "byStatus": {
-      "fully-allocated": 38,
-      "allocated-cross-po": 18,
-      "allocated-mixed": 0,
-      "allocated-inventory": 30,
+      "fully-allocated": 28,
+      "allocated-cross-po": 6,
+      "allocated-mixed": 17,
+      "allocated-inventory": 41,
       "arrived-po-ringfenced": 0,
-      "no-stock": 6
+      "no-stock": 5
     },
-    "tagChangesRequired": [
-      {
-        "orderNumber": "4127",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026"
-      },
-      {
-        "orderNumber": "4169",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026"
-      },
-      {
-        "orderNumber": "4237",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026"
-      },
-      {
-        "orderNumber": "4240",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026"
-      }
-    ]
+    "tagChangesRequired": []
   },
   "auditTrail": {
     "silentAllocations": [
       {
-        "timestamp": "2026-01-24T17:27:22.299Z",
-        "orderNumber": "4127",
-        "sku": "OXFORD-5S-CNR-BEIGE",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": ""
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.300Z",
+        "timestamp": "2026-01-27T14:45:27.087Z",
         "orderNumber": "4131",
         "sku": "STOCKHOLM-LOUNGE-SET",
         "qty": 1,
@@ -2909,67 +3020,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-01-24T17:27:22.300Z",
-        "orderNumber": "4169",
-        "sku": "OXFORD-5S-CNR-BEIGE",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": ""
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.301Z",
-        "orderNumber": "4197",
-        "sku": "FARO-LOUNGE-SET-BEIGE",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "37/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "PALMA-COVER"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.301Z",
-        "orderNumber": "4197",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.302Z",
-        "orderNumber": "4237",
-        "sku": "OXFORD-5S-CNR-BEIGE",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": ""
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.302Z",
-        "orderNumber": "4240",
-        "sku": "SORRENTO-7S-CNR-BEIGE",
-        "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": ""
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.302Z",
-        "orderNumber": "4257",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.302Z",
+        "timestamp": "2026-01-27T14:45:27.089Z",
         "orderNumber": "4257",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -2979,7 +3030,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.302Z",
+        "timestamp": "2026-01-27T14:45:27.089Z",
         "orderNumber": "4257",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -2989,17 +3040,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.302Z",
-        "orderNumber": "4257",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.303Z",
+        "timestamp": "2026-01-27T14:45:27.089Z",
         "orderNumber": "4271",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3009,7 +3050,7 @@
         "otherSKUs": "STOCKHOLM-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.303Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4289",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3019,17 +3060,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, PALMA-COVER"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4289",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4292",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3039,7 +3070,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4295",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3049,7 +3080,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4296",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3059,17 +3090,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4296",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4297",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3079,17 +3100,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4297",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4298",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3099,17 +3110,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4298",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4299",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3119,17 +3120,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4299",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4301",
         "sku": "STOCKHOLM-LOUNGE-SET",
         "qty": 1,
@@ -3139,7 +3130,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4302",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3149,17 +3140,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4302",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
-      },
-      {
-        "timestamp": "2026-01-24T17:27:22.304Z",
+        "timestamp": "2026-01-27T14:45:27.090Z",
         "orderNumber": "4304",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -3169,14 +3150,104 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-01-24T17:27:22.304Z",
-        "orderNumber": "4304",
-        "sku": "PALMA-COVER",
+        "timestamp": "2026-01-27T14:45:27.090Z",
+        "orderNumber": "4306",
+        "sku": "FARO-LOUNGE-SET",
         "qty": 1,
         "fromPO": "16/2026",
         "toPO": "17/2026",
         "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4316",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4321",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4323",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4327",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4329",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4335",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4336",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.091Z",
+        "orderNumber": "4341",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-01-27T14:45:27.092Z",
+        "orderNumber": "4342",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "16/2026",
+        "toPO": "17/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
       }
     ],
     "inventoryRingfence": [
@@ -3199,8 +3270,14 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4167",
-        "sku": "STOCKHOLM-CORNER-COVER",
+        "orderNumber": "4174",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4197",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3217,14 +3294,32 @@
         "note": "Using warehouse stock"
       },
       {
+        "orderNumber": "4244",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
         "orderNumber": "4247",
         "sku": "STOCKHOLM-CORNER-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4261",
-        "sku": "STOCKHOLM-CORNER-BLACK",
+        "orderNumber": "4257",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4257",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4260",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3247,14 +3342,14 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4274",
-        "sku": "STOCKHOLM-CORNER-BLACK",
+        "orderNumber": "4284",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4278",
-        "sku": "STOCKHOLM-CORNER-BLACK",
+        "orderNumber": "4287",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3267,6 +3362,12 @@
       {
         "orderNumber": "4288",
         "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4289",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3277,26 +3378,56 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4294",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "orderNumber": "4293",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4300",
-        "sku": "STOCKHOLM-CHAISE-COVER",
+        "orderNumber": "4296",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4300",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "orderNumber": "4297",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4298",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4299",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4302",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4304",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
         "orderNumber": "4305",
         "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4306",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3337,6 +3468,12 @@
         "note": "Using warehouse stock"
       },
       {
+        "orderNumber": "4312",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
         "orderNumber": "4313",
         "sku": "STOCKHOLM-CHAISE-LOUNGE",
         "qty": 1,
@@ -3361,8 +3498,38 @@
         "note": "Using warehouse stock"
       },
       {
+        "orderNumber": "4316",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4317",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4317",
+        "sku": "STOCKHOLM-CORNER-BLACK",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4317",
+        "sku": "STOCKHOLM-CORNER-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
         "orderNumber": "4318",
         "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4319",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3373,8 +3540,20 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4324",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "orderNumber": "4321",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4322",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4323",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -3387,6 +3566,78 @@
       {
         "orderNumber": "4326",
         "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4328",
+        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4329",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4331",
+        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4332",
+        "sku": "STOCKHOLM-CHAISE-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4333",
+        "sku": "STOCKHOLM-CORNER-BLACK",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4335",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4336",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4339",
+        "sku": "STOCKHOLM-CORNER-BLACK",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4340",
+        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4341",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4342",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4344",
+        "sku": "STOCKHOLM-CORNER-BLACK",
         "qty": 1,
         "note": "Using warehouse stock"
       }
