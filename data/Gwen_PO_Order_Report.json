@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-26T08:29:47.055Z",
+    "generatedAt": "2026-01-27T08:29:46.529Z",
     "version": "3.2",
-    "processingTimeSeconds": 10.119,
-    "totalLineItemsInData": 4031,
-    "fulfilledOrdersSkipped": 3088,
+    "processingTimeSeconds": 9.51,
+    "totalLineItemsInData": 4039,
+    "fulfilledOrdersSkipped": 3100,
     "refundedOrdersSkipped": 458,
-    "activeOrdersProcessed": 100,
+    "activeOrdersProcessed": 97,
     "arrivedPOs": [
       "13/2026",
       "14/2026"
@@ -55,7 +55,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -171,7 +171,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -200,7 +200,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 36,
+          "currentInventory": 35,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -360,9 +360,9 @@
     },
     {
       "orderNumber": "4127",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -373,16 +373,16 @@
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
-          "tagMatch": false,
+          "tagMatch": true,
           "currentInventory": 0,
           "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
           "riskLevel": "Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026.",
-      "poArrivalDate": "2026-03-29T23:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -417,35 +417,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4151",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4157",
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
@@ -471,35 +442,6 @@
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4167",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 93,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -534,9 +476,9 @@
     },
     {
       "orderNumber": "4169",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -547,16 +489,16 @@
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
-          "tagMatch": false,
+          "tagMatch": true,
           "currentInventory": 0,
           "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
           "riskLevel": "Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026.",
-      "poArrivalDate": "2026-03-29T23:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -593,16 +535,16 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -734,37 +676,8 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4196",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "MARBELLA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "none",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "🚨 No stock available.",
-          "riskLevel": "High"
-        }
-      ],
-      "overallStatus": "no-stock",
-      "actionRequired": "🚨 URGENT: No stock available. Contact customer immediately.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4197",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "34/2026",
       "suggestedTagPO": "37/2026",
       "tagChangeRequired": false,
       "taggedToArrivedPO": false,
@@ -786,29 +699,29 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "2026-03-29T23:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
+      "poArrivalDate": "2026-04-19T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4199",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -818,17 +731,17 @@
           "allocationSource": "po",
           "stockSourcePO": "16/2026",
           "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
+          "tagMatch": true,
           "currentInventory": 0,
           "recommendedAction": "Stock from PO 16/2026.",
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "fully-allocated",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -877,7 +790,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 93,
+          "currentInventory": 92,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -962,9 +875,9 @@
     },
     {
       "orderNumber": "4237",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -975,16 +888,16 @@
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
-          "tagMatch": false,
+          "tagMatch": true,
           "currentInventory": 0,
           "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
           "riskLevel": "Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026.",
-      "poArrivalDate": "2026-03-29T23:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -1005,7 +918,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1020,9 +933,9 @@
     },
     {
       "orderNumber": "4240",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "taggedToArrivedPO": false,
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
@@ -1033,16 +946,16 @@
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
           "stockSourceArrival": "2026-04-14T23:00:00.000Z",
-          "tagMatch": false,
+          "tagMatch": true,
           "currentInventory": 0,
           "recommendedAction": "Stock from PO 18/2026.",
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026.",
-      "poArrivalDate": "2026-03-29T23:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -1059,13 +972,13 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         },
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
@@ -1099,7 +1012,7 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -1135,7 +1048,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 93,
+          "currentInventory": 92,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1160,13 +1073,13 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         },
         {
           "sku": "FARO-LOUNGE-SET",
@@ -1207,13 +1120,13 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             },
             {
               "sku": "PALMA-CUSHION-BOX",
@@ -1231,7 +1144,7 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -1266,49 +1179,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4261",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 184,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -1344,7 +1228,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 36,
+          "currentInventory": 35,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -1356,7 +1240,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1463,60 +1347,12 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4267",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -1550,54 +1386,6 @@
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4269",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1688,35 +1476,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4274",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 184,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4276",
       "orderTagPO": "36/2026",
       "suggestedTagPO": "36/2026",
@@ -1746,35 +1505,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4278",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 184,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4281",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "17/2026",
@@ -1789,54 +1519,6 @@
           "bundleComponents": [
             {
               "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4282",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
@@ -1886,20 +1568,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -1971,20 +1653,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -2008,7 +1690,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 36,
+          "currentInventory": 35,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -2020,7 +1702,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2076,16 +1758,16 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": false,
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2197,20 +1879,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -2234,7 +1916,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2322,20 +2004,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2370,20 +2052,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2418,13 +2100,13 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             },
             {
               "sku": "PALMA-CUSHION-BOX",
@@ -2442,7 +2124,7 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2477,13 +2159,13 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             },
             {
               "sku": "PALMA-CUSHION-BOX",
@@ -2501,52 +2183,11 @@
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4300",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 36,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "currentInventory": 206,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2606,20 +2247,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2654,20 +2295,20 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "2026-02-03T00:00:00.000Z",
       "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
@@ -2691,7 +2332,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2706,10 +2347,10 @@
     },
     {
       "orderNumber": "4306",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -2723,7 +2364,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -2731,24 +2372,24 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2768,7 +2409,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 184,
+          "currentInventory": 178,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2797,7 +2438,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 19,
+          "currentInventory": 18,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2826,7 +2467,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2855,7 +2496,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2884,7 +2525,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 93,
+          "currentInventory": 92,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -2896,7 +2537,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 184,
+          "currentInventory": 178,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2911,23 +2552,23 @@
     },
     {
       "orderNumber": "4312",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "34/2026",
       "suggestedTagPO": "37/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-03-20T00:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": false,
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         },
         {
           "sku": "FARO-LOUNGE-SET-BEIGE",
@@ -2936,16 +2577,16 @@
           "allocationSource": "po",
           "stockSourcePO": "37/2026",
           "stockSourceArrival": "2026-03-20T00:00:00.000Z",
-          "tagMatch": "",
+          "tagMatch": false,
           "currentInventory": 0,
           "recommendedAction": "Stock from PO 37/2026.",
           "riskLevel": "Low-Medium"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
+      "poArrivalDate": "2026-04-19T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -2966,7 +2607,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2995,7 +2636,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3024,7 +2665,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 205,
+          "currentInventory": 204,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -3036,7 +2677,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 10,
+          "currentInventory": 9,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3051,10 +2692,10 @@
     },
     {
       "orderNumber": "4316",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -3068,7 +2709,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -3076,33 +2717,33 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4317",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -3116,7 +2757,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -3124,24 +2765,24 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -3161,7 +2802,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3177,25 +2818,25 @@
     {
       "orderNumber": "4319",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
+      "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
       "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-inventory",
       "actionRequired": "All items allocated. No action required.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
@@ -3219,7 +2860,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 184,
+          "currentInventory": 178,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3234,10 +2875,10 @@
     },
     {
       "orderNumber": "4321",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -3251,7 +2892,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -3259,106 +2900,29 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4322",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4323",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "17/2026",
-      "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-02-03T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4324",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
       "tagChangeRequired": false,
@@ -3366,14 +2930,14 @@
       "shipDate": "",
       "lineItems": [
         {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "sku": "PALMA-COVER",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "inventory",
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 70,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3383,6 +2947,54 @@
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4323",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -3402,7 +3014,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 184,
+          "currentInventory": 178,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3431,7 +3043,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3446,10 +3058,10 @@
     },
     {
       "orderNumber": "4327",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -3463,7 +3075,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -3474,7 +3086,7 @@
               "allocationSource": "po",
               "stockSourcePO": "16/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": true,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 16/2026.",
               "riskLevel": "Low-Medium"
@@ -3486,9 +3098,9 @@
       ],
       "overallStatus": "allocated-cross-po",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -3508,7 +3120,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3523,10 +3135,10 @@
     },
     {
       "orderNumber": "4329",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "16/2026",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
@@ -3540,7 +3152,7 @@
               "allocationSource": "po",
               "stockSourcePO": "17/2026",
               "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
+              "tagMatch": false,
               "currentInventory": 0,
               "recommendedAction": "Stock from PO 17/2026.",
               "riskLevel": "Low-Medium"
@@ -3548,33 +3160,33 @@
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "17/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-              "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 17/2026.",
-              "riskLevel": "Low-Medium"
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-cross-po",
+      "overallStatus": "allocated-mixed",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4330",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "34/2026",
       "suggestedTagPO": "37/2026",
       "tagChangeRequired": false,
-      "taggedToArrivedPO": "",
+      "taggedToArrivedPO": false,
       "shipDate": "2026-03-20T00:00:00.000Z",
       "lineItems": [
         {
@@ -3584,7 +3196,7 @@
           "allocationSource": "po",
           "stockSourcePO": "37/2026",
           "stockSourceArrival": "2026-03-20T00:00:00.000Z",
-          "tagMatch": "",
+          "tagMatch": false,
           "currentInventory": 0,
           "recommendedAction": "Stock from PO 37/2026.",
           "riskLevel": "Low-Medium"
@@ -3592,8 +3204,8 @@
       ],
       "overallStatus": "allocated-cross-po",
       "actionRequired": "All items allocated. No action required.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
+      "poArrivalDate": "2026-04-19T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -3614,7 +3226,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 206,
+          "currentInventory": 197,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3643,7 +3255,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 36,
+          "currentInventory": 35,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3672,7 +3284,7 @@
           "stockSourcePO": null,
           "stockSourceArrival": "",
           "tagMatch": "",
-          "currentInventory": 184,
+          "currentInventory": 178,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -3687,6 +3299,143 @@
     },
     {
       "orderNumber": "4334",
+      "orderTagPO": "18/2026",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "OXFORD-5S-CNR-BEIGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "tagMatch": true,
+          "currentInventory": 0,
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4335",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": false,
+          "currentInventory": 70,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        },
+        {
+          "sku": "PALMA-CUSHION BOX-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-CUSHION-BOX",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "16/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": true,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 16/2026.",
+              "riskLevel": "Low-Medium"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4336",
+      "orderTagPO": "16/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": false,
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "2026-02-03T00:00:00.000Z",
+      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4337",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "18/2026",
       "tagChangeRequired": false,
@@ -3694,7 +3443,7 @@
       "shipDate": "2026-04-14T23:00:00.000Z",
       "lineItems": [
         {
-          "sku": "OXFORD-5S-CNR-BEIGE",
+          "sku": "HW-MARB-1S-A",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
@@ -3715,7 +3464,94 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4335",
+      "orderNumber": "4338",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "HW-MARB-1S-A",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "tagMatch": "",
+          "currentInventory": 0,
+          "recommendedAction": "⚠️ Overallocated on PO 18/2026.",
+          "riskLevel": "Medium"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4339",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 178,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4340",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "currentInventory": 197,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4341",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "17/2026",
       "tagChangeRequired": false,
@@ -3723,19 +3559,7 @@
       "shipDate": "2026-02-03T00:00:00.000Z",
       "lineItems": [
         {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "17/2026",
-          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
-          "tagMatch": "",
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 17/2026.",
-          "riskLevel": "Low-Medium"
-        },
-        {
-          "sku": "PALMA-CUSHION BOX-BUNDLE",
+          "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
           "isBundle": true,
           "bundleComponents": [
@@ -3751,19 +3575,96 @@
               "riskLevel": "Low-Medium"
             },
             {
-              "sku": "PALMA-CUSHION-BOX",
+              "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "16/2026",
-              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
               "tagMatch": "",
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 16/2026.",
-              "riskLevel": "Low-Medium"
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
             }
           ],
           "overallRiskLevel": "Low-Medium",
           "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4342",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "17/2026",
+              "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+              "tagMatch": "",
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 17/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "currentInventory": 70,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4343",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "16/2026",
+      "tagChangeRequired": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-02-03T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-03T00:00:00.000Z",
+          "tagMatch": "",
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 16/2026.",
+          "riskLevel": "Low-Medium"
         }
       ],
       "overallStatus": "allocated-cross-po",
@@ -3776,37 +3677,12 @@
     }
   ],
   "summary": {
-    "totalActiveOrders": 100,
-    "tagChangesRequired": 4,
-    "noStockOrders": 6,
-    "inventoryOrders": 34,
-    "crossPOOrders": 47,
-    "ordersRequiringTagChange": [
-      {
-        "orderNumber": "4127",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026",
-        "reason": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026."
-      },
-      {
-        "orderNumber": "4169",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026",
-        "reason": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026."
-      },
-      {
-        "orderNumber": "4237",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026",
-        "reason": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026."
-      },
-      {
-        "orderNumber": "4240",
-        "currentTag": "19/2026",
-        "suggestedTag": "18/2026",
-        "reason": "Update tag to 18/2026. Current tag arrives 30/03/2026, but stock arrives 15/04/2026."
-      }
-    ],
+    "totalActiveOrders": 97,
+    "tagChangesRequired": 0,
+    "noStockOrders": 5,
+    "inventoryOrders": 32,
+    "crossPOOrders": 15,
+    "ordersRequiringTagChange": [],
     "noStockOrdersList": [
       {
         "orderNumber": "1365",
@@ -3833,12 +3709,6 @@
           "WILLOW-2S-NEUTRAL",
           "WILLOW-CNR-CHAIR-NEUTRAL",
           "WILLOW-1S-SOFA-NEUTRAL"
-        ]
-      },
-      {
-        "orderNumber": "4196",
-        "skus": [
-          "MARBELLA-COVER"
         ]
       },
       {
