@@ -1,20 +1,20 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-27T14:42:48.933Z",
+    "generatedAt": "2026-01-28T06:11:24.759Z",
     "script": "updatePreOrderSchedule",
     "version": "4.2",
     "spreadsheetId": "1QMB1yfEgspAIwh0Pnh_0JTuOSddfXxBPFg0WB37w_fM",
     "spreadsheetName": "Order Data by Line Item",
-    "completedAt": "2026-01-27T14:43:08.293Z",
-    "processingTimeMs": 19375
+    "completedAt": "2026-01-28T06:12:02.078Z",
+    "processingTimeMs": 37711
   },
   "summary": {
-    "totalLineItems": 4043,
+    "totalLineItems": 4048,
     "fulfilledSkipped": 3744,
     "refundedSkipped": 180,
-    "allocatedToFuturePOs": 110,
+    "allocatedToFuturePOs": 111,
     "inventoryRingfenced": 0,
-    "noTagOrders": 54,
+    "noTagOrders": 59,
     "bundlesExpanded": 33
   },
   "poAllocations": {
@@ -33,7 +33,7 @@
     "15/2026": {
       "status": "future",
       "arrivedDate": null,
-      "etaDate": "2026-02-03T00:00:00.000Z",
+      "etaDate": "2026-02-06T00:00:00.000Z",
       "skuAllocations": {
         "STOCKHOLM-LOUNGE-SET": {
           "planned": 90,
@@ -121,7 +121,7 @@
     "16/2026": {
       "status": "future",
       "arrivedDate": null,
-      "etaDate": "2026-02-03T00:00:00.000Z",
+      "etaDate": "2026-02-06T00:00:00.000Z",
       "skuAllocations": {
         "FARO-LOUNGE-SET": {
           "planned": 24,
@@ -341,7 +341,7 @@
     "17/2026": {
       "status": "future",
       "arrivedDate": null,
-      "etaDate": "2026-02-03T00:00:00.000Z",
+      "etaDate": "2026-02-07T00:00:00.000Z",
       "skuAllocations": {
         "PALMA-COVER": {
           "planned": 100,
@@ -659,8 +659,13 @@
       "skuAllocations": {
         "STOCKHOLM-CHAISE-COVER": {
           "planned": 50,
-          "allocated": 4,
+          "allocated": 5,
           "orders": [
+            {
+              "orderNumber": "4350",
+              "qty": 1,
+              "bundleFrom": null
+            },
             {
               "orderNumber": "4332",
               "qty": 1,
@@ -3877,6 +3882,7 @@
       "1006",
       "1005",
       "1003",
+      "Warehouse February",
       "4270",
       "DUX050829556-A",
       "4294",
@@ -4367,6 +4373,48 @@
     ]
   },
   "allocationDetails": [
+    {
+      "orderNumber": "4350",
+      "sku": "STOCKHOLM-CHAISE-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "24/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4349",
+      "sku": "STOCKHOLM-CHAISE-LOUNGE",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4348",
+      "sku": "STOCKHOLM-CHAISE-LOUNGE",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4347",
+      "sku": "BRIDGETOWN-120-4S",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4346",
+      "sku": "STOCKHOLM-CORNER-BLACK",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
     {
       "orderNumber": "4345",
       "sku": "FARO-LOUNGE-SET",
