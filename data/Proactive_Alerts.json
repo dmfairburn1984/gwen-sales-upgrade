@@ -1,5 +1,5 @@
 {
-  "dateGenerated": "2026-01-28T03:55:31.467Z",
+  "dateGenerated": "2026-01-29T03:55:41.901Z",
   "proactiveAlerts": [
     {
       "alertType": "[HIGH] High-Risk Order Alert",
@@ -46,7 +46,7 @@
     {
       "alertType": "[OK] PO Tag Confirmed",
       "skuOrOrderId": "4131",
-      "issue": "SKU undefined associated with PO 16/2026. (Source: Order Recommendation).",
+      "issue": "SKU undefined associated with PO 15/2026. (Source: Order Recommendation).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -228,7 +228,7 @@
     {
       "alertType": "[OK] PO Tag Confirmed",
       "skuOrOrderId": "4271",
-      "issue": "SKU undefined associated with PO 15/2026. (Source: Order Recommendation).",
+      "issue": "SKU undefined associated with PO 17/2026. (Source: Order Recommendation).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -340,7 +340,7 @@
     {
       "alertType": "[OK] PO Tag Confirmed",
       "skuOrOrderId": "4301",
-      "issue": "SKU undefined associated with PO 16/2026. (Source: Order Recommendation).",
+      "issue": "SKU undefined associated with PO 15/2026. (Source: Order Recommendation).",
       "recommendedAction": "No action needed unless this association is incorrect.",
       "riskLevel": "Low"
     },
@@ -359,10 +359,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "[OK] Delivery Booking in Progress",
+      "alertType": "[OK] NO ISSUES",
       "skuOrOrderId": "4305",
-      "issue": "Order is allocated to inventory and scheduled for delivery.",
-      "recommendedAction": "No action required - delivery in progress.",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
@@ -415,10 +415,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "[OK] Delivery Booking in Progress",
+      "alertType": "[OK] NO ISSUES",
       "skuOrOrderId": "4313",
-      "issue": "Order is allocated to inventory and scheduled for delivery.",
-      "recommendedAction": "No action required - delivery in progress.",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
@@ -513,10 +513,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "[OK] Delivery Booking in Progress",
+      "alertType": "[OK] NO ISSUES",
       "skuOrOrderId": "4328",
-      "issue": "Order is allocated to inventory and scheduled for delivery.",
-      "recommendedAction": "No action required - delivery in progress.",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
@@ -590,10 +590,10 @@
       "riskLevel": "Low"
     },
     {
-      "alertType": "[OK] Delivery Booking in Progress",
+      "alertType": "[OK] NO ISSUES",
       "skuOrOrderId": "4340",
-      "issue": "Order is allocated to inventory and scheduled for delivery.",
-      "recommendedAction": "No action required - delivery in progress.",
+      "issue": "Order already in POD.",
+      "recommendedAction": "No further action required.",
       "riskLevel": "Low"
     },
     {
@@ -618,12 +618,61 @@
       "riskLevel": "Low"
     },
     {
+      "alertType": "[OK] Delivery Booking in Progress",
+      "skuOrOrderId": "4344",
+      "issue": "Order is allocated to inventory and scheduled for delivery.",
+      "recommendedAction": "No action required - delivery in progress.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] PO Tag Confirmed",
+      "skuOrOrderId": "4345",
+      "issue": "SKU undefined associated with PO 17/2026. (Source: Order Recommendation).",
+      "recommendedAction": "No action needed unless this association is incorrect.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] Delivery Booking in Progress",
+      "skuOrOrderId": "4346",
+      "issue": "Order is allocated to inventory and scheduled for delivery.",
+      "recommendedAction": "No action required - delivery in progress.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] PO Tag Confirmed",
+      "skuOrOrderId": "4347",
+      "issue": "SKU undefined associated with PO NO STOCK. (Source: Order Recommendation).",
+      "recommendedAction": "No action needed unless this association is incorrect.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] Delivery Booking in Progress",
+      "skuOrOrderId": "4348",
+      "issue": "Order is allocated to inventory and scheduled for delivery.",
+      "recommendedAction": "No action required - delivery in progress.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] Delivery Booking in Progress",
+      "skuOrOrderId": "4349",
+      "issue": "Order is allocated to inventory and scheduled for delivery.",
+      "recommendedAction": "No action required - delivery in progress.",
+      "riskLevel": "Low"
+    },
+    {
+      "alertType": "[OK] Delivery Booking in Progress",
+      "skuOrOrderId": "4350",
+      "issue": "Order is allocated to inventory and scheduled for delivery.",
+      "recommendedAction": "No action required - delivery in progress.",
+      "riskLevel": "Low"
+    },
+    {
       "alertType": "[DELAY] Potential Delivery Delay",
       "skuOrOrderId": "3945",
-      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 87 days.",
+      "issue": "Order (SLA Start from JOB date: 13/09/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/09/2025. Overdue by: 88 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 87,
+      "overdueByDays": 88,
       "items": [
         {
           "sku": "HAVANA-8S",
@@ -636,10 +685,10 @@
     {
       "alertType": "[DELAY] Potential Delivery Delay",
       "skuOrOrderId": "4174",
-      "issue": "Order (SLA Start from JOB date: 31/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 9 days.",
+      "issue": "Order (SLA Start from JOB date: 31/12/2025) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 30/11/2025. Overdue by: 10 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 9,
+      "overdueByDays": 10,
       "items": [
         {
           "sku": "FARO-LOUNGE-SET",
@@ -657,10 +706,10 @@
     {
       "alertType": "[DELAY] Potential Delivery Delay",
       "skuOrOrderId": "4238",
-      "issue": "Order (SLA Start from JOB date: 10/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 08/01/2026. Overdue by: 2 days.",
+      "issue": "Order (SLA Start from JOB date: 10/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 08/01/2026. Overdue by: 3 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 2,
+      "overdueByDays": 3,
       "items": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
@@ -673,10 +722,10 @@
     {
       "alertType": "[DELAY] Potential Delivery Delay",
       "skuOrOrderId": "4244",
-      "issue": "Order (SLA Start from JOB date: 13/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/01/2026.",
+      "issue": "Order (SLA Start from JOB date: 13/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 11/01/2026. Overdue by: 1 days.",
       "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
       "riskLevel": "High",
-      "overdueByDays": 0,
+      "overdueByDays": 1,
       "items": [
         {
           "sku": "PALMA-COVER",
@@ -692,23 +741,60 @@
       "adminOrderUrl": "https://admin.shopify.com/orders/12277305442636"
     },
     {
+      "alertType": "[DELAY] Potential Delivery Delay",
+      "skuOrOrderId": "4260",
+      "issue": "Order (SLA Start from JOB date: 17/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 15/01/2026.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "name": "Palma Grey Rattan Garden Lounge Set and Cover Bundle",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12285406413132"
+    },
+    {
+      "alertType": "[DELAY] Potential Delivery Delay",
+      "skuOrOrderId": "4263",
+      "issue": "Order (SLA Start from JOB date: 18/01/2026) is tagged for delivery & in JOB list, not delivered after 8 working days. Original Order Date: 16/01/2026.",
+      "recommendedAction": "Escalate to RRL to confirm if this order is routed or delayed.",
+      "riskLevel": "High",
+      "overdueByDays": 0,
+      "items": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "name": "Palma Grey Corner Rattan Casual Garden Dining and Lounge Set 9 Seater",
+          "qty": 1
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "name": "Palma Rattan Cushion Box L.149 x W.76 x H.70cm",
+          "qty": 1
+        }
+      ],
+      "adminOrderUrl": "https://admin.shopify.com/orders/12287066702156"
+    },
+    {
       "alertType": "[WARNING] Balance Payment Required",
       "skuOrOrderId": "4335",
-      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (9 days).",
+      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (8 days).",
       "recommendedAction": "Collect final balance before dispatch deadline.",
       "riskLevel": "High"
     },
     {
       "alertType": "[WARNING] Balance Payment Required",
       "skuOrOrderId": "4335",
-      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (9 days).",
+      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (8 days).",
       "recommendedAction": "Collect final balance before dispatch deadline.",
       "riskLevel": "High"
     },
     {
       "alertType": "[WARNING] Balance Payment Required",
       "skuOrOrderId": "4335",
-      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (9 days).",
+      "issue": "Order 4335 (PO 16/2026) is partially paid. PO ETA: 06/02/2026 (8 days).",
       "recommendedAction": "Collect final balance before dispatch deadline.",
       "riskLevel": "High"
     }

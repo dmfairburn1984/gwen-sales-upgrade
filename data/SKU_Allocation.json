@@ -1,24 +1,24 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-28T13:06:14.070Z",
+    "generatedAt": "2026-01-29T20:34:51.656Z",
     "version": "1.2",
-    "processingTimeMs": 9261,
-    "totalOrders": 104,
-    "totalLineItems": 150,
-    "fulfilledOrdersSkipped": 3744,
-    "refundedOrdersSkipped": 180,
+    "processingTimeMs": 13460,
+    "totalOrders": 102,
+    "totalLineItems": 152,
+    "fulfilledOrdersSkipped": 3752,
+    "refundedOrdersSkipped": 183,
     "arrivedPORingfenced": 0,
-    "keptOnTaggedPO": 56,
+    "keptOnTaggedPO": 65,
     "crossPOAllocations": 3,
     "inventoryRingfenceItems": 28,
     "noStockItems": 7,
-    "bundlesExpanded": 23,
+    "bundlesExpanded": 26,
     "arrivedPOs": [
       "13/2026",
-      "14/2026"
+      "14/2026",
+      "99/2026"
     ],
     "futurePOs": [
-      "99/2026",
       "15/2026",
       "16/2026",
       "17/2026",
@@ -57,8 +57,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 196,
-          "inventoryAfterAllocation": 195,
+          "currentInventory": 194,
+          "inventoryAfterAllocation": 193,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -110,7 +110,7 @@
           "stockSourceArrival": "2026-02-06T00:00:00.000Z",
           "arrivalDate": "2026-02-06T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 73,
+          "availableAfterAllocation": 72,
           "status": "allocated",
           "note": "",
           "keptOnTaggedPO": false,
@@ -156,8 +156,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 195,
-          "inventoryAfterAllocation": 194,
+          "currentInventory": 193,
+          "inventoryAfterAllocation": 192,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -350,7 +350,7 @@
     },
     {
       "orderNumber": "4131",
-      "orderTagPO": "16/2026",
+      "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
@@ -364,15 +364,14 @@
           "stockSourceArrival": "2026-02-06T00:00:00.000Z",
           "arrivalDate": "2026-02-06T00:00:00.000Z",
           "plannedOnSourcePO": 90,
-          "availableAfterAllocation": 65,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 15/2026. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -699,8 +698,8 @@
           "sku": "STOCKHOLM-CORNER-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 92,
-          "inventoryAfterAllocation": 91,
+          "currentInventory": 91,
+          "inventoryAfterAllocation": 90,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -910,8 +909,8 @@
           "sku": "STOCKHOLM-CORNER-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 91,
-          "inventoryAfterAllocation": 90,
+          "currentInventory": 90,
+          "inventoryAfterAllocation": 89,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -1049,8 +1048,8 @@
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 35,
-          "inventoryAfterAllocation": 34,
+          "currentInventory": 34,
+          "inventoryAfterAllocation": 33,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -1060,8 +1059,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 194,
-          "inventoryAfterAllocation": 193,
+          "currentInventory": 192,
+          "inventoryAfterAllocation": 191,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -1181,9 +1180,9 @@
     },
     {
       "orderNumber": "4271",
-      "orderTagPO": "15/2026",
+      "orderTagPO": "17/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-02-07T00:00:00.000Z",
       "lineItems": [
@@ -1195,10 +1194,9 @@
           "stockSourceArrival": "2026-02-07T00:00:00.000Z",
           "arrivalDate": "2026-02-07T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 33,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
           "isFromBundle": true,
           "bundleSku": "FARO-LOUNGE-SET"
         },
@@ -1210,14 +1208,15 @@
           "stockSourceArrival": "2026-02-06T00:00:00.000Z",
           "arrivalDate": "2026-02-06T00:00:00.000Z",
           "plannedOnSourcePO": 90,
-          "status": "allocated-to-tagged-po",
-          "note": "Stock reserved on tagged PO",
-          "keptOnTaggedPO": true,
+          "availableAfterAllocation": 65,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
           "isFromBundle": false
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ Update tag to 17/2026. Stock from different PO.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1277,28 +1276,6 @@
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4285",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -1413,28 +1390,6 @@
       ],
       "overallStatus": "allocated-inventory",
       "actionRequired": "✅ All items allocated on tagged PO 16/2026. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4291",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "SANTORINI-GREY",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1734,7 +1689,7 @@
     },
     {
       "orderNumber": "4301",
-      "orderTagPO": "16/2026",
+      "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
       "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
@@ -1748,15 +1703,14 @@
           "stockSourceArrival": "2026-02-06T00:00:00.000Z",
           "arrivalDate": "2026-02-06T00:00:00.000Z",
           "plannedOnSourcePO": 90,
-          "availableAfterAllocation": 64,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 15/2026. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1837,28 +1791,6 @@
       ],
       "overallStatus": "allocated-inventory",
       "actionRequired": "✅ All items allocated on tagged PO 16/2026. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4305",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2059,28 +1991,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4313",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4314",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Delivery in Progress",
@@ -2173,44 +2083,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4317",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        },
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        },
-        {
-          "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4318",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Delivery in Progress",
@@ -2242,28 +2114,6 @@
       "lineItems": [
         {
           "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4320",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -2401,28 +2251,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4326",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4327",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
@@ -2461,28 +2289,6 @@
       ],
       "overallStatus": "fully-allocated",
       "actionRequired": "✅ All items allocated on tagged PO 16/2026. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4328",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2816,28 +2622,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4340",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4341",
       "orderTagPO": "16/2026",
       "suggestedTagPO": "16/2026",
@@ -2968,9 +2752,9 @@
     },
     {
       "orderNumber": "4345",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "17/2026",
       "suggestedTagPO": "17/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-02-07T00:00:00.000Z",
       "lineItems": [
@@ -2982,10 +2766,9 @@
           "stockSourceArrival": "2026-02-07T00:00:00.000Z",
           "arrivalDate": "2026-02-07T00:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 32,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
           "isFromBundle": true,
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         },
@@ -2997,15 +2780,15 @@
           "stockSourceArrival": "2026-02-06T00:00:00.000Z",
           "arrivalDate": "2026-02-06T00:00:00.000Z",
           "plannedOnSourcePO": 100,
-          "availableAfterAllocation": 72,
+          "availableAfterAllocation": 71,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "isFromBundle": true,
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
+      "overallStatus": "allocated-cross-po",
       "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
@@ -3125,30 +2908,264 @@
     {
       "orderNumber": "4351",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 178,
-          "inventoryAfterAllocation": 177,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4352",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "BALI-WOOD-PARASOL-GREEN",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4353",
+      "orderTagPO": "17/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-02-07T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 17/2026. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4354",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
+        },
+        {
+          "sku": "STOCKHOLM-CHAISE-COVER",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4355",
+      "orderTagPO": "17/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-02-07T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 17/2026. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4356",
+      "orderTagPO": "17/2026",
+      "suggestedTagPO": "17/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-02-07T00:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-BOX-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "17/2026",
+          "stockSourceArrival": "2026-02-07T00:00:00.000Z",
+          "arrivalDate": "2026-02-07T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-BOX-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "16/2026",
+          "stockSourceArrival": "2026-02-06T00:00:00.000Z",
+          "arrivalDate": "2026-02-06T00:00:00.000Z",
+          "plannedOnSourcePO": 100,
+          "availableAfterAllocation": 70,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-BOX-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4357",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4358",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-COVER",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4359",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO STOCK",
       "tagChangeRequired": false,
@@ -3156,11 +3173,22 @@
       "shipDate": "",
       "lineItems": [
         {
-          "sku": "BALI-WOOD-PARASOL-GREEN",
+          "sku": "CHESTERTON-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 49,
-          "inventoryAfterAllocation": 48,
+          "currentInventory": 204,
+          "inventoryAfterAllocation": 203,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "isFromBundle": false
+        },
+        {
+          "sku": "MALAGA-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 9,
+          "inventoryAfterAllocation": 8,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -3168,17 +3196,17 @@
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: BALI-WOOD-PARASOL-GREEN",
+      "actionRequired": "Reserve warehouse stock for: CHESTERTON-COVER, MALAGA-LOUNGE-SET",
       "isFulfilled": false,
       "isRefunded": false
     }
   ],
   "summary": {
     "byStatus": {
-      "allocated-inventory": 26,
+      "allocated-inventory": 25,
       "no-stock": 4,
-      "fully-allocated": 28,
-      "delivery-booking-in-progress": 43,
+      "fully-allocated": 31,
+      "delivery-booking-in-progress": 39,
       "allocated-cross-po": 3
     },
     "tagChangesRequired": [
@@ -3186,11 +3214,6 @@
         "orderNumber": "1370",
         "currentTag": "NO TAG",
         "suggestedTag": "16/2026"
-      },
-      {
-        "orderNumber": "4271",
-        "currentTag": "15/2026",
-        "suggestedTag": "17/2026"
       },
       {
         "orderNumber": "4337",
@@ -3201,45 +3224,40 @@
         "orderNumber": "4338",
         "currentTag": "NO TAG",
         "suggestedTag": "18/2026"
-      },
-      {
-        "orderNumber": "4345",
-        "currentTag": "NO TAG",
-        "suggestedTag": "17/2026"
       }
     ]
   },
   "auditTrail": {
     "silentAllocations": [
       {
-        "timestamp": "2026-01-28T13:06:14.055Z",
-        "orderNumber": "4131",
-        "sku": "STOCKHOLM-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "16/2026",
-        "toPO": "15/2026",
-        "reserveInventory": "No",
-        "otherSKUs": ""
-      },
-      {
-        "timestamp": "2026-01-28T13:06:14.056Z",
+        "timestamp": "2026-01-29T20:34:51.599Z",
         "orderNumber": "4271",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "15/2026",
-        "toPO": "17/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "STOCKHOLM-LOUNGE-SET"
-      },
-      {
-        "timestamp": "2026-01-28T13:06:14.056Z",
-        "orderNumber": "4301",
         "sku": "STOCKHOLM-LOUNGE-SET",
         "qty": 1,
-        "fromPO": "16/2026",
+        "fromPO": "17/2026",
         "toPO": "15/2026",
         "reserveInventory": "No",
-        "otherSKUs": ""
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-01-29T20:34:51.601Z",
+        "orderNumber": "4345",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "17/2026",
+        "toPO": "16/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-01-29T20:34:51.601Z",
+        "orderNumber": "4356",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "17/2026",
+        "toPO": "16/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       }
     ],
     "inventoryRingfence": [
@@ -3400,14 +3418,14 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4351",
-        "sku": "STOCKHOLM-CORNER-BLACK",
+        "orderNumber": "4359",
+        "sku": "CHESTERTON-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4352",
-        "sku": "BALI-WOOD-PARASOL-GREEN",
+        "orderNumber": "4359",
+        "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
         "note": "Using warehouse stock"
       }

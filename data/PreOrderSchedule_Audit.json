@@ -1,21 +1,21 @@
 {
   "metadata": {
-    "generatedAt": "2026-01-28T13:05:33.901Z",
+    "generatedAt": "2026-01-29T06:11:14.297Z",
     "script": "updatePreOrderSchedule",
     "version": "4.2",
     "spreadsheetId": "1QMB1yfEgspAIwh0Pnh_0JTuOSddfXxBPFg0WB37w_fM",
     "spreadsheetName": "Order Data by Line Item",
-    "completedAt": "2026-01-28T13:05:50.512Z",
-    "processingTimeMs": 16622
+    "completedAt": "2026-01-29T06:11:40.683Z",
+    "processingTimeMs": 26411
   },
   "summary": {
-    "totalLineItems": 4050,
-    "fulfilledSkipped": 3744,
-    "refundedSkipped": 180,
-    "allocatedToFuturePOs": 111,
+    "totalLineItems": 4057,
+    "fulfilledSkipped": 3748,
+    "refundedSkipped": 183,
+    "allocatedToFuturePOs": 118,
     "inventoryRingfenced": 0,
-    "noTagOrders": 61,
-    "bundlesExpanded": 33
+    "noTagOrders": 60,
+    "bundlesExpanded": 35
   },
   "poAllocations": {
     "13/2026": {
@@ -128,6 +128,21 @@
           "allocated": 21,
           "orders": [
             {
+              "orderNumber": "4356",
+              "qty": 1,
+              "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+            },
+            {
+              "orderNumber": "4355",
+              "qty": 1,
+              "bundleFrom": "PALMA-COVER-BUNDLE"
+            },
+            {
+              "orderNumber": "4353",
+              "qty": 1,
+              "bundleFrom": "PALMA-COVER-BUNDLE"
+            },
+            {
               "orderNumber": "4345",
               "qty": 1,
               "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
@@ -169,11 +184,6 @@
             },
             {
               "orderNumber": "4321",
-              "qty": 1,
-              "bundleFrom": "PALMA-COVER-BUNDLE"
-            },
-            {
-              "orderNumber": "4317",
               "qty": 1,
               "bundleFrom": "PALMA-COVER-BUNDLE"
             },
@@ -221,23 +231,18 @@
               "orderNumber": "4295",
               "qty": 1,
               "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-            },
-            {
-              "orderNumber": "4293",
-              "qty": 1,
-              "bundleFrom": "PALMA-COVER-BUNDLE"
-            },
-            {
-              "orderNumber": "4292",
-              "qty": 1,
-              "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
             }
           ]
         },
         "PALMA-CUSHION-BOX": {
           "planned": 100,
-          "allocated": 16,
+          "allocated": 17,
           "orders": [
+            {
+              "orderNumber": "4356",
+              "qty": 1,
+              "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+            },
             {
               "orderNumber": "4345",
               "qty": 1,
@@ -345,8 +350,23 @@
       "skuAllocations": {
         "PALMA-COVER": {
           "planned": 100,
-          "allocated": 29,
+          "allocated": 31,
           "orders": [
+            {
+              "orderNumber": "4356",
+              "qty": 1,
+              "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+            },
+            {
+              "orderNumber": "4355",
+              "qty": 1,
+              "bundleFrom": "PALMA-COVER-BUNDLE"
+            },
+            {
+              "orderNumber": "4353",
+              "qty": 1,
+              "bundleFrom": "PALMA-COVER-BUNDLE"
+            },
             {
               "orderNumber": "4342",
               "qty": 1,
@@ -391,11 +411,6 @@
               "orderNumber": "4319",
               "qty": 1,
               "bundleFrom": null
-            },
-            {
-              "orderNumber": "4317",
-              "qty": 1,
-              "bundleFrom": "PALMA-COVER-BUNDLE"
             },
             {
               "orderNumber": "4316",
@@ -496,8 +511,18 @@
         },
         "FARO-LOUNGE-SET": {
           "planned": 52,
-          "allocated": 12,
+          "allocated": 14,
           "orders": [
+            {
+              "orderNumber": "4293",
+              "qty": 1,
+              "bundleFrom": "PALMA-COVER-BUNDLE"
+            },
+            {
+              "orderNumber": "4292",
+              "qty": 1,
+              "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
+            },
             {
               "orderNumber": "4289",
               "qty": 1,
@@ -659,8 +684,18 @@
       "skuAllocations": {
         "STOCKHOLM-CHAISE-COVER": {
           "planned": 50,
-          "allocated": 5,
+          "allocated": 7,
           "orders": [
+            {
+              "orderNumber": "4358",
+              "qty": 1,
+              "bundleFrom": null
+            },
+            {
+              "orderNumber": "4354",
+              "qty": 1,
+              "bundleFrom": null
+            },
             {
               "orderNumber": "4350",
               "qty": 1,
@@ -803,8 +838,8 @@
       "skuAllocations": {}
     },
     "99/2026": {
-      "status": "future",
-      "arrivedDate": null,
+      "status": "arrived",
+      "arrivedDate": "2026-01-30T00:00:00.000Z",
       "etaDate": "2026-01-30T00:00:00.000Z",
       "skuAllocations": {}
     }
@@ -3888,6 +3923,10 @@
       "1006",
       "1005",
       "1003",
+      "4328",
+      "4340",
+      "4305",
+      "4313",
       "DUX050996501-D",
       "Warehouse February",
       "4270",
@@ -3915,10 +3954,10 @@
       "DUX050419327-C",
       "4231",
       "DUX050090206-A",
-      "1058671167-A",
-      "Warehouse January"
+      "1058671167-A"
     ],
     "refunded": [
+      "4317",
       "4303",
       "4241",
       "4224",
@@ -4381,6 +4420,112 @@
   },
   "allocationDetails": [
     {
+      "orderNumber": "4358",
+      "sku": "STOCKHOLM-CHAISE-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "24/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4357",
+      "sku": "STOCKHOLM-CHAISE-LOUNGE",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4356",
+      "sku": "FARO-LOUNGE-SET",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4356",
+      "sku": "PALMA-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "17/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4356",
+      "sku": "PALMA-CUSHION-BOX",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4355",
+      "sku": "FARO-LOUNGE-SET",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4355",
+      "sku": "PALMA-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "17/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4354",
+      "sku": "STOCKHOLM-CHAISE-LOUNGE",
+      "qty": 1,
+      "status": "NO_STOCK",
+      "reason": "No future PO has this SKU planned",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4354",
+      "sku": "STOCKHOLM-CHAISE-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "24/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": null
+    },
+    {
+      "orderNumber": "4353",
+      "sku": "FARO-LOUNGE-SET",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-COVER-BUNDLE"
+    },
+    {
+      "orderNumber": "4353",
+      "sku": "PALMA-COVER",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "17/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "PALMA-COVER-BUNDLE"
+    },
+    {
       "orderNumber": "4352",
       "sku": "BALI-WOOD-PARASOL-GREEN",
       "qty": 1,
@@ -4444,8 +4589,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "16/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
+      "orderTagPO": "17/2026",
+      "crossPO": true,
       "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
     },
     {
@@ -4454,8 +4599,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "16/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
+      "orderTagPO": "17/2026",
+      "crossPO": true,
       "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
     },
     {
@@ -4520,9 +4665,8 @@
       "orderNumber": "4340",
       "sku": "STOCKHOLM-CHAISE-LOUNGE",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4339",
@@ -4672,9 +4816,8 @@
       "orderNumber": "4328",
       "sku": "STOCKHOLM-CHAISE-LOUNGE",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4327",
@@ -4797,39 +4940,24 @@
     },
     {
       "orderNumber": "4317",
-      "sku": "FARO-LOUNGE-SET",
+      "sku": "PALMA-COVER-BUNDLE",
       "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "16/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
-      "bundleFrom": "PALMA-COVER-BUNDLE"
-    },
-    {
-      "orderNumber": "4317",
-      "sku": "PALMA-COVER",
-      "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "17/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
-      "bundleFrom": "PALMA-COVER-BUNDLE"
+      "status": "SKIPPED_REFUNDED",
+      "reason": "Order refunded - excluded from all allocations"
     },
     {
       "orderNumber": "4317",
       "sku": "STOCKHOLM-CORNER-BLACK",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_REFUNDED",
+      "reason": "Order refunded - excluded from all allocations"
     },
     {
       "orderNumber": "4317",
       "sku": "STOCKHOLM-CORNER-COVER",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_REFUNDED",
+      "reason": "Order refunded - excluded from all allocations"
     },
     {
       "orderNumber": "4316",
@@ -4881,9 +5009,8 @@
       "orderNumber": "4313",
       "sku": "STOCKHOLM-CHAISE-LOUNGE",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4312",
@@ -4977,9 +5104,8 @@
       "orderNumber": "4305",
       "sku": "STOCKHOLM-CHAISE-LOUNGE",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": null
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4304",
@@ -5034,8 +5160,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "15/2026",
-      "orderTagPO": "16/2026",
-      "crossPO": true,
+      "orderTagPO": "15/2026",
+      "crossPO": false,
       "bundleFrom": null
     },
     {
@@ -5184,7 +5310,7 @@
       "sku": "FARO-LOUNGE-SET",
       "qty": 1,
       "status": "ALLOCATED",
-      "allocatedToPO": "16/2026",
+      "allocatedToPO": "17/2026",
       "orderTagPO": "NO TAG",
       "crossPO": "",
       "bundleFrom": "PALMA-COVER-BUNDLE"
@@ -5204,9 +5330,9 @@
       "sku": "FARO-LOUNGE-SET",
       "qty": 1,
       "status": "ALLOCATED",
-      "allocatedToPO": "16/2026",
+      "allocatedToPO": "17/2026",
       "orderTagPO": "16/2026",
-      "crossPO": false,
+      "crossPO": true,
       "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
     },
     {
@@ -5461,8 +5587,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "17/2026",
-      "orderTagPO": "15/2026",
-      "crossPO": true,
+      "orderTagPO": "17/2026",
+      "crossPO": false,
       "bundleFrom": "FARO-LOUNGE-SET"
     },
     {
@@ -5471,8 +5597,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "15/2026",
-      "orderTagPO": "15/2026",
-      "crossPO": false,
+      "orderTagPO": "17/2026",
+      "crossPO": true,
       "bundleFrom": null
     },
     {
@@ -7003,8 +7129,8 @@
       "qty": 1,
       "status": "ALLOCATED",
       "allocatedToPO": "15/2026",
-      "orderTagPO": "16/2026",
-      "crossPO": true,
+      "orderTagPO": "15/2026",
+      "crossPO": false,
       "bundleFrom": null
     },
     {
