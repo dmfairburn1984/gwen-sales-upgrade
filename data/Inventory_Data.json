@@ -14,8 +14,8 @@
       "stockOnHand": 0,
       "committed": 30,
       "available": 186,
-      "runRate": 1.4285714285714286,
-      "daysOfStock": 130.2,
+      "runRate": 1.1428571428571428,
+      "daysOfStock": 162.75,
       "lowStockWarning": "60+ Days"
     },
     {
@@ -23,8 +23,8 @@
       "stockOnHand": 0,
       "committed": 15,
       "available": 172,
-      "runRate": 0.7142857142857143,
-      "daysOfStock": 240.79999999999998,
+      "runRate": 0.42857142857142855,
+      "daysOfStock": 401.33333333333337,
       "lowStockWarning": "60+ Days"
     },
     {
@@ -49,7 +49,7 @@
       "sku": "MARBELLA-BOX-BUNDLE",
       "stockOnHand": 0,
       "committed": 0,
-      "available": 65,
+      "available": 64,
       "runRate": 0,
       "daysOfStock": 9999,
       "lowStockWarning": "60+ Days"
@@ -57,10 +57,10 @@
     {
       "sku": "PALMA-COVER",
       "stockOnHand": 0,
-      "committed": 12,
-      "available": 58,
-      "runRate": 0.2857142857142857,
-      "daysOfStock": 203,
+      "committed": 13,
+      "available": 55,
+      "runRate": 0.42857142857142855,
+      "daysOfStock": 128.33333333333334,
       "lowStockWarning": "60+ Days"
     },
     {
@@ -113,18 +113,9 @@
       "stockOnHand": 0,
       "committed": 12,
       "available": 29,
-      "runRate": 0.8571428571428571,
-      "daysOfStock": 33.833333333333336,
+      "runRate": 0.7142857142857143,
+      "daysOfStock": 40.6,
       "lowStockWarning": "30-60 Days"
-    },
-    {
-      "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
-      "stockOnHand": 0,
-      "committed": 0,
-      "available": 29,
-      "runRate": 0,
-      "daysOfStock": 9999,
-      "lowStockWarning": "60+ Days"
     },
     {
       "sku": "SANTORINI-COVER",
@@ -212,6 +203,15 @@
       "stockOnHand": 0,
       "committed": 0,
       "available": 1,
+      "runRate": 0,
+      "daysOfStock": 9999,
+      "lowStockWarning": "60+ Days"
+    },
+    {
+      "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
+      "stockOnHand": 0,
+      "committed": 0,
+      "available": 0,
       "runRate": 0,
       "daysOfStock": 9999,
       "lowStockWarning": "60+ Days"
@@ -2998,15 +2998,6 @@
       "lowStockWarning": "60+ Days"
     },
     {
-      "sku": "HW-MARB-3S-E",
-      "stockOnHand": 0,
-      "committed": 0,
-      "available": 0,
-      "runRate": 0,
-      "daysOfStock": 9999,
-      "lowStockWarning": "60+ Days"
-    },
-    {
       "sku": "HW-MARB-3S-F",
       "stockOnHand": 0,
       "committed": 0,
@@ -3151,13 +3142,22 @@
       "lowStockWarning": "60+ Days"
     },
     {
-      "sku": "BRIDGETOWN-120-4S",
+      "sku": "HW-MARB-3S-E",
       "stockOnHand": 0,
       "committed": 1,
       "available": -1,
       "runRate": 0.14285714285714285,
       "daysOfStock": -7,
       "lowStockWarning": "<30 Days"
+    },
+    {
+      "sku": "BRIDGETOWN-120-4S",
+      "stockOnHand": 0,
+      "committed": 1,
+      "available": -1,
+      "runRate": 0,
+      "daysOfStock": 9999,
+      "lowStockWarning": "60+ Days"
     },
     {
       "sku": "WILLOW-TABLE-120CM",
@@ -3279,11 +3279,11 @@
     {
       "sku": "FARO-LOUNGE-SET-BEIGE",
       "stockOnHand": 0,
-      "committed": 3,
-      "available": -3,
-      "runRate": 0,
-      "daysOfStock": 9999,
-      "lowStockWarning": "60+ Days"
+      "committed": 4,
+      "available": -4,
+      "runRate": 0.14285714285714285,
+      "daysOfStock": -28,
+      "lowStockWarning": "<30 Days"
     },
     {
       "sku": "OXFORD-5S-CNR-BEIGE",
@@ -3325,16 +3325,16 @@
       "sku": "STOCKHOLM-LOUNGE-SET",
       "stockOnHand": 0,
       "committed": 19,
-      "available": -18,
+      "available": -16,
       "runRate": 0.5714285714285714,
-      "daysOfStock": -31.5,
+      "daysOfStock": -28,
       "lowStockWarning": "<30 Days"
     },
     {
       "sku": "PALMA-CUSHION-BOX",
       "stockOnHand": 0,
       "committed": 6,
-      "available": -18,
+      "available": -19,
       "runRate": 0,
       "daysOfStock": 9999,
       "lowStockWarning": "60+ Days"
@@ -3352,36 +3352,36 @@
       "sku": "FARO-LOUNGE-SET",
       "stockOnHand": 0,
       "committed": 11,
-      "available": -32,
+      "available": -35,
       "runRate": 0.42857142857142855,
-      "daysOfStock": -74.66666666666667,
+      "daysOfStock": -81.66666666666667,
       "lowStockWarning": "<30 Days"
     },
     {
       "sku": "PALMA-COVER-BUNDLE",
       "stockOnHand": 0,
-      "committed": 27,
-      "available": -32,
-      "runRate": 1,
-      "daysOfStock": -32,
+      "committed": 29,
+      "available": -35,
+      "runRate": 1.2857142857142858,
+      "daysOfStock": -27.22222222222222,
       "lowStockWarning": "<30 Days"
     },
     {
       "sku": "PALMA-CUSHION BOX-BUNDLE",
       "stockOnHand": 0,
-      "committed": 10,
-      "available": -32,
+      "committed": 11,
+      "available": -35,
       "runRate": 0.5714285714285714,
-      "daysOfStock": -56,
+      "daysOfStock": -61.25,
       "lowStockWarning": "<30 Days"
     },
     {
       "sku": "PALMA-BOX-COVER-BUNDLE",
       "stockOnHand": 0,
       "committed": 4,
-      "available": -32,
+      "available": -35,
       "runRate": 0.14285714285714285,
-      "daysOfStock": -224,
+      "daysOfStock": -245,
       "lowStockWarning": "<30 Days"
     }
   ]
