@@ -2283,20 +2283,39 @@ app.post('/chat', async (req, res) => {
                     }
                 }
                 
-                if (toolCall.function.name === "initiate_checkout") {
-                    console.log(`ðŸ›’ Checkout initiated:`, args);
+               if (toolCall.function.name === "initiate_checkout") {
+                    console.log(`🛒 Checkout initiated:`, args);
                     
-                    const product = productIndex.bySku[args.productSku];
+                    // Try to find product by SKU first, then by name
+                    let product = productIndex.bySku[args.productSku];
+                    let actualSku = args.productSku;
+                    
+                    // If not found by SKU, try finding by name
+                    if (!product && args.productSku) {
+                        console.log(`🔍 Product not found by SKU, trying name lookup: "${args.productSku}"`);
+                        const productResult = findProductByName(args.productSku, session.commercial.productsShown);
+                        if (productResult) {
+                            product = productResult.product;
+                            actualSku = productResult.sku;
+                            console.log(`✅ Found product by name: ${actualSku}`);
+                        }
+                    }
+                    
                     if (!product) {
+                        // Log what we tried to find for debugging
+                        console.log(`❌ Could not find product: "${args.productSku}"`);
+                        console.log(`   Products shown this session: [${session.commercial.productsShown.join(', ')}]`);
+                        
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: false,
-                                message: "Product not found. Ask customer which product they'd like to order."
+                                message: "Product not found. Ask customer which product they'd like to order. Check the products shown earlier in this conversation.",
+                                productsShown: session.commercial.productsShown
                             })
                         });
                     } else {
-                        const productUrl = `https://www.mint-outdoor.com/products/${args.productSku.toLowerCase()}`;
+                        const productUrl = `https://www.mint-outdoor.com/products/${actualSku.toLowerCase().replace(/\s+/g, '-')}`;
                         const price = parseFloat(product.product_identity?.price_gbp) || 0;
                         
                         let checkoutInfo = {
@@ -2984,7 +3003,7 @@ app.get('/api/conversations/:sessionId', async (req, res) => {
                 sentiment,
                 created_at
             FROM conversation_messages
-            WHERE session_id =             ORDER BY created_at ASC
+            WHERE session_id = $1 ORDER BY created_at ASC
         `, [req.params.sessionId]);
         
         res.json({ 
