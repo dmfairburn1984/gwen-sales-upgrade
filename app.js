@@ -36,7 +36,10 @@ const emailTransporter = nodemailer.createTransport({
 // ============================================
 
 async function sendEscalationEmail(customerEmail, customerName, reason, conversationHistory, productsDiscussed = []) {
-    const supportEmail = 'help@mint-outdoor.com';
+    // Use environment variable, fallback to help@mint-outdoor.com
+    const supportEmail = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
+    
+    console.log(`📧 Sending escalation to: ${supportEmail}`);
     
     // Build conversation transcript
     const transcript = conversationHistory
@@ -978,7 +981,7 @@ If customer asks "how do I contact support", "speak to someone", "talk to a pers
 OR if you cannot answer their question, OR if they're frustrated:
 1. ALWAYS ask for their email address first
 2. Then use request_human_handoff tool with their email and reason
-3. The conversation will be emailed to help@mint-outdoor.com
+3. The conversation will be emailed to our customer service team
 4. Confirm: "I've passed your details to our team - they'll email you within a few hours"
 5. NEVER say "I can't help" without offering to connect them with support
 
@@ -2492,7 +2495,7 @@ app.post('/chat', async (req, res) => {
                             session.commercial.productsShown || []
                         );
                         
-                        console.log(`📧 ESCALATION to help@mint-outdoor.com for: ${args.customerEmail}`);
+                        console.log(`📧 ESCALATION sent for: ${args.customerEmail}`);
                         console.log(`📧 Reason: ${args.reason}`);
                         
                         toolResults.push({
@@ -2501,7 +2504,7 @@ app.post('/chat', async (req, res) => {
                                 success: true,
                                 emailSent: emailResult.success,
                                 customerEmail: args.customerEmail,
-                                message: `Escalation sent to our support team at help@mint-outdoor.com. Tell the customer: "I've passed your details to our customer service team at help@mint-outdoor.com. They will email you at ${args.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?"`
+                                message: `Escalation sent to our support team. Tell the customer: "I've passed your details to our customer service team. They will email you at ${args.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?"`
                             })
                         });
                     }
@@ -2847,7 +2850,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         
                         aiOutput = {
                             intent: 'escalation_sent',
-                            response_text: `I've passed your request to our customer service team at help@mint-outdoor.com. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?`
+                            response_text: `I've passed your request to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?`
                         };
                     } else {
                         // Need to capture email first
@@ -2856,7 +2859,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         
                         aiOutput = {
                             intent: 'email_capture_for_escalation',
-                            response_text: `I'd be happy to connect you with our customer service team who can help with this. They're available at help@mint-outdoor.com and typically respond within a few hours.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`
+                            response_text: `I'd be happy to connect you with our customer service team who can help with this. They typically respond within a few hours.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`
                         };
                     }
                 }
@@ -2881,7 +2884,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         
                         aiOutput = {
                             intent: 'escalation_sent',
-                            response_text: `Perfect, thank you! I've sent your details and our conversation to our customer service team at help@mint-outdoor.com. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`
+                            response_text: `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`
                         };
                     }
                 }
