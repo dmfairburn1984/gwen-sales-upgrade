@@ -31,6 +31,77 @@ const emailTransporter = nodemailer.createTransport({
     }
 });
 
+// ============================================
+// ESCALATION EMAIL FUNCTION
+// ============================================
+
+async function sendEscalationEmail(customerEmail, customerName, reason, conversationHistory, productsDiscussed = []) {
+    const supportEmail = 'help@mint-outdoor.com';
+    
+    // Build conversation transcript
+    const transcript = conversationHistory
+        .slice(-20) // Last 20 messages
+        .map(msg => `[${msg.role.toUpperCase()}]: ${msg.content}`)
+        .join('\n\n');
+    
+    // Build product list if any
+    const productList = productsDiscussed.length > 0 
+        ? productsDiscussed.map(sku => {
+            const product = productIndex?.bySku?.[sku];
+            return product 
+                ? `• ${product.product_identity?.product_name} (${sku}) - £${product.product_identity?.price_gbp}`
+                : `• ${sku}`;
+          }).join('\n')
+        : 'No specific products discussed';
+    
+    const emailContent = {
+        from: process.env.EMAIL_USER,
+        to: supportEmail,
+        subject: `🚨 Gwen Escalation: Customer needs help - ${reason.substring(0, 50)}`,
+        html: `
+            <h2>Customer Escalation from Gwen Chatbot</h2>
+            
+            <h3>Customer Details</h3>
+            <p><strong>Email:</strong> ${customerEmail || 'Not provided'}</p>
+            <p><strong>Name:</strong> ${customerName || 'Not provided'}</p>
+            
+            <h3>Reason for Escalation</h3>
+            <p>${reason}</p>
+            
+            <h3>Products Discussed</h3>
+            <pre>${productList}</pre>
+            
+            <h3>Conversation Transcript</h3>
+            <div style="background:#f5f5f5; padding:15px; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:12px;">
+${transcript}
+            </div>
+            
+            <hr>
+            <p style="color:#666; font-size:11px;">
+                This email was automatically sent by Gwen Sales Agent.<br>
+                Please respond to the customer at: ${customerEmail || 'EMAIL NOT PROVIDED - check conversation for contact details'}
+            </p>
+        `
+    };
+    
+    try {
+        if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+            await emailTransporter.sendMail(emailContent);
+            console.log(`📧 ESCALATION EMAIL SENT to ${supportEmail} for customer: ${customerEmail}`);
+            return { success: true, message: 'Escalation email sent' };
+        } else {
+            console.log(`⚠️ Email not configured - escalation logged but not sent`);
+            console.log(`📧 Would have sent to: ${supportEmail}`);
+            console.log(`📧 Customer: ${customerEmail}`);
+            console.log(`📧 Reason: ${reason}`);
+            return { success: false, message: 'Email not configured' };
+        }
+    } catch (error) {
+        console.error(`❌ Failed to send escalation email:`, error.message);
+        return { success: false, message: error.message };
+    }
+}
+
 // Database setup
 const { Pool } = require('pg');
 const pool = process.env.DATABASE_URL ? new Pool({
@@ -289,8 +360,8 @@ function searchProducts(criteria) {
         !excludedSkus.includes(p.product_identity.sku.toUpperCase())
     );
     
-    console.log(`� Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
-    console.log(`� Starting with ${filtered.length} products`);
+    console.log(` Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
+    console.log(` Starting with ${filtered.length} products`);
     
     // Filter by furniture type
     if (furnitureType) {
@@ -307,7 +378,7 @@ function searchProducts(criteria) {
             if (type === 'lounger') return taxonomy.includes('lounger') || name.includes('lounger') || name.includes('sun');
             return true; // If unknown type, don't filter
         });
-        console.log(`� After furniture type filter (${type}): ${filtered.length} products (was ${beforeCount})`);
+        console.log(` After furniture type filter (${type}): ${filtered.length} products (was ${beforeCount})`);
     }
     
     // Filter by material
@@ -319,7 +390,7 @@ function searchProducts(criteria) {
             const name = p.product_identity?.product_name?.toLowerCase() || '';
             return materialType.includes(mat) || name.includes(mat);
         });
-        console.log(`� After material filter (${mat}): ${filtered.length} products (was ${beforeCount})`);
+        console.log(` After material filter (${mat}): ${filtered.length} products (was ${beforeCount})`);
     }
     
     // Filter by seat count - STRICT MINIMUM, no irrelevant smaller products
@@ -333,7 +404,7 @@ function searchProducts(criteria) {
             return seats && seats >= target;
         });
         
-        console.log(`� After seat filter (>=${target}): ${matchingProducts.length} products (was ${beforeCount})`);
+        console.log(` After seat filter (>=${target}): ${matchingProducts.length} products (was ${beforeCount})`);
         
         if (matchingProducts.length > 0) {
             // Sort by closest match to requested seats (not oversized)
@@ -391,11 +462,11 @@ function searchProducts(criteria) {
         return true;
     });
     
-    console.log(`� After stock filter: ${inStockProducts.length} products (was ${beforeStockCount})`);
+    console.log(` After stock filter: ${inStockProducts.length} products (was ${beforeStockCount})`);
     
     const results = inStockProducts.slice(0, maxResults);
     
-    console.log(`� Final results: ${results.map(p => p.product_identity.sku + '(' + p.specifications?.seats + ' seats)').join(', ')}`);
+    console.log(` Final results: ${results.map(p => p.product_identity.sku + '(' + p.specifications?.seats + ' seats)').join(', ')}`);
     
     return results.map(p => ({
         sku: p.product_identity.sku,
@@ -414,7 +485,7 @@ function searchProducts(criteria) {
 function findProductByName(productName, productsShown = []) {
     const searchTerm = productName.toLowerCase().trim();
     
-    console.log(`� Looking for product: "${searchTerm}"`);
+    console.log(` Looking for product: "${searchTerm}"`);
     console.log(`   Products shown this session: [${productsShown.join(', ')}]`);
     
     // PRIORITY 1: Check recently shown products first
@@ -559,7 +630,7 @@ async function renderDimensionCard(sku, options = {}) {
         return {
             type: 'dimension_missing',
             card: null,
-            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">�— View ${name} =†’</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
+            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View ${name} →</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
             productUrl: productUrl,
             productName: name,
             sku: sku
@@ -582,7 +653,7 @@ async function renderDimensionCard(sku, options = {}) {
         card += `\n**Configuration:** This set can be arranged as left or right-hand facing - perfect for fitting your specific space layout!\n`;
     }
     
-    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">�— View detailed dimension diagram =†’</a>\n`;
+    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View detailed dimension diagram →</a>\n`;
     
     // Box dimensions - only if explicitly requested
     if (showBoxDimensions) {
@@ -786,7 +857,7 @@ async function renderProductCard(sku, options = {}) {
     
     card += `\n**Price:** £${price.toFixed(2)}\n`;
     card += `**Stock:** ${stockMessage}\n\n`;
-    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product =†’</a>\n`;
+    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product →</a>\n`;
     
     if (showBundleHint && productData.related_products?.matching_cover_sku) {
         card += `\n🎁 *Matching cover available - ask about our 20% bundle discount!*\n`;
@@ -867,16 +938,16 @@ CRITICAL - URLS AND LINKS:
 WHEN TO SHOW PRODUCTS (use product_recommendation intent):
 - Customer mentions material (rattan, teak, aluminium) AND furniture type or size
 - Customer asks to see options or alternatives
-=†’ Only show products if you have 2+ pieces of qualifying information
+→ Only show products if you have 2+ pieces of qualifying information
 
 WHEN NOT TO SHOW PRODUCTS:
-- Customer says "I like it", "that's great", "perfect" =†’ They've chosen! Help them buy, don't show more
-- Customer asks "how do I order" or "how to buy" =†’ Give checkout instructions, don't show products
-- Customer says "yes" to your question =†’ Acknowledge and help them proceed, don't restart
+- Customer says "I like it", "that's great", "perfect" → They've chosen! Help them buy, don't show more
+- Customer asks "how do I order" or "how to buy" → Give checkout instructions, don't show products
+- Customer says "yes" to your question → Acknowledge and help them proceed, don't restart
 
 WHEN CUSTOMER IS READY TO BUY:
 If customer says: "I'll take it", "how do I order", "how to buy", "yes I want it", "let's do it"
-=†’ Use the initiate_checkout tool OR give clear ordering instructions:
+→ Use the initiate_checkout tool OR give clear ordering instructions:
    1. Tell them to click the View Product button
    2. Add to basket on our website
    3. Proceed to checkout
@@ -884,8 +955,8 @@ If customer says: "I'll take it", "how do I order", "how to buy", "yes I want it
 
 WHEN CUSTOMER WANTS EMAIL QUOTE:
 If customer provides email or asks you to email details:
-=†’ Use the capture_email_for_quote tool
-=†’ Confirm you'll send details within a few minutes
+→ Use the capture_email_for_quote tool
+→ Confirm you'll send details within a few minutes
 
 WHEN TO ASK QUESTIONS (use clarification intent):
 - Only 1 piece of info known - ask for furniture type or size
@@ -901,6 +972,26 @@ RESPONDING TO SPECIFIC QUESTIONS:
 - Will it fit: Use get_product_dimensions, then confirm if it fits their space
 - Eco questions: "Our teak is from sustainable plantations, aluminium is 100% recyclable"
 - Commercial/B2B: "We work with businesses - contact sales@mint-outdoor.com for volume pricing"
+
+WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
+If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
+OR if you cannot answer their question, OR if they're frustrated:
+1. ALWAYS ask for their email address first
+2. Then use request_human_handoff tool with their email and reason
+3. The conversation will be emailed to help@mint-outdoor.com
+4. Confirm: "I've passed your details to our team - they'll email you within a few hours"
+5. NEVER say "I can't help" without offering to connect them with support
+
+IMPORTANT: When chatbot cannot fulfill a request (e.g., product not available, question you can't answer):
+- DO NOT give generic responses about "warranty info" or "delivery details"
+- INSTEAD, immediately offer to connect with customer service
+- Ask: "Let me connect you with our customer service team who can help. What's your email address?"
+
+ACCESSORY QUERIES:
+When customer asks about replacement cushions, covers, or accessories for a specific product:
+1. Use find_accessories tool with the product name and accessory type
+2. Show the main product AND available accessories
+3. If no accessories found, offer to connect with customer service
 
 DIMENSION QUERIES - IMPORTANT:
 When customer asks "how big is...", "what size...", "dimensions of...", "will it fit...", "measurements":
@@ -1001,20 +1092,24 @@ const aiTools = [
         type: "function",
         function: {
             name: "request_human_handoff",
-            description: "Request handoff to human agent when customer needs help beyond your capabilities",
+            description: "Request handoff to human support team when customer needs help you cannot provide, wants to speak to someone, asks how to contact support, or when you cannot fulfill their request. ALWAYS capture customer email first so support can respond.",
             parameters: {
                 type: "object",
                 properties: {
                     reason: {
                         type: "string",
-                        description: "Reason for handoff"
+                        description: "Detailed reason for handoff - include what customer wanted and why you couldn't help"
                     },
                     customerEmail: {
                         type: "string",
-                        description: "Customer's email if provided"
+                        description: "Customer's email address - REQUIRED so support team can respond"
+                    },
+                    customerName: {
+                        type: "string",
+                        description: "Customer's name if provided"
                     }
                 },
-                required: ["reason"]
+                required: ["reason", "customerEmail"]
             }
         }
     },
@@ -1471,7 +1566,7 @@ function buildClosingResponse(session, sentiment) {
                   `2ï¸=ƒ£ Add it to your basket\n` +
                   `3ï¸=ƒ£ The matching accessories will be suggested at checkout\n` +
                   `4ï¸=ƒ£ Your ${COMMERCE_RULES.bundle.discountPercent}% bundle discount applies automatically!\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW =†’ £${finalPrice.toFixed(2)}</a>\n\n` +
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${finalPrice.toFixed(2)}</a>\n\n` +
                   `Or if you'd like me to email you this quote to review later, just let me know your email address and I'll send it with the discount locked in for 48 hours! 📧`,
             mainProduct: mainProductSku,
             bundlePrice: finalPrice,
@@ -1488,7 +1583,7 @@ function buildClosingResponse(session, sentiment) {
                   `✅ 1-year warranty included\n\n` +
                   `**To order:**\n` +
                   `Simply click the button below to add it to your basket and checkout:\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW =†’ £${price.toFixed(2)}</a>\n\n` +
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${price.toFixed(2)}</a>\n\n` +
                   `Would you also like a protective cover? It extends the furniture's life by 3-5 years and you'll save ${COMMERCE_RULES.bundle.discountPercent}% when bought together! 🎁`,
             mainProduct: mainProductSku,
             productPrice: price
@@ -1510,7 +1605,7 @@ function buildEmailCaptureResponse(session) {
               `Just share your email address and I'll send:\n` +
               `📋 Product specifications and dimensions\n` +
               `💰 Your personalised quote with any bundle discounts\n` +
-              `�’ Discount locked in for 48 hours\n\n` +
+              `’ Discount locked in for 48 hours\n\n` +
               `What's the best email to send this to?`
     };
 }
@@ -1843,7 +1938,7 @@ app.post('/chat', async (req, res) => {
         
         const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
         if (isChangeRequest) {
-            console.log(`�„ Change request detected`);
+            console.log(`„ Change request detected`);
         }
         
         // ============================================
@@ -1893,7 +1988,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if material changed
         if (previousMaterial && session.context.material && previousMaterial !== session.context.material) {
-            console.log(`�„ Material changed: ${previousMaterial} =†’ ${session.context.material} - clearing whitelist`);
+            console.log(`„ Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -1969,7 +2064,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if furniture type changed
         if (previousType && session.context.furnitureType && previousType !== session.context.furnitureType) {
-            console.log(`�„ Type changed: ${previousType} =†’ ${session.context.furnitureType} - clearing whitelist`);
+            console.log(`„ Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2043,7 +2138,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if seat count changed
         if (previousSeats && session.context.seatCount && previousSeats !== session.context.seatCount) {
-            console.log(`�„ Seats changed: ${previousSeats} =†’ ${session.context.seatCount} - clearing whitelist`);
+            console.log(`„ Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2168,7 +2263,7 @@ app.post('/chat', async (req, res) => {
         // GENERIC CHANGE REQUEST - Clear whitelist
         // ============================================
         if (isChangeRequest && session.currentWhitelist.length > 0) {
-            console.log(`�„ Change request with existing whitelist - clearing for fresh search`);
+            console.log(`„ Change request with existing whitelist - clearing for fresh search`);
             session.currentWhitelist = [];
         }
     
@@ -2317,7 +2412,7 @@ app.post('/chat', async (req, res) => {
                 const args = JSON.parse(toolCall.function.arguments);
                 
                 if (toolCall.function.name === "search_products") {
-                    console.log(`� Search:`, args);
+                    console.log(` Search:`, args);
                     
                     if (args.furnitureType) session.context.furnitureType = args.furnitureType;
                     if (args.seatCount) session.context.seatCount = args.seatCount;
@@ -2367,15 +2462,49 @@ app.post('/chat', async (req, res) => {
                 }
                 
                          if (toolCall.function.name === "request_human_handoff") {
-                    console.log(`📧 Handoff requested: ${args.reason}`);
+                    console.log(`📧 ESCALATION REQUESTED:`, args);
                     
-                    toolResults.push({
-                        tool_call_id: toolCall.id,
-                        output: JSON.stringify({
-                            success: true,
-                            message: "Handoff logged. Tell customer a team member will be in touch."
-                        })
-                    });
+                    // Validate email if provided
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+                    if (!args.customerEmail || !emailRegex.test(args.customerEmail)) {
+                        // No email - ask for it first
+                        console.log(`⚠️ Escalation requested but no valid email provided`);
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                success: false,
+                                needsEmail: true,
+                                message: "Before I connect you with our support team, I'll need your email address so they can get back to you. What's the best email to reach you on?"
+                            })
+                        });
+                    } else {
+                        // Have email - send escalation
+                        session.customerEmail = args.customerEmail;
+                        session.escalationReason = args.reason;
+                        
+                        // Send the actual escalation email
+                        const emailResult = await sendEscalationEmail(
+                            args.customerEmail,
+                            args.customerName || 'Not provided',
+                            args.reason,
+                            session.conversationHistory || [],
+                            session.commercial.productsShown || []
+                        );
+                        
+                        console.log(`📧 ESCALATION to help@mint-outdoor.com for: ${args.customerEmail}`);
+                        console.log(`📧 Reason: ${args.reason}`);
+                        
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                success: true,
+                                emailSent: emailResult.success,
+                                customerEmail: args.customerEmail,
+                                message: `Escalation sent to our support team at help@mint-outdoor.com. Tell the customer: "I've passed your details to our customer service team at help@mint-outdoor.com. They will email you at ${args.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?"`
+                            })
+                        });
+                    }
                 }
                 
                 if (toolCall.function.name === "capture_email_for_quote") {
@@ -2680,10 +2809,82 @@ if (toolCall.function.name === "get_product_dimensions") {
             // LAYER 4: CONTEXT-AWARE INTELLIGENT FALLBACK
             // ============================================
             if (!aiOutput) {
-                console.log(`�„ Using context-aware fallback`);
+                console.log(`🔄 Using context-aware fallback`);
                 const ctx = session.context;
                 const hasWhitelist = session.currentWhitelist && session.currentWhitelist.length > 0;
                 const hasContext = ctx.material || ctx.furnitureType || ctx.seatCount;
+                
+                // ============================================
+                // PRIORITY 0: ESCALATION/SUPPORT REQUEST DETECTION
+                // ============================================
+                const escalationPatterns = [
+                    'contact support', 'contact team', 'contact you', 'contact someone',
+                    'speak to someone', 'speak to a person', 'speak to a human', 'speak to agent',
+                    'talk to someone', 'talk to a person', 'talk to a human', 'talk to agent',
+                    'customer service', 'customer support', 'support team', 'help desk',
+                    'real person', 'real human', 'human agent', 'live agent', 'live chat',
+                    'phone number', 'call you', 'email you', 'email address', 'email me',
+                    'get in touch', 'how do i contact', 'how can i contact', 'how to contact',
+                    'need help', 'need assistance', 'this is useless', 'you\'re useless',
+                    'not helpful', 'can\'t help', 'cannot help'
+                ];
+                
+                const wantsEscalation = escalationPatterns.some(p => msgLower.includes(p));
+                
+                if (wantsEscalation) {
+                    console.log(`🚨 ESCALATION REQUEST DETECTED in fallback`);
+                    
+                    // Check if we already have their email
+                    if (session.customerEmail) {
+                        // We have email - send escalation directly
+                        const emailResult = await sendEscalationEmail(
+                            session.customerEmail,
+                            session.customerName || 'Not provided',
+                            `Customer requested human support. Last message: "${message}"`,
+                            session.conversationHistory || [],
+                            session.commercial.productsShown || []
+                        );
+                        
+                        aiOutput = {
+                            intent: 'escalation_sent',
+                            response_text: `I've passed your request to our customer service team at help@mint-outdoor.com. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?`
+                        };
+                    } else {
+                        // Need to capture email first
+                        session.pendingEscalation = true;
+                        session.escalationReason = message;
+                        
+                        aiOutput = {
+                            intent: 'email_capture_for_escalation',
+                            response_text: `I'd be happy to connect you with our customer service team who can help with this. They're available at help@mint-outdoor.com and typically respond within a few hours.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`
+                        };
+                    }
+                }
+                
+                // PRIORITY 0.5: Check if customer just provided email after escalation request
+                if (!aiOutput && session.pendingEscalation) {
+                    const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+                    if (emailMatch) {
+                        session.customerEmail = emailMatch[0];
+                        session.pendingEscalation = false;
+                        
+                        // Send escalation email
+                        const emailResult = await sendEscalationEmail(
+                            session.customerEmail,
+                            session.customerName || 'Not provided',
+                            session.escalationReason || 'Customer requested human support',
+                            session.conversationHistory || [],
+                            session.commercial.productsShown || []
+                        );
+                        
+                        console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
+                        
+                        aiOutput = {
+                            intent: 'escalation_sent',
+                            response_text: `Perfect, thank you! I've sent your details and our conversation to our customer service team at help@mint-outdoor.com. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`
+                        };
+                    }
+                }
                 
                 // PRIORITY 1: Check if customer mentioned a SPECIFIC PRODUCT BY NAME
                 const productNamePatterns = [
@@ -2697,7 +2898,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                 );
                 
                 if (mentionedProduct) {
-                    console.log(`� Fallback: Customer mentioned "${mentionedProduct}" - searching`);
+                    console.log(` Fallback: Customer mentioned "${mentionedProduct}" - searching`);
                     
                     const productSearch = searchProducts({ 
                         productName: mentionedProduct,
@@ -3480,7 +3681,7 @@ app.get('/run-tests', async (req, res) => {
     console.log(`\n📋 Suite: ${suiteName}`);
     
     for (const test of suite.tests) {
-      console.log(`�„ ${test.id}: ${test.name}`);
+      console.log(`„ ${test.id}: ${test.name}`);
       const startTime = Date.now();
       
       try {
@@ -3862,7 +4063,7 @@ function generateTestReportHTML(results) {
   `).join('')}
   
   <div class="actions">
-    <a href="/run-tests" class="btn">�„ Run Again</a>
+    <a href="/run-tests" class="btn">„ Run Again</a>
     <a href="/run-tests?format=json" class="btn">📊 JSON Results</a>
     <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">🧪 Test Single</a>
   </div>
