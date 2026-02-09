@@ -22,12 +22,29 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
-// Email configuration
+// Email configuration - Supports both Gmail and Google Workspace
+// For Google Workspace (custom domain like @mint-outdoor.com), use SMTP settings
 const emailTransporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // Use TLS
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+// Verify email configuration on startup
+emailTransporter.verify((error, success) => {
+    if (error) {
+        console.log('❌ Email configuration ERROR:', error.message);
+        console.log('   EMAIL_USER:', process.env.EMAIL_USER ? '✅ Set' : '❌ Missing');
+        console.log('   EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set' : '❌ Missing');
+    } else {
+        console.log('✅ Email server ready - can send escalations');
     }
 });
 
@@ -39,12 +56,18 @@ async function sendEscalationEmail(customerEmail, customerName, reason, conversa
     // Use environment variable, fallback to help@mint-outdoor.com
     const supportEmail = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
     
-    console.log(`📧 Sending escalation to: ${supportEmail}`);
+    console.log(`📧 ============================================`);
+    console.log(`📧 ESCALATION EMAIL ATTEMPT`);
+    console.log(`📧 To: ${supportEmail}`);
+    console.log(`📧 From: ${process.env.EMAIL_USER}`);
+    console.log(`📧 Customer: ${customerEmail}`);
+    console.log(`📧 Reason: ${reason.substring(0, 100)}...`);
+    console.log(`📧 ============================================`);
     
     // Build conversation transcript
     const transcript = conversationHistory
         .slice(-20) // Last 20 messages
-        .map(msg => `[${msg.role.toUpperCase()}]: ${msg.content}`)
+        .map(msg => `[${msg.role?.toUpperCase() || 'UNKNOWN'}]: ${msg.content || ''}`)
         .join('\n\n');
     
     // Build product list if any
@@ -58,8 +81,9 @@ async function sendEscalationEmail(customerEmail, customerName, reason, conversa
         : 'No specific products discussed';
     
     const emailContent = {
-        from: process.env.EMAIL_USER,
+        from: `"Gwen Sales Agent" <${process.env.EMAIL_USER}>`,
         to: supportEmail,
+        replyTo: customerEmail || process.env.EMAIL_USER,
         subject: `🚨 Gwen Escalation: Customer needs help - ${reason.substring(0, 50)}`,
         html: `
             <h2>Customer Escalation from Gwen Chatbot</h2>
@@ -84,24 +108,54 @@ ${transcript}
                 This email was automatically sent by Gwen Sales Agent.<br>
                 Please respond to the customer at: ${customerEmail || 'EMAIL NOT PROVIDED - check conversation for contact details'}
             </p>
+        `,
+        text: `
+CUSTOMER ESCALATION FROM GWEN CHATBOT
+
+Customer Email: ${customerEmail || 'Not provided'}
+Customer Name: ${customerName || 'Not provided'}
+
+Reason: ${reason}
+
+Products Discussed:
+${productList}
+
+Conversation:
+${transcript}
         `
     };
     
     try {
-        if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
-            await emailTransporter.sendMail(emailContent);
-            console.log(`📧 ESCALATION EMAIL SENT to ${supportEmail} for customer: ${customerEmail}`);
-            return { success: true, message: 'Escalation email sent' };
-        } else {
-            console.log(`⚠️ Email not configured - escalation logged but not sent`);
-            console.log(`📧 Would have sent to: ${supportEmail}`);
-            console.log(`📧 Customer: ${customerEmail}`);
-            console.log(`📧 Reason: ${reason}`);
-            return { success: false, message: 'Email not configured' };
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+            console.log(`❌ Email credentials not configured`);
+            console.log(`   EMAIL_USER: ${process.env.EMAIL_USER ? 'Set' : 'MISSING'}`);
+            console.log(`   EMAIL_PASSWORD: ${process.env.EMAIL_PASSWORD ? 'Set' : 'MISSING'}`);
+            return { success: false, message: 'Email credentials not configured' };
         }
+        
+        const info = await emailTransporter.sendMail(emailContent);
+        console.log(`✅ ESCALATION EMAIL SENT SUCCESSFULLY`);
+        console.log(`   Message ID: ${info.messageId}`);
+        console.log(`   To: ${supportEmail}`);
+        console.log(`   Customer: ${customerEmail}`);
+        return { success: true, message: 'Escalation email sent', messageId: info.messageId };
+        
     } catch (error) {
-        console.error(`❌ Failed to send escalation email:`, error.message);
-        return { success: false, message: error.message };
+        console.log(`❌ ESCALATION EMAIL FAILED`);
+        console.log(`   Error: ${error.message}`);
+        console.log(`   Code: ${error.code || 'N/A'}`);
+        console.log(`   Response: ${error.response || 'N/A'}`);
+        
+        // Log more details for common errors
+        if (error.code === 'EAUTH') {
+            console.log(`   💡 Fix: Check EMAIL_PASSWORD - may need App Password from Google`);
+            console.log(`   💡 Go to: https://myaccount.google.com/apppasswords`);
+        }
+        if (error.code === 'ESOCKET' || error.code === 'ECONNECTION') {
+            console.log(`   💡 Fix: Network/firewall issue - check Heroku can reach smtp.gmail.com`);
+        }
+        
+        return { success: false, message: error.message, code: error.code };
     }
 }
 
@@ -1910,7 +1964,10 @@ app.post('/chat', async (req, res) => {
                     crossSellsShown: [],
                     lastProductPrice: null,
                     lastOfferType: null
-                }
+                },
+                escalationOffered: false,
+                pendingEscalation: false,
+                escalationReason: null
             });
         }
         
@@ -1921,6 +1978,99 @@ app.post('/chat', async (req, res) => {
         // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
         const msgLower = message.toLowerCase();
+        
+        // ============================================
+        // CHECK FOR ESCALATION ACCEPTANCE (PRIORITY FIRST!)
+        // ============================================
+        // If Gwen just offered to connect to customer service and customer said "yes"
+        const affirmativePatterns = [
+            'yes', 'yeah', 'yep', 'sure', 'please', 'ok', 'okay', 
+            'go ahead', 'that would be great', 'that would be good',
+            'yes please', 'please do', 'i would like that', 'sounds good'
+        ];
+        
+        const isAffirmative = affirmativePatterns.some(p => {
+            // Match whole word or phrase, not partial (e.g., "yes" not in "yesterday")
+            const regex = new RegExp(`\\b${p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+            return regex.test(msgLower);
+        });
+        
+        // Check if customer is accepting escalation offer
+        if (session.escalationOffered && isAffirmative) {
+            console.log(`🚨 Customer accepted escalation offer - proceeding with email capture`);
+            session.pendingEscalation = true;
+            session.escalationOffered = false; // Reset the offer flag
+            
+            // Check if they also provided an email in the same message
+            const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+            if (emailMatch) {
+                session.customerEmail = emailMatch[0];
+                session.pendingEscalation = false;
+                
+                // Send escalation email
+                const emailResult = await sendEscalationEmail(
+                    session.customerEmail,
+                    session.customerName || 'Not provided',
+                    session.escalationReason || 'Customer requested human support',
+                    session.conversationHistory || [],
+                    session.commercial.productsShown || []
+                );
+                
+                console.log(`📧 ESCALATION EMAIL SENT (with affirmative): ${session.customerEmail}`);
+                
+                // Return escalation confirmation directly
+                const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: confirmationResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, {});
+                await logConversationMessage(sessionId, 'assistant', confirmationResponse, { intent: 'escalation_sent' });
+                
+                return res.json({ response: confirmationResponse, sessionId });
+            } else {
+                // No email provided - ask for it
+                const emailRequestResponse = `I'd be happy to connect you with our customer service team who can help with this.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: emailRequestResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, {});
+                await logConversationMessage(sessionId, 'assistant', emailRequestResponse, { intent: 'email_capture_for_escalation' });
+                
+                return res.json({ response: emailRequestResponse, sessionId });
+            }
+        }
+        
+        // Check if customer is providing email after we asked for it (for escalation)
+        if (session.pendingEscalation) {
+            const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+            if (emailMatch) {
+                session.customerEmail = emailMatch[0];
+                session.pendingEscalation = false;
+                
+                // Send escalation email
+                const emailResult = await sendEscalationEmail(
+                    session.customerEmail,
+                    session.customerName || 'Not provided',
+                    session.escalationReason || 'Customer requested human support',
+                    session.conversationHistory || [],
+                    session.commercial.productsShown || []
+                );
+                
+                console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
+                
+                const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: confirmationResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, {});
+                await logConversationMessage(sessionId, 'assistant', confirmationResponse, { intent: 'escalation_sent' });
+                
+                return res.json({ response: confirmationResponse, sessionId });
+            }
+        }
         
         // Store previous context to detect changes
         const previousMaterial = session.context.material;
@@ -1941,7 +2091,7 @@ app.post('/chat', async (req, res) => {
         
         const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
         if (isChangeRequest) {
-            console.log(`„ Change request detected`);
+            console.log(`🔄 Change request detected`);
         }
         
         // ============================================
@@ -1991,7 +2141,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if material changed
         if (previousMaterial && session.context.material && previousMaterial !== session.context.material) {
-            console.log(`„ Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
+            console.log(`🔄 Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2067,7 +2217,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if furniture type changed
         if (previousType && session.context.furnitureType && previousType !== session.context.furnitureType) {
-            console.log(`„ Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
+            console.log(`🔄 Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2141,7 +2291,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if seat count changed
         if (previousSeats && session.context.seatCount && previousSeats !== session.context.seatCount) {
-            console.log(`„ Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
+            console.log(`🔄 Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2266,7 +2416,7 @@ app.post('/chat', async (req, res) => {
         // GENERIC CHANGE REQUEST - Clear whitelist
         // ============================================
         if (isChangeRequest && session.currentWhitelist.length > 0) {
-            console.log(`„ Change request with existing whitelist - clearing for fresh search`);
+            console.log(`🔄 Change request with existing whitelist - clearing for fresh search`);
             session.currentWhitelist = [];
         }
     
@@ -3170,7 +3320,32 @@ if (toolCall.function.name === "get_product_dimensions") {
             sentiment: session.commercial.sentiment
         });
         
-      
+        // ============================================
+        // DETECT ESCALATION OFFERS - Track when Gwen offers to connect to support
+        // ============================================
+        const escalationOfferPatterns = [
+            'connect you with our customer service',
+            'connect you with our team',
+            'connect you with support',
+            'speak to someone',
+            'speak to a person',
+            'speak to our team',
+            'would you like me to do that',
+            'would you like that',
+            'pass this to our team',
+            'hand this over to',
+            'get someone to help',
+            'have our team contact you'
+        ];
+        
+        const finalResponseLower = finalResponse.toLowerCase();
+        const isOfferingEscalation = escalationOfferPatterns.some(p => finalResponseLower.includes(p));
+        
+        if (isOfferingEscalation) {
+            console.log(`🚨 Escalation offered - setting flag for next response`);
+            session.escalationOffered = true;
+            session.escalationReason = `Customer inquiry: ${message.substring(0, 200)}`;
+        }
         
         console.log(`📤 Response (${finalResponse.length} chars)`);
         console.log(`${'='.repeat(60)}\n`);
@@ -3684,7 +3859,7 @@ app.get('/run-tests', async (req, res) => {
     console.log(`\n📋 Suite: ${suiteName}`);
     
     for (const test of suite.tests) {
-      console.log(`„ ${test.id}: ${test.name}`);
+      console.log(`🔄 ${test.id}: ${test.name}`);
       const startTime = Date.now();
       
       try {
@@ -4066,7 +4241,7 @@ function generateTestReportHTML(results) {
   `).join('')}
   
   <div class="actions">
-    <a href="/run-tests" class="btn">„ Run Again</a>
+    <a href="/run-tests" class="btn">🔄 Run Again</a>
     <a href="/run-tests?format=json" class="btn">📊 JSON Results</a>
     <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">🧪 Test Single</a>
   </div>
