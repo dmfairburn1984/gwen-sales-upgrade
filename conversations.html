@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINT Outdoor — Gwen Conversation Log</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mint: #9FDCC2;
+            --forest: #2E6041;
+            --forest-dark: #1a3d28;
+            --off-white: #F5F5F0;
+            --charcoal: #333333;
+            --red: #D84727;
+            --amber: #E8A317;
+            --blue: #3B82F6;
+            --light-grey: #E8E8E3;
+            --card-bg: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--off-white);
+            color: var(--charcoal);
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+            color: white;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header-left h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .header-left p {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 2px;
+            font-family: 'Lora', serif;
+        }
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .header-stat {
+            text-align: center;
+            padding: 0 16px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-stat:last-child { border-right: none; }
+        .header-stat .val {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--mint);
+        }
+        .header-stat .lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        /* ── Controls bar ── */
+        .controls {
+            padding: 16px 32px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--light-grey);
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px 14px 10px 38px;
+            border: 1px solid var(--light-grey);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            outline: none;
+            background: var(--off-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") 12px center no-repeat;
+            transition: border-color 0.2s;
+        }
+        .search-box:focus { border-color: var(--forest); }
+        .filter-btn {
+            padding: 10px 16px;
+            border: 1px solid var(--light-grey);
+            border-radius: 8px;
+            background: var(--off-white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { background: var(--light-grey); }
+        .filter-btn.active {
+            background: var(--forest);
+            color: white;
+            border-color: var(--forest);
+        }
+        .refresh-btn {
+            padding: 10px 20px;
+            background: var(--forest);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .refresh-btn:hover { background: var(--forest-dark); }
+
+        /* ── Main content ── */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px;
+        }
+
+        /* ── Conversation list ── */
+        .conv-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .conv-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--light-grey);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        .conv-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+        .conv-summary {
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 40px 1fr auto auto auto auto 32px;
+            gap: 16px;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .conv-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--forest);
+        }
+        .conv-preview {
+            min-width: 0;
+        }
+        .conv-preview .first-msg {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .conv-preview .session-id {
+            font-size: 11px;
+            color: #999;
+            margin-top: 2px;
+            font-family: monospace;
+        }
+        .conv-meta {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .conv-meta .meta-val {
+            font-weight: 600;
+            color: var(--charcoal);
+            display: block;
+        }
+        .conv-meta .meta-lbl {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-positive { background: #D4EDDA; color: #155724; }
+        .badge-neutral { background: #E8E8E3; color: #666; }
+        .badge-concern { background: #FFF3CD; color: #856404; }
+        .badge-checkout { background: #CCE5FF; color: #004085; }
+        .badge-error { background: #F8D7DA; color: #721C24; }
+
+        .expand-arrow {
+            font-size: 16px;
+            color: #999;
+            transition: transform 0.2s;
+        }
+        .conv-card.open .expand-arrow { transform: rotate(180deg); }
+
+        /* ── Expanded conversation ── */
+        .conv-detail {
+            display: none;
+            border-top: 1px solid var(--light-grey);
+            background: #FAFAF7;
+        }
+        .conv-card.open .conv-detail { display: block; }
+
+        .conv-actions {
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--light-grey);
+        }
+        .action-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--light-grey);
+            border-radius: 6px;
+            background: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .action-btn:hover { background: var(--off-white); }
+        .action-btn.flag { color: var(--red); border-color: var(--red); }
+        .action-btn.flag:hover { background: #FEE; }
+        .action-btn.flag.flagged { background: var(--red); color: white; }
+
+        .messages {
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .msg {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+        }
+        .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .msg.customer .msg-avatar {
+            background: var(--blue);
+            color: white;
+        }
+        .msg.gwen .msg-avatar {
+            background: var(--forest);
+            color: white;
+        }
+        .msg-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .msg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .msg-sender {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .msg-time {
+            font-size: 11px;
+            color: #999;
+        }
+        .msg-intent {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 4px;
+            background: #EDF2FF;
+            color: var(--blue);
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        .msg-content {
+            font-size: 13px;
+            line-height: 1.6;
+            font-family: 'Lora', serif;
+            color: #444;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--light-grey);
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        .msg.customer .msg-content {
+            background: #EDF2FF;
+            border-color: #D0DFFF;
+        }
+        .msg-products {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #888;
+        }
+        .msg-products span {
+            display: inline-block;
+            background: var(--off-white);
+            border: 1px solid var(--light-grey);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px 4px 2px 0;
+            font-family: monospace;
+            font-size: 10px;
+        }
+
+        /* ── Empty state ── */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+        .empty-state h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #777;
+        }
+        .empty-state p { font-family: 'Lora', serif; font-size: 14px; }
+
+        /* ── Loading ── */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+        .spinner {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--light-grey);
+            border-top-color: var(--forest);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .conv-summary {
+                grid-template-columns: 1fr auto auto;
+                gap: 10px;
+            }
+            .conv-number, .conv-meta:nth-child(n+5) { display: none; }
+            .header { padding: 16px 20px; }
+            .controls { padding: 12px 20px; }
+            .main { padding: 16px 20px; }
+        }
+
+        /* ── Stripped HTML in messages ── */
+        .msg-content img { max-width: 100%; border-radius: 6px; margin: 4px 0; }
+        .msg-content a { color: var(--forest); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <h1>🌿 Gwen — Conversation Log</h1>
+        <p>Every customer interaction, every response</p>
+    </div>
+    <div class="header-right">
+        <div class="header-stat">
+            <div class="val" id="stat-total">—</div>
+            <div class="lbl">Conversations</div>
+        </div>
+        <div class="header-stat">
+            <div class="val" id="stat-today">—</div>
+            <div class="lbl">Today</div>
+        </div>
+        <div class="header-stat">
+            <div class="val" id="stat-flagged">—</div>
+            <div class="lbl">Flagged</div>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <input type="text" class="search-box" id="searchBox" placeholder="Search messages, sessions, products…">
+    <button class="filter-btn" data-filter="all" onclick="setFilter('all', this)">All</button>
+    <button class="filter-btn" data-filter="today" onclick="setFilter('today', this)">Today</button>
+    <button class="filter-btn" data-filter="flagged" onclick="setFilter('flagged', this)">⚠ Flagged</button>
+    <button class="filter-btn" data-filter="checkout" onclick="setFilter('checkout', this)">🛒 Checkout</button>
+    <button class="filter-btn" data-filter="errors" onclick="setFilter('errors', this)">❌ Errors</button>
+    <button class="refresh-btn" onclick="loadConversations()">↻ Refresh</button>
+</div>
+
+<div class="main">
+    <div id="convContainer">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top:12px;">Loading conversations…</p>
+        </div>
+    </div>
+</div>
+
+<script>
+let allConversations = [];
+let currentFilter = 'all';
+let flaggedSessions = JSON.parse(localStorage.getItem('gwen_flagged') || '[]');
+
+// ── Determine API base URL ──
+const API_BASE = window.location.origin;
+
+async function loadConversations() {
+    const container = document.getElementById('convContainer');
+    container.innerHTML = '<div class="loading"><div class="spinner"></div><p style="margin-top:12px;">Loading conversations…</p></div>';
+
+    try {
+        const res = await fetch(`${API_BASE}/api/conversations`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        allConversations = data.conversations || [];
+        updateStats();
+        renderConversations();
+    } catch (err) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <h2>⚠ Could not load conversations</h2>
+                <p>${err.message}<br>Make sure the database is connected and conversations are being logged.</p>
+            </div>`;
+    }
+}
+
+function updateStats() {
+    const today = new Date().toISOString().slice(0, 10);
+    const todayConvs = allConversations.filter(c => c.first_message_at && c.first_message_at.slice(0, 10) === today);
+    const flaggedConvs = allConversations.filter(c => flaggedSessions.includes(c.session_id));
+
+    document.getElementById('stat-total').textContent = allConversations.length;
+    document.getElementById('stat-today').textContent = todayConvs.length;
+    document.getElementById('stat-flagged').textContent = flaggedConvs.length;
+}
+
+function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderConversations();
+}
+
+function renderConversations() {
+    const container = document.getElementById('convContainer');
+    const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+    const today = new Date().toISOString().slice(0, 10);
+
+    let filtered = allConversations;
+
+    // Apply filter
+    if (currentFilter === 'today') {
+        filtered = filtered.filter(c => c.first_message_at && c.first_message_at.slice(0, 10) === today);
+    } else if (currentFilter === 'flagged') {
+        filtered = filtered.filter(c => flaggedSessions.includes(c.session_id));
+    } else if (currentFilter === 'checkout') {
+        filtered = filtered.filter(c => c.has_checkout);
+    } else if (currentFilter === 'errors') {
+        filtered = filtered.filter(c => c.has_errors);
+    }
+
+    // Apply search
+    if (searchTerm) {
+        filtered = filtered.filter(c =>
+            (c.first_customer_message || '').toLowerCase().includes(searchTerm) ||
+            (c.session_id || '').toLowerCase().includes(searchTerm) ||
+            (c.products_shown || '').toLowerCase().includes(searchTerm) ||
+            (c.all_messages_text || '').toLowerCase().includes(searchTerm)
+        );
+    }
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <h2>No conversations found</h2>
+                <p>${allConversations.length === 0 ? 'Conversations will appear here once customers start chatting with Gwen.' : 'Try adjusting your search or filter.'}</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = '<div class="conv-list">' + filtered.map((conv, idx) => {
+        const isFlagged = flaggedSessions.includes(conv.session_id);
+        const timeAgo = getTimeAgo(conv.first_message_at);
+        const sentimentBadge = getSentimentBadge(conv);
+
+        return `
+        <div class="conv-card" id="conv-${conv.session_id}">
+            <div class="conv-summary" onclick="toggleConversation('${conv.session_id}')">
+                <div class="conv-number">${filtered.length - idx}</div>
+                <div class="conv-preview">
+                    <div class="first-msg">${escapeHtml(conv.first_customer_message || 'No messages')}</div>
+                    <div class="session-id">${conv.session_id.substring(0, 16)}… · ${timeAgo}</div>
+                </div>
+                <div class="conv-meta">
+                    <span class="meta-val">${conv.message_count || 0}</span>
+                    <span class="meta-lbl">Messages</span>
+                </div>
+                <div class="conv-meta">
+                    <span class="meta-val">${conv.products_shown_count || 0}</span>
+                    <span class="meta-lbl">Products</span>
+                </div>
+                <div>${sentimentBadge}</div>
+                <div class="expand-arrow">▼</div>
+            </div>
+            <div class="conv-detail" id="detail-${conv.session_id}">
+                <div class="conv-actions">
+                    <button class="action-btn flag ${isFlagged ? 'flagged' : ''}" onclick="toggleFlag('${conv.session_id}', event)">
+                        ${isFlagged ? '⚠ Flagged' : '⚠ Flag for Review'}
+                    </button>
+                    <button class="action-btn" onclick="copyConversation('${conv.session_id}', event)">📋 Copy Text</button>
+                    <button class="action-btn" onclick="exportConversation('${conv.session_id}', event)">💾 Export JSON</button>
+                </div>
+                <div class="messages" id="messages-${conv.session_id}">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>`;
+    }).join('') + '</div>';
+}
+
+async function toggleConversation(sessionId) {
+    const card = document.getElementById(`conv-${sessionId}`);
+    const isOpen = card.classList.contains('open');
+
+    // Close all others
+    document.querySelectorAll('.conv-card.open').forEach(c => c.classList.remove('open'));
+
+    if (!isOpen) {
+        card.classList.add('open');
+        await loadMessages(sessionId);
+    }
+}
+
+async function loadMessages(sessionId) {
+    const container = document.getElementById(`messages-${sessionId}`);
+    container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+    try {
+        const res = await fetch(`${API_BASE}/api/conversations/${encodeURIComponent(sessionId)}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const messages = data.messages || [];
+
+        if (messages.length === 0) {
+            container.innerHTML = '<p style="padding:20px;color:#999;text-align:center;">No messages found for this session.</p>';
+            return;
+        }
+
+        container.innerHTML = messages.map(msg => {
+            const isCustomer = msg.role === 'customer';
+            const time = msg.created_at ? new Date(msg.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '';
+            const date = msg.created_at ? new Date(msg.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
+            const intentTag = msg.intent ? `<span class="msg-intent">${msg.intent}</span>` : '';
+            const productsShown = msg.products_shown ? JSON.parse(msg.products_shown || '[]') : [];
+            const productsHtml = productsShown.length > 0
+                ? `<div class="msg-products">Products shown: ${productsShown.map(p => `<span>${p}</span>`).join('')}</div>`
+                : '';
+
+            // Strip heavy HTML from Gwen's responses for readability but keep text
+            let content = msg.content || '';
+            if (!isCustomer) {
+                // Keep text readable: strip img tags and heavy HTML, preserve structure
+                content = content
+                    .replace(/<img[^>]*>/gi, '[product image]')
+                    .replace(/<a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a>/gi, '$2 ($1)')
+                    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/\*\*/g, '')
+                    .replace(/\n{3,}/g, '\n\n')
+                    .trim();
+            }
+
+            return `
+            <div class="msg ${isCustomer ? 'customer' : 'gwen'}">
+                <div class="msg-avatar">${isCustomer ? '👤' : '🌿'}</div>
+                <div class="msg-body">
+                    <div class="msg-header">
+                        <span class="msg-sender">${isCustomer ? 'Customer' : 'Gwen'}${intentTag}</span>
+                        <span class="msg-time">${date} ${time}</span>
+                    </div>
+                    <div class="msg-content">${escapeHtml(content)}</div>
+                    ${productsHtml}
+                </div>
+            </div>`;
+        }).join('');
+
+    } catch (err) {
+        container.innerHTML = `<p style="padding:20px;color:var(--red);">Failed to load: ${err.message}</p>`;
+    }
+}
+
+function toggleFlag(sessionId, event) {
+    event.stopPropagation();
+    const idx = flaggedSessions.indexOf(sessionId);
+    if (idx > -1) {
+        flaggedSessions.splice(idx, 1);
+    } else {
+        flaggedSessions.push(sessionId);
+    }
+    localStorage.setItem('gwen_flagged', JSON.stringify(flaggedSessions));
+    updateStats();
+    renderConversations();
+}
+
+async function copyConversation(sessionId, event) {
+    event.stopPropagation();
+    try {
+        const res = await fetch(`${API_BASE}/api/conversations/${encodeURIComponent(sessionId)}`);
+        const data = await res.json();
+        const text = (data.messages || []).map(m =>
+            `[${m.role === 'customer' ? 'CUSTOMER' : 'GWEN'}] ${m.content}`
+        ).join('\n\n---\n\n');
+        await navigator.clipboard.writeText(text);
+        event.target.textContent = '✓ Copied!';
+        setTimeout(() => { event.target.textContent = '📋 Copy Text'; }, 2000);
+    } catch (err) {
+        alert('Failed to copy: ' + err.message);
+    }
+}
+
+async function exportConversation(sessionId, event) {
+    event.stopPropagation();
+    try {
+        const res = await fetch(`${API_BASE}/api/conversations/${encodeURIComponent(sessionId)}`);
+        const data = await res.json();
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `gwen-conversation-${sessionId.substring(0, 8)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    } catch (err) {
+        alert('Failed to export: ' + err.message);
+    }
+}
+
+function getSentimentBadge(conv) {
+    if (conv.has_checkout) return '<span class="badge badge-checkout">🛒 Checkout</span>';
+    if (conv.has_errors) return '<span class="badge badge-error">❌ Error</span>';
+    if (conv.final_sentiment === 'price_concerned') return '<span class="badge badge-concern">💰 Price Concern</span>';
+    if (conv.final_sentiment === 'positive') return '<span class="badge badge-positive">😊 Positive</span>';
+    return '<span class="badge badge-neutral">💬 Active</span>';
+}
+
+function getTimeAgo(dateStr) {
+    if (!dateStr) return 'Unknown';
+    const now = new Date();
+    const then = new Date(dateStr);
+    const mins = Math.floor((now - then) / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days === 1) return 'Yesterday';
+    if (days < 7) return `${days}d ago`;
+    return then.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ── Search debounce ──
+let searchTimeout;
+document.getElementById('searchBox').addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(renderConversations, 300);
+});
+
+// ── Auto-refresh every 30 seconds ──
+setInterval(loadConversations, 30000);
+
+// ── Initial load ──
+loadConversations();
+// Set "All" filter active by default
+document.querySelector('[data-filter="all"]').classList.add('active');
+</script>
+
+</body>
+</html>
