@@ -1030,6 +1030,17 @@ RESPONDING TO SPECIFIC QUESTIONS:
 - Eco questions: "Our teak is from sustainable plantations, aluminium is 100% recyclable"
 - Commercial/B2B: "We work with businesses - contact sales@mint-outdoor.com for volume pricing"
 
+QUALITY, TESTING & WEIGHT QUESTIONS (EN-581):
+All Mint Outdoor products are tested to European safety standards. When customers ask about quality, strength, durability or testing:
+- Use the en581Info object for authoritative answers
+- Always mention "independently tested to European safety standards" in plain English
+- Add "(the official testing standard is called EN-581 if you wanted to research that yourself)" for substance
+- For WEIGHT LIMIT questions: Our furniture is tested for up to 110kg (17 stone 4 lbs)
+- If customer needs HIGHER weight capacity, offer to connect with customer service for specialist options
+- For STABILITY questions: Explain furniture is tested for tipping in all directions
+- For DURABILITY questions: Explain 25,000 cycle testing simulating years of use
+- For SAFETY questions: Mention smooth edges, no finger-trap hazards, secure mechanisms
+
 WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
 If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
 OR if you cannot answer their question, OR if they're frustrated:
@@ -1297,6 +1308,58 @@ const materialInfo = {
         durability: "15+ years",
         pros: "Very strong, often powder-coated for protection",
         cons: "Can rust if coating damaged"
+    }
+};
+
+// ============================================
+// EN-581 QUALITY & TESTING INFORMATION
+// ============================================
+// All Mint Outdoor products are tested to EN-581 European safety standard
+
+const en581Info = {
+    standard: {
+        name: "BS EN 581",
+        description: "The European safety standard specifically designed for outdoor furniture",
+        analogy: "Think of it like an MOT for garden furniture - rigorous independent testing",
+        customerFriendly: "All our furniture is independently tested to European safety standards (the official testing standard is called EN-581 if you wanted to research that yourself)"
+    },
+    weightLimit: {
+        kg: 110,
+        stones: "17 stone 4 lbs",
+        response: "Our furniture is tested for persons weighing up to 110kg (approximately 17 stone 4 lbs) - this is the European standard. If you need furniture for higher weight capacity, I can connect you with our customer service team who can advise on specialist options."
+    },
+    testing: {
+        domestic: {
+            cycles: 25000,
+            description: "25,000 durability cycles - simulating years of daily family use",
+            timeToComplete: "4-5 days of continuous laboratory testing"
+        },
+        contract: {
+            cycles: 50000,
+            description: "50,000 durability cycles - for commercial/heavy use",
+            timeToComplete: "8-9 days of continuous laboratory testing"
+        }
+    },
+    whatsTested: {
+        strength: "Heavy loads applied to seats, backrests, armrests and legs - must not crack, break or permanently bend",
+        stability: "Tested for tipping in all directions - forward, backward and sideways",
+        safety: "All edges checked for sharpness, gaps checked for finger-trap hazards, folding mechanisms tested",
+        durability: "Thousands of sit-down/stand-up cycles simulating years of real use",
+        weather: "UV resistance, temperature cycling, and moisture exposure testing"
+    },
+    customerQuestions: {
+        quality: "All our furniture is independently tested to European safety standards, covering strength, stability, durability and safety (the official testing standard is called EN-581 if you wanted to research that yourself). Every piece goes through rigorous laboratory testing before we sell it.",
+        strength: "Our furniture undergoes serious strength testing - heavy loads are applied to seats, backs, armrests and legs to ensure nothing cracks, breaks or bends. It's tested to handle the equivalent of someone sitting down firmly thousands of times (the official testing standard is called EN-581 if you wanted to research that yourself).",
+        stability: "Stability is a key part of the safety testing. Every chair is tested for tipping - forward, backward and sideways - under load. If it tips over in any direction, it fails. So you can sit back with confidence (the official testing standard is called EN-581 if you wanted to research that yourself).",
+        durability: "For home garden use, furniture must survive 25,000 durability cycles in the lab - that's simulating years of a family sitting down and getting up, day after day. It's like fast-forwarding through years of use in just a few days of testing (the official testing standard is called EN-581 if you wanted to research that yourself).",
+        weatherResistance: "The testing includes UV exposure (simulating years of sun), temperature extremes, and moisture - checking for fading, cracking, warping and corrosion. Our materials are chosen specifically to handle the British climate (the official testing standard is called EN-581 if you wanted to research that yourself).",
+        safetyFeatures: "Safety checks include ensuring all edges are smooth with no sharp corners, no gaps that could trap fingers, and that folding mechanisms are secure. It's common-sense safety, but independently verified (the official testing standard is called EN-581 if you wanted to research that yourself)."
+    },
+    materialPerformance: {
+        teak: "Teak is a premium choice - naturally weather-resistant, insect-repellent, and can last 30+ years. It ages to a beautiful silver-grey or can be oiled to keep the golden colour.",
+        aluminium: "Aluminium is virtually maintenance-free - it's rust-proof, lightweight, and the powder coating provides extra protection. Perfect for the British climate.",
+        rattan: "Our PE rattan is UV-stabilised and tested to 2000 hours of UV exposure. Quality varies hugely in the market - ours is high-density polyethylene on aluminium frames for durability.",
+        steel: "Steel provides excellent strength and weight (won't blow over in wind). Powder-coated for rust protection - just touch up any scratches promptly."
     }
 };
 
@@ -3089,11 +3152,60 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
                     
                     if (isAskingQuestion) {
-                        console.log(`=“ Fallback: Detected question`);
+                        console.log(`❓ Fallback: Detected question`);
                         
                         let helpfulResponse = "";
                         
-                        if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
+                        // ============================================
+                        // EN-581 QUALITY & TESTING QUESTIONS
+                        // ============================================
+                        
+                        // Weight limit questions - specific handling
+                        const weightPatterns = ['weight limit', 'how much weight', 'how heavy', 'weight capacity', 
+                                               'can it hold', 'maximum weight', 'stone', 'kg limit', 'heavy person',
+                                               'big person', 'large person', 'overweight', 'bariatric'];
+                        const isWeightQuestion = weightPatterns.some(p => msgLower.includes(p));
+                        
+                        // Quality/testing questions
+                        const qualityPatterns = ['quality', 'tested', 'testing', 'how strong', 'is it strong', 
+                                                'will it break', 'will it last', 'durable', 'durability',
+                                                'sturdy', 'robust', 'solid', 'reliable', 'safe', 'safety',
+                                                'certified', 'certification', 'standard', 'en-581', 'en581',
+                                                'bs en', 'european standard', 'british standard'];
+                        const isQualityQuestion = qualityPatterns.some(p => msgLower.includes(p));
+                        
+                        // Stability questions
+                        const stabilityPatterns = ['tip over', 'tipping', 'wobble', 'wobbly', 'stable', 'stability',
+                                                   'fall over', 'topple', 'uneven', 'rock', 'rocking'];
+                        const isStabilityQuestion = stabilityPatterns.some(p => msgLower.includes(p));
+                        
+                        if (isWeightQuestion) {
+                            console.log(`⚖️ Fallback: Weight limit question detected`);
+                            helpfulResponse = en581Info.weightLimit.response;
+                            
+                            // Check if they might need higher capacity
+                            if (msgLower.includes('more than') || msgLower.includes('over') || 
+                                msgLower.includes('higher') || msgLower.includes('bariatric')) {
+                                session.escalationOffered = true;
+                                session.escalationReason = 'Customer enquiring about higher weight capacity furniture';
+                            }
+                        } else if (isStabilityQuestion) {
+                            console.log(`🪑 Fallback: Stability question detected`);
+                            helpfulResponse = en581Info.customerQuestions.stability;
+                        } else if (isQualityQuestion) {
+                            console.log(`✅ Fallback: Quality/testing question detected`);
+                            
+                            // Give more specific answer based on what they asked
+                            if (msgLower.includes('strong') || msgLower.includes('break')) {
+                                helpfulResponse = en581Info.customerQuestions.strength;
+                            } else if (msgLower.includes('last') || msgLower.includes('durable') || msgLower.includes('durability')) {
+                                helpfulResponse = en581Info.customerQuestions.durability;
+                            } else if (msgLower.includes('safe') || msgLower.includes('safety')) {
+                                helpfulResponse = en581Info.customerQuestions.safetyFeatures;
+                            } else {
+                                helpfulResponse = en581Info.customerQuestions.quality;
+                            }
+                        } else if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
                             helpfulResponse = "Great question! Our furniture is built to last:\n\n**Within warranty (2 years for rattan):** We repair or replace manufacturing defects free of charge.\n\n**After warranty:** Minor damage can often be repaired. We stock spare parts and replacement cushion covers.\n\n**Maximise lifespan:** Use a protective cover - extends life by 3-5 years!\n\nWould you like details on protective covers?";
                         } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
                             helpfulResponse = "Our warranty coverage:\n\n= **Rattan:** 2 years structural + colour\n= **Aluminium:** 10 years corrosion\n= **Teak:** 5 years structural\n= **Cushions:** 1 year\n\nAnything specific you'd like to know?";
@@ -3102,7 +3214,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
                             helpfulResponse = "Care is easy:\n\n= **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n= **Aluminium:** Just soapy water occasionally.\n= **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
-                            helpfulResponse = "Our furniture handles weather well:\n\n= **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\n= **Aluminium:** 100% rust-proof, year-round outdoor use.\n= **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
+                            helpfulResponse = en581Info.customerQuestions.weatherResistance;
                         } else {
                             helpfulResponse = "I'd be happy to help! I can assist with:\n\n= Warranty info\n= Delivery details\n= Care and maintenance\n= Product specifications\n\nWhat would you like to know?";
                         }
