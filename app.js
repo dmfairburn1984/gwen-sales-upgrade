@@ -22,142 +22,14 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
-// Email configuration - Supports both Gmail and Google Workspace
-// For Google Workspace (custom domain like @mint-outdoor.com), use SMTP settings
+// Email configuration
 const emailTransporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use TLS
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-        rejectUnauthorized: false
     }
 });
-
-// Verify email configuration on startup
-emailTransporter.verify((error, success) => {
-    if (error) {
-        console.log('❌ Email configuration ERROR:', error.message);
-        console.log('   EMAIL_USER:', process.env.EMAIL_USER ? '✅ Set' : '❌ Missing');
-        console.log('   EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set' : '❌ Missing');
-    } else {
-        console.log('✅ Email server ready - can send escalations');
-    }
-});
-
-// ============================================
-// ESCALATION EMAIL FUNCTION
-// ============================================
-
-async function sendEscalationEmail(customerEmail, customerName, reason, conversationHistory, productsDiscussed = []) {
-    // Use environment variable, fallback to help@mint-outdoor.com
-    const supportEmail = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
-    
-    console.log(`📧 ============================================`);
-    console.log(`📧 ESCALATION EMAIL ATTEMPT`);
-    console.log(`📧 To: ${supportEmail}`);
-    console.log(`📧 From: ${process.env.EMAIL_USER}`);
-    console.log(`📧 Customer: ${customerEmail}`);
-    console.log(`📧 Reason: ${reason.substring(0, 100)}...`);
-    console.log(`📧 ============================================`);
-    
-    // Build conversation transcript
-    const transcript = conversationHistory
-        .slice(-20) // Last 20 messages
-        .map(msg => `[${msg.role?.toUpperCase() || 'UNKNOWN'}]: ${msg.content || ''}`)
-        .join('\n\n');
-    
-    // Build product list if any
-    const productList = productsDiscussed.length > 0 
-        ? productsDiscussed.map(sku => {
-            const product = productIndex?.bySku?.[sku];
-            return product 
-                ? `• ${product.product_identity?.product_name} (${sku}) - £${product.product_identity?.price_gbp}`
-                : `• ${sku}`;
-          }).join('\n')
-        : 'No specific products discussed';
-    
-    const emailContent = {
-        from: `"Gwen Sales Agent" <${process.env.EMAIL_USER}>`,
-        to: supportEmail,
-        replyTo: customerEmail || process.env.EMAIL_USER,
-        subject: `🚨 Gwen Escalation: Customer needs help - ${reason.substring(0, 50)}`,
-        html: `
-            <h2>Customer Escalation from Gwen Chatbot</h2>
-            
-            <h3>Customer Details</h3>
-            <p><strong>Email:</strong> ${customerEmail || 'Not provided'}</p>
-            <p><strong>Name:</strong> ${customerName || 'Not provided'}</p>
-            
-            <h3>Reason for Escalation</h3>
-            <p>${reason}</p>
-            
-            <h3>Products Discussed</h3>
-            <pre>${productList}</pre>
-            
-            <h3>Conversation Transcript</h3>
-            <div style="background:#f5f5f5; padding:15px; border-radius:8px; white-space:pre-wrap; font-family:monospace; font-size:12px;">
-${transcript}
-            </div>
-            
-            <hr>
-            <p style="color:#666; font-size:11px;">
-                This email was automatically sent by Gwen Sales Agent.<br>
-                Please respond to the customer at: ${customerEmail || 'EMAIL NOT PROVIDED - check conversation for contact details'}
-            </p>
-        `,
-        text: `
-CUSTOMER ESCALATION FROM GWEN CHATBOT
-
-Customer Email: ${customerEmail || 'Not provided'}
-Customer Name: ${customerName || 'Not provided'}
-
-Reason: ${reason}
-
-Products Discussed:
-${productList}
-
-Conversation:
-${transcript}
-        `
-    };
-    
-    try {
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
-            console.log(`❌ Email credentials not configured`);
-            console.log(`   EMAIL_USER: ${process.env.EMAIL_USER ? 'Set' : 'MISSING'}`);
-            console.log(`   EMAIL_PASSWORD: ${process.env.EMAIL_PASSWORD ? 'Set' : 'MISSING'}`);
-            return { success: false, message: 'Email credentials not configured' };
-        }
-        
-        const info = await emailTransporter.sendMail(emailContent);
-        console.log(`✅ ESCALATION EMAIL SENT SUCCESSFULLY`);
-        console.log(`   Message ID: ${info.messageId}`);
-        console.log(`   To: ${supportEmail}`);
-        console.log(`   Customer: ${customerEmail}`);
-        return { success: true, message: 'Escalation email sent', messageId: info.messageId };
-        
-    } catch (error) {
-        console.log(`❌ ESCALATION EMAIL FAILED`);
-        console.log(`   Error: ${error.message}`);
-        console.log(`   Code: ${error.code || 'N/A'}`);
-        console.log(`   Response: ${error.response || 'N/A'}`);
-        
-        // Log more details for common errors
-        if (error.code === 'EAUTH') {
-            console.log(`   💡 Fix: Check EMAIL_PASSWORD - may need App Password from Google`);
-            console.log(`   💡 Go to: https://myaccount.google.com/apppasswords`);
-        }
-        if (error.code === 'ESOCKET' || error.code === 'ECONNECTION') {
-            console.log(`   💡 Fix: Network/firewall issue - check Heroku can reach smtp.gmail.com`);
-        }
-        
-        return { success: false, message: error.message, code: error.code };
-    }
-}
 
 // Database setup
 const { Pool } = require('pg');
@@ -176,7 +48,7 @@ app.use(express.json());
 
 async function initConversationLogging() {
     if (!pool) {
-        console.log('⚠️ No database - conversation logging disabled');
+        console.log('âš ï¸ No database - conversation logging disabled');
         return;
     }
     
@@ -204,9 +76,9 @@ async function initConversationLogging() {
             ON conversation_messages(created_at DESC)
         `);
         
-        console.log('✅ Conversation logging tables ready');
+        console.log('âœ… Conversation logging tables ready');
     } catch (error) {
-        console.error('⚠️ Failed to create conversation tables:', error.message);
+        console.error('âš ï¸ Failed to create conversation tables:', error.message);
     }
 }
 
@@ -230,7 +102,7 @@ async function logConversationMessage(sessionId, role, content, metadata = {}) {
             metadata.sentiment || null
         ]);
     } catch (error) {
-        console.error('⚠️ Failed to log conversation:', error.message);
+        console.error('âš ï¸ Failed to log conversation:', error.message);
         // Don't throw - logging failure should never break the chat
     }
 }
@@ -303,10 +175,10 @@ function loadDataFile(filename, defaultValue = []) {
     try {
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const parsedData = JSON.parse(rawData);
-        console.log(`✅ Loaded ${filename}`);
+        console.log(`Ã¢Å“â€¦ Loaded ${filename}`);
         return parsedData;
     } catch (error) {
-        console.error(`=Œ Failed to load ${filename}: ${error.message}`);
+        console.error(`Ã¢ÂÅ’ Failed to load ${filename}: ${error.message}`);
         return defaultValue;
     }
 }
@@ -317,16 +189,16 @@ const inventoryData = Array.isArray(rawInventoryData) ? rawInventoryData : (rawI
 const bundleSuggestions = loadDataFile('bundle_suggestions.json', []);
 const bundleItems = loadDataFile('bundle_items.json', []);
 
-console.log(`📦 Inventory data type: ${typeof rawInventoryData}`);
-console.log(`📦 Inventory is array after processing: ${Array.isArray(inventoryData)}`);
-console.log(`📦 Inventory length: ${inventoryData.length}`);
+console.log(`Ã°Å¸â€œÂ¦ Inventory data type: ${typeof rawInventoryData}`);
+console.log(`Ã°Å¸â€œÂ¦ Inventory is array after processing: ${Array.isArray(inventoryData)}`);
+console.log(`Ã°Å¸â€œÂ¦ Inventory length: ${inventoryData.length}`);
 
 // Check FARO specifically
 const faroInventory = inventoryData.find(i => i.sku === 'FARO-LOUNGE-SET');
 if (faroInventory) {
-    console.log(`✅ FARO-LOUNGE-SET in inventory: available=${faroInventory.available}`);
+    console.log(`Ã¢Å“â€¦ FARO-LOUNGE-SET in inventory: available=${faroInventory.available}`);
 } else {
-    console.log(`=Œ FARO-LOUNGE-SET NOT in inventory array`);
+    console.log(`Ã¢ÂÅ’ FARO-LOUNGE-SET NOT in inventory array`);
     console.log(`   First 3 inventory SKUs: ${inventoryData.slice(0, 3).map(i => i.sku).join(', ')}`);
 }
 
@@ -339,19 +211,19 @@ productKnowledgeCenter.forEach(product => {
     }
 });
 
-console.log(`📦 Indexed ${Object.keys(productIndex.bySku).length} products`);
-console.log(`📦 Inventory records: ${inventoryData.length}`);
+console.log(`Ã°Å¸â€œÂ¦ Indexed ${Object.keys(productIndex.bySku).length} products`);
+console.log(`Ã°Å¸â€œÂ¦ Inventory records: ${inventoryData.length}`);
 
 // Verify specific product exists
 const testProduct = productIndex.bySku['FARO-LOUNGE-SET'];
 if (testProduct) {
-    console.log(`✅ FARO-LOUNGE-SET found in index:`);
+    console.log(`Ã¢Å“â€¦ FARO-LOUNGE-SET found in index:`);
     console.log(`   - Name: ${testProduct.product_identity?.product_name}`);
     console.log(`   - Material: ${testProduct.description_and_category?.material_type}`);
     console.log(`   - Taxonomy: ${testProduct.description_and_category?.taxonomy_type}`);
     console.log(`   - Seats: ${testProduct.specifications?.seats} (type: ${typeof testProduct.specifications?.seats})`);
 } else {
-    console.log(`=Œ FARO-LOUNGE-SET NOT FOUND in index!`);
+    console.log(`Ã¢ÂÅ’ FARO-LOUNGE-SET NOT FOUND in index!`);
     console.log(`   Sample SKUs: ${Object.keys(productIndex.bySku).slice(0, 5).join(', ')}`);
 }
 
@@ -359,7 +231,7 @@ if (testProduct) {
 const rattanCount = Object.values(productIndex.bySku).filter(p => 
     p.description_and_category?.material_type?.toLowerCase() === 'rattan'
 ).length;
-console.log(`📦 Rattan products: ${rattanCount}`);
+console.log(`Ã°Å¸â€œÂ¦ Rattan products: ${rattanCount}`);
 
 // ============================================
 // STOCK CHECKING - Filter BEFORE AI sees products
@@ -386,7 +258,7 @@ function getProductStock(sku) {
     
     // Debug logging for troubleshooting
     if (sku === 'FARO-LOUNGE-SET' || finalStock === 0) {
-        console.log(`📊 getProductStock(${sku}): inventory=${stockFromInventory}, PKC=${stockFromPKC}, using=${finalStock}`);
+        console.log(`Ã°Å¸â€œÅ  getProductStock(${sku}): inventory=${stockFromInventory}, PKC=${stockFromPKC}, using=${finalStock}`);
     }
     
     // If no data at all, default to in stock (100)
@@ -408,17 +280,13 @@ function isInStock(sku) {
 function searchProducts(criteria) {
     const { furnitureType, material, seatCount, productName, maxResults = 5 } = criteria;
     
-   // Exclude service/delivery SKUs from product searches
-    const excludedSkus = ['2-PERSON-DELIVERY', 'ASSEMBLY-SERVICE', 'DELIVERY-CHARGE'];
-    
     let filtered = Object.values(productIndex.bySku).filter(p => 
         p.product_identity?.sku && 
-        p.description_and_category?.primary_category &&
-        !excludedSkus.includes(p.product_identity.sku.toUpperCase())
+        p.description_and_category?.primary_category
     );
     
-    console.log(` Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
-    console.log(` Starting with ${filtered.length} products`);
+    console.log(`Ã°Å¸â€Â Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
+    console.log(`Ã°Å¸â€Â Starting with ${filtered.length} products`);
     
     // Filter by furniture type
     if (furnitureType) {
@@ -435,7 +303,7 @@ function searchProducts(criteria) {
             if (type === 'lounger') return taxonomy.includes('lounger') || name.includes('lounger') || name.includes('sun');
             return true; // If unknown type, don't filter
         });
-        console.log(` After furniture type filter (${type}): ${filtered.length} products (was ${beforeCount})`);
+        console.log(`Ã°Å¸â€Â After furniture type filter (${type}): ${filtered.length} products (was ${beforeCount})`);
     }
     
     // Filter by material
@@ -447,7 +315,7 @@ function searchProducts(criteria) {
             const name = p.product_identity?.product_name?.toLowerCase() || '';
             return materialType.includes(mat) || name.includes(mat);
         });
-        console.log(` After material filter (${mat}): ${filtered.length} products (was ${beforeCount})`);
+        console.log(`Ã°Å¸â€Â After material filter (${mat}): ${filtered.length} products (was ${beforeCount})`);
     }
     
     // Filter by seat count - STRICT MINIMUM, no irrelevant smaller products
@@ -461,7 +329,7 @@ function searchProducts(criteria) {
             return seats && seats >= target;
         });
         
-        console.log(` After seat filter (>=${target}): ${matchingProducts.length} products (was ${beforeCount})`);
+        console.log(`Ã°Å¸â€Â After seat filter (>=${target}): ${matchingProducts.length} products (was ${beforeCount})`);
         
         if (matchingProducts.length > 0) {
             // Sort by closest match to requested seats (not oversized)
@@ -473,7 +341,7 @@ function searchProducts(criteria) {
             filtered = matchingProducts;
         } else {
             // No exact matches - find the LARGEST available and warn
-            console.log(`   ⚠ï¸ No products with ${target}+ seats, finding largest available`);
+            console.log(`   Ã¢Å¡Â Ã¯Â¸Â No products with ${target}+ seats, finding largest available`);
             
             // Get products with seat counts, sorted by seats descending
             const productsWithSeats = filtered.filter(p => {
@@ -490,7 +358,7 @@ function searchProducts(criteria) {
                     const seats = parseInt(p.specifications?.seats);
                     return seats >= maxSeats - 1; // Allow 1 seat tolerance
                 });
-                console.log(`   📊 Showing ${filtered.length} products with ${maxSeats} seats (largest available)`);
+                console.log(`   Ã°Å¸â€œÅ  Showing ${filtered.length} products with ${maxSeats} seats (largest available)`);
             } else {
                 filtered = [];
             }
@@ -513,17 +381,17 @@ function searchProducts(criteria) {
         const sku = p.product_identity.sku;
         const stock = getProductStock(sku);
         if (stock <= 0) {
-            console.log(`   =Œ Filtering out ${sku} - out of stock`);
+            console.log(`   Ã¢ÂÅ’ Filtering out ${sku} - out of stock`);
             return false;
         }
         return true;
     });
     
-    console.log(` After stock filter: ${inStockProducts.length} products (was ${beforeStockCount})`);
+    console.log(`Ã°Å¸â€Â After stock filter: ${inStockProducts.length} products (was ${beforeStockCount})`);
     
     const results = inStockProducts.slice(0, maxResults);
     
-    console.log(` Final results: ${results.map(p => p.product_identity.sku + '(' + p.specifications?.seats + ' seats)').join(', ')}`);
+    console.log(`Ã°Å¸â€Â Final results: ${results.map(p => p.product_identity.sku + '(' + p.specifications?.seats + ' seats)').join(', ')}`);
     
     return results.map(p => ({
         sku: p.product_identity.sku,
@@ -542,7 +410,7 @@ function searchProducts(criteria) {
 function findProductByName(productName, productsShown = []) {
     const searchTerm = productName.toLowerCase().trim();
     
-    console.log(` Looking for product: "${searchTerm}"`);
+    console.log(`Ã°Å¸â€Â Looking for product: "${searchTerm}"`);
     console.log(`   Products shown this session: [${productsShown.join(', ')}]`);
     
     // PRIORITY 1: Check recently shown products first
@@ -559,7 +427,7 @@ function findProductByName(productName, productsShown = []) {
                     skuLower.includes(searchTerm) || 
                     family.includes(searchTerm) ||
                     searchTerm.includes(family)) {
-                    console.log(`   ✅ Found in shown products: ${sku}`);
+                    console.log(`   Ã¢Å“â€¦ Found in shown products: ${sku}`);
                     return { sku, product, source: 'shown' };
                 }
             }
@@ -576,81 +444,13 @@ function findProductByName(productName, productsShown = []) {
             skuLower.includes(searchTerm.replace(/\s+/g, '-')) ||
             family.includes(searchTerm) ||
             searchTerm.includes(family)) {
-            console.log(`   ✅ Found in database: ${sku}`);
+            console.log(`   Ã¢Å“â€¦ Found in database: ${sku}`);
             return { sku, product, source: 'database' };
         }
     }
     
-    console.log(`   =Œ Product not found: "${searchTerm}"`);
+    console.log(`   Ã¢ÂÅ’ Product not found: "${searchTerm}"`);
     return null;
-}
-
-// ============================================
-// FIND RELATED ACCESSORIES (cushions, covers, etc.)
-// ============================================
-
-function findRelatedAccessories(productSku, accessoryType = null) {
-    const product = productIndex.bySku[productSku];
-    if (!product) return [];
-    
-    const productFamily = product.product_identity?.product_family?.toLowerCase() || '';
-    const productName = product.product_identity?.product_name?.toLowerCase() || '';
-    
-    // Extract family name from product name if not set
-    const familyFromName = productName.split(' ')[0]; // e.g., "palma" from "Palma Grey..."
-    const searchFamily = productFamily || familyFromName;
-    
-    console.log(`🔍 Finding accessories for family: "${searchFamily}"`);
-    
-    const accessories = [];
-    
-    for (const [sku, prod] of Object.entries(productIndex.bySku)) {
-        // Skip the main product itself
-        if (sku === productSku) continue;
-        
-        const name = prod.product_identity?.product_name?.toLowerCase() || '';
-        const category = prod.description_and_category?.primary_category?.toLowerCase() || '';
-        const family = prod.product_identity?.product_family?.toLowerCase() || '';
-        
-        // Check if this is an accessory for the same family
-        const isRelated = (family === searchFamily) || 
-                          name.includes(searchFamily) ||
-                          name.includes(familyFromName);
-        
-        if (!isRelated) continue;
-        
-        // Check if it's an accessory type
-        const isAccessory = category.includes('accessor') ||
-                           name.includes('cushion') ||
-                           name.includes('cover') ||
-                           name.includes('replacement') ||
-                           name.includes('parasol') ||
-                           name.includes('storage');
-        
-        if (!isAccessory) continue;
-        
-        // Filter by specific accessory type if requested
-        if (accessoryType) {
-            const typeMatch = name.includes(accessoryType.toLowerCase());
-            if (!typeMatch) continue;
-        }
-        
-        // Check stock
-        const stock = getProductStock(sku);
-        if (stock <= 0) continue;
-        
-        accessories.push({
-            sku: sku,
-            name: prod.product_identity?.product_name,
-            type: name.includes('cushion') ? 'cushion' : 
-                  name.includes('cover') ? 'cover' : 'accessory',
-            price: prod.product_identity?.price_gbp
-        });
-        
-        console.log(`   ✅ Found accessory: ${sku}`);
-    }
-    
-    return accessories;
 }
 
 // ============================================
@@ -662,7 +462,7 @@ async function renderDimensionCard(sku, options = {}) {
     
     const productData = productIndex.bySku[sku];
     if (!productData) {
-        console.log(`⚠ï¸ No product data for SKU: ${sku}`);
+        console.log(`Ã¢Å¡Â Ã¯Â¸Â No product data for SKU: ${sku}`);
         return null;
     }
     
@@ -683,11 +483,11 @@ async function renderDimensionCard(sku, options = {}) {
     
     if (!hasDimensions) {
         // Missing dimensions - provide helpful fallback
-        console.log(`📐 Missing dimensions for ${sku}`);
+        console.log(`Ã°Å¸â€œÂ Missing dimensions for ${sku}`);
         return {
             type: 'dimension_missing',
             card: null,
-            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View ${name} →</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
+            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">Ã°Å¸â€â€” View ${name} Ã¢â€ â€™</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
             productUrl: productUrl,
             productName: name,
             sku: sku
@@ -695,14 +495,14 @@ async function renderDimensionCard(sku, options = {}) {
     }
     
     // Build dimension card
-    let card = `\n📐 **${name} - Dimensions**\n\n`;
+    let card = `\nÃ°Å¸â€œÂ **${name} - Dimensions**\n\n`;
     card += `**Footprint:**\n`;
-    card += `= Width: ${width}cm\n`;
-    card += `= Depth: ${depth}cm\n`;
+    card += `Ã¢â‚¬Â¢ Width: ${width}cm\n`;
+    card += `Ã¢â‚¬Â¢ Depth: ${depth}cm\n`;
     
     // Use "Length" label for customer-facing (even if field is called height)
     if (length) {
-        card += `= Length: ${length}cm\n`;
+        card += `Ã¢â‚¬Â¢ Length: ${length}cm\n`;
     }
     
     // Configurable sides messaging
@@ -710,7 +510,7 @@ async function renderDimensionCard(sku, options = {}) {
         card += `\n**Configuration:** This set can be arranged as left or right-hand facing - perfect for fitting your specific space layout!\n`;
     }
     
-    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View detailed dimension diagram →</a>\n`;
+    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">Ã°Å¸â€â€” View detailed dimension diagram Ã¢â€ â€™</a>\n`;
     
     // Box dimensions - only if explicitly requested
     if (showBoxDimensions) {
@@ -742,7 +542,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
     const components = productData.logistics_and_inventory?.components;
     
     if (!components || components.length === 0) {
-        return `\n📦 **Delivery Boxes:** Contact us for box dimensions - we'll measure and confirm before delivery.\n`;
+        return `\nÃ°Å¸â€œÂ¦ **Delivery Boxes:** Contact us for box dimensions - we'll measure and confirm before delivery.\n`;
     }
     
     // Check if any boxes have dimensions
@@ -751,10 +551,10 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
     );
     
     if (boxesWithDimensions.length === 0) {
-        return `\n📦 **Delivery Boxes:** This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}. Contact us for exact box dimensions.\n`;
+        return `\nÃ°Å¸â€œÂ¦ **Delivery Boxes:** This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}. Contact us for exact box dimensions.\n`;
     }
     
-    let boxCard = `\n📦 **Delivery Boxes:**\n`;
+    let boxCard = `\nÃ°Å¸â€œÂ¦ **Delivery Boxes:**\n`;
     boxCard += `This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}:\n\n`;
     
     const productFamily = productData.product_identity?.product_family?.toLowerCase() || '';
@@ -772,7 +572,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
         }
         
         if (dims?.length && dims?.width && dims?.height) {
-            boxCard += `**Box ${index + 1}:** ${dims.length}cm × ${dims.width}cm × ${dims.height}cm\n`;
+            boxCard += `**Box ${index + 1}:** ${dims.length}cm Ãƒâ€” ${dims.width}cm Ãƒâ€” ${dims.height}cm\n`;
         } else {
             boxCard += `**Box ${index + 1}:** Dimensions not available\n`;
         }
@@ -791,7 +591,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
 // ============================================
 
 function filterProductsBySpace(products, maxWidth, maxLength) {
-    console.log(`📐 Filtering for space: ${maxWidth}cm × ${maxLength}cm`);
+    console.log(`Ã°Å¸â€œÂ Filtering for space: ${maxWidth}cm Ãƒâ€” ${maxLength}cm`);
     
     const fitting = products.filter(p => {
         const product = productIndex.bySku[p.sku || p];
@@ -811,15 +611,15 @@ function filterProductsBySpace(products, maxWidth, maxLength) {
         const fits = fitsNormal || fitsRotated;
         
         if (fits) {
-            console.log(`   ✅ ${p.sku || p} fits (${width}×${length || depth}cm)`);
+            console.log(`   Ã¢Å“â€¦ ${p.sku || p} fits (${width}Ãƒâ€”${length || depth}cm)`);
         } else {
-            console.log(`   =Œ ${p.sku || p} too large (${width}×${length || depth}cm)`);
+            console.log(`   Ã¢ÂÅ’ ${p.sku || p} too large (${width}Ãƒâ€”${length || depth}cm)`);
         }
         
         return fits;
     });
     
-    console.log(`📐 ${fitting.length} of ${products.length} products fit the space`);
+    console.log(`Ã°Å¸â€œÂ ${fitting.length} of ${products.length} products fit the space`);
     return fitting;
 }
 
@@ -833,7 +633,7 @@ async function renderProductCard(sku, options = {}) {
     
     const productData = productIndex.bySku[sku];
     if (!productData) {
-        console.log(`⚠ï¸ No product data for SKU: ${sku}`);
+        console.log(`Ã¢Å¡Â Ã¯Â¸Â No product data for SKU: ${sku}`);
         return null;
     }
     
@@ -849,7 +649,7 @@ async function renderProductCard(sku, options = {}) {
     
     // Double-check stock
     if (stock <= 0) {
-        console.log(`⚠ï¸ ${sku} out of stock at render time`);
+        console.log(`Ã¢Å¡Â Ã¯Â¸Â ${sku} out of stock at render time`);
         return null;
     }
     
@@ -883,11 +683,11 @@ async function renderProductCard(sku, options = {}) {
     // Stock message
     let stockMessage = '';
     if (stock <= 5) {
-        stockMessage = `🚨 Only ${stock} left!`;
+        stockMessage = `Ã°Å¸Å¡Â¨ Only ${stock} left!`;
     } else if (stock <= 20) {
-        stockMessage = `⚠ï¸ Low stock - ${stock} remaining`;
+        stockMessage = `Ã¢Å¡Â Ã¯Â¸Â Low stock - ${stock} remaining`;
     } else {
-        stockMessage = `✅ In stock`;
+        stockMessage = `Ã¢Å“â€¦ In stock`;
     }
     
     // Build card
@@ -898,13 +698,13 @@ async function renderProductCard(sku, options = {}) {
     }
     
     if (personalisation) {
-        card += `✨ *${personalisation}*\n\n`;
+        card += `Ã¢Å“Â¨ *${personalisation}*\n\n`;
     }
     
     if (features.length > 0) {
         card += `**Why customers love this:**\n`;
         features.slice(0, 3).forEach(f => {
-            card += `= ${f}\n`;
+            card += `Ã¢â‚¬Â¢ ${f}\n`;
         });
     }
     
@@ -912,12 +712,12 @@ async function renderProductCard(sku, options = {}) {
         card += `\n**Warranty:** ${warranties[0]}\n`;
     }
     
-    card += `\n**Price:** £${price.toFixed(2)}\n`;
+    card += `\n**Price:** Ã‚Â£${price.toFixed(2)}\n`;
     card += `**Stock:** ${stockMessage}\n\n`;
-    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product →</a>\n`;
+    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product Ã¢â€ â€™</a>\n`;
     
     if (showBundleHint && productData.related_products?.matching_cover_sku) {
-        card += `\n🎁 *Matching cover available - ask about our 20% bundle discount!*\n`;
+        card += `\nÃ°Å¸Å½Â *Matching cover available - ask about our 20% bundle discount!*\n`;
     }
     
     return card;
@@ -963,48 +763,40 @@ function buildSystemPrompt(sessionState) {
         commercialState.push(`Products shown: ${commercial.productsShown.length}`);
     }
     if (commercial.sentiment === 'price_concerned') {
-        commercialState.push("⚠ï¸ Customer is price-sensitive - NO UPSELLS");
+        commercialState.push("Ã¢Å¡Â Ã¯Â¸Â Customer is price-sensitive - NO UPSELLS");
     }
     if (commercial.bundleDeclined) {
-        commercialState.push("⚠ï¸ Bundle declined - don't offer again");
+        commercialState.push("Ã¢Å¡Â Ã¯Â¸Â Bundle declined - don't offer again");
     }
     
     return `You are Gwen, a friendly sales assistant for MINT Outdoor furniture. You help customers find perfect outdoor furniture.
 
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 CURRENT CUSTOMER CONTEXT
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 ${contextSummary}
 ${commercialState.length > 0 ? '\nCommercial notes: ' + commercialState.join(' | ') : ''}
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 
 YOUR CORE RULES:
 1. REMEMBER what customer already told you - don't ask again
 2. ANSWER direct questions FIRST, then ask follow-ups
 3. When showing products, output SKUs only - server renders the cards
 4. Be warm and helpful, never say "no" or "unfortunately"
-5. NEVER write URLs or links in your response - the server adds all links automatically
-6. NEVER invent product information - if you don't have data, ask for clarification
-
-CRITICAL - URLS AND LINKS:
-- You CANNOT and MUST NOT write any URLs or hyperlinks
-- All product links are added automatically by the server
-- If you write a URL, it will be wrong and break the customer experience
-- Instead of writing links, use intents: product_recommendation, dimension_query, initiate_checkout
 
 WHEN TO SHOW PRODUCTS (use product_recommendation intent):
 - Customer mentions material (rattan, teak, aluminium) AND furniture type or size
 - Customer asks to see options or alternatives
-→ Only show products if you have 2+ pieces of qualifying information
+Ã¢â€ â€™ Only show products if you have 2+ pieces of qualifying information
 
 WHEN NOT TO SHOW PRODUCTS:
-- Customer says "I like it", "that's great", "perfect" → They've chosen! Help them buy, don't show more
-- Customer asks "how do I order" or "how to buy" → Give checkout instructions, don't show products
-- Customer says "yes" to your question → Acknowledge and help them proceed, don't restart
+- Customer says "I like it", "that's great", "perfect" Ã¢â€ â€™ They've chosen! Help them buy, don't show more
+- Customer asks "how do I order" or "how to buy" Ã¢â€ â€™ Give checkout instructions, don't show products
+- Customer says "yes" to your question Ã¢â€ â€™ Acknowledge and help them proceed, don't restart
 
 WHEN CUSTOMER IS READY TO BUY:
 If customer says: "I'll take it", "how do I order", "how to buy", "yes I want it", "let's do it"
-→ Use the initiate_checkout tool OR give clear ordering instructions:
+Ã¢â€ â€™ Use the initiate_checkout tool OR give clear ordering instructions:
    1. Tell them to click the View Product button
    2. Add to basket on our website
    3. Proceed to checkout
@@ -1012,8 +804,8 @@ If customer says: "I'll take it", "how do I order", "how to buy", "yes I want it
 
 WHEN CUSTOMER WANTS EMAIL QUOTE:
 If customer provides email or asks you to email details:
-→ Use the capture_email_for_quote tool
-→ Confirm you'll send details within a few minutes
+Ã¢â€ â€™ Use the capture_email_for_quote tool
+Ã¢â€ â€™ Confirm you'll send details within a few minutes
 
 WHEN TO ASK QUESTIONS (use clarification intent):
 - Only 1 piece of info known - ask for furniture type or size
@@ -1021,7 +813,7 @@ WHEN TO ASK QUESTIONS (use clarification intent):
 - NEVER ask "would you like these?" after they already said yes
 
 RESPONDING TO SPECIFIC QUESTIONS:
-- Price: "The [Product] is **£XXX**" - always include the pound amount
+- Price: "The [Product] is **Ã‚Â£XXX**" - always include the pound amount
 - Stock: "Yes, it's in stock with 3-5 day delivery"
 - Warranty: "We offer 1-year guarantee plus extended material warranties"
 - Dimensions: Use the get_product_dimensions tool to get exact sizes
@@ -1030,46 +822,15 @@ RESPONDING TO SPECIFIC QUESTIONS:
 - Eco questions: "Our teak is from sustainable plantations, aluminium is 100% recyclable"
 - Commercial/B2B: "We work with businesses - contact sales@mint-outdoor.com for volume pricing"
 
-QUALITY, TESTING & WEIGHT QUESTIONS (EN-581):
-All Mint Outdoor products are tested to European safety standards. When customers ask about quality, strength, durability or testing:
-- Use the en581Info object for authoritative answers
-- Always mention "independently tested to European safety standards" in plain English
-- Add "(the official testing standard is called EN-581 if you wanted to research that yourself)" for substance
-- For WEIGHT LIMIT questions: Our furniture is tested for up to 110kg (17 stone 4 lbs)
-- If customer needs HIGHER weight capacity, offer to connect with customer service for specialist options
-- For STABILITY questions: Explain furniture is tested for tipping in all directions
-- For DURABILITY questions: Explain 25,000 cycle testing simulating years of use
-- For SAFETY questions: Mention smooth edges, no finger-trap hazards, secure mechanisms
-
-WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
-If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
-OR if you cannot answer their question, OR if they're frustrated:
-1. ALWAYS ask for their email address first
-2. Then use request_human_handoff tool with their email and reason
-3. The conversation will be emailed to our customer service team
-4. Confirm: "I've passed your details to our team - they'll email you within a few hours"
-5. NEVER say "I can't help" without offering to connect them with support
-
-IMPORTANT: When chatbot cannot fulfill a request (e.g., product not available, question you can't answer):
-- DO NOT give generic responses about "warranty info" or "delivery details"
-- INSTEAD, immediately offer to connect with customer service
-- Ask: "Let me connect you with our customer service team who can help. What's your email address?"
-
-ACCESSORY QUERIES:
-When customer asks about replacement cushions, covers, or accessories for a specific product:
-1. Use find_accessories tool with the product name and accessory type
-2. Show the main product AND available accessories
-3. If no accessories found, offer to connect with customer service
-
 DIMENSION QUERIES - IMPORTANT:
 When customer asks "how big is...", "what size...", "dimensions of...", "will it fit...", "measurements":
 1. Use get_product_dimensions tool with the product name
 2. If dimensions found, output intent: "dimension_query" with the response
 3. If product not found, ask customer to clarify which product they mean
 
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 OUTPUT FORMAT - ALWAYS VALID JSON
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 
 For conversation only (no products):
 {
@@ -1094,12 +855,12 @@ For dimension queries:
     "response_text": "Optional intro text before dimension card"
 }
 
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 AVAILABLE PRODUCT SKUs (only use these):
 ${sessionState.availableSkus?.length > 0 
     ? sessionState.availableSkus.join(', ') 
     : 'Call search_products first to find products'}
-===========================================================
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
 
 Remember: Output ONLY valid JSON. No markdown, no code blocks, just the JSON object.`;
 }
@@ -1160,24 +921,20 @@ const aiTools = [
         type: "function",
         function: {
             name: "request_human_handoff",
-            description: "Request handoff to human support team when customer needs help you cannot provide, wants to speak to someone, asks how to contact support, or when you cannot fulfill their request. ALWAYS capture customer email first so support can respond.",
+            description: "Request handoff to human agent when customer needs help beyond your capabilities",
             parameters: {
                 type: "object",
                 properties: {
                     reason: {
                         type: "string",
-                        description: "Detailed reason for handoff - include what customer wanted and why you couldn't help"
+                        description: "Reason for handoff"
                     },
                     customerEmail: {
                         type: "string",
-                        description: "Customer's email address - REQUIRED so support team can respond"
-                    },
-                    customerName: {
-                        type: "string",
-                        description: "Customer's name if provided"
+                        description: "Customer's email if provided"
                     }
                 },
-                required: ["reason", "customerEmail"]
+                required: ["reason"]
             }
         }
     },
@@ -1224,7 +981,7 @@ const aiTools = [
                         description: "Whether customer wants the bundle deal"
                     }
                 },
-                required: ["productSku"]
+              required: ["productSku"]
             }
         }
     },
@@ -1247,31 +1004,6 @@ const aiTools = [
                     includeBoxDimensions: {
                         type: "boolean",
                         description: "Whether to include delivery box dimensions (only if customer asks about boxes, delivery size, or fitting through doors)"
-                    }
-                }
-            }
-        }
-    },
-    {
-        type: "function",
-        function: {
-            name: "find_accessories",
-            description: "Find accessories (cushions, covers, replacement parts) for a specific product. Use when customer asks about spare cushions, replacement covers, or accessories for a product.",
-            parameters: {
-                type: "object",
-                properties: {
-                    productName: {
-                        type: "string",
-                        description: "Name of the main product (e.g., 'Palma Grey', 'Stockholm')"
-                    },
-                    productSku: {
-                        type: "string",
-                        description: "SKU of the main product if known"
-                    },
-                    accessoryType: {
-                        type: "string",
-                        enum: ["cushion", "cover", "parasol", "storage", "any"],
-                        description: "Type of accessory to find"
                     }
                 }
             }
@@ -1308,58 +1040,6 @@ const materialInfo = {
         durability: "15+ years",
         pros: "Very strong, often powder-coated for protection",
         cons: "Can rust if coating damaged"
-    }
-};
-
-// ============================================
-// EN-581 QUALITY & TESTING INFORMATION
-// ============================================
-// All Mint Outdoor products are tested to EN-581 European safety standard
-
-const en581Info = {
-    standard: {
-        name: "BS EN 581",
-        description: "The European safety standard specifically designed for outdoor furniture",
-        analogy: "Think of it like an MOT for garden furniture - rigorous independent testing",
-        customerFriendly: "All our furniture is independently tested to European safety standards (the official testing standard is called EN-581 if you wanted to research that yourself)"
-    },
-    weightLimit: {
-        kg: 110,
-        stones: "17 stone 4 lbs",
-        response: "Our furniture is tested for persons weighing up to 110kg (approximately 17 stone 4 lbs) - this is the European standard. If you need furniture for higher weight capacity, I can connect you with our customer service team who can advise on specialist options."
-    },
-    testing: {
-        domestic: {
-            cycles: 25000,
-            description: "25,000 durability cycles - simulating years of daily family use",
-            timeToComplete: "4-5 days of continuous laboratory testing"
-        },
-        contract: {
-            cycles: 50000,
-            description: "50,000 durability cycles - for commercial/heavy use",
-            timeToComplete: "8-9 days of continuous laboratory testing"
-        }
-    },
-    whatsTested: {
-        strength: "Heavy loads applied to seats, backrests, armrests and legs - must not crack, break or permanently bend",
-        stability: "Tested for tipping in all directions - forward, backward and sideways",
-        safety: "All edges checked for sharpness, gaps checked for finger-trap hazards, folding mechanisms tested",
-        durability: "Thousands of sit-down/stand-up cycles simulating years of real use",
-        weather: "UV resistance, temperature cycling, and moisture exposure testing"
-    },
-    customerQuestions: {
-        quality: "All our furniture is independently tested to European safety standards, covering strength, stability, durability and safety (the official testing standard is called EN-581 if you wanted to research that yourself). Every piece goes through rigorous laboratory testing before we sell it.",
-        strength: "Our furniture undergoes serious strength testing - heavy loads are applied to seats, backs, armrests and legs to ensure nothing cracks, breaks or bends. It's tested to handle the equivalent of someone sitting down firmly thousands of times (the official testing standard is called EN-581 if you wanted to research that yourself).",
-        stability: "Stability is a key part of the safety testing. Every chair is tested for tipping - forward, backward and sideways - under load. If it tips over in any direction, it fails. So you can sit back with confidence (the official testing standard is called EN-581 if you wanted to research that yourself).",
-        durability: "For home garden use, furniture must survive 25,000 durability cycles in the lab - that's simulating years of a family sitting down and getting up, day after day. It's like fast-forwarding through years of use in just a few days of testing (the official testing standard is called EN-581 if you wanted to research that yourself).",
-        weatherResistance: "The testing includes UV exposure (simulating years of sun), temperature extremes, and moisture - checking for fading, cracking, warping and corrosion. Our materials are chosen specifically to handle the British climate (the official testing standard is called EN-581 if you wanted to research that yourself).",
-        safetyFeatures: "Safety checks include ensuring all edges are smooth with no sharp corners, no gaps that could trap fingers, and that folding mechanisms are secure. It's common-sense safety, but independently verified (the official testing standard is called EN-581 if you wanted to research that yourself)."
-    },
-    materialPerformance: {
-        teak: "Teak is a premium choice - naturally weather-resistant, insect-repellent, and can last 30+ years. It ages to a beautiful silver-grey or can be oiled to keep the golden colour.",
-        aluminium: "Aluminium is virtually maintenance-free - it's rust-proof, lightweight, and the powder coating provides extra protection. Perfect for the British climate.",
-        rattan: "Our PE rattan is UV-stabilised and tested to 2000 hours of UV exposure. Quality varies hugely in the market - ours is high-density polyethylene on aluminium frames for durability.",
-        steel: "Steel provides excellent strength and weight (won't blow over in wind). Powder-coated for rust protection - just touch up any scratches promptly."
     }
 };
 
@@ -1623,7 +1303,7 @@ function getCrossSellSuggestions(sku, session) {
             sku: 'ASSEMBLY-SERVICE',
             priority: 4,
             price: COMMERCE_RULES.crossSell.assemblyPrice,
-            pitch: `Save time with our professional assembly service - just £${COMMERCE_RULES.crossSell.assemblyPrice}!`
+            pitch: `Save time with our professional assembly service - just Ã‚Â£${COMMERCE_RULES.crossSell.assemblyPrice}!`
         });
     }
     
@@ -1678,16 +1358,16 @@ function buildClosingResponse(session, sentiment) {
             intent: 'checkout_flow',
             text: `Brilliant choice! Here's how to get your bundle with the ${COMMERCE_RULES.bundle.discountPercent}% discount:\n\n` +
                   `**Your Bundle:**\n` +
-                  bundleProductNames.map(n => `✔ ${n}`).join('\n') + `\n\n` +
-                  `**Bundle Price: £${finalPrice.toFixed(2)}** ~~£${bundleTotal.toFixed(2)}~~\n` +
-                  `*You save: £${discount.toFixed(2)}*\n\n` +
+                  bundleProductNames.map(n => `Ã¢Å“â€œ ${n}`).join('\n') + `\n\n` +
+                  `**Bundle Price: Ã‚Â£${finalPrice.toFixed(2)}** ~~Ã‚Â£${bundleTotal.toFixed(2)}~~\n` +
+                  `*You save: Ã‚Â£${discount.toFixed(2)}*\n\n` +
                   `**To order:**\n` +
-                  `1ï¸=ƒ£ Click the link below to view the main product\n` +
-                  `2ï¸=ƒ£ Add it to your basket\n` +
-                  `3ï¸=ƒ£ The matching accessories will be suggested at checkout\n` +
-                  `4ï¸=ƒ£ Your ${COMMERCE_RULES.bundle.discountPercent}% bundle discount applies automatically!\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${finalPrice.toFixed(2)}</a>\n\n` +
-                  `Or if you'd like me to email you this quote to review later, just let me know your email address and I'll send it with the discount locked in for 48 hours! 📧`,
+                  `1Ã¯Â¸ÂÃ¢Æ’Â£ Click the link below to view the main product\n` +
+                  `2Ã¯Â¸ÂÃ¢Æ’Â£ Add it to your basket\n` +
+                  `3Ã¯Â¸ÂÃ¢Æ’Â£ The matching accessories will be suggested at checkout\n` +
+                  `4Ã¯Â¸ÂÃ¢Æ’Â£ Your ${COMMERCE_RULES.bundle.discountPercent}% bundle discount applies automatically!\n\n` +
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW Ã¢â€ â€™ Ã‚Â£${finalPrice.toFixed(2)}</a>\n\n` +
+                  `Or if you'd like me to email you this quote to review later, just let me know your email address and I'll send it with the discount locked in for 48 hours! Ã°Å¸â€œÂ§`,
             mainProduct: mainProductSku,
             bundlePrice: finalPrice,
             savingsAmount: discount
@@ -1698,13 +1378,13 @@ function buildClosingResponse(session, sentiment) {
             type: 'product_checkout',
             intent: 'checkout_flow',
             text: `Excellent choice! The **${productName}** is one of our most popular sets.\n\n` +
-                  `**Price: £${price.toFixed(2)}**\n` +
-                  `✅ In stock with 3-5 day delivery\n` +
-                  `✅ 1-year warranty included\n\n` +
+                  `**Price: Ã‚Â£${price.toFixed(2)}**\n` +
+                  `Ã¢Å“â€¦ In stock with 3-5 day delivery\n` +
+                  `Ã¢Å“â€¦ 1-year warranty included\n\n` +
                   `**To order:**\n` +
                   `Simply click the button below to add it to your basket and checkout:\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${price.toFixed(2)}</a>\n\n` +
-                  `Would you also like a protective cover? It extends the furniture's life by 3-5 years and you'll save ${COMMERCE_RULES.bundle.discountPercent}% when bought together! 🎁`,
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW Ã¢â€ â€™ Ã‚Â£${price.toFixed(2)}</a>\n\n` +
+                  `Would you also like a protective cover? It extends the furniture's life by 3-5 years and you'll save ${COMMERCE_RULES.bundle.discountPercent}% when bought together! Ã°Å¸Å½Â`,
             mainProduct: mainProductSku,
             productPrice: price
         };
@@ -1723,9 +1403,9 @@ function buildEmailCaptureResponse(session) {
         intent: 'email_capture',
         text: `I'd be happy to email you a summary of ${productName} with all the details and your exclusive discount.\n\n` +
               `Just share your email address and I'll send:\n` +
-              `📋 Product specifications and dimensions\n` +
-              `💰 Your personalised quote with any bundle discounts\n` +
-              `’ Discount locked in for 48 hours\n\n` +
+              `Ã°Å¸â€œâ€¹ Product specifications and dimensions\n` +
+              `Ã°Å¸â€™Â° Your personalised quote with any bundle discounts\n` +
+              `Ã°Å¸â€â€™ Discount locked in for 48 hours\n\n` +
               `What's the best email to send this to?`
     };
 }
@@ -1773,7 +1453,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
     if (offerType === 'soft') {
         return {
             type: 'soft',
-            text: `🎁 *Great news! This comes with a matching protective cover bundle - save ${COMMERCE_RULES.bundle.discountPercent}% when you buy together. Would you like details?*`
+            text: `Ã°Å¸Å½Â *Great news! This comes with a matching protective cover bundle - save ${COMMERCE_RULES.bundle.discountPercent}% when you buy together. Would you like details?*`
         };
     } else {
         // Detailed pricing
@@ -1785,7 +1465,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
             if (prod) {
                 const price = parseFloat(prod.product_identity?.price_gbp) || 0;
                 totalOriginal += price * item.product_qty;
-                productDetails.push(`- ${prod.product_identity?.product_name}: £${price.toFixed(2)}`);
+                productDetails.push(`- ${prod.product_identity?.product_name}: Ã‚Â£${price.toFixed(2)}`);
             }
         }
         
@@ -1794,7 +1474,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
         
         return {
             type: 'detailed',
-            text: `🎁 **${bundle.name} Bundle Deal**\n\n${productDetails.join('\n')}\n\n~~Original: £${totalOriginal.toFixed(2)}~~\n**Bundle Price: £${bundlePrice.toFixed(2)}**\n*You save: £${discount.toFixed(2)} (${COMMERCE_RULES.bundle.discountPercent}% off)*\n\nWant me to add this bundle to help you complete your purchase?`
+            text: `Ã°Å¸Å½Â **${bundle.name} Bundle Deal**\n\n${productDetails.join('\n')}\n\n~~Original: Ã‚Â£${totalOriginal.toFixed(2)}~~\n**Bundle Price: Ã‚Â£${bundlePrice.toFixed(2)}**\n*You save: Ã‚Â£${discount.toFixed(2)} (${COMMERCE_RULES.bundle.discountPercent}% off)*\n\nWant me to add this bundle to help you complete your purchase?`
         };
     }
 }
@@ -1805,7 +1485,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
 
 function validateAIOutput(aiOutput, whitelist, sessionId) {
     if (!aiOutput || !aiOutput.intent) {
-        console.log(`⚠ï¸ [${sessionId}] Missing aiOutput or intent`);
+        console.log(`Ã¢Å¡Â Ã¯Â¸Â [${sessionId}] Missing aiOutput or intent`);
         return null;
     }
     
@@ -1819,14 +1499,14 @@ function validateAIOutput(aiOutput, whitelist, sessionId) {
                 validSkus.push(sku);
             } else {
                 invalidSkus.push(sku);
-                console.log(`🛡️ [${sessionId}] BLOCKED: "${sku}" not in whitelist`);
+                console.log(`Ã°Å¸â€ºÂ¡Ã¯Â¸Â [${sessionId}] BLOCKED: "${sku}" not in whitelist`);
             }
         }
         
         aiOutput.selected_skus = validSkus;
         
         if (invalidSkus.length > 0) {
-            console.log(`🛡️ Whitelist was: [${whitelist.join(', ')}]`);
+            console.log(`Ã°Å¸â€ºÂ¡Ã¯Â¸Â Whitelist was: [${whitelist.join(', ')}]`);
         }
     }
     
@@ -1944,7 +1624,7 @@ async function assembleResponse(aiOutput, sessionId, session) {
                 parts.push(bundleOffer.text);
                 session.commercial.bundlesOffered++;
                 session.commercial.lastOfferType = 'bundle';
-                console.log(`🎁 Bundle offer added (${bundleEligibility.offerType}) - positive signal: ${hasPositiveSignal}`);
+                console.log(`Ã°Å¸Å½Â Bundle offer added (${bundleEligibility.offerType}) - positive signal: ${hasPositiveSignal}`);
             }
         }
         
@@ -1955,9 +1635,9 @@ async function assembleResponse(aiOutput, sessionId, session) {
             if (crossSells.length > 0 && session.commercial.crossSellsShown.length < 2) {
                 const suggestion = crossSells[0];
                 parts.push('');
-                parts.push(`💡 *${suggestion.pitch}*`);
+                parts.push(`Ã°Å¸â€™Â¡ *${suggestion.pitch}*`);
                 session.commercial.crossSellsShown.push(suggestion.sku);
-                console.log(`💡 Cross-sell suggested: ${suggestion.type}`);
+                console.log(`Ã°Å¸â€™Â¡ Cross-sell suggested: ${suggestion.type}`);
             }
         }
     }
@@ -1992,7 +1672,7 @@ app.post('/chat', async (req, res) => {
         }
         
         console.log(`\n${'='.repeat(60)}`);
-        console.log(`📩 [${sessionId}] "${message}"`);
+        console.log(`Ã°Å¸â€œÂ© [${sessionId}] "${message}"`);
         
         // Get or create session
         if (!sessions.has(sessionId)) {
@@ -2027,13 +1707,7 @@ app.post('/chat', async (req, res) => {
                     crossSellsShown: [],
                     lastProductPrice: null,
                     lastOfferType: null
-                },
-                escalationOffered: false,
-                pendingEscalation: false,
-                escalationReason: null,
-                // Session exclusion tracking
-                excludedCategories: [],
-                excludedProductTypes: []
+                }
             });
         }
         
@@ -2044,99 +1718,6 @@ app.post('/chat', async (req, res) => {
         // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
         const msgLower = message.toLowerCase();
-        
-        // ============================================
-        // CHECK FOR ESCALATION ACCEPTANCE (PRIORITY FIRST!)
-        // ============================================
-        // If Gwen just offered to connect to customer service and customer said "yes"
-        const affirmativePatterns = [
-            'yes', 'yeah', 'yep', 'sure', 'please', 'ok', 'okay', 
-            'go ahead', 'that would be great', 'that would be good',
-            'yes please', 'please do', 'i would like that', 'sounds good'
-        ];
-        
-        const isAffirmative = affirmativePatterns.some(p => {
-            // Match whole word or phrase, not partial (e.g., "yes" not in "yesterday")
-            const regex = new RegExp(`\\b${p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
-            return regex.test(msgLower);
-        });
-        
-        // Check if customer is accepting escalation offer
-        if (session.escalationOffered && isAffirmative) {
-            console.log(`🚨 Customer accepted escalation offer - proceeding with email capture`);
-            session.pendingEscalation = true;
-            session.escalationOffered = false; // Reset the offer flag
-            
-            // Check if they also provided an email in the same message
-            const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
-            if (emailMatch) {
-                session.customerEmail = emailMatch[0];
-                session.pendingEscalation = false;
-                
-                // Send escalation email
-                const emailResult = await sendEscalationEmail(
-                    session.customerEmail,
-                    session.customerName || 'Not provided',
-                    session.escalationReason || 'Customer requested human support',
-                    session.conversationHistory || [],
-                    session.commercial.productsShown || []
-                );
-                
-                console.log(`📧 ESCALATION EMAIL SENT (with affirmative): ${session.customerEmail}`);
-                
-                // Return escalation confirmation directly
-                const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
-                
-                session.conversationHistory.push({ role: 'user', content: message });
-                session.conversationHistory.push({ role: 'assistant', content: confirmationResponse });
-                
-                await logConversationMessage(sessionId, 'user', message, {});
-                await logConversationMessage(sessionId, 'assistant', confirmationResponse, { intent: 'escalation_sent' });
-                
-                return res.json({ response: confirmationResponse, sessionId });
-            } else {
-                // No email provided - ask for it
-                const emailRequestResponse = `I'd be happy to connect you with our customer service team who can help with this.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`;
-                
-                session.conversationHistory.push({ role: 'user', content: message });
-                session.conversationHistory.push({ role: 'assistant', content: emailRequestResponse });
-                
-                await logConversationMessage(sessionId, 'user', message, {});
-                await logConversationMessage(sessionId, 'assistant', emailRequestResponse, { intent: 'email_capture_for_escalation' });
-                
-                return res.json({ response: emailRequestResponse, sessionId });
-            }
-        }
-        
-        // Check if customer is providing email after we asked for it (for escalation)
-        if (session.pendingEscalation) {
-            const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
-            if (emailMatch) {
-                session.customerEmail = emailMatch[0];
-                session.pendingEscalation = false;
-                
-                // Send escalation email
-                const emailResult = await sendEscalationEmail(
-                    session.customerEmail,
-                    session.customerName || 'Not provided',
-                    session.escalationReason || 'Customer requested human support',
-                    session.conversationHistory || [],
-                    session.commercial.productsShown || []
-                );
-                
-                console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
-                
-                const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
-                
-                session.conversationHistory.push({ role: 'user', content: message });
-                session.conversationHistory.push({ role: 'assistant', content: confirmationResponse });
-                
-                await logConversationMessage(sessionId, 'user', message, {});
-                await logConversationMessage(sessionId, 'assistant', confirmationResponse, { intent: 'escalation_sent' });
-                
-                return res.json({ response: confirmationResponse, sessionId });
-            }
-        }
         
         // Store previous context to detect changes
         const previousMaterial = session.context.material;
@@ -2157,7 +1738,7 @@ app.post('/chat', async (req, res) => {
         
         const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
         if (isChangeRequest) {
-            console.log(`🔄 Change request detected`);
+            console.log(`Ã°Å¸â€â€ž Change request detected`);
         }
         
         // ============================================
@@ -2169,13 +1750,13 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('poly rattan') || msgLower.includes('pe rattan') ||
             msgLower.includes('synthetic rattan')) {
             session.context.material = 'rattan';
-            console.log(`📝 Context: material = rattan`);
+            console.log(`Ã°Å¸â€œÂ Context: material = rattan`);
         }
         
         // Teak
         if (msgLower.includes('teak')) {
             session.context.material = 'teak';
-            console.log(`📝 Context: material = teak`);
+            console.log(`Ã°Å¸â€œÂ Context: material = teak`);
         }
         
         // Wood (and synonyms) - check this AFTER teak so teak doesn't get overwritten
@@ -2183,31 +1764,31 @@ app.post('/chat', async (req, res) => {
              msgLower.includes('acacia') || msgLower.includes('hardwood')) &&
             !msgLower.includes('teak')) {
             session.context.material = 'wood';
-            console.log(`📝 Context: material = wood`);
+            console.log(`Ã°Å¸â€œÂ Context: material = wood`);
         }
         
         // Aluminium (and synonyms)
         if (msgLower.includes('aluminium') || msgLower.includes('aluminum') || 
             msgLower.includes('alloy')) {
             session.context.material = 'aluminium';
-            console.log(`📝 Context: material = aluminium`);
+            console.log(`Ã°Å¸â€œÂ Context: material = aluminium`);
         }
         
         // Metal (maps to aluminium for search, but also catches steel)
         if (msgLower.includes('metal') || msgLower.includes('steel')) {
             session.context.material = 'aluminium';
-            console.log(`📝 Context: material = aluminium (from metal/steel)`);
+            console.log(`Ã°Å¸â€œÂ Context: material = aluminium (from metal/steel)`);
         }
         
         // Woven
         if (msgLower.includes('woven') && !msgLower.includes('rattan')) {
             session.context.material = 'woven';
-            console.log(`📝 Context: material = woven`);
+            console.log(`Ã°Å¸â€œÂ Context: material = woven`);
         }
         
         // Clear whitelist if material changed
         if (previousMaterial && session.context.material && previousMaterial !== session.context.material) {
-            console.log(`🔄 Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
+            console.log(`Ã°Å¸â€â€ž Material changed: ${previousMaterial} Ã¢â€ â€™ ${session.context.material} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2219,7 +1800,7 @@ app.post('/chat', async (req, res) => {
         if (msgLower.includes('dining') || msgLower.includes('dinner') || 
             msgLower.includes('eating') || msgLower.includes('table and chair')) {
             session.context.furnitureType = 'dining';
-            console.log(`📝 Context: type = dining`);
+            console.log(`Ã°Å¸â€œÂ Context: type = dining`);
         }
         
         // Lounge (and synonyms)
@@ -2227,14 +1808,14 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('sofa') || msgLower.includes('couch') ||
             msgLower.includes('seating') || msgLower.includes('relax')) {
             session.context.furnitureType = 'lounge';
-            console.log(`📝 Context: type = lounge`);
+            console.log(`Ã°Å¸â€œÂ Context: type = lounge`);
         }
         
         // Corner (and synonyms)
         if (msgLower.includes('corner') || msgLower.includes('l-shape') || 
             msgLower.includes('l shape') || msgLower.includes('l shaped')) {
             session.context.furnitureType = 'corner';
-            console.log(`📝 Context: type = corner`);
+            console.log(`Ã°Å¸â€œÂ Context: type = corner`);
         }
         
         // Sun lounger (and synonyms)
@@ -2243,14 +1824,14 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('daybed') || msgLower.includes('day bed') ||
             (msgLower.includes('lounger') && !msgLower.includes('lounge set'))) {
             session.context.furnitureType = 'lounger';
-            console.log(`📝 Context: type = lounger`);
+            console.log(`Ã°Å¸â€œÂ Context: type = lounger`);
         }
         
         // Chaise
         if (msgLower.includes('chaise')) {
             session.context.furnitureType = 'lounge';
             session.context.subType = 'chaise';
-            console.log(`📝 Context: type = lounge (chaise)`);
+            console.log(`Ã°Å¸â€œÂ Context: type = lounge (chaise)`);
         }
         
         // Bistro (small sets)
@@ -2258,13 +1839,13 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('balcony set') || msgLower.includes('2 person')) {
             session.context.furnitureType = 'dining';
             session.context.seatCount = 2;
-            console.log(`📝 Context: type = dining (bistro), seats = 2`);
+            console.log(`Ã°Å¸â€œÂ Context: type = dining (bistro), seats = 2`);
         }
         
         // Modular
         if (msgLower.includes('modular') || msgLower.includes('configurable')) {
             session.context.subType = 'modular';
-            console.log(`📝 Context: subType = modular`);
+            console.log(`Ã°Å¸â€œÂ Context: subType = modular`);
         }
         
         // Accessories
@@ -2273,7 +1854,7 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('storage') || msgLower.includes('accessory') ||
             msgLower.includes('accessories')) {
             session.context.furnitureType = 'accessories';
-            console.log(`📝 Context: type = accessories`);
+            console.log(`Ã°Å¸â€œÂ Context: type = accessories`);
             
             if (msgLower.includes('cover')) session.context.subType = 'cover';
             if (msgLower.includes('parasol') || msgLower.includes('umbrella')) session.context.subType = 'parasol';
@@ -2283,7 +1864,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if furniture type changed
         if (previousType && session.context.furnitureType && previousType !== session.context.furnitureType) {
-            console.log(`🔄 Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
+            console.log(`Ã°Å¸â€â€ž Type changed: ${previousType} Ã¢â€ â€™ ${session.context.furnitureType} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2295,7 +1876,7 @@ app.post('/chat', async (req, res) => {
         const seatMatch = msgLower.match(/(\d+)\s*(?:people|person|seat|seater|guests?)/);
         if (seatMatch) {
             session.context.seatCount = parseInt(seatMatch[1]);
-            console.log(`📝 Context: seats = ${session.context.seatCount}`);
+            console.log(`Ã°Å¸â€œÂ Context: seats = ${session.context.seatCount}`);
         }
         
         // Word-based numbers
@@ -2316,7 +1897,7 @@ app.post('/chat', async (req, res) => {
                 msgLower.includes(word + ' seat') || msgLower.includes(word + ' guest') ||
                 msgLower.includes('for ' + word)) {
                 session.context.seatCount = num;
-                console.log(`📝 Context: seats = ${num} (from "${word}")`);
+                console.log(`Ã°Å¸â€œÂ Context: seats = ${num} (from "${word}")`);
                 break;
             }
         }
@@ -2327,7 +1908,7 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('tiny') || msgLower.includes('little')) {
             if (!session.context.seatCount) {
                 session.context.sizePreference = 'small';
-                console.log(`📝 Context: size preference = small`);
+                console.log(`Ã°Å¸â€œÂ Context: size preference = small`);
             }
             session.currentWhitelist = [];
         }
@@ -2338,26 +1919,26 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('guests')) {
             if (!session.context.seatCount) {
                 session.context.sizePreference = 'large';
-                console.log(`📝 Context: size preference = large`);
+                console.log(`Ã°Å¸â€œÂ Context: size preference = large`);
             }
             session.currentWhitelist = [];
         }
         
         // Relative size changes
         if (msgLower.includes('smaller') || msgLower.includes('fewer seat')) {
-            console.log(`📝 Customer wants smaller - clearing whitelist`);
+            console.log(`Ã°Å¸â€œÂ Customer wants smaller - clearing whitelist`);
             session.context.sizePreference = 'smaller';
             session.currentWhitelist = [];
         }
         if (msgLower.includes('bigger') || msgLower.includes('larger') || msgLower.includes('more seat')) {
-            console.log(`📝 Customer wants bigger - clearing whitelist`);
+            console.log(`Ã°Å¸â€œÂ Customer wants bigger - clearing whitelist`);
             session.context.sizePreference = 'larger';
             session.currentWhitelist = [];
         }
         
         // Clear whitelist if seat count changed
         if (previousSeats && session.context.seatCount && previousSeats !== session.context.seatCount) {
-            console.log(`🔄 Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
+            console.log(`Ã°Å¸â€â€ž Seats changed: ${previousSeats} Ã¢â€ â€™ ${session.context.seatCount} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2366,27 +1947,27 @@ app.post('/chat', async (req, res) => {
         // ============================================
         if (msgLower.includes('grey') || msgLower.includes('gray')) {
             session.context.colour = 'grey';
-            console.log(`📝 Context: colour = grey`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = grey`);
         }
         if (msgLower.includes('black')) {
             session.context.colour = 'black';
-            console.log(`📝 Context: colour = black`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = black`);
         }
         if (msgLower.includes('beige') || msgLower.includes('cream') || msgLower.includes('natural')) {
             session.context.colour = 'beige';
-            console.log(`📝 Context: colour = beige`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = beige`);
         }
         if (msgLower.includes('green')) {
             session.context.colour = 'green';
-            console.log(`📝 Context: colour = green`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = green`);
         }
         if (msgLower.includes('taupe') || msgLower.includes('brown')) {
             session.context.colour = 'taupe';
-            console.log(`📝 Context: colour = taupe`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = taupe`);
         }
         if (msgLower.includes('white')) {
             session.context.colour = 'white';
-            console.log(`📝 Context: colour = white`);
+            console.log(`Ã°Å¸â€œÂ Context: colour = white`);
         }
         
         // ============================================
@@ -2398,34 +1979,34 @@ app.post('/chat', async (req, res) => {
         if (budgetWords.some(word => msgLower.includes(word))) {
             session.context.priceRange = 'budget';
             session.commercial.sentiment = 'price_concerned';
-            console.log(`📝 Context: price range = budget`);
+            console.log(`Ã°Å¸â€œÂ Context: price range = budget`);
             session.currentWhitelist = [];
         }
         
         if (premiumWords.some(word => msgLower.includes(word))) {
             session.context.priceRange = 'premium';
-            console.log(`📝 Context: price range = premium`);
+            console.log(`Ã°Å¸â€œÂ Context: price range = premium`);
         }
         
         // Price threshold detection
-        const priceMatch = msgLower.match(/(?:under|below|less than|up to|max|maximum)\s*£?\s*(\d+)/);
+        const priceMatch = msgLower.match(/(?:under|below|less than|up to|max|maximum)\s*Ã‚Â£?\s*(\d+)/);
         if (priceMatch) {
             session.context.maxPrice = parseInt(priceMatch[1]);
-            console.log(`📝 Context: max price = £${session.context.maxPrice}`);
+            console.log(`Ã°Å¸â€œÂ Context: max price = Ã‚Â£${session.context.maxPrice}`);
             session.currentWhitelist = [];
         }
         
-        const minPriceMatch = msgLower.match(/(?:over|above|more than|at least|minimum)\s*£?\s*(\d+)/);
+        const minPriceMatch = msgLower.match(/(?:over|above|more than|at least|minimum)\s*Ã‚Â£?\s*(\d+)/);
         if (minPriceMatch) {
             session.context.minPrice = parseInt(minPriceMatch[1]);
-            console.log(`📝 Context: min price = £${session.context.minPrice}`);
+            console.log(`Ã°Å¸â€œÂ Context: min price = Ã‚Â£${session.context.minPrice}`);
         }
         
         // "too expensive" detection
         if (msgLower.includes('too expensive') || msgLower.includes('too much') || 
             msgLower.includes('too pricey') || msgLower.includes('can\'t afford')) {
             session.commercial.sentiment = 'price_concerned';
-            console.log(`💰 Price concern detected - clearing whitelist`);
+            console.log(`Ã°Å¸â€™Â° Price concern detected - clearing whitelist`);
             session.currentWhitelist = [];
         }
 
@@ -2444,7 +2025,7 @@ app.post('/chat', async (req, res) => {
         
         if (isDimensionQuery) {
             session.context.queryType = 'dimensions';
-            console.log(`📐 Dimension query detected`);
+            console.log(`Ã°Å¸â€œÂ Dimension query detected`);
         }
         
         // Detect space size from customer (e.g., "my space is 200cm x 300cm")
@@ -2461,7 +2042,7 @@ app.post('/chat', async (req, res) => {
                 width: Math.min(dim1, dim2),
                 length: Math.max(dim1, dim2)
             };
-            console.log(`📐 Customer space detected: ${session.context.customerSpace.width}cm × ${session.context.customerSpace.length}cm`);
+            console.log(`Ã°Å¸â€œÂ Customer space detected: ${session.context.customerSpace.width}cm Ãƒâ€” ${session.context.customerSpace.length}cm`);
         }
         
         // Detect box/delivery dimension queries
@@ -2475,14 +2056,14 @@ app.post('/chat', async (req, res) => {
         
         if (isBoxQuery) {
             session.context.queryType = 'box_dimensions';
-            console.log(`📦 Box dimension query detected`);
+            console.log(`Ã°Å¸â€œÂ¦ Box dimension query detected`);
         }
         
         // ============================================
         // GENERIC CHANGE REQUEST - Clear whitelist
         // ============================================
         if (isChangeRequest && session.currentWhitelist.length > 0) {
-            console.log(`🔄 Change request with existing whitelist - clearing for fresh search`);
+            console.log(`Ã°Å¸â€â€ž Change request with existing whitelist - clearing for fresh search`);
             session.currentWhitelist = [];
         }
     
@@ -2496,51 +2077,30 @@ app.post('/chat', async (req, res) => {
         
         if (sentiment.priceConcerned) {
             session.commercial.sentiment = 'price_concerned';
-            console.log(`💰 Sentiment: Price concerned`);
+            console.log(`Ã°Å¸â€™Â° Sentiment: Price concerned`);
         } else if (sentiment.positive) {
             session.commercial.sentiment = 'positive';
             session.commercial.positiveSignalReceived = true;
-            console.log(`😊 Sentiment: Positive signal received`);
+            console.log(`Ã°Å¸ËœÅ  Sentiment: Positive signal received`);
         }
         
         if (sentiment.strongPositive) {
             session.commercial.strongPositiveReceived = true;
-            console.log(`🎯 Sentiment: Strong positive - customer has chosen!`);
+            console.log(`Ã°Å¸Å½Â¯ Sentiment: Strong positive - customer has chosen!`);
         }
         
         if (sentiment.bundleInterest) {
             session.commercial.bundleInterestShown = true;
-            console.log(`🎁 Bundle interest detected`);
-        }
-        
-        // ============================================
-        // DETECT CUSTOMER FRUSTRATION / LEAVING
-        // ============================================
-        const leavingPatterns = [
-            'buy elsewhere', 'buying elsewhere', 'go elsewhere', 'going elsewhere',
-            'try somewhere else', 'look elsewhere', 'shop elsewhere',
-            'forget it', 'never mind', 'nevermind', 'give up',
-            'waste of time', 'useless', 'hopeless', 'frustrated',
-            'going to competitor', 'amazon', 'wayfair', 'john lewis',
-            'this is ridiculous', 'terrible', 'awful experience'
-        ];
-        
-        const isLeaving = leavingPatterns.some(p => msgLower.includes(p));
-        
-        if (isLeaving) {
-            console.log(`🚨 LOST_SALE: Customer leaving - "${message.substring(0, 80)}..."`);
-            session.commercial.sentiment = 'leaving';
-            session.commercial.lostSaleReason = message;
-            session.commercial.lostSaleTimestamp = new Date().toISOString();
+            console.log(`Ã°Å¸Å½Â Bundle interest detected`);
         }
         
         if (sentiment.decline) {
             if (session.commercial.lastOfferType === 'bundle') {
                 session.commercial.bundleDeclined = true;
-                console.log(`=Œ Bundle offer declined`);
+                console.log(`Ã¢ÂÅ’ Bundle offer declined`);
             } else if (session.commercial.lastOfferType === 'upsell') {
                 session.commercial.upsellDeclined = true;
-                console.log(`=Œ Upsell declined`);
+                console.log(`Ã¢ÂÅ’ Upsell declined`);
             }
         }
         
@@ -2548,7 +2108,7 @@ app.post('/chat', async (req, res) => {
         // PURCHASE INTENT HANDLING - TRIGGER CLOSING FLOW
         // ============================================
         if (sentiment.readyToBuy && session.commercial.productsShown.length > 0) {
-            console.log(`🛒 PURCHASE INTENT DETECTED - Triggering closing flow`);
+            console.log(`Ã°Å¸â€ºâ€™ PURCHASE INTENT DETECTED - Triggering closing flow`);
             
             // Build closing response directly - don't let AI show more products
             const closingResponse = buildClosingResponse(session, sentiment);
@@ -2568,7 +2128,7 @@ app.post('/chat', async (req, res) => {
                 }
             });
             
-            console.log(`📤 Closing flow response sent`);
+            console.log(`Ã°Å¸â€œÂ¤ Closing flow response sent`);
             
             // Log both messages to database
             await logConversationMessage(sessionId, 'customer', message, {
@@ -2609,8 +2169,8 @@ app.post('/chat', async (req, res) => {
         // Add current user message
         messages.push({ role: "user", content: message });
         
-        console.log(`💬 Sending ${messages.length} messages to AI (${session.conversationHistory.length} history)`);
-        console.log(`📋 Context: ${JSON.stringify(session.context)}`);
+        console.log(`Ã°Å¸â€™Â¬ Sending ${messages.length} messages to AI (${session.conversationHistory.length} history)`);
+        console.log(`Ã°Å¸â€œâ€¹ Context: ${JSON.stringify(session.context)}`);
         
         // Call AI
         let response = await openai.chat.completions.create({
@@ -2631,7 +2191,7 @@ app.post('/chat', async (req, res) => {
                 const args = JSON.parse(toolCall.function.arguments);
                 
                 if (toolCall.function.name === "search_products") {
-                    console.log(` Search:`, args);
+                    console.log(`Ã°Å¸â€Â Search:`, args);
                     
                     if (args.furnitureType) session.context.furnitureType = args.furnitureType;
                     if (args.seatCount) session.context.seatCount = args.seatCount;
@@ -2640,7 +2200,7 @@ app.post('/chat', async (req, res) => {
                     const products = searchProducts(args);
                     
                     session.currentWhitelist = products.map(p => p.sku);
-                    console.log(`🛡️ Whitelist: [${session.currentWhitelist.join(', ')}]`);
+                    console.log(`Ã°Å¸â€ºÂ¡Ã¯Â¸Â Whitelist: [${session.currentWhitelist.join(', ')}]`);
                     
                     // Check if products actually meet the seat requirement
                     let seatWarning = null;
@@ -2681,53 +2241,19 @@ app.post('/chat', async (req, res) => {
                 }
                 
                          if (toolCall.function.name === "request_human_handoff") {
-                    console.log(`📧 ESCALATION REQUESTED:`, args);
+                    console.log(`Ã°Å¸â€œÂ§ Handoff requested: ${args.reason}`);
                     
-                    // Validate email if provided
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    
-                    if (!args.customerEmail || !emailRegex.test(args.customerEmail)) {
-                        // No email - ask for it first
-                        console.log(`⚠️ Escalation requested but no valid email provided`);
-                        toolResults.push({
-                            tool_call_id: toolCall.id,
-                            output: JSON.stringify({
-                                success: false,
-                                needsEmail: true,
-                                message: "Before I connect you with our support team, I'll need your email address so they can get back to you. What's the best email to reach you on?"
-                            })
-                        });
-                    } else {
-                        // Have email - send escalation
-                        session.customerEmail = args.customerEmail;
-                        session.escalationReason = args.reason;
-                        
-                        // Send the actual escalation email
-                        const emailResult = await sendEscalationEmail(
-                            args.customerEmail,
-                            args.customerName || 'Not provided',
-                            args.reason,
-                            session.conversationHistory || [],
-                            session.commercial.productsShown || []
-                        );
-                        
-                        console.log(`📧 ESCALATION sent for: ${args.customerEmail}`);
-                        console.log(`📧 Reason: ${args.reason}`);
-                        
-                        toolResults.push({
-                            tool_call_id: toolCall.id,
-                            output: JSON.stringify({
-                                success: true,
-                                emailSent: emailResult.success,
-                                customerEmail: args.customerEmail,
-                                message: `Escalation sent to our support team. Tell the customer: "I've passed your details to our customer service team. They will email you at ${args.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?"`
-                            })
-                        });
-                    }
+                    toolResults.push({
+                        tool_call_id: toolCall.id,
+                        output: JSON.stringify({
+                            success: true,
+                            message: "Handoff logged. Tell customer a team member will be in touch."
+                        })
+                    });
                 }
                 
                 if (toolCall.function.name === "capture_email_for_quote") {
-                    console.log(`📧 Email capture:`, args);
+                    console.log(`Ã°Å¸â€œÂ§ Email capture:`, args);
                     
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(args.email)) {
@@ -2742,8 +2268,8 @@ app.post('/chat', async (req, res) => {
                         session.customerEmail = args.email;
                         const productsForQuote = args.productSkus || session.commercial.productsShown.slice(-3);
                         
-                        console.log(`📧 Quote requested for: ${args.email}`);
-                        console.log(`📧 Products: ${productsForQuote.join(', ')}`);
+                        console.log(`Ã°Å¸â€œÂ§ Quote requested for: ${args.email}`);
+                        console.log(`Ã°Å¸â€œÂ§ Products: ${productsForQuote.join(', ')}`);
                         
                         toolResults.push({
                             tool_call_id: toolCall.id,
@@ -2757,53 +2283,20 @@ app.post('/chat', async (req, res) => {
                     }
                 }
                 
-               if (toolCall.function.name === "initiate_checkout") {
-                    console.log(`🛒 Checkout initiated:`, args);
+                if (toolCall.function.name === "initiate_checkout") {
+                    console.log(`Ã°Å¸â€ºâ€™ Checkout initiated:`, args);
                     
-                    // Try to find product by SKU first, then by name
-                    let product = productIndex.bySku[args.productSku];
-                    let actualSku = args.productSku;
-                    
-                    // If not found by SKU, try finding by name
-                    if (!product && args.productSku) {
-                        console.log(`🔍 Product not found by SKU, trying name lookup: "${args.productSku}"`);
-                        const productResult = findProductByName(args.productSku, session.commercial.productsShown);
-                        if (productResult) {
-                            product = productResult.product;
-                            actualSku = productResult.sku;
-                            console.log(`✅ Found product by name: ${actualSku}`);
-                        }
-                    }
-                    
+                    const product = productIndex.bySku[args.productSku];
                     if (!product) {
-                        // Log what we tried to find for debugging
-                       console.log(`❌ LOST_SALE: Could not find product: "${args.productSku}"`);
-                        console.log(`   Products shown this session: [${session.commercial.productsShown.join(', ')}]`);
-                        
-                        // If we have products shown this session, suggest those
-                        let helpfulMessage = "I couldn't find that specific product.";
-                        
-                        if (session.commercial.productsShown.length > 0) {
-                            const lastProduct = session.commercial.productsShown[session.commercial.productsShown.length - 1];
-                            const lastProductData = productIndex.bySku[lastProduct];
-                            if (lastProductData) {
-                                helpfulMessage = `I want to make sure I help you order the right product. Were you interested in the ${lastProductData.product_identity?.product_name}? Just confirm and I'll show you how to complete your purchase.`;
-                            }
-                        } else {
-                            helpfulMessage = "I'd love to help you complete your purchase! Could you tell me which product you'd like to order, and I'll show you the checkout options.";
-                        }
-                        
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
                                 success: false,
-                                message: helpfulMessage,
-                                productsShown: session.commercial.productsShown,
-                                note: "DO NOT generate a URL. Ask the customer to confirm which product they want, then call initiate_checkout again with the correct SKU."
+                                message: "Product not found. Ask customer which product they'd like to order."
                             })
                         });
                     } else {
-                        const productUrl = `https://www.mint-outdoor.com/products/${actualSku.toLowerCase().replace(/\s+/g, '-')}`;
+                        const productUrl = `https://www.mint-outdoor.com/products/${args.productSku.toLowerCase()}`;
                         const price = parseFloat(product.product_identity?.price_gbp) || 0;
                         
                         let checkoutInfo = {
@@ -2828,7 +2321,7 @@ app.post('/chat', async (req, res) => {
                                 const discount = bundleTotal * 0.20;
                                 checkoutInfo.bundlePrice = bundleTotal - discount;
                                 checkoutInfo.bundleSavings = discount;
-                                checkoutInfo.message += ` Bundle discount of 20% (saving £${discount.toFixed(2)}) applies at checkout when they add the matching cover.`;
+                                checkoutInfo.message += ` Bundle discount of 20% (saving Ã‚Â£${discount.toFixed(2)}) applies at checkout when they add the matching cover.`;
                             }
                         }
                         
@@ -2839,7 +2332,7 @@ app.post('/chat', async (req, res) => {
                     }
                 }
 if (toolCall.function.name === "get_product_dimensions") {
-                    console.log(`📐 Dimension query:`, args);
+                    console.log(`Ã°Å¸â€œÂ Dimension query:`, args);
                     
                     // Find the product
                     let productResult = null;
@@ -2899,69 +2392,6 @@ if (toolCall.function.name === "get_product_dimensions") {
                     }
                 }
 
-                // ============================================
-                // FIND ACCESSORIES TOOL HANDLER
-                // ============================================
-                if (toolCall.function.name === "find_accessories") {
-                    console.log(`🎁 Accessory search:`, args);
-                    
-                    let mainProduct = null;
-                    let mainSku = null;
-                    
-                    // Try to find by SKU first
-                    if (args.productSku) {
-                        mainProduct = productIndex.bySku[args.productSku];
-                        mainSku = args.productSku;
-                    }
-                    
-                    // If not found by SKU, try finding by name
-                    if (!mainProduct && args.productName) {
-                        const result = findProductByName(args.productName, session.commercial.productsShown);
-                        if (result) {
-                            mainProduct = result.product;
-                            mainSku = result.sku;
-                            console.log(`✅ Found main product by name: ${mainSku}`);
-                        }
-                    }
-                    
-                    if (!mainProduct) {
-                        console.log(`❌ Could not find main product for accessories`);
-                        toolResults.push({
-                            tool_call_id: toolCall.id,
-                            output: JSON.stringify({
-                                success: false,
-                                message: `I couldn't find the product "${args.productName || args.productSku}". Could you confirm which product you'd like accessories for?`
-                            })
-                        });
-                    } else {
-                        const accessoryType = args.accessoryType === 'any' ? null : args.accessoryType;
-                        const accessories = findRelatedAccessories(mainSku, accessoryType);
-                        
-                        console.log(`🎁 Found ${accessories.length} accessories for ${mainSku}`);
-                        
-                        // Add main product and accessories to whitelist
-                        session.currentWhitelist = [mainSku, ...accessories.map(a => a.sku)];
-                        
-                        toolResults.push({
-                            tool_call_id: toolCall.id,
-                            output: JSON.stringify({
-                                success: true,
-                                mainProduct: {
-                                    sku: mainSku,
-                                    name: mainProduct.product_identity?.product_name,
-                                    price: mainProduct.product_identity?.price_gbp
-                                },
-                                accessories: accessories,
-                                accessoryCount: accessories.length,
-                                available_skus: session.currentWhitelist,
-                                note: accessories.length > 0 
-                                    ? `Found ${accessories.length} accessories. Show the main product AND accessories using product_recommendation intent with these SKUs: ${session.currentWhitelist.join(', ')}`
-                                    : `No matching accessories found for this product. Let the customer know and offer to check other options or contact our team.`
-                            })
-                        });
-                    }
-                }
-
             }
             
             messages.push(aiMessage);
@@ -2996,18 +2426,18 @@ if (toolCall.function.name === "get_product_dimensions") {
         // LAYER 1: Try direct JSON parse
         try {
             aiOutput = JSON.parse(aiMessage.content);
-            console.log(`✅ AI intent: ${aiOutput.intent}`);
+            console.log(`Ã¢Å“â€¦ AI intent: ${aiOutput.intent}`);
         } catch (parseError) {
-            console.log(`⚠ï¸ JSON parse failed, trying extraction...`);
+            console.log(`Ã¢Å¡Â Ã¯Â¸Â JSON parse failed, trying extraction...`);
             
             // LAYER 2: Try to extract JSON from markdown code blocks
             const jsonMatch = aiMessage.content?.match(/```(?:json)?\s*([\s\S]*?)```/);
             if (jsonMatch) {
                 try {
                     aiOutput = JSON.parse(jsonMatch[1].trim());
-                    console.log(`✅ Extracted JSON from code block`);
+                    console.log(`Ã¢Å“â€¦ Extracted JSON from code block`);
                 } catch (e2) {
-                    console.log(`⚠ï¸ Code block extraction failed`);
+                    console.log(`Ã¢Å¡Â Ã¯Â¸Â Code block extraction failed`);
                 }
             }
             
@@ -3017,9 +2447,9 @@ if (toolCall.function.name === "get_product_dimensions") {
                 if (objectMatch) {
                     try {
                         aiOutput = JSON.parse(objectMatch[0]);
-                        console.log(`✅ Extracted JSON object from response`);
+                        console.log(`Ã¢Å“â€¦ Extracted JSON object from response`);
                     } catch (e3) {
-                        console.log(`⚠ï¸ Object extraction failed`);
+                        console.log(`Ã¢Å¡Â Ã¯Â¸Â Object extraction failed`);
                     }
                 }
             }
@@ -3028,82 +2458,10 @@ if (toolCall.function.name === "get_product_dimensions") {
             // LAYER 4: CONTEXT-AWARE INTELLIGENT FALLBACK
             // ============================================
             if (!aiOutput) {
-                console.log(`🔄 Using context-aware fallback`);
+                console.log(`Ã°Å¸â€â€ž Using context-aware fallback`);
                 const ctx = session.context;
                 const hasWhitelist = session.currentWhitelist && session.currentWhitelist.length > 0;
                 const hasContext = ctx.material || ctx.furnitureType || ctx.seatCount;
-                
-                // ============================================
-                // PRIORITY 0: ESCALATION/SUPPORT REQUEST DETECTION
-                // ============================================
-                const escalationPatterns = [
-                    'contact support', 'contact team', 'contact you', 'contact someone',
-                    'speak to someone', 'speak to a person', 'speak to a human', 'speak to agent',
-                    'talk to someone', 'talk to a person', 'talk to a human', 'talk to agent',
-                    'customer service', 'customer support', 'support team', 'help desk',
-                    'real person', 'real human', 'human agent', 'live agent', 'live chat',
-                    'phone number', 'call you', 'email you', 'email address', 'email me',
-                    'get in touch', 'how do i contact', 'how can i contact', 'how to contact',
-                    'need help', 'need assistance', 'this is useless', 'you\'re useless',
-                    'not helpful', 'can\'t help', 'cannot help'
-                ];
-                
-                const wantsEscalation = escalationPatterns.some(p => msgLower.includes(p));
-                
-                if (wantsEscalation) {
-                    console.log(`🚨 ESCALATION REQUEST DETECTED in fallback`);
-                    
-                    // Check if we already have their email
-                    if (session.customerEmail) {
-                        // We have email - send escalation directly
-                        const emailResult = await sendEscalationEmail(
-                            session.customerEmail,
-                            session.customerName || 'Not provided',
-                            `Customer requested human support. Last message: "${message}"`,
-                            session.conversationHistory || [],
-                            session.commercial.productsShown || []
-                        );
-                        
-                        aiOutput = {
-                            intent: 'escalation_sent',
-                            response_text: `I've passed your request to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?`
-                        };
-                    } else {
-                        // Need to capture email first
-                        session.pendingEscalation = true;
-                        session.escalationReason = message;
-                        
-                        aiOutput = {
-                            intent: 'email_capture_for_escalation',
-                            response_text: `I'd be happy to connect you with our customer service team who can help with this. They typically respond within a few hours.\n\nTo make sure they can get back to you quickly, could you please share your email address? I'll pass on our conversation so they have all the context.`
-                        };
-                    }
-                }
-                
-                // PRIORITY 0.5: Check if customer just provided email after escalation request
-                if (!aiOutput && session.pendingEscalation) {
-                    const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
-                    if (emailMatch) {
-                        session.customerEmail = emailMatch[0];
-                        session.pendingEscalation = false;
-                        
-                        // Send escalation email
-                        const emailResult = await sendEscalationEmail(
-                            session.customerEmail,
-                            session.customerName || 'Not provided',
-                            session.escalationReason || 'Customer requested human support',
-                            session.conversationHistory || [],
-                            session.commercial.productsShown || []
-                        );
-                        
-                        console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
-                        
-                        aiOutput = {
-                            intent: 'escalation_sent',
-                            response_text: `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`
-                        };
-                    }
-                }
                 
                 // PRIORITY 1: Check if customer mentioned a SPECIFIC PRODUCT BY NAME
                 const productNamePatterns = [
@@ -3117,7 +2475,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                 );
                 
                 if (mentionedProduct) {
-                    console.log(` Fallback: Customer mentioned "${mentionedProduct}" - searching`);
+                    console.log(`Ã°Å¸â€Â Fallback: Customer mentioned "${mentionedProduct}" - searching`);
                     
                     const productSearch = searchProducts({ 
                         productName: mentionedProduct,
@@ -3133,7 +2491,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                             personalisation: '',
                             closing_copy: "Would you like more details?"
                         };
-                        console.log(`✅ Fallback: Found ${productSearch.length} products`);
+                        console.log(`Ã¢Å“â€¦ Fallback: Found ${productSearch.length} products`);
                     } else {
                         aiOutput = {
                             intent: 'question_answer',
@@ -3155,71 +2513,22 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
                     
                     if (isAskingQuestion) {
-                        console.log(`❓ Fallback: Detected question`);
+                        console.log(`Ã¢Ââ€œ Fallback: Detected question`);
                         
                         let helpfulResponse = "";
                         
-                        // ============================================
-                        // EN-581 QUALITY & TESTING QUESTIONS
-                        // ============================================
-                        
-                        // Weight limit questions - specific handling
-                        const weightPatterns = ['weight limit', 'how much weight', 'how heavy', 'weight capacity', 
-                                               'can it hold', 'maximum weight', 'stone', 'kg limit', 'heavy person',
-                                               'big person', 'large person', 'overweight', 'bariatric'];
-                        const isWeightQuestion = weightPatterns.some(p => msgLower.includes(p));
-                        
-                        // Quality/testing questions
-                        const qualityPatterns = ['quality', 'tested', 'testing', 'how strong', 'is it strong', 
-                                                'will it break', 'will it last', 'durable', 'durability',
-                                                'sturdy', 'robust', 'solid', 'reliable', 'safe', 'safety',
-                                                'certified', 'certification', 'standard', 'en-581', 'en581',
-                                                'bs en', 'european standard', 'british standard'];
-                        const isQualityQuestion = qualityPatterns.some(p => msgLower.includes(p));
-                        
-                        // Stability questions
-                        const stabilityPatterns = ['tip over', 'tipping', 'wobble', 'wobbly', 'stable', 'stability',
-                                                   'fall over', 'topple', 'uneven', 'rock', 'rocking'];
-                        const isStabilityQuestion = stabilityPatterns.some(p => msgLower.includes(p));
-                        
-                        if (isWeightQuestion) {
-                            console.log(`⚖️ Fallback: Weight limit question detected`);
-                            helpfulResponse = en581Info.weightLimit.response;
-                            
-                            // Check if they might need higher capacity
-                            if (msgLower.includes('more than') || msgLower.includes('over') || 
-                                msgLower.includes('higher') || msgLower.includes('bariatric')) {
-                                session.escalationOffered = true;
-                                session.escalationReason = 'Customer enquiring about higher weight capacity furniture';
-                            }
-                        } else if (isStabilityQuestion) {
-                            console.log(`🪑 Fallback: Stability question detected`);
-                            helpfulResponse = en581Info.customerQuestions.stability;
-                        } else if (isQualityQuestion) {
-                            console.log(`✅ Fallback: Quality/testing question detected`);
-                            
-                            // Give more specific answer based on what they asked
-                            if (msgLower.includes('strong') || msgLower.includes('break')) {
-                                helpfulResponse = en581Info.customerQuestions.strength;
-                            } else if (msgLower.includes('last') || msgLower.includes('durable') || msgLower.includes('durability')) {
-                                helpfulResponse = en581Info.customerQuestions.durability;
-                            } else if (msgLower.includes('safe') || msgLower.includes('safety')) {
-                                helpfulResponse = en581Info.customerQuestions.safetyFeatures;
-                            } else {
-                                helpfulResponse = en581Info.customerQuestions.quality;
-                            }
-                        } else if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
+                        if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
                             helpfulResponse = "Great question! Our furniture is built to last:\n\n**Within warranty (2 years for rattan):** We repair or replace manufacturing defects free of charge.\n\n**After warranty:** Minor damage can often be repaired. We stock spare parts and replacement cushion covers.\n\n**Maximise lifespan:** Use a protective cover - extends life by 3-5 years!\n\nWould you like details on protective covers?";
                         } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
-                            helpfulResponse = "Our warranty coverage:\n\n= **Rattan:** 2 years structural + colour\n= **Aluminium:** 10 years corrosion\n= **Teak:** 5 years structural\n= **Cushions:** 1 year\n\nAnything specific you'd like to know?";
+                            helpfulResponse = "Our warranty coverage:\n\nÃ¢â‚¬Â¢ **Rattan:** 2 years structural + colour\nÃ¢â‚¬Â¢ **Aluminium:** 10 years corrosion\nÃ¢â‚¬Â¢ **Teak:** 5 years structural\nÃ¢â‚¬Â¢ **Cushions:** 1 year\n\nAnything specific you'd like to know?";
                         } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
-                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over £500\n= Tracking sent when shipped\n\nAnything else I can help with?";
+                            helpfulResponse = "We offer fast UK delivery:\n\nÃ¢â‚¬Â¢ 3-5 working days\nÃ¢â‚¬Â¢ Free on orders over Ã‚Â£500\nÃ¢â‚¬Â¢ Tracking sent when shipped\n\nAnything else I can help with?";
                         } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
-                            helpfulResponse = "Care is easy:\n\n= **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n= **Aluminium:** Just soapy water occasionally.\n= **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
+                            helpfulResponse = "Care is easy:\n\nÃ¢â‚¬Â¢ **Rattan:** Wipe with damp cloth. Cover in harsh winters.\nÃ¢â‚¬Â¢ **Aluminium:** Just soapy water occasionally.\nÃ¢â‚¬Â¢ **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
-                            helpfulResponse = en581Info.customerQuestions.weatherResistance;
+                            helpfulResponse = "Our furniture handles weather well:\n\nÃ¢â‚¬Â¢ **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\nÃ¢â‚¬Â¢ **Aluminium:** 100% rust-proof, year-round outdoor use.\nÃ¢â‚¬Â¢ **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
                         } else {
-                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n= Warranty info\n= Delivery details\n= Care and maintenance\n= Product specifications\n\nWhat would you like to know?";
+                            helpfulResponse = "I'd be happy to help! I can assist with:\n\nÃ¢â‚¬Â¢ Warranty info\nÃ¢â‚¬Â¢ Delivery details\nÃ¢â‚¬Â¢ Care and maintenance\nÃ¢â‚¬Â¢ Product specifications\n\nWhat would you like to know?";
                         }
                         
                         aiOutput = {
@@ -3241,7 +2550,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isDimensionQuery = dimensionPatterns.some(p => msgLower.includes(p));
                     
                     if (isDimensionQuery) {
-                        console.log(`📐 Fallback: Detected dimension query`);
+                        console.log(`Ã°Å¸â€œÂ Fallback: Detected dimension query`);
                         
                         // Try to identify which product they're asking about
                         const productsShown = session.commercial.productsShown || [];
@@ -3263,7 +2572,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         if (!productFound && productsShown.length > 0) {
                             const lastShown = productsShown[productsShown.length - 1];
                             productFound = { sku: lastShown, product: productIndex.bySku[lastShown], source: 'last_shown' };
-                            console.log(`📐 Using last shown product: ${lastShown}`);
+                            console.log(`Ã°Å¸â€œÂ Using last shown product: ${lastShown}`);
                         }
                         
                         if (productFound) {
@@ -3275,13 +2584,13 @@ if (toolCall.function.name === "get_product_dimensions") {
                                 include_box_dimensions: includeBoxDimensions,
                                 response_text: ''
                             };
-                            console.log(`✅ Fallback: Dimension query for ${productFound.sku}`);
+                            console.log(`Ã¢Å“â€¦ Fallback: Dimension query for ${productFound.sku}`);
                         } else {
                             aiOutput = {
                                 intent: 'clarification',
                                 response_text: "I'd be happy to help with dimensions! Which product would you like to know the size of?"
                             };
-                            console.log(`=“ Fallback: Asking which product for dimensions`);
+                            console.log(`Ã¢Ââ€œ Fallback: Asking which product for dimensions`);
                         }
                     }
                 }
@@ -3299,22 +2608,22 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
                     
                     if (isAskingQuestion) {
-                        console.log(`=“ Fallback: Detected question`);
+                        console.log(`Ã¢Ââ€œ Fallback: Detected question`);
                         
                         let helpfulResponse = "";
                         
                         if (msgLower.includes('wear') || msgLower.includes('tear') || msgLower.includes('break') || msgLower.includes('damage')) {
                             helpfulResponse = "Great question! Our furniture is built to last:\n\n**Within warranty (2 years for rattan):** We repair or replace manufacturing defects free of charge.\n\n**After warranty:** Minor damage can often be repaired. We stock spare parts and replacement cushion covers.\n\n**Maximise lifespan:** Use a protective cover - extends life by 3-5 years!\n\nWould you like details on protective covers?";
                         } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
-                            helpfulResponse = "Our warranty coverage:\n\n= **Rattan:** 2 years structural + colour\n= **Aluminium:** 10 years corrosion\n= **Teak:** 5 years structural\n= **Cushions:** 1 year\n\nAnything specific you'd like to know?";
+                            helpfulResponse = "Our warranty coverage:\n\nÃ¢â‚¬Â¢ **Rattan:** 2 years structural + colour\nÃ¢â‚¬Â¢ **Aluminium:** 10 years corrosion\nÃ¢â‚¬Â¢ **Teak:** 5 years structural\nÃ¢â‚¬Â¢ **Cushions:** 1 year\n\nAnything specific you'd like to know?";
                         } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
-                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over £500\n= Tracking sent when shipped\n\nAnything else I can help with?";
+                            helpfulResponse = "We offer fast UK delivery:\n\nÃ¢â‚¬Â¢ 3-5 working days\nÃ¢â‚¬Â¢ Free on orders over Ã‚Â£500\nÃ¢â‚¬Â¢ Tracking sent when shipped\n\nAnything else I can help with?";
                         } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
-                            helpfulResponse = "Care is easy:\n\n= **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n= **Aluminium:** Just soapy water occasionally.\n= **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
+                            helpfulResponse = "Care is easy:\n\nÃ¢â‚¬Â¢ **Rattan:** Wipe with damp cloth. Cover in harsh winters.\nÃ¢â‚¬Â¢ **Aluminium:** Just soapy water occasionally.\nÃ¢â‚¬Â¢ **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
-                            helpfulResponse = "Our furniture handles weather well:\n\n= **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\n= **Aluminium:** 100% rust-proof, year-round outdoor use.\n= **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
+                            helpfulResponse = "Our furniture handles weather well:\n\nÃ¢â‚¬Â¢ **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\nÃ¢â‚¬Â¢ **Aluminium:** 100% rust-proof, year-round outdoor use.\nÃ¢â‚¬Â¢ **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
                         } else {
-                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n= Warranty info\n= Delivery details\n= Care and maintenance\n= Product dimensions and specifications\n\nWhat would you like to know?";
+                            helpfulResponse = "I'd be happy to help! I can assist with:\n\nÃ¢â‚¬Â¢ Warranty info\nÃ¢â‚¬Â¢ Delivery details\nÃ¢â‚¬Â¢ Care and maintenance\nÃ¢â‚¬Â¢ Product dimensions and specifications\n\nWhat would you like to know?";
                         }
                         
                         aiOutput = {
@@ -3336,7 +2645,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         personalisation: '',
                         closing_copy: "Would any of these work for you?"
                     };
-                    console.log(`✅ Fallback: Showing products with context`);
+                    console.log(`Ã¢Å“â€¦ Fallback: Showing products with context`);
                 }
                 
                 // PRIORITY 4: Safety net
@@ -3345,7 +2654,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         intent: 'clarification',
                         response_text: "I'd love to help! Are you looking for dining furniture, a lounge set, or perhaps a corner sofa?"
                     };
-                    console.log(`✅ Fallback: Safety net`);
+                    console.log(`Ã¢Å“â€¦ Fallback: Safety net`);
                 }
             }
         }
@@ -3435,34 +2744,9 @@ if (toolCall.function.name === "get_product_dimensions") {
             sentiment: session.commercial.sentiment
         });
         
-        // ============================================
-        // DETECT ESCALATION OFFERS - Track when Gwen offers to connect to support
-        // ============================================
-        const escalationOfferPatterns = [
-            'connect you with our customer service',
-            'connect you with our team',
-            'connect you with support',
-            'speak to someone',
-            'speak to a person',
-            'speak to our team',
-            'would you like me to do that',
-            'would you like that',
-            'pass this to our team',
-            'hand this over to',
-            'get someone to help',
-            'have our team contact you'
-        ];
+      
         
-        const finalResponseLower = finalResponse.toLowerCase();
-        const isOfferingEscalation = escalationOfferPatterns.some(p => finalResponseLower.includes(p));
-        
-        if (isOfferingEscalation) {
-            console.log(`🚨 Escalation offered - setting flag for next response`);
-            session.escalationOffered = true;
-            session.escalationReason = `Customer inquiry: ${message.substring(0, 200)}`;
-        }
-        
-        console.log(`📤 Response (${finalResponse.length} chars)`);
+        console.log(`Ã°Å¸â€œÂ¤ Response (${finalResponse.length} chars)`);
         console.log(`${'='.repeat(60)}\n`);
         
         res.json({
@@ -3471,7 +2755,7 @@ if (toolCall.function.name === "get_product_dimensions") {
         });
         
     } catch (error) {
-        console.error('=Œ Error:', error);
+        console.error('Ã¢ÂÅ’ Error:', error);
         // Log errors to dashboard too
         try {
             await logConversationMessage(sessionId, 'customer', message || 'unknown', { sentiment: 'error' });
@@ -3535,7 +2819,7 @@ app.get('/debug-session/:sessionId', (req, res) => {
 // Debug endpoint to test search directly
 app.get('/debug-search', (req, res) => {
     const { type, material, seats } = req.query;
-    console.log(`\n🧪 DEBUG SEARCH: type=${type}, material=${material}, seats=${seats}`);
+    console.log(`\nÃ°Å¸Â§Âª DEBUG SEARCH: type=${type}, material=${material}, seats=${seats}`);
     
     const results = searchProducts({
         furnitureType: type || undefined,
@@ -3700,7 +2984,7 @@ app.get('/api/conversations/:sessionId', async (req, res) => {
                 sentiment,
                 created_at
             FROM conversation_messages
-            WHERE session_id = $1 ORDER BY created_at ASC
+            WHERE session_id =             ORDER BY created_at ASC
         `, [req.params.sessionId]);
         
         res.json({ 
@@ -3793,7 +3077,7 @@ const TEST_SCENARIOS_V2 = {
       "tests": [
         { "id": "WARRANTY-001", "name": "Warranty coverage", "input": "what warranty do you offer on furniture?", "expect_any": ["warranty", "year", "guarantee", "cover"], "must_not_contain": ["sorry"] },
         { "id": "DELIVERY-001", "name": "Delivery time", "input": "how long does delivery take?", "expect_any": ["deliver", "day", "week", "working", "5", "10"], "must_not_contain": ["sorry"] },
-        { "id": "DELIVERY-002", "name": "Assembly", "input": "do you offer assembly?", "expect_any": ["assembl", "build", "set up", "service", "£69", "69.95"], "must_not_contain": ["sorry", "no"] },
+        { "id": "DELIVERY-002", "name": "Assembly", "input": "do you offer assembly?", "expect_any": ["assembl", "build", "set up", "service", "Ã‚Â£69", "69.95"], "must_not_contain": ["sorry", "no"] },
         { "id": "DELIVERY-003", "name": "Scotland delivery", "input": "do you deliver to Scotland?", "expect_any": ["Scotland", "deliver", "postcode", "unfortunately", "unable", "currently"], "must_not_contain": ["sorry we cannot help"] }
       ]
     },
@@ -3819,8 +3103,8 @@ const TEST_SCENARIOS_V2 = {
     "price_budget": {
       "description": "Pricing and budget queries",
       "tests": [
-        { "id": "PRICE-001", "name": "Price query", "input": "how much is the Faro set?", "expect_any": ["£", "price", "cost", "Faro", "from"], "must_not_contain": ["sorry", "cannot provide"] },
-        { "id": "PRICE-002", "name": "Budget request", "input": "what can I get for under £1000?", "expect_any": ["£", "budget", "range", "option", "under"], "must_not_contain": ["sorry"] },
+        { "id": "PRICE-001", "name": "Price query", "input": "how much is the Faro set?", "expect_any": ["Ã‚Â£", "price", "cost", "Faro", "from"], "must_not_contain": ["sorry", "cannot provide"] },
+        { "id": "PRICE-002", "name": "Budget request", "input": "what can I get for under Ã‚Â£1000?", "expect_any": ["Ã‚Â£", "budget", "range", "option", "under"], "must_not_contain": ["sorry"] },
         { "id": "PRICE-003", "name": "Value concern", "input": "seems quite expensive, is it worth it?", "expect_any": ["quality", "value", "warranty", "last", "investment", "worth"], "must_not_contain": ["sorry"] },
         { "id": "PRICE-004", "name": "Payment options", "input": "can I pay in installments?", "expect_any": ["pay", "payment", "finance", "deposit", "option"], "must_not_contain": ["sorry", "cash only"] }
       ]
@@ -3957,9 +3241,9 @@ app.get('/run-tests', async (req, res) => {
   const format = req.query.format || 'html';
   const requestedSuites = req.query.suite ? req.query.suite.split(',') : null;
   
-  console.log('\n🧪 =======================================');
-  console.log('🧪 GWEN TEST SUITE V2');
-  console.log('🧪 =======================================\n');
+  console.log('\nÃ°Å¸Â§Âª Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â');
+  console.log('Ã°Å¸Â§Âª GWEN TEST SUITE V2');
+  console.log('Ã°Å¸Â§Âª Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â\n');
   
   const results = [];
   const suites = TEST_SCENARIOS_V2.suites;
@@ -3971,10 +3255,10 @@ app.get('/run-tests', async (req, res) => {
   
   for (const suiteName of suitesToRun) {
     const suite = suites[suiteName];
-    console.log(`\n📋 Suite: ${suiteName}`);
+    console.log(`\nÃ°Å¸â€œâ€¹ Suite: ${suiteName}`);
     
     for (const test of suite.tests) {
-      console.log(`🔄 ${test.id}: ${test.name}`);
+      console.log(`Ã°Å¸â€â€ž ${test.id}: ${test.name}`);
       const startTime = Date.now();
       
       try {
@@ -4074,7 +3358,7 @@ app.get('/run-tests', async (req, res) => {
           }
         }
         
-        const status = passed ? '✅ PASSED' : '=Œ FAILED';
+        const status = passed ? 'Ã¢Å“â€¦ PASSED' : 'Ã¢ÂÅ’ FAILED';
         console.log(`${status} (${responseTime}ms)`);
         
         if (!passed && missingTerms.length > 0) {
@@ -4099,7 +3383,7 @@ app.get('/run-tests', async (req, res) => {
         });
         
       } catch (error) {
-        console.log(`=Œ ERROR: ${error.message}`);
+        console.log(`Ã¢ÂÅ’ ERROR: ${error.message}`);
         results.push({
           suite: suiteName,
           id: test.id,
@@ -4121,9 +3405,9 @@ app.get('/run-tests', async (req, res) => {
   const total = results.length;
   const passRate = ((passed / total) * 100).toFixed(1);
   
-  console.log(`\n🧪 =======================================`);
-  console.log(`🧪 RESULTS: ${passed}/${total} (${passRate}%)`);
-  console.log(`🧪 =======================================\n`);
+  console.log(`\nÃ°Å¸Â§Âª Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â`);
+  console.log(`Ã°Å¸Â§Âª RESULTS: ${passed}/${total} (${passRate}%)`);
+  console.log(`Ã°Å¸Â§Âª Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â\n`);
   
   if (format === 'json') {
     return res.json({ passed, total, passRate, results });
@@ -4164,7 +3448,7 @@ app.get('/run-tests', async (req, res) => {
 app.get('/test-single', async (req, res) => {
   const input = req.query.input || req.query.q || 'outdoor furniture for 4 people';
   
-  console.log(`\n🧪 Single test: "${input}"`);
+  console.log(`\nÃ°Å¸Â§Âª Single test: "${input}"`);
   
   try {
     const systemPrompt = buildSystemPrompt ? buildSystemPrompt() : '';
@@ -4277,7 +3561,7 @@ function generateTestReportHTML(results) {
 </head>
 <body>
   <div class="header">
-    <h1>🧪 Gwen Test Results</h1>
+    <h1>Ã°Å¸Â§Âª Gwen Test Results</h1>
     <p>Run at: ${results.timestamp}</p>
   </div>
   
@@ -4309,7 +3593,7 @@ function generateTestReportHTML(results) {
     ${suite.tests.map(test => `
     <div class="test">
       <div class="test-row" onclick="this.nextElementSibling.classList.toggle('show')">
-        <div class="test-status ${test.passed ? 'pass' : 'fail'}">${test.passed ? '✔' : '✗'}</div>
+        <div class="test-status ${test.passed ? 'pass' : 'fail'}">${test.passed ? 'Ã¢Å“â€œ' : 'Ã¢Å“â€”'}</div>
         <div class="test-info">
           <span class="test-id">${test.id}</span>
           <span class="test-name">- ${test.name}</span>
@@ -4356,9 +3640,9 @@ function generateTestReportHTML(results) {
   `).join('')}
   
   <div class="actions">
-    <a href="/run-tests" class="btn">🔄 Run Again</a>
-    <a href="/run-tests?format=json" class="btn">📊 JSON Results</a>
-    <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">🧪 Test Single</a>
+    <a href="/run-tests" class="btn">Ã°Å¸â€â€ž Run Again</a>
+    <a href="/run-tests?format=json" class="btn">Ã°Å¸â€œÅ  JSON Results</a>
+    <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">Ã°Å¸Â§Âª Test Single</a>
   </div>
 </body>
 </html>`;
@@ -4373,11 +3657,11 @@ function generateTestReportHTML(results) {
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 GWEN v14.0 - Conversation + Server Rendering`);
+    console.log(`Ã°Å¸Å¡â‚¬ GWEN v14.0 - Conversation + Server Rendering`);
     console.log(`   Products: ${Object.keys(productIndex.bySku).length}`);
     console.log(`   Inventory: ${inventoryData.length} records`);
-    console.log(`   OpenAI: ${process.env.OPENAI_API_KEY ? '✅' : '=Œ'}`);
-    console.log(`   Shopify: ${SHOPIFY_ACCESS_TOKEN ? '✅' : '⚠ï¸'}`);
+    console.log(`   OpenAI: ${process.env.OPENAI_API_KEY ? 'Ã¢Å“â€¦' : 'Ã¢ÂÅ’'}`);
+    console.log(`   Shopify: ${SHOPIFY_ACCESS_TOKEN ? 'Ã¢Å“â€¦' : 'Ã¢Å¡Â Ã¯Â¸Â'}`);
     console.log(`${'='.repeat(60)}\n`);
 });
 
