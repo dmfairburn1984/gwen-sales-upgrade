@@ -406,14 +406,7 @@ function isInStock(sku) {
 // ============================================
 
 function searchProducts(criteria) {
-    const { 
-        furnitureType, material, seatCount, productName, maxResults = 5,
-        // Session exclusions and family targeting
-        excludedCategories = [],
-        excludedProductTypes = [],
-        requestedFamily = null,
-        requestedProductType = null
-    } = criteria;
+    const { furnitureType, material, seatCount, productName, maxResults = 5 } = criteria;
     
    // Exclude service/delivery SKUs from product searches
     const excludedSkus = ['2-PERSON-DELIVERY', 'ASSEMBLY-SERVICE', 'DELIVERY-CHARGE'];
@@ -424,91 +417,8 @@ function searchProducts(criteria) {
         !excludedSkus.includes(p.product_identity.sku.toUpperCase())
     );
     
-    console.log(`🔍 Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
-    console.log(`🔍 Family filter: ${requestedFamily || 'none'}, Product type: ${requestedProductType || 'any'}`);
-    console.log(`🔍 Exclusions - categories: [${excludedCategories.join(', ')}], types: [${excludedProductTypes.join(', ')}]`);
-    console.log(`🔍 Starting with ${filtered.length} products`);
-    
-    // ============================================
-    // APPLY SESSION EXCLUSIONS
-    // ============================================
-    
-    // Filter out excluded categories (covers, cushions, boxes)
-    if (excludedCategories.length > 0) {
-        const beforeCount = filtered.length;
-        filtered = filtered.filter(p => {
-            const subCategory = p.description_and_category?.sub_category?.toLowerCase() || '';
-            const taxonomyCategory = p.description_and_category?.taxonomy_category?.toLowerCase() || '';
-            
-            // Check if this product matches any excluded category
-            for (const excluded of excludedCategories) {
-                if (excluded === 'covers' && (subCategory.includes('cover') || taxonomyCategory.includes('cover'))) return false;
-                if (excluded === 'cushions' && (subCategory.includes('cushion') || taxonomyCategory.includes('cushion'))) return false;
-                if (excluded === 'boxes' && (subCategory.includes('box') || taxonomyCategory.includes('box') || subCategory.includes('storage'))) return false;
-            }
-            return true;
-        });
-        console.log(`🚫 After category exclusions: ${filtered.length} products (was ${beforeCount})`);
-    }
-    
-    // Filter out excluded product types (accessories)
-    if (excludedProductTypes.length > 0) {
-        const beforeCount = filtered.length;
-        filtered = filtered.filter(p => {
-            const taxonomyType = p.description_and_category?.taxonomy_type?.toLowerCase() || '';
-            const primaryCategory = p.description_and_category?.primary_category?.toLowerCase() || '';
-            
-            for (const excluded of excludedProductTypes) {
-                if (excluded === 'accessories' && (taxonomyType === 'accessories' || primaryCategory === 'accessories')) return false;
-            }
-            return true;
-        });
-        console.log(`🚫 After type exclusions: ${filtered.length} products (was ${beforeCount})`);
-    }
-    
-    // ============================================
-    // APPLY FAMILY + PRODUCT TYPE FILTERING
-    // ============================================
-    
-    // Filter by requested family (e.g., PALMA)
-    if (requestedFamily) {
-        const beforeCount = filtered.length;
-        filtered = filtered.filter(p => {
-            const family = p.product_identity?.product_family?.toUpperCase() || '';
-            return family === requestedFamily.toUpperCase();
-        });
-        console.log(`🏷️ After family filter (${requestedFamily}): ${filtered.length} products (was ${beforeCount})`);
-    }
-    
-    // Filter by requested product type
-    if (requestedProductType && requestedProductType !== 'any') {
-        const beforeCount = filtered.length;
-        filtered = filtered.filter(p => {
-            const subCategory = p.description_and_category?.sub_category?.toLowerCase() || '';
-            const taxonomyType = p.description_and_category?.taxonomy_type?.toLowerCase() || '';
-            const primaryCategory = p.description_and_category?.primary_category?.toLowerCase() || '';
-            
-            if (requestedProductType === 'cover') {
-                return subCategory.includes('cover') || taxonomyType.includes('cover');
-            }
-            if (requestedProductType === 'cushion') {
-                return subCategory.includes('cushion') || taxonomyType.includes('cushion');
-            }
-            if (requestedProductType === 'box') {
-                return subCategory.includes('box') || taxonomyType.includes('box');
-            }
-            if (requestedProductType === 'furniture') {
-                // Exclude accessories - only show main furniture
-                return taxonomyType !== 'accessories' && primaryCategory !== 'accessories';
-            }
-            return true;
-        });
-        console.log(`🏷️ After product type filter (${requestedProductType}): ${filtered.length} products (was ${beforeCount})`);
-    }
-    
-    // ============================================
-    // STANDARD FILTERS (existing logic)
-    // ============================================
+    console.log(` Search criteria: type=${furnitureType}, material=${material}, seats=${seatCount}`);
+    console.log(` Starting with ${filtered.length} products`);
     
     // Filter by furniture type
     if (furnitureType) {
@@ -1131,28 +1041,14 @@ All Mint Outdoor products are tested to European safety standards. When customer
 - For DURABILITY questions: Explain 25,000 cycle testing simulating years of use
 - For SAFETY questions: Mention smooth edges, no finger-trap hazards, secure mechanisms
 
-EXISTING CUSTOMER VS FRUSTRATED PROSPECT - CRITICAL:
-
-ROUTE A - EXISTING CUSTOMER (has order evidence):
-If customer mentions: my order, my delivery, refund, return, order number, tracking, arrived damaged, wrong item sent, not delivered, where is my order:
+EXISTING CUSTOMER COMPLAINTS - CRITICAL:
+If customer mentions: complaint, unhappy, my order, damaged, missing, refund, return, wrong item, not arrived, faulty, defective, already ordered, previous order:
 1. This is an EXISTING CUSTOMER with an order issue
 2. You CANNOT help with existing order problems - you are for NEW sales only
 3. IMMEDIATELY direct them to the Order Helpdesk: https://mint-orderhelpdesk-bot-5c699086fbd7.herokuapp.com/
-4. EXCEPTION: If they want to BUY MORE or place a NEW order, you can help with that
-
-ROUTE B - FRUSTRATED PROSPECT (no order evidence):
-If customer is frustrated/annoyed/unhappy but has NOT mentioned any order evidence:
-1. They are likely a PROSPECT frustrated with the chat experience
-2. Do NOT send them to Order Helpdesk
-3. Offer to connect them with our customer service team (sales escalation)
-4. Ask for their email address and escalate to help@mint-outdoor.com
-
-KEY SIGNALS:
-- "I am not a customer" / "not an existing customer" → ALWAYS treat as prospect
-- "my order" / "my delivery" / "refund" → ALWAYS treat as existing customer
-- "annoying" / "frustrated" ALONE (no order mention) → Treat as frustrated prospect
-
-NEVER ask "what furniture are you looking for" when someone is frustrated or complaining!
+4. Say: "I'm sorry to hear about the issue with your order. For existing order enquiries, please visit our Order Helpdesk [link] - they have access to your order details and can help resolve this quickly."
+5. EXCEPTION: If they want to BUY MORE or place a NEW order, you can help with that
+6. NEVER ask "what furniture are you looking for" when someone is making a complaint!
 
 WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
 If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
@@ -2143,11 +2039,7 @@ app.post('/chat', async (req, res) => {
                 },
                 escalationOffered: false,
                 pendingEscalation: false,
-                escalationReason: null,
-                // Session exclusion list - track rejected items
-                excludedCategories: [],  // e.g., ['covers', 'cushions', 'boxes']
-                excludedSkus: [],        // specific SKUs customer rejected
-                excludedProductTypes: [] // e.g., ['accessories']
+                escalationReason: null
             });
         }
         
@@ -2160,58 +2052,36 @@ app.post('/chat', async (req, res) => {
         const msgLower = message.toLowerCase();
         
         // ============================================
-        // PRIORITY ZERO: CUSTOMER COMPLAINT ROUTING
+        // PRIORITY ZERO: EXISTING CUSTOMER COMPLAINTS
         // ============================================
-        // Distinguish between:
-        // A) Existing customer with ORDER issue → Order Helpdesk
-        // B) Frustrated PROSPECT (no order) → Sales escalation (help@)
-        
-        // ORDER EVIDENCE - these indicate an existing customer with an order issue
-        const orderEvidencePatterns = [
-            'my order', 'my delivery', 'order number', 'tracking number', 'tracking',
-            'refund', 'return', 'send back', 'sending back', 'money back',
-            'arrived damaged', 'arrived broken', 'item arrived', 'package arrived',
-            'wrong item sent', 'sent wrong', 'received wrong', 
-            'missing from order', 'missing from my', 'missing from the',
-            'not delivered', 'not arrived', 'hasn\'t arrived', 'hasnt arrived',
-            'where is my order', 'where\'s my order', 'wheres my order',
-            'delivery issue', 'order issue', 'order problem',
-            'already ordered', 'placed an order', 'bought from you', 'purchased from',
-            'previous order', 'last order', 'recent order', 'my purchase',
-            'existing order', 'outstanding order'
-        ];
-        
-        // FRUSTRATION WORDS - these alone DON'T mean existing customer
-        const frustrationPatterns = [
+        // If customer has an existing order issue, redirect to Order Helpdesk immediately
+        const complaintPatterns = [
             'complaint', 'complain', 'complaining',
             'not happy', 'unhappy', 'disappointed', 'disgusted', 'furious', 'angry',
-            'annoying', 'annoyed', 'frustrated', 'frustrating',
-            'terrible', 'rubbish', 'useless', 'waste of time', 'hopeless',
+            'my order', 'existing order', 'order issue', 'order problem',
+            'wrong item', 'wrong colour', 'wrong color', 'wrong product',
+            'missing', 'missing item', 'missing parts', 'missing piece',
+            'damaged', 'broken', 'arrived broken', 'arrived damaged',
+            'refund', 'return', 'send back', 'sending back',
+            'still waiting', 'not arrived', 'not delivered', 'where is my order',
+            'delivery issue', 'delivery problem', 'late delivery',
+            'faulty', 'defective', 'not working', 'doesn\'t work',
+            'poor quality', 'terrible', 'rubbish', 'worst',
             'speak to manager', 'speak to supervisor', 'escalate',
-            'trading standards', 'consumer rights', 'legal action'
+            'trading standards', 'consumer rights', 'legal action',
+            'already ordered', 'placed an order', 'bought from you',
+            'previous order', 'last order', 'recent order'
         ];
         
-        // EXPLICIT "NOT A CUSTOMER" - cancel any Order Helpdesk assumption
-        const notACustomerPatterns = [
-            'i am not a customer', 'not a customer', 'not an existing customer',
-            'haven\'t ordered', 'havent ordered', 'not ordered yet', 'haven\'t bought',
-            'havent bought', 'not bought yet', 'trying to buy', 'want to buy',
-            'looking to buy', 'interested in buying', 'thinking of buying'
-        ];
+        const isComplaint = complaintPatterns.some(p => msgLower.includes(p));
         
-        const hasOrderEvidence = orderEvidencePatterns.some(p => msgLower.includes(p));
-        const hasFrustration = frustrationPatterns.some(p => msgLower.includes(p));
-        const isNotACustomer = notACustomerPatterns.some(p => msgLower.includes(p));
-        
-        // Check if they want to buy MORE (exception - keep them here for new sales)
+        // Check if they want to buy MORE (exception - keep them here)
         const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') || 
                                msgLower.includes('another') || msgLower.includes('additional order') ||
                                msgLower.includes('new order') || msgLower.includes('want to buy');
         
-        // ROUTE A: Clear order evidence (and not explicitly saying they're not a customer)
-        // → Order Helpdesk
-        if (hasOrderEvidence && !isNotACustomer && !wantsToBuyMore) {
-            console.log(`🚨 EXISTING CUSTOMER ORDER ISSUE DETECTED: "${message}"`);
+        if (isComplaint && !wantsToBuyMore) {
+            console.log(`🚨 EXISTING CUSTOMER COMPLAINT DETECTED: "${message}"`);
             
             const helpdeskUrl = 'https://mint-orderhelpdesk-bot-5c699086fbd7.herokuapp.com/';
             
@@ -2225,132 +2095,6 @@ app.post('/chat', async (req, res) => {
             await logConversationMessage(sessionId, 'assistant', complaintResponse, { intent: 'complaint_redirect' });
             
             return res.json({ response: complaintResponse, sessionId });
-        }
-        
-        // ROUTE B: Frustration WITHOUT order evidence (or explicitly said "not a customer")
-        // → This is a frustrated PROSPECT, offer sales escalation to help@
-        if ((hasFrustration && !hasOrderEvidence) || isNotACustomer) {
-            console.log(`😤 FRUSTRATED PROSPECT DETECTED: "${message}"`);
-            
-            // Set escalation flags for sales support
-            session.escalationOffered = true;
-            session.escalationReason = isNotACustomer 
-                ? 'Customer clarified they are a prospect, not existing customer' 
-                : 'Frustrated prospect - needs human sales support';
-            
-            const frustrationResponse = `I'm really sorry for the frustration. Let me connect you with our customer service team who can help you properly.\n\nTo make sure they can get back to you quickly, could you please share your email address?`;
-            
-            session.conversationHistory.push({ role: 'user', content: message });
-            session.conversationHistory.push({ role: 'assistant', content: frustrationResponse });
-            session.pendingEscalation = true;
-            
-            await logConversationMessage(sessionId, 'user', message, { sentiment: 'frustrated_prospect' });
-            await logConversationMessage(sessionId, 'assistant', frustrationResponse, { intent: 'sales_escalation_offer' });
-            
-            return res.json({ response: frustrationResponse, sessionId });
-        }
-        
-        // ============================================
-        // SESSION EXCLUSION DETECTION
-        // ============================================
-        // Track when customer says "not the X" to exclude from future results
-        
-        // Detect "not the cover", "not covers", "don't want cover" etc.
-        if (msgLower.includes('not the cover') || msgLower.includes('not a cover') || 
-            msgLower.includes('not covers') || msgLower.includes('don\'t want cover') ||
-            msgLower.includes('dont want cover') || msgLower.includes('no cover')) {
-            if (!session.excludedCategories.includes('covers')) {
-                session.excludedCategories.push('covers');
-                console.log(`🚫 Exclusion added: covers`);
-            }
-        }
-        
-        // Detect "not the cushions", "not cushions" etc.
-        if (msgLower.includes('not the cushion') || msgLower.includes('not cushions') ||
-            msgLower.includes('don\'t want cushion') || msgLower.includes('dont want cushion')) {
-            if (!session.excludedCategories.includes('cushions')) {
-                session.excludedCategories.push('cushions');
-                console.log(`🚫 Exclusion added: cushions`);
-            }
-        }
-        
-        // Detect "not the box", "not a box" etc.
-        if (msgLower.includes('not the box') || msgLower.includes('not a box') ||
-            msgLower.includes('don\'t want box') || msgLower.includes('dont want box')) {
-            if (!session.excludedCategories.includes('boxes')) {
-                session.excludedCategories.push('boxes');
-                console.log(`🚫 Exclusion added: boxes`);
-            }
-        }
-        
-        // Detect "not accessories", "not an accessory"
-        if (msgLower.includes('not accessor') || msgLower.includes('no accessor')) {
-            if (!session.excludedProductTypes.includes('accessories')) {
-                session.excludedProductTypes.push('accessories');
-                console.log(`🚫 Exclusion added: accessories`);
-            }
-        }
-        
-        // ============================================
-        // SMART FAMILY + PRODUCT TYPE EXTRACTION
-        // ============================================
-        // Detect "[family name] + [product type]" patterns
-        // e.g., "palma set" → family: PALMA, wants: furniture (exclude accessories)
-        // e.g., "palma cover" → family: PALMA, wants: cover (only show covers)
-        
-        const knownFamilies = [
-            'marbella', 'stockholm', 'palma', 'faro', 'lima', 'harbour', 
-            'santorini', 'cora', 'bayswater', 'cove', 'oxford', 'chesterton',
-            'kiki', 'linden', 'malaga', 'alanne', 'lark', 'havana', 'sloane',
-            'barcelona', 'milan', 'como', 'naples', 'rio', 'capri', 'sorrento'
-        ];
-        
-        // Product type indicators
-        const furnitureIndicators = ['set', 'sofa', 'dining', 'lounge', 'corner', 'seater', 'table', 'chair', 'bench'];
-        const coverIndicators = ['cover', 'covers', 'protection'];
-        const cushionIndicators = ['cushion', 'cushions', 'replacement cushion'];
-        const boxIndicators = ['box', 'storage', 'cushion box'];
-        
-        // Check for family name in message
-        let detectedFamily = null;
-        let detectedProductType = null;
-        
-        for (const family of knownFamilies) {
-            if (msgLower.includes(family)) {
-                detectedFamily = family.toUpperCase();
-                console.log(`🏷️ Detected product family: ${detectedFamily}`);
-                
-                // Now determine what TYPE they want
-                if (coverIndicators.some(c => msgLower.includes(c))) {
-                    detectedProductType = 'cover';
-                    console.log(`🏷️ Customer specifically wants: COVER`);
-                } else if (cushionIndicators.some(c => msgLower.includes(c))) {
-                    detectedProductType = 'cushion';
-                    console.log(`🏷️ Customer specifically wants: CUSHION`);
-                } else if (boxIndicators.some(c => msgLower.includes(c))) {
-                    detectedProductType = 'box';
-                    console.log(`🏷️ Customer specifically wants: BOX`);
-                } else if (furnitureIndicators.some(f => msgLower.includes(f))) {
-                    detectedProductType = 'furniture';
-                    console.log(`🏷️ Customer wants: FURNITURE (exclude accessories)`);
-                    // Auto-exclude accessories when they ask for furniture
-                    if (!session.excludedProductTypes.includes('accessories')) {
-                        session.excludedProductTypes.push('accessories');
-                    }
-                } else {
-                    // Just family name alone - prioritize furniture but don't exclude
-                    detectedProductType = 'any';
-                    console.log(`🏷️ Customer mentioned family only - will prioritize furniture`);
-                }
-                
-                break; // Found family, stop looking
-            }
-        }
-        
-        // Store in session context for use in search
-        if (detectedFamily) {
-            session.context.requestedFamily = detectedFamily;
-            session.context.requestedProductType = detectedProductType;
         }
         
         // ============================================
@@ -2939,22 +2683,13 @@ app.post('/chat', async (req, res) => {
                 const args = JSON.parse(toolCall.function.arguments);
                 
                 if (toolCall.function.name === "search_products") {
-                                        console.log(`🔍 Search:`, args);
+                    console.log(` Search:`, args);
                     
                     if (args.furnitureType) session.context.furnitureType = args.furnitureType;
                     if (args.seatCount) session.context.seatCount = args.seatCount;
                     if (args.material) session.context.material = args.material;
                     
-                    // Add session exclusions and family targeting to search
-                    const searchCriteria = {
-                        ...args,
-                        excludedCategories: session.excludedCategories || [],
-                        excludedProductTypes: session.excludedProductTypes || [],
-                        requestedFamily: session.context.requestedFamily || null,
-                        requestedProductType: session.context.requestedProductType || null
-                    };
-                    
-                    const products = searchProducts(searchCriteria);
+                    const products = searchProducts(args);
                     
                     session.currentWhitelist = products.map(p => p.sku);
                     console.log(`🛡️ Whitelist: [${session.currentWhitelist.join(', ')}]`);
@@ -3434,15 +3169,11 @@ if (toolCall.function.name === "get_product_dimensions") {
                 );
                 
                 if (mentionedProduct) {
-                    console.log(`🔍 Fallback: Customer mentioned "${mentionedProduct}" - searching`);
+                    console.log(` Fallback: Customer mentioned "${mentionedProduct}" - searching`);
                     
                     const productSearch = searchProducts({ 
                         productName: mentionedProduct,
-                        maxResults: 3,
-                        excludedCategories: session.excludedCategories || [],
-                        excludedProductTypes: session.excludedProductTypes || [],
-                        requestedFamily: session.context.requestedFamily || null,
-                        requestedProductType: session.context.requestedProductType || null
+                        maxResults: 3
                     });
                     
                     if (productSearch.length > 0) {
