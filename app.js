@@ -1041,6 +1041,15 @@ All Mint Outdoor products are tested to European safety standards. When customer
 - For DURABILITY questions: Explain 25,000 cycle testing simulating years of use
 - For SAFETY questions: Mention smooth edges, no finger-trap hazards, secure mechanisms
 
+EXISTING CUSTOMER COMPLAINTS - CRITICAL:
+If customer mentions: complaint, unhappy, my order, damaged, missing, refund, return, wrong item, not arrived, faulty, defective, already ordered, previous order:
+1. This is an EXISTING CUSTOMER with an order issue
+2. You CANNOT help with existing order problems - you are for NEW sales only
+3. IMMEDIATELY direct them to the Order Helpdesk: https://mint-orderhelpdesk-bot-5c699086fbd7.herokuapp.com/
+4. Say: "I'm sorry to hear about the issue with your order. For existing order enquiries, please visit our Order Helpdesk [link] - they have access to your order details and can help resolve this quickly."
+5. EXCEPTION: If they want to BUY MORE or place a NEW order, you can help with that
+6. NEVER ask "what furniture are you looking for" when someone is making a complaint!
+
 WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
 If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
 OR if you cannot answer their question, OR if they're frustrated:
@@ -2041,6 +2050,52 @@ app.post('/chat', async (req, res) => {
         // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
         const msgLower = message.toLowerCase();
+        
+        // ============================================
+        // PRIORITY ZERO: EXISTING CUSTOMER COMPLAINTS
+        // ============================================
+        // If customer has an existing order issue, redirect to Order Helpdesk immediately
+        const complaintPatterns = [
+            'complaint', 'complain', 'complaining',
+            'not happy', 'unhappy', 'disappointed', 'disgusted', 'furious', 'angry',
+            'my order', 'existing order', 'order issue', 'order problem',
+            'wrong item', 'wrong colour', 'wrong color', 'wrong product',
+            'missing', 'missing item', 'missing parts', 'missing piece',
+            'damaged', 'broken', 'arrived broken', 'arrived damaged',
+            'refund', 'return', 'send back', 'sending back',
+            'still waiting', 'not arrived', 'not delivered', 'where is my order',
+            'delivery issue', 'delivery problem', 'late delivery',
+            'faulty', 'defective', 'not working', 'doesn\'t work',
+            'poor quality', 'terrible', 'rubbish', 'worst',
+            'speak to manager', 'speak to supervisor', 'escalate',
+            'trading standards', 'consumer rights', 'legal action',
+            'already ordered', 'placed an order', 'bought from you',
+            'previous order', 'last order', 'recent order'
+        ];
+        
+        const isComplaint = complaintPatterns.some(p => msgLower.includes(p));
+        
+        // Check if they want to buy MORE (exception - keep them here)
+        const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') || 
+                               msgLower.includes('another') || msgLower.includes('additional order') ||
+                               msgLower.includes('new order') || msgLower.includes('want to buy');
+        
+        if (isComplaint && !wantsToBuyMore) {
+            console.log(`🚨 EXISTING CUSTOMER COMPLAINT DETECTED: "${message}"`);
+            
+            const helpdeskUrl = 'https://mint-orderhelpdesk-bot-5c699086fbd7.herokuapp.com/';
+            
+            const complaintResponse = `I'm really sorry to hear you're having an issue with your order. For existing order enquiries, complaints, or issues with deliveries, our dedicated Order Helpdesk team can assist you straight away.\n\n**Please click here to speak with our Order Helpdesk:**\n<a href="${helpdeskUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Go to Order Helpdesk →</a>\n\nThey have access to your order details and can resolve issues much faster than I can.\n\nIf you'd like to browse new products or make a new purchase, I'm happy to help with that here!`;
+            
+            // Log this interaction
+            session.conversationHistory.push({ role: 'user', content: message });
+            session.conversationHistory.push({ role: 'assistant', content: complaintResponse });
+            
+            await logConversationMessage(sessionId, 'user', message, { sentiment: 'complaint' });
+            await logConversationMessage(sessionId, 'assistant', complaintResponse, { intent: 'complaint_redirect' });
+            
+            return res.json({ response: complaintResponse, sessionId });
+        }
         
         // ============================================
         // CHECK FOR ESCALATION ACCEPTANCE (PRIORITY FIRST!)
