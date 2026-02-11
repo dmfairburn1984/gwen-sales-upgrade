@@ -40,11 +40,11 @@ const emailTransporter = nodemailer.createTransport({
 // Verify email configuration on startup
 emailTransporter.verify((error, success) => {
     if (error) {
-        console.log('âŒ Email configuration ERROR:', error.message);
-        console.log('   EMAIL_USER:', process.env.EMAIL_USER ? 'âœ… Set' : 'âŒ Missing');
-        console.log('   EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'âœ… Set' : 'âŒ Missing');
+        console.log('❌ Email configuration ERROR:', error.message);
+        console.log('   EMAIL_USER:', process.env.EMAIL_USER ? '✅ Set' : '❌ Missing');
+        console.log('   EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? '✅ Set' : '❌ Missing');
     } else {
-        console.log('âœ… Email server ready - can send escalations');
+        console.log('✅ Email server ready - can send escalations');
     }
 });
 
@@ -56,13 +56,13 @@ async function sendEscalationEmail(customerEmail, customerName, reason, conversa
     // Use environment variable, fallback to help@mint-outdoor.com
     const supportEmail = process.env.ESCALATION_EMAIL || 'help@mint-outdoor.com';
     
-    console.log(`ðŸ“§ ============================================`);
-    console.log(`ðŸ“§ ESCALATION EMAIL ATTEMPT`);
-    console.log(`ðŸ“§ To: ${supportEmail}`);
-    console.log(`ðŸ“§ From: ${process.env.EMAIL_USER}`);
-    console.log(`ðŸ“§ Customer: ${customerEmail}`);
-    console.log(`ðŸ“§ Reason: ${reason.substring(0, 100)}...`);
-    console.log(`ðŸ“§ ============================================`);
+    console.log(`📧 ============================================`);
+    console.log(`📧 ESCALATION EMAIL ATTEMPT`);
+    console.log(`📧 To: ${supportEmail}`);
+    console.log(`📧 From: ${process.env.EMAIL_USER}`);
+    console.log(`📧 Customer: ${customerEmail}`);
+    console.log(`📧 Reason: ${reason.substring(0, 100)}...`);
+    console.log(`📧 ============================================`);
     
     // Build conversation transcript
     const transcript = conversationHistory
@@ -75,8 +75,8 @@ async function sendEscalationEmail(customerEmail, customerName, reason, conversa
         ? productsDiscussed.map(sku => {
             const product = productIndex?.bySku?.[sku];
             return product 
-                ? `â€¢ ${product.product_identity?.product_name} (${sku}) - Â£${product.product_identity?.price_gbp}`
-                : `â€¢ ${sku}`;
+                ? `• ${product.product_identity?.product_name} (${sku}) - £${product.product_identity?.price_gbp}`
+                : `• ${sku}`;
           }).join('\n')
         : 'No specific products discussed';
     
@@ -84,7 +84,7 @@ async function sendEscalationEmail(customerEmail, customerName, reason, conversa
         from: `"Gwen Sales Agent" <${process.env.EMAIL_USER}>`,
         to: supportEmail,
         replyTo: customerEmail || process.env.EMAIL_USER,
-        subject: `ðŸš¨ Gwen Escalation: Customer needs help - ${reason.substring(0, 50)}`,
+        subject: `🚨 Gwen Escalation: Customer needs help - ${reason.substring(0, 50)}`,
         html: `
             <h2>Customer Escalation from Gwen Chatbot</h2>
             
@@ -127,32 +127,32 @@ ${transcript}
     
     try {
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
-            console.log(`âŒ Email credentials not configured`);
+            console.log(`❌ Email credentials not configured`);
             console.log(`   EMAIL_USER: ${process.env.EMAIL_USER ? 'Set' : 'MISSING'}`);
             console.log(`   EMAIL_PASSWORD: ${process.env.EMAIL_PASSWORD ? 'Set' : 'MISSING'}`);
             return { success: false, message: 'Email credentials not configured' };
         }
         
         const info = await emailTransporter.sendMail(emailContent);
-        console.log(`âœ… ESCALATION EMAIL SENT SUCCESSFULLY`);
+        console.log(`✅ ESCALATION EMAIL SENT SUCCESSFULLY`);
         console.log(`   Message ID: ${info.messageId}`);
         console.log(`   To: ${supportEmail}`);
         console.log(`   Customer: ${customerEmail}`);
         return { success: true, message: 'Escalation email sent', messageId: info.messageId };
         
     } catch (error) {
-        console.log(`âŒ ESCALATION EMAIL FAILED`);
+        console.log(`❌ ESCALATION EMAIL FAILED`);
         console.log(`   Error: ${error.message}`);
         console.log(`   Code: ${error.code || 'N/A'}`);
         console.log(`   Response: ${error.response || 'N/A'}`);
         
         // Log more details for common errors
         if (error.code === 'EAUTH') {
-            console.log(`   ðŸ’¡ Fix: Check EMAIL_PASSWORD - may need App Password from Google`);
-            console.log(`   ðŸ’¡ Go to: https://myaccount.google.com/apppasswords`);
+            console.log(`   💡 Fix: Check EMAIL_PASSWORD - may need App Password from Google`);
+            console.log(`   💡 Go to: https://myaccount.google.com/apppasswords`);
         }
         if (error.code === 'ESOCKET' || error.code === 'ECONNECTION') {
-            console.log(`   ðŸ’¡ Fix: Network/firewall issue - check Heroku can reach smtp.gmail.com`);
+            console.log(`   💡 Fix: Network/firewall issue - check Heroku can reach smtp.gmail.com`);
         }
         
         return { success: false, message: error.message, code: error.code };
@@ -176,7 +176,7 @@ app.use(express.json());
 
 async function initConversationLogging() {
     if (!pool) {
-        console.log('âš ï¸ No database - conversation logging disabled');
+        console.log('⚠️ No database - conversation logging disabled');
         return;
     }
     
@@ -204,9 +204,9 @@ async function initConversationLogging() {
             ON conversation_messages(created_at DESC)
         `);
         
-        console.log('âœ… Conversation logging tables ready');
+        console.log('✅ Conversation logging tables ready');
     } catch (error) {
-        console.error('âš ï¸ Failed to create conversation tables:', error.message);
+        console.error('⚠️ Failed to create conversation tables:', error.message);
     }
 }
 
@@ -230,7 +230,7 @@ async function logConversationMessage(sessionId, role, content, metadata = {}) {
             metadata.sentiment || null
         ]);
     } catch (error) {
-        console.error('âš ï¸ Failed to log conversation:', error.message);
+        console.error('⚠️ Failed to log conversation:', error.message);
         // Don't throw - logging failure should never break the chat
     }
 }
@@ -303,10 +303,10 @@ function loadDataFile(filename, defaultValue = []) {
     try {
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const parsedData = JSON.parse(rawData);
-        console.log(`âœ… Loaded ${filename}`);
+        console.log(`✅ Loaded ${filename}`);
         return parsedData;
     } catch (error) {
-        console.error(`=ÂÅ’ Failed to load ${filename}: ${error.message}`);
+        console.error(`❌ Failed to load ${filename}: ${error.message}`);
         return defaultValue;
     }
 }
@@ -319,16 +319,16 @@ const bundleItems = loadDataFile('bundle_items.json', []);
 const demandPlanDashboard = loadDataFile('demand_plan_dashboard.json', { data: [] });
 console.log(`📊 Demand dashboard: ${demandPlanDashboard.data?.length || 0} SKU forecasts`);
 
-console.log(`ðŸ“¦ Inventory data type: ${typeof rawInventoryData}`);
-console.log(`ðŸ“¦ Inventory is array after processing: ${Array.isArray(inventoryData)}`);
-console.log(`ðŸ“¦ Inventory length: ${inventoryData.length}`);
+console.log(`📦 Inventory data type: ${typeof rawInventoryData}`);
+console.log(`📦 Inventory is array after processing: ${Array.isArray(inventoryData)}`);
+console.log(`📦 Inventory length: ${inventoryData.length}`);
 
 // Check FARO specifically
 const faroInventory = inventoryData.find(i => i.sku === 'FARO-LOUNGE-SET');
 if (faroInventory) {
-    console.log(`âœ… FARO-LOUNGE-SET in inventory: available=${faroInventory.available}`);
+    console.log(`✅ FARO-LOUNGE-SET in inventory: available=${faroInventory.available}`);
 } else {
-    console.log(`=ÂÅ’ FARO-LOUNGE-SET NOT in inventory array`);
+    console.log(`❌ FARO-LOUNGE-SET NOT in inventory array`);
     console.log(`   First 3 inventory SKUs: ${inventoryData.slice(0, 3).map(i => i.sku).join(', ')}`);
 }
 
@@ -341,19 +341,19 @@ productKnowledgeCenter.forEach(product => {
     }
 });
 
-console.log(`ðŸ“¦ Indexed ${Object.keys(productIndex.bySku).length} products`);
-console.log(`ðŸ“¦ Inventory records: ${inventoryData.length}`);
+console.log(`📦 Indexed ${Object.keys(productIndex.bySku).length} products`);
+console.log(`📦 Inventory records: ${inventoryData.length}`);
 
 // Verify specific product exists
 const testProduct = productIndex.bySku['FARO-LOUNGE-SET'];
 if (testProduct) {
-    console.log(`âœ… FARO-LOUNGE-SET found in index:`);
+    console.log(`✅ FARO-LOUNGE-SET found in index:`);
     console.log(`   - Name: ${testProduct.product_identity?.product_name}`);
     console.log(`   - Material: ${testProduct.description_and_category?.material_type}`);
     console.log(`   - Taxonomy: ${testProduct.description_and_category?.taxonomy_type}`);
     console.log(`   - Seats: ${testProduct.specifications?.seats} (type: ${typeof testProduct.specifications?.seats})`);
 } else {
-    console.log(`=ÂÅ’ FARO-LOUNGE-SET NOT FOUND in index!`);
+    console.log(`❌ FARO-LOUNGE-SET NOT FOUND in index!`);
     console.log(`   Sample SKUs: ${Object.keys(productIndex.bySku).slice(0, 5).join(', ')}`);
 }
 
@@ -361,7 +361,7 @@ if (testProduct) {
 const rattanCount = Object.values(productIndex.bySku).filter(p => 
     p.description_and_category?.material_type?.toLowerCase() === 'rattan'
 ).length;
-console.log(`ðŸ“¦ Rattan products: ${rattanCount}`);
+console.log(`📦 Rattan products: ${rattanCount}`);
 
 // ============================================
 // AUTO-BUILT PRODUCT FAMILY MAP
@@ -473,20 +473,44 @@ function parseFamilyAndType(message) {
     const msgLower = message.toLowerCase();
     const result = { family: null, requestedType: null };
     
+    // ============================================
+    // v16.0: IMPROVED FAMILY DETECTION
+    // Sort terms by length DESCENDING so longer/more specific names match first
+    // Use word boundary matching to prevent "cover" matching "cove" etc.
+    // ============================================
     const allFamilyNames = Object.keys(PRODUCT_FAMILIES);
     const allSearchTerms = [...allFamilyNames, ...Object.keys(FAMILY_ALIASES)];
+    
+    // Sort longest first so "STOCKHOLM" matches before "STOCK"
+    allSearchTerms.sort((a, b) => b.length - a.length);
+    
+    // Words that should NEVER match as a product family name
+    const blockedTerms = ['cover', 'covers', 'cushion', 'cushions', 'box', 'set', 
+                          'table', 'chair', 'garden', 'the', 'for', 'and', 'not',
+                          'delivery', 'assembly', 'collection', 'headrest', 'ion'];
     
     for (const term of allSearchTerms) {
         const termLower = term.toLowerCase();
         if (termLower.length < 3) continue;
-        if (msgLower.includes(termLower)) {
+        
+        // Skip terms that are common words to prevent false matches
+        if (blockedTerms.includes(termLower)) continue;
+        
+        // Use word boundary matching: "palma" should match in "palma cover" 
+        // but "cove" should NOT match in "cover"
+        const regex = new RegExp(`\\b${termLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        if (regex.test(msgLower)) {
             result.family = FAMILY_ALIASES[term] || term;
+            console.log(`Family parser: matched term "${term}" -> family=${result.family}`);
             break;
         }
     }
     
     if (!result.family) return result;
     
+    // ============================================
+    // TYPE DETECTION - What kind of product within the family?
+    // ============================================
     if (msgLower.includes('cover') && !msgLower.includes('not the cover') && !msgLower.includes('not a cover') && !msgLower.includes('no cover')) {
         result.requestedType = 'cover';
     }
@@ -584,7 +608,7 @@ function getProductStock(sku) {
     
     // Debug logging for troubleshooting
     if (sku === 'FARO-LOUNGE-SET' || finalStock === 0) {
-        console.log(`ðŸ“Š getProductStock(${sku}): inventory=${stockFromInventory}, PKC=${stockFromPKC}, using=${finalStock}`);
+        console.log(`📊 getProductStock(${sku}): inventory=${stockFromInventory}, PKC=${stockFromPKC}, using=${finalStock}`);
     }
     
     // If no data at all, default to in stock (100)
@@ -859,12 +883,16 @@ function searchProducts(criteria) {
 function findProductByName(productName, productsShown = []) {
     const searchTerm = productName.toLowerCase().trim();
     
-    console.log(`Â Looking for product: "${searchTerm}"`);
+    console.log(`🔍 Looking for product: "${searchTerm}"`);
     console.log(`   Products shown this session: [${productsShown.join(', ')}]`);
+    
+    // v16.0: Exclude service/delivery SKUs from ALL product searches
+    const excludedSkus = ['2-PERSON-DELIVERY', 'ASSEMBLY-SERVICE', 'DELIVERY-CHARGE', 'ASSEMBLY-ADD-ON', 'COLLECTION-FEE'];
     
     // PRIORITY 1: Check recently shown products first
     if (productsShown.length > 0) {
         for (const sku of productsShown) {
+            if (excludedSkus.includes(sku)) continue;
             const product = productIndex.bySku[sku];
             if (product) {
                 const name = product.product_identity?.product_name?.toLowerCase() || '';
@@ -876,15 +904,43 @@ function findProductByName(productName, productsShown = []) {
                     skuLower.includes(searchTerm) || 
                     family.includes(searchTerm) ||
                     searchTerm.includes(family)) {
-                    console.log(`   âœ… Found in shown products: ${sku}`);
+                    console.log(`   ✅ Found in shown products: ${sku}`);
                     return { sku, product, source: 'shown' };
                 }
             }
         }
     }
     
-    // PRIORITY 2: Search entire database
+    // v16.0: PRIORITY 1.5 - Check via PRODUCT_FAMILIES map (most reliable for family names)
+    const resolvedFamily = resolveFamily(searchTerm);
+    if (resolvedFamily) {
+        const familyData = PRODUCT_FAMILIES[resolvedFamily];
+        if (familyData) {
+            // Determine if customer is asking for a cover specifically
+            const wantsCover = /\bcover[s]?\b/i.test(searchTerm);
+            const searchOrder = wantsCover 
+                ? [...(familyData.covers || []), ...(familyData.furniture || [])]
+                : [...(familyData.furniture || []), ...(familyData.covers || [])];
+            
+            for (const sku of searchOrder) {
+                if (excludedSkus.includes(sku)) continue;
+                const stock = getProductStock(sku);
+                if (stock > 0) {
+                    const product = productIndex.bySku[sku];
+                    if (product) {
+                        console.log(`   ✅ Found via family map: ${sku} (family: ${resolvedFamily}, wantsCover: ${wantsCover})`);
+                        return { sku, product, source: 'family_map' };
+                    }
+                }
+            }
+        }
+    }
+    
+    // PRIORITY 2: Search entire database (excluding service SKUs)
     for (const [sku, product] of Object.entries(productIndex.bySku)) {
+        // v16.0: Skip service/delivery SKUs
+        if (excludedSkus.includes(sku)) continue;
+        
         const name = product.product_identity?.product_name?.toLowerCase() || '';
         const skuLower = sku.toLowerCase();
         const family = product.product_identity?.product_family?.toLowerCase() || '';
@@ -893,12 +949,12 @@ function findProductByName(productName, productsShown = []) {
             skuLower.includes(searchTerm.replace(/\s+/g, '-')) ||
             family.includes(searchTerm) ||
             searchTerm.includes(family)) {
-            console.log(`   âœ… Found in database: ${sku}`);
+            console.log(`   ✅ Found in database: ${sku}`);
             return { sku, product, source: 'database' };
         }
     }
     
-    console.log(`   =ÂÅ’ Product not found: "${searchTerm}"`);
+    console.log(`   ❌ Product not found: "${searchTerm}"`);
     return null;
 }
 
@@ -917,7 +973,7 @@ function findRelatedAccessories(productSku, accessoryType = null) {
     const familyFromName = productName.split(' ')[0]; // e.g., "palma" from "Palma Grey..."
     const searchFamily = productFamily || familyFromName;
     
-    console.log(`ðŸ” Finding accessories for family: "${searchFamily}"`);
+    console.log(`🔍 Finding accessories for family: "${searchFamily}"`);
     
     const accessories = [];
     
@@ -964,7 +1020,7 @@ function findRelatedAccessories(productSku, accessoryType = null) {
             price: prod.product_identity?.price_gbp
         });
         
-        console.log(`   âœ… Found accessory: ${sku}`);
+        console.log(`   ✅ Found accessory: ${sku}`);
     }
     
     return accessories;
@@ -979,7 +1035,7 @@ async function renderDimensionCard(sku, options = {}) {
     
     const productData = productIndex.bySku[sku];
     if (!productData) {
-        console.log(`âš Ã¯Â¸Â No product data for SKU: ${sku}`);
+        console.log(`⚠️ No product data for SKU: ${sku}`);
         return null;
     }
     
@@ -1000,11 +1056,11 @@ async function renderDimensionCard(sku, options = {}) {
     
     if (!hasDimensions) {
         // Missing dimensions - provide helpful fallback
-        console.log(`ðŸ“ Missing dimensions for ${sku}`);
+        console.log(`📐 Missing dimensions for ${sku}`);
         return {
             type: 'dimension_missing',
             card: null,
-            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">â€” View ${name} â†’</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
+            fallbackMessage: `I don't have the exact footprint sizes for the ${name} to hand, but we usually have detailed dimension diagrams on the product page here if you'd like to check:\n\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View ${name} →</a>\n\nOtherwise, please give me your email and I'll have our customer service manager get back to you within today or latest first thing tomorrow.`,
             productUrl: productUrl,
             productName: name,
             sku: sku
@@ -1012,7 +1068,7 @@ async function renderDimensionCard(sku, options = {}) {
     }
     
     // Build dimension card
-    let card = `\nðŸ“ **${name} - Dimensions**\n\n`;
+    let card = `\n📐 **${name} - Dimensions**\n\n`;
     card += `**Footprint:**\n`;
     card += `= Width: ${width}cm\n`;
     card += `= Depth: ${depth}cm\n`;
@@ -1027,7 +1083,7 @@ async function renderDimensionCard(sku, options = {}) {
         card += `\n**Configuration:** This set can be arranged as left or right-hand facing - perfect for fitting your specific space layout!\n`;
     }
     
-    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">â€” View detailed dimension diagram â†’</a>\n`;
+    card += `\n<a href="${productUrl}" target="_blank" style="color:#2E6041; text-decoration:underline;">— View detailed dimension diagram →</a>\n`;
     
     // Box dimensions - only if explicitly requested
     if (showBoxDimensions) {
@@ -1059,7 +1115,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
     const components = productData.logistics_and_inventory?.components;
     
     if (!components || components.length === 0) {
-        return `\nðŸ“¦ **Delivery Boxes:** Contact us for box dimensions - we'll measure and confirm before delivery.\n`;
+        return `\n📦 **Delivery Boxes:** Contact us for box dimensions - we'll measure and confirm before delivery.\n`;
     }
     
     // Check if any boxes have dimensions
@@ -1068,10 +1124,10 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
     );
     
     if (boxesWithDimensions.length === 0) {
-        return `\nðŸ“¦ **Delivery Boxes:** This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}. Contact us for exact box dimensions.\n`;
+        return `\n📦 **Delivery Boxes:** This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}. Contact us for exact box dimensions.\n`;
     }
     
-    let boxCard = `\nðŸ“¦ **Delivery Boxes:**\n`;
+    let boxCard = `\n📦 **Delivery Boxes:**\n`;
     boxCard += `This set arrives in ${components.length} box${components.length > 1 ? 'es' : ''}:\n\n`;
     
     const productFamily = productData.product_identity?.product_family?.toLowerCase() || '';
@@ -1089,7 +1145,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
         }
         
         if (dims?.length && dims?.width && dims?.height) {
-            boxCard += `**Box ${index + 1}:** ${dims.length}cm Ã— ${dims.width}cm Ã— ${dims.height}cm\n`;
+            boxCard += `**Box ${index + 1}:** ${dims.length}cm × ${dims.width}cm × ${dims.height}cm\n`;
         } else {
             boxCard += `**Box ${index + 1}:** Dimensions not available\n`;
         }
@@ -1108,7 +1164,7 @@ function renderBoxDimensionCard(sku, productData, productUrl) {
 // ============================================
 
 function filterProductsBySpace(products, maxWidth, maxLength) {
-    console.log(`ðŸ“ Filtering for space: ${maxWidth}cm Ã— ${maxLength}cm`);
+    console.log(`📐 Filtering for space: ${maxWidth}cm × ${maxLength}cm`);
     
     const fitting = products.filter(p => {
         const product = productIndex.bySku[p.sku || p];
@@ -1128,15 +1184,15 @@ function filterProductsBySpace(products, maxWidth, maxLength) {
         const fits = fitsNormal || fitsRotated;
         
         if (fits) {
-            console.log(`   âœ… ${p.sku || p} fits (${width}Ã—${length || depth}cm)`);
+            console.log(`   ✅ ${p.sku || p} fits (${width}×${length || depth}cm)`);
         } else {
-            console.log(`   =ÂÅ’ ${p.sku || p} too large (${width}Ã—${length || depth}cm)`);
+            console.log(`   ❌ ${p.sku || p} too large (${width}×${length || depth}cm)`);
         }
         
         return fits;
     });
     
-    console.log(`ðŸ“ ${fitting.length} of ${products.length} products fit the space`);
+    console.log(`📐 ${fitting.length} of ${products.length} products fit the space`);
     return fitting;
 }
 
@@ -1150,7 +1206,7 @@ async function renderProductCard(sku, options = {}) {
     
     const productData = productIndex.bySku[sku];
     if (!productData) {
-        console.log(`âš Ã¯Â¸Â No product data for SKU: ${sku}`);
+        console.log(`⚠️ No product data for SKU: ${sku}`);
         return null;
     }
     
@@ -1166,7 +1222,7 @@ async function renderProductCard(sku, options = {}) {
     
     // Double-check stock
     if (stock <= 0) {
-        console.log(`âš Ã¯Â¸Â ${sku} out of stock at render time`);
+        console.log(`⚠️ ${sku} out of stock at render time`);
         return null;
     }
     
@@ -1218,7 +1274,7 @@ async function renderProductCard(sku, options = {}) {
     }
     
     if (personalisation) {
-        card += `âœ¨ *${personalisation}*\n\n`;
+        card += `✨ *${personalisation}*\n\n`;
     }
     
     if (features.length > 0) {
@@ -1232,12 +1288,12 @@ async function renderProductCard(sku, options = {}) {
         card += `\n**Warranty:** ${warranties[0]}\n`;
     }
     
-    card += `\n**Price:** Â£${price.toFixed(2)}\n`;
+    card += `\n**Price:** £${price.toFixed(2)}\n`;
     card += `**Stock:** ${stockMessage}\n\n`;
-    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product â†’</a>\n`;
+    card += `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background:#2E6041; color:white; text-decoration:none; border-radius:5px;">View Product →</a>\n`;
     
     if (showBundleHint && productData.related_products?.matching_cover_sku) {
-        card += `\nðŸŽ *Matching cover available - ask about our 20% bundle discount!*\n`;
+        card += `\n🎁 *Matching cover available - ask about our 20% bundle discount!*\n`;
     }
     
     return card;
@@ -1271,6 +1327,8 @@ function buildSystemPrompt(sessionState) {
     if (ctx.furnitureType) contextParts.push(`Looking for: ${ctx.furnitureType} furniture`);
     if (ctx.seatCount) contextParts.push(`Seats needed: ${ctx.seatCount}+`);
     if (ctx.material) contextParts.push(`Material: ${ctx.material}`);
+    if (ctx.spaceSize) contextParts.push(`Space: ${ctx.spaceSize}`);
+    if (ctx.budget) contextParts.push(`Budget: ${ctx.budget}`);
     
     const contextSummary = contextParts.length > 0 
         ? contextParts.join(' | ') 
@@ -1280,185 +1338,237 @@ function buildSystemPrompt(sessionState) {
     const commercial = sessionState.commercial || {};
     const commercialState = [];
     if (commercial.productsShown?.length > 0) {
-        commercialState.push(`Products shown: ${commercial.productsShown.length}`);
+        commercialState.push(`Products shown: ${commercial.productsShown.length} (${commercial.productsShown.join(', ')})`);
     }
     if (commercial.sentiment === 'price_concerned') {
-        commercialState.push("âš Ã¯Â¸Â Customer is price-sensitive - NO UPSELLS");
+        commercialState.push("⚠️ Customer is price-sensitive - emphasise VALUE not price");
     }
     if (commercial.bundleDeclined) {
-        commercialState.push("âš Ã¯Â¸Â Bundle declined - don't offer again");
+        commercialState.push("⚠️ Bundle declined - don't offer bundle again");
+    }
+    if (commercial.bundleInterestShown) {
+        commercialState.push("✅ Customer showed bundle interest - push to close bundle deal");
+    }
+
+    // Build bundle context for shown products
+    let bundleContext = '';
+    if (commercial.productsShown?.length > 0) {
+        const bundleInfo = [];
+        for (const sku of commercial.productsShown) {
+            try {
+                const bundles = getBundleForProduct(sku);
+                if (bundles.length > 0) {
+                    const bundle = bundles[0];
+                    let bundleTotal = 0;
+                    const parts = [];
+                    for (const item of bundle.products) {
+                        const prod = productIndex.bySku[item.product_sku];
+                        if (prod) {
+                            const itemPrice = parseFloat(prod.product_identity?.price_gbp) || 0;
+                            bundleTotal += itemPrice * item.product_qty;
+                            parts.push(prod.product_identity?.product_name || item.product_sku);
+                        }
+                    }
+                    const discount = bundleTotal * (COMMERCE_RULES.bundle.discountPercent / 100);
+                    bundleInfo.push(`${bundle.name}: ${parts.join(' + ')} = £${bundleTotal.toFixed(0)} → £${(bundleTotal - discount).toFixed(0)} with ${COMMERCE_RULES.bundle.discountPercent}% off (save £${discount.toFixed(0)})`);
+                }
+            } catch(e) {}
+        }
+        if (bundleInfo.length > 0) {
+            bundleContext = `\n\nAVAILABLE BUNDLES FOR SHOWN PRODUCTS:\n${bundleInfo.join('\n')}\nProactively mention bundle savings after showing furniture. Frame as: "Great news - there's a bundle deal available..."`;
+        }
     }
     
-    return `You are Gwen, a friendly sales assistant for MINT Outdoor furniture. You help customers find perfect outdoor furniture.
+    return `You are Gwen, a warm and knowledgeable sales assistant for MINT Outdoor (www.mint-outdoor.com). You have 25 years of outdoor furniture expertise. You help customers find their perfect garden setup and guide them to purchase.
 
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+===========================================================
 CURRENT CUSTOMER CONTEXT
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+===========================================================
 ${contextSummary}
-${commercialState.length > 0 ? '\nCommercial notes: ' + commercialState.join(' | ') : ''}
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+${commercialState.length > 0 ? '\nCommercial notes: ' + commercialState.join(' | ') : ''}${bundleContext}
+===========================================================
 
-YOUR CORE RULES:
-1. REMEMBER what customer already told you - don't ask again
-2. ANSWER direct questions FIRST, then ask follow-ups
-3. When showing products, output SKUs only - server renders the cards
-4. Be warm and helpful, never say "no" or "unfortunately"
-5. NEVER write URLs or links in your response - the server adds all links automatically
-6. NEVER invent product information - if you don't have data, ask for clarification
-7. When customer asks for a SPECIFIC product by name (e.g. "palma set"), show it IMMEDIATELY - don't ask qualifying questions
-8. ALWAYS suggest a protective cover or bundle when showing furniture - this is our key upsell
+YOUR SALES APPROACH - PRODUCT FIRST:
+Show products within 2 messages. Do NOT interview the customer with lots of questions.
+1. If they name a product → Show it IMMEDIATELY
+2. If they give type + size OR material → Show best matches right away
+3. If vague ("garden furniture") → Ask ONE qualifying question max, then show products
+4. NEVER ask more than 2 questions before showing something
 
-CRITICAL - URLS AND LINKS:
-- You CANNOT and MUST NOT write any URLs or hyperlinks
-- All product links are added automatically by the server
-- If you write a URL, it will be wrong and break the customer experience
-- Instead of writing links, use intents: product_recommendation, dimension_query, initiate_checkout
+GOLDEN RULE: A customer looking at a product card is 10x more likely to buy than one answering questions.
 
-WHEN TO SHOW PRODUCTS (use product_recommendation intent):
-- Customer mentions a SPECIFIC product family name (palma, stockholm, marbella etc.) → Show IMMEDIATELY
-- Customer mentions material (rattan, teak, aluminium) AND furniture type or size → Show products
-- Customer asks to see options or alternatives → Show products
-→ For named products, show immediately. For general queries, get 2+ pieces of qualifying info
+===========================================================
+CORE RULES
+===========================================================
+1. REMEMBER what customer told you - NEVER re-ask
+2. ANSWER direct questions FIRST, then suggest next step
+3. When showing products, output SKUs only - server renders cards with images and prices
+4. Be warm, confident, and enthusiastic - you LOVE outdoor furniture
+5. NEVER write URLs or links - the server adds all links automatically
+6. NEVER invent product specs - only use data from search results
+7. Frame everything positively: "great choice" not "unfortunately"
+8. When a customer likes something → help them BUY, don't show more options
 
-WHEN NOT TO SHOW PRODUCTS:
-- Customer says "I like it", "that's great", "perfect" â†’ They've chosen! Help them buy, don't show more
-- Customer asks "how do I order" or "how to buy" â†’ Give checkout instructions, don't show products
-- Customer says "yes" to your question â†’ Acknowledge and help them proceed, don't restart
+===========================================================
+FUZZY QUERY MATCHING - HOW TO INTERPRET CUSTOMER REQUESTS
+===========================================================
+Customers rarely use exact product names. Here is how to decode their requests:
 
-WHEN CUSTOMER IS READY TO BUY:
-If customer says: "I'll take it", "how do I order", "how to buy", "yes I want it", "let's do it"
-â†’ Use the initiate_checkout tool OR give clear ordering instructions:
-   1. Tell them to click the View Product button
-   2. Add to basket on our website
-   3. Proceed to checkout
-   4. Mention any bundle discount if applicable
+SEATING REQUESTS - Map to seat counts:
+"for 2" / "couple" / "small" → seatCount: 2-4
+"for 4" / "family" / "medium" → seatCount: 4-6
+"for 6" / "entertaining" / "large" → seatCount: 6-8
+"for 8" / "for 10" / "big group" → seatCount: 8+
+"corner" / "L-shaped" → furnitureType: corner
 
-WHEN CUSTOMER WANTS EMAIL QUOTE:
-If customer provides email or asks you to email details:
-â†’ Use the capture_email_for_quote tool
-â†’ Confirm you'll send details within a few minutes
+MATERIAL REQUESTS:
+"wicker" / "rattan" / "woven" → material: rattan
+"metal" / "aluminium" / "modern" → material: aluminium
+"wood" / "teak" / "natural" / "timber" → material: teak
 
-WHEN TO ASK QUESTIONS (use clarification intent):
-- Only 1 piece of info known - ask for furniture type or size
-- Never ask what they already told you
-- NEVER ask "would you like these?" after they already said yes
+TYPE REQUESTS:
+"dining" / "eating" / "table and chairs" → furnitureType: dining
+"lounge" / "sofa" / "relax" / "chill" → furnitureType: lounge
+"sunbed" / "lounger" / "sunbathing" → furnitureType: lounger
+"L-shape" / "corner sofa" / "wrap around" → furnitureType: corner
 
-RESPONDING TO SPECIFIC QUESTIONS:
-- Price: "The [Product] is **Â£XXX**" - always include the pound amount
-- Stock: "Yes, it's in stock with 3-5 day delivery"
-- Warranty: "We offer 1-year guarantee plus extended material warranties"
-- Dimensions: Use the get_product_dimensions tool to get exact sizes
-- Box/Delivery size: Use get_product_dimensions with includeBoxDimensions=true
-- Will it fit: Use get_product_dimensions, then confirm if it fits their space
-- Eco questions: "Our teak is from sustainable plantations, aluminium is 100% recyclable"
-- Commercial/B2B: "We work with businesses - contact sales@mint-outdoor.com for volume pricing"
+COMBINED EXAMPLES:
+"Barcelona 9 seater" → productFamily: barcelona, seatCount: 9
+"large corner rattan" → furnitureType: corner, material: rattan, seatCount: 8
+"small teak dining" → furnitureType: dining, material: teak, seatCount: 4
+"something for a balcony" → furnitureType: lounge OR dining, seatCount: 2
 
-QUALITY, TESTING & WEIGHT QUESTIONS (EN-581):
-All Mint Outdoor products are tested to European safety standards. When customers ask about quality, strength, durability or testing:
-- Use the en581Info object for authoritative answers
-- Always mention "independently tested to European safety standards" in plain English
-- Add "(the official testing standard is called EN-581 if you wanted to research that yourself)" for substance
-- For WEIGHT LIMIT questions: Our furniture is tested for up to 110kg (17 stone 4 lbs)
-- If customer needs HIGHER weight capacity, offer to connect with customer service for specialist options
-- For STABILITY questions: Explain furniture is tested for tipping in all directions
-- For DURABILITY questions: Explain 25,000 cycle testing simulating years of use
-- For SAFETY questions: Mention smooth edges, no finger-trap hazards, secure mechanisms
+WHEN SIZE IS AMBIGUOUS:
+If customer says "I have a small patio" → recommend 4-seater AND offer: "How many people would you typically seat?"
+If customer gives measurements → use get_product_dimensions to compare
 
-EXISTING CUSTOMER VS FRUSTRATED PROSPECT - CRITICAL:
-ROUTE A - EXISTING CUSTOMER (has order evidence):
-If customer mentions: my order, my delivery, refund, return, order number, tracking, arrived damaged, wrong item sent, not delivered:
-→ Direct them to Order Helpdesk (the server handles this automatically)
-→ EXCEPTION: If they want to BUY MORE, help them with that
+===========================================================
+UPSELLING & CROSS-SELLING - CRITICAL FOR REVENUE
+===========================================================
+After EVERY furniture recommendation, you MUST mention accessories. This is not optional.
 
-ROUTE B - FRUSTRATED PROSPECT (no order evidence):
-If customer is frustrated/annoyed but has NOT mentioned any order:
-→ They are a PROSPECT frustrated with the chat experience
-→ Offer to connect them with customer service (ask for email)
-→ Do NOT send to Order Helpdesk
+STEP 1 - SOFT MENTION (immediately after showing furniture):
+"A matching protective cover is available for this set - it extends the lifespan by 3-5 years and keeps it looking pristine all year round."
 
-KEY SIGNALS:
-- "I am not a customer" / "not an existing customer" → ALWAYS treat as prospect
-- "my order" / "refund" / "tracking" → ALWAYS treat as existing customer
-- "annoying" / "frustrated" ALONE → Treat as frustrated prospect
-NEVER ask "what furniture are you looking for" when someone is frustrated!
+STEP 2 - BUNDLE PITCH (if they show ANY interest or ask about covers/protection):
+"Great news! If you buy the set with the cover together, you save [X]% - that is £[amount] off. Most of our customers go for the bundle because it is much better value."
 
-PRODUCT NAME RECOGNITION:
-When customer mentions a product family name (Palma, Stockholm, Marbella, etc.):
-- "[name] set" or "[name] dining" → Show FURNITURE from that family
-- "[name] cover" → Show COVER for that family
-- "[name] cushions" → Show REPLACEMENT CUSHIONS for that family
-- "[name]" alone → Prioritize furniture, but mention covers are available
-The server handles family routing - just search with the product name.
+STEP 3 - URGENCY (if considering but not committed):
+"The bundle discount is available right now. Shall I add the cover to create your bundle?"
 
-UPSELLING - ALWAYS DO THIS:
-After showing any furniture set:
-1. FIRST mention: "A matching protective cover is available - extends lifespan by 3-5 years!"
-2. SECOND mention (if they show interest): Give the bundle price with 20% discount
-3. If they ask about covers OR storage: Show the matching cover and cushion box
-This is critical for business - every furniture recommendation should include a cover mention.
+VALUE FRAMING for price-sensitive customers:
+- Do not just say "20% off" → Say "You save £XX, plus the cover pays for itself by protecting your furniture for years"
+- Compare: "A cover costs £69 but replacing weather-damaged cushions would cost £150+"
+- Social proof: "Over 70% of our customers choose the bundle"
 
-WHEN YOU CANNOT HELP OR CUSTOMER WANTS HUMAN SUPPORT:
-If customer asks "how do I contact support", "speak to someone", "talk to a person", "customer service", 
-OR if you cannot answer their question, OR if they're frustrated:
-1. ALWAYS ask for their email address first
-2. Then use request_human_handoff tool with their email and reason
-3. The conversation will be emailed to our customer service team
-4. Confirm: "I've passed your details to our team - they'll email you within a few hours"
-5. NEVER say "I can't help" without offering to connect them with support
+OBJECTION HANDLING FOR UPSELLS:
+"I don't need a cover" → "That is fair! Just so you know, it is there if you change your mind. Even our UV-resistant materials benefit from winter protection."
+"Too expensive" → "I understand. The cover actually saves money long-term by preventing weather damage. But the furniture is brilliant on its own too!"
 
-IMPORTANT: When chatbot cannot fulfill a request (e.g., product not available, question you can't answer):
-- DO NOT give generic responses about "warranty info" or "delivery details"
-- INSTEAD, immediately offer to connect with customer service
-- Ask: "Let me connect you with our customer service team who can help. What's your email address?"
+===========================================================
+MATERIAL & WARRANTY REASSURANCE
+===========================================================
+When customers ask about quality, durability, or weather resistance, be CONFIDENT and specific:
 
-ACCESSORY QUERIES:
-When customer asks about replacement cushions, covers, or accessories for a specific product:
-1. Use find_accessories tool with the product name and accessory type
-2. Show the main product AND available accessories
-3. If no accessories found, offer to connect with customer service
+RATTAN:
+- "Our rattan is PE woven - not natural rattan that rots. It is UV-tested to 2000 hours (equivalent to 4+ British summers)"
+- "2-year structural and colour warranty, but honestly these sets last 10-15 years with basic care"
+- "Just wipe with a damp cloth. Cover it in harsh winters and it will look great for years"
 
-DIMENSION QUERIES - IMPORTANT:
-When customer asks "how big is...", "what size...", "dimensions of...", "will it fit...", "measurements":
-1. Use get_product_dimensions tool with the product name
-2. If dimensions found, output intent: "dimension_query" with the response
-3. If product not found, ask customer to clarify which product they mean
+ALUMINIUM:
+- "Powder-coated aluminium - completely rust-proof and virtually indestructible"
+- "10-year corrosion warranty, but aluminium lasts 20+ years"
+- "Zero maintenance needed. A quick wipe with soapy water is all it ever needs"
 
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+TEAK:
+- "Grade-A plantation teak from sustainable sources - the gold standard of outdoor wood"
+- "5-year structural warranty. Teak naturally weathers to a beautiful silver-grey, or oil it annually to keep the golden colour"
+- "Teak naturally contains oils that resist rot, insects, and moisture"
+
+ALL MATERIALS:
+- "Everything is independently tested to European safety standards (EN-581)"
+- "Weight tested to 110kg per seat"
+- "25,000-cycle durability testing - simulating years of daily use"
+
+===========================================================
+WHEN CUSTOMER HAS CHOSEN - CLOSE THE SALE
+===========================================================
+If customer says "I like it", "perfect", "that is the one", "looks great":
+→ They have CHOSEN. Help them BUY. Do NOT show more products.
+→ Response: "Brilliant choice! To order, just click the View Product button below to add it to your basket. [Then mention bundle if not yet offered]"
+
+If customer says "how do I order", "how to buy", "I will take it":
+→ Use initiate_checkout tool
+→ "Click the View Product button below, add to basket, and checkout. You will receive order confirmation straight away!"
+
+If customer asks about discount/bundle purchasing:
+→ Explain: "Simply add both items to your basket and the bundle discount applies automatically at checkout!"
+→ If complex bundle: "I can email you a quote with the bundle discount locked in. What is your email?"
+
+===========================================================
+CUSTOMER ROUTING
+===========================================================
+EXISTING CUSTOMER (mentions: my order, delivery, refund, return, tracking, damaged):
+→ Direct to Order Helpdesk (server handles automatically)
+→ EXCEPTION: If they want to BUY MORE, help them
+
+FRUSTRATED PROSPECT (no order evidence, just frustrated):
+→ Offer to connect with customer service (ask for email)
+→ NEVER ask "what furniture?" when someone is frustrated
+
+HUMAN SUPPORT REQUEST:
+1. Ask for email address first
+2. Use request_human_handoff tool
+3. Confirm: "I have passed your details to our team - they will email you within a few hours"
+
+===========================================================
+PRODUCT NAME RECOGNITION
+===========================================================
+"[name] set" / "[name] dining" → Show FURNITURE from that family
+"[name] cover" → Show COVER for that family
+"[name] cushions" → Show REPLACEMENT CUSHIONS
+"[name]" alone → Prioritize furniture, mention covers are available
+
+DIMENSION QUERIES:
+"how big" / "what size" / "will it fit" / "measurements" → Use get_product_dimensions tool
+
+===========================================================
 OUTPUT FORMAT - ALWAYS VALID JSON
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+===========================================================
 
-For conversation only (no products):
+For conversation (no products):
 {
     "intent": "greeting" | "clarification" | "question_answer",
-    "response_text": "Your friendly response here"
+    "response_text": "Your friendly response"
 }
 
 For showing products:
 {
     "intent": "product_recommendation",
-    "intro_copy": "Brief intro (1 sentence)",
+    "intro_copy": "Brief intro (1 sentence max)",
     "selected_skus": ["SKU-1", "SKU-2"],
-    "personalisation": "Brief personalisation",
-    "closing_copy": "Which style catches your eye?"
+    "personalisation": "Why these suit the customer",
+    "closing_copy": "Engaging question or next step prompt"
 }
 
-For dimension queries:
+For dimensions:
 {
     "intent": "dimension_query",
     "product_sku": "SKU-HERE",
     "include_box_dimensions": false,
-    "response_text": "Optional intro text before dimension card"
+    "response_text": "Optional intro before dimension card"
 }
 
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
-AVAILABLE PRODUCT SKUs (only use these):
+===========================================================
+AVAILABLE PRODUCT SKUs (ONLY use these):
 ${sessionState.availableSkus?.length > 0 
     ? sessionState.availableSkus.join(', ') 
     : 'Call search_products first to find products'}
-=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â
+===========================================================
 
 Remember: Output ONLY valid JSON. No markdown, no code blocks, just the JSON object.`;
 }
+
 
 // ============================================
 // AI TOOLS
@@ -1983,7 +2093,7 @@ function getCrossSellSuggestions(sku, session) {
             sku: 'ASSEMBLY-SERVICE',
             priority: 4,
             price: COMMERCE_RULES.crossSell.assemblyPrice,
-            pitch: `Save time with our professional assembly service - just Â£${COMMERCE_RULES.crossSell.assemblyPrice}!`
+            pitch: `Save time with our professional assembly service - just £${COMMERCE_RULES.crossSell.assemblyPrice}!`
         });
     }
     
@@ -2038,16 +2148,16 @@ function buildClosingResponse(session, sentiment) {
             intent: 'checkout_flow',
             text: `Brilliant choice! Here's how to get your bundle with the ${COMMERCE_RULES.bundle.discountPercent}% discount:\n\n` +
                   `**Your Bundle:**\n` +
-                  bundleProductNames.map(n => `âœ” ${n}`).join('\n') + `\n\n` +
-                  `**Bundle Price: Â£${finalPrice.toFixed(2)}** ~~Â£${bundleTotal.toFixed(2)}~~\n` +
-                  `*You save: Â£${discount.toFixed(2)}*\n\n` +
+                  bundleProductNames.map(n => `✔ ${n}`).join('\n') + `\n\n` +
+                  `**Bundle Price: £${finalPrice.toFixed(2)}** ~~£${bundleTotal.toFixed(2)}~~\n` +
+                  `*You save: £${discount.toFixed(2)}*\n\n` +
                   `**To order:**\n` +
-                  `1Ã¯Â¸Â=Æ’Â£ Click the link below to view the main product\n` +
-                  `2Ã¯Â¸Â=Æ’Â£ Add it to your basket\n` +
-                  `3Ã¯Â¸Â=Æ’Â£ The matching accessories will be suggested at checkout\n` +
-                  `4Ã¯Â¸Â=Æ’Â£ Your ${COMMERCE_RULES.bundle.discountPercent}% bundle discount applies automatically!\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW â†’ Â£${finalPrice.toFixed(2)}</a>\n\n` +
-                  `Or if you'd like me to email you this quote to review later, just let me know your email address and I'll send it with the discount locked in for 48 hours! ðŸ“§`,
+                  `1️⃣ Click the link below to view the main product\n` +
+                  `2️⃣ Add it to your basket\n` +
+                  `3️⃣ The matching accessories will be suggested at checkout\n` +
+                  `4️⃣ Your ${COMMERCE_RULES.bundle.discountPercent}% bundle discount applies automatically!\n\n` +
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${finalPrice.toFixed(2)}</a>\n\n` +
+                  `Or if you'd like me to email you this quote to review later, just let me know your email address and I'll send it with the discount locked in for 48 hours! 📧`,
             mainProduct: mainProductSku,
             bundlePrice: finalPrice,
             savingsAmount: discount
@@ -2058,13 +2168,13 @@ function buildClosingResponse(session, sentiment) {
             type: 'product_checkout',
             intent: 'checkout_flow',
             text: `Excellent choice! The **${productName}** is one of our most popular sets.\n\n` +
-                  `**Price: Â£${price.toFixed(2)}**\n` +
-                  `âœ… In stock with 3-5 day delivery\n` +
-                  `âœ… 1-year warranty included\n\n` +
+                  `**Price: £${price.toFixed(2)}**\n` +
+                  `✅ In stock with 3-5 day delivery\n` +
+                  `✅ 1-year warranty included\n\n` +
                   `**To order:**\n` +
                   `Simply click the button below to add it to your basket and checkout:\n\n` +
-                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW â†’ Â£${price.toFixed(2)}</a>\n\n` +
-                  `Would you also like a protective cover? It extends the furniture's life by 3-5 years and you'll save ${COMMERCE_RULES.bundle.discountPercent}% when bought together! ðŸŽ`,
+                  `<a href="${productUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">ORDER NOW → £${price.toFixed(2)}</a>\n\n` +
+                  `Would you also like a protective cover? It extends the furniture's life by 3-5 years and you'll save ${COMMERCE_RULES.bundle.discountPercent}% when bought together! 🎁`,
             mainProduct: mainProductSku,
             productPrice: price
         };
@@ -2083,9 +2193,9 @@ function buildEmailCaptureResponse(session) {
         intent: 'email_capture',
         text: `I'd be happy to email you a summary of ${productName} with all the details and your exclusive discount.\n\n` +
               `Just share your email address and I'll send:\n` +
-              `ðŸ“‹ Product specifications and dimensions\n` +
-              `ðŸ’° Your personalised quote with any bundle discounts\n` +
-              `â€™ Discount locked in for 48 hours\n\n` +
+              `📋 Product specifications and dimensions\n` +
+              `💰 Your personalised quote with any bundle discounts\n` +
+              `🔒 Discount locked in for 48 hours\n\n` +
               `What's the best email to send this to?`
     };
 }
@@ -2133,7 +2243,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
     if (offerType === 'soft') {
         return {
             type: 'soft',
-            text: `ðŸŽ *Great news! This comes with a matching protective cover bundle - save ${COMMERCE_RULES.bundle.discountPercent}% when you buy together. Would you like details?*`
+            text: `🎁 *Great news! This comes with a matching protective cover bundle - save ${COMMERCE_RULES.bundle.discountPercent}% when you buy together. Would you like details?*`
         };
     } else {
         // Detailed pricing
@@ -2145,7 +2255,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
             if (prod) {
                 const price = parseFloat(prod.product_identity?.price_gbp) || 0;
                 totalOriginal += price * item.product_qty;
-                productDetails.push(`- ${prod.product_identity?.product_name}: Â£${price.toFixed(2)}`);
+                productDetails.push(`- ${prod.product_identity?.product_name}: £${price.toFixed(2)}`);
             }
         }
         
@@ -2154,7 +2264,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
         
         return {
             type: 'detailed',
-            text: `ðŸŽ **${bundle.name} Bundle Deal**\n\n${productDetails.join('\n')}\n\n~~Original: Â£${totalOriginal.toFixed(2)}~~\n**Bundle Price: Â£${bundlePrice.toFixed(2)}**\n*You save: Â£${discount.toFixed(2)} (${COMMERCE_RULES.bundle.discountPercent}% off)*\n\nWant me to add this bundle to help you complete your purchase?`
+            text: `🎁 **${bundle.name} Bundle Deal**\n\n${productDetails.join('\n')}\n\n~~Original: £${totalOriginal.toFixed(2)}~~\n**Bundle Price: £${bundlePrice.toFixed(2)}**\n*You save: £${discount.toFixed(2)} (${COMMERCE_RULES.bundle.discountPercent}% off)*\n\nWant me to add this bundle to help you complete your purchase?`
         };
     }
 }
@@ -2165,7 +2275,7 @@ function buildBundleOffer(session, mainProductSku, offerType) {
 
 function validateAIOutput(aiOutput, whitelist, sessionId) {
     if (!aiOutput || !aiOutput.intent) {
-        console.log(`âš Ã¯Â¸Â [${sessionId}] Missing aiOutput or intent`);
+        console.log(`⚠️ [${sessionId}] Missing aiOutput or intent`);
         return null;
     }
     
@@ -2179,14 +2289,14 @@ function validateAIOutput(aiOutput, whitelist, sessionId) {
                 validSkus.push(sku);
             } else {
                 invalidSkus.push(sku);
-                console.log(`ðŸ›¡ï¸ [${sessionId}] BLOCKED: "${sku}" not in whitelist`);
+                console.log(`🛡️ [${sessionId}] BLOCKED: "${sku}" not in whitelist`);
             }
         }
         
         aiOutput.selected_skus = validSkus;
         
         if (invalidSkus.length > 0) {
-            console.log(`ðŸ›¡ï¸ Whitelist was: [${whitelist.join(', ')}]`);
+            console.log(`🛡️ Whitelist was: [${whitelist.join(', ')}]`);
         }
     }
     
@@ -2304,7 +2414,7 @@ async function assembleResponse(aiOutput, sessionId, session) {
                 parts.push(bundleOffer.text);
                 session.commercial.bundlesOffered++;
                 session.commercial.lastOfferType = 'bundle';
-                console.log(`ðŸŽ Bundle offer added (${bundleEligibility.offerType}) - positive signal: ${hasPositiveSignal}`);
+                console.log(`🎁 Bundle offer added (${bundleEligibility.offerType}) - positive signal: ${hasPositiveSignal}`);
             }
         }
         
@@ -2315,9 +2425,9 @@ async function assembleResponse(aiOutput, sessionId, session) {
             if (crossSells.length > 0 && session.commercial.crossSellsShown.length < 2) {
                 const suggestion = crossSells[0];
                 parts.push('');
-                parts.push(`ðŸ’¡ *${suggestion.pitch}*`);
+                parts.push(`💡 *${suggestion.pitch}*`);
                 session.commercial.crossSellsShown.push(suggestion.sku);
-                console.log(`ðŸ’¡ Cross-sell suggested: ${suggestion.type}`);
+                console.log(`💡 Cross-sell suggested: ${suggestion.type}`);
             }
         }
     }
@@ -2352,7 +2462,7 @@ app.post('/chat', async (req, res) => {
         }
         
         console.log(`\n${'='.repeat(60)}`);
-        console.log(`ðŸ“© [${sessionId}] "${message}"`);
+        console.log(`📩 [${sessionId}] "${message}"`);
         
         // Get or create session
         if (!sessions.has(sessionId)) {
@@ -2555,7 +2665,7 @@ app.post('/chat', async (req, res) => {
         
         // Check if customer is accepting escalation offer
         if (session.escalationOffered && isAffirmative) {
-            console.log(`ðŸš¨ Customer accepted escalation offer - proceeding with email capture`);
+            console.log(`🚨 Customer accepted escalation offer - proceeding with email capture`);
             session.pendingEscalation = true;
             session.escalationOffered = false; // Reset the offer flag
             
@@ -2574,7 +2684,7 @@ app.post('/chat', async (req, res) => {
                     session.commercial.productsShown || []
                 );
                 
-                console.log(`ðŸ“§ ESCALATION EMAIL SENT (with affirmative): ${session.customerEmail}`);
+                console.log(`📧 ESCALATION EMAIL SENT (with affirmative): ${session.customerEmail}`);
                 
                 // Return escalation confirmation directly
                 const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
@@ -2616,7 +2726,7 @@ app.post('/chat', async (req, res) => {
                     session.commercial.productsShown || []
                 );
                 
-                console.log(`ðŸ“§ ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
+                console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
                 
                 const confirmationResponse = `Perfect, thank you! I've sent your details and our conversation to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours).\n\nIs there anything else I can help with in the meantime?`;
                 
@@ -2651,7 +2761,7 @@ app.post('/chat', async (req, res) => {
         
         const isChangeRequest = changeRequestPatterns.some(pattern => msgLower.includes(pattern));
         if (isChangeRequest) {
-            console.log(`ðŸ”„ Change request detected`);
+            console.log(`🔄 Change request detected`);
         }
         
         // ============================================
@@ -2663,13 +2773,13 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('poly rattan') || msgLower.includes('pe rattan') ||
             msgLower.includes('synthetic rattan')) {
             session.context.material = 'rattan';
-            console.log(`ðŸ“ Context: material = rattan`);
+            console.log(`📝 Context: material = rattan`);
         }
         
         // Teak
         if (msgLower.includes('teak')) {
             session.context.material = 'teak';
-            console.log(`ðŸ“ Context: material = teak`);
+            console.log(`📝 Context: material = teak`);
         }
         
         // Wood (and synonyms) - check this AFTER teak so teak doesn't get overwritten
@@ -2677,31 +2787,31 @@ app.post('/chat', async (req, res) => {
              msgLower.includes('acacia') || msgLower.includes('hardwood')) &&
             !msgLower.includes('teak')) {
             session.context.material = 'wood';
-            console.log(`ðŸ“ Context: material = wood`);
+            console.log(`📝 Context: material = wood`);
         }
         
         // Aluminium (and synonyms)
         if (msgLower.includes('aluminium') || msgLower.includes('aluminum') || 
             msgLower.includes('alloy')) {
             session.context.material = 'aluminium';
-            console.log(`ðŸ“ Context: material = aluminium`);
+            console.log(`📝 Context: material = aluminium`);
         }
         
         // Metal (maps to aluminium for search, but also catches steel)
         if (msgLower.includes('metal') || msgLower.includes('steel')) {
             session.context.material = 'aluminium';
-            console.log(`ðŸ“ Context: material = aluminium (from metal/steel)`);
+            console.log(`📝 Context: material = aluminium (from metal/steel)`);
         }
         
         // Woven
         if (msgLower.includes('woven') && !msgLower.includes('rattan')) {
             session.context.material = 'woven';
-            console.log(`ðŸ“ Context: material = woven`);
+            console.log(`📝 Context: material = woven`);
         }
         
         // Clear whitelist if material changed
         if (previousMaterial && session.context.material && previousMaterial !== session.context.material) {
-            console.log(`ðŸ”„ Material changed: ${previousMaterial} â†’ ${session.context.material} - clearing whitelist`);
+            console.log(`🔄 Material changed: ${previousMaterial} → ${session.context.material} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2713,7 +2823,7 @@ app.post('/chat', async (req, res) => {
         if (msgLower.includes('dining') || msgLower.includes('dinner') || 
             msgLower.includes('eating') || msgLower.includes('table and chair')) {
             session.context.furnitureType = 'dining';
-            console.log(`ðŸ“ Context: type = dining`);
+            console.log(`📝 Context: type = dining`);
         }
         
         // Lounge (and synonyms)
@@ -2721,14 +2831,14 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('sofa') || msgLower.includes('couch') ||
             msgLower.includes('seating') || msgLower.includes('relax')) {
             session.context.furnitureType = 'lounge';
-            console.log(`ðŸ“ Context: type = lounge`);
+            console.log(`📝 Context: type = lounge`);
         }
         
         // Corner (and synonyms)
         if (msgLower.includes('corner') || msgLower.includes('l-shape') || 
             msgLower.includes('l shape') || msgLower.includes('l shaped')) {
             session.context.furnitureType = 'corner';
-            console.log(`ðŸ“ Context: type = corner`);
+            console.log(`📝 Context: type = corner`);
         }
         
         // Sun lounger (and synonyms)
@@ -2737,14 +2847,14 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('daybed') || msgLower.includes('day bed') ||
             (msgLower.includes('lounger') && !msgLower.includes('lounge set'))) {
             session.context.furnitureType = 'lounger';
-            console.log(`ðŸ“ Context: type = lounger`);
+            console.log(`📝 Context: type = lounger`);
         }
         
         // Chaise
         if (msgLower.includes('chaise')) {
             session.context.furnitureType = 'lounge';
             session.context.subType = 'chaise';
-            console.log(`ðŸ“ Context: type = lounge (chaise)`);
+            console.log(`📝 Context: type = lounge (chaise)`);
         }
         
         // Bistro (small sets)
@@ -2752,13 +2862,13 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('balcony set') || msgLower.includes('2 person')) {
             session.context.furnitureType = 'dining';
             session.context.seatCount = 2;
-            console.log(`ðŸ“ Context: type = dining (bistro), seats = 2`);
+            console.log(`📝 Context: type = dining (bistro), seats = 2`);
         }
         
         // Modular
         if (msgLower.includes('modular') || msgLower.includes('configurable')) {
             session.context.subType = 'modular';
-            console.log(`ðŸ“ Context: subType = modular`);
+            console.log(`📝 Context: subType = modular`);
         }
         
         // Accessories - v15.0: NEGATION AWARE
@@ -2791,7 +2901,7 @@ app.post('/chat', async (req, res) => {
         
         // Clear whitelist if furniture type changed
         if (previousType && session.context.furnitureType && previousType !== session.context.furnitureType) {
-            console.log(`ðŸ”„ Type changed: ${previousType} â†’ ${session.context.furnitureType} - clearing whitelist`);
+            console.log(`🔄 Type changed: ${previousType} → ${session.context.furnitureType} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2803,7 +2913,7 @@ app.post('/chat', async (req, res) => {
         const seatMatch = msgLower.match(/(\d+)\s*(?:people|person|seat|seater|guests?)/);
         if (seatMatch) {
             session.context.seatCount = parseInt(seatMatch[1]);
-            console.log(`ðŸ“ Context: seats = ${session.context.seatCount}`);
+            console.log(`📝 Context: seats = ${session.context.seatCount}`);
         }
         
         // Word-based numbers
@@ -2824,7 +2934,7 @@ app.post('/chat', async (req, res) => {
                 msgLower.includes(word + ' seat') || msgLower.includes(word + ' guest') ||
                 msgLower.includes('for ' + word)) {
                 session.context.seatCount = num;
-                console.log(`ðŸ“ Context: seats = ${num} (from "${word}")`);
+                console.log(`📝 Context: seats = ${num} (from "${word}")`);
                 break;
             }
         }
@@ -2835,7 +2945,7 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('tiny') || msgLower.includes('little')) {
             if (!session.context.seatCount) {
                 session.context.sizePreference = 'small';
-                console.log(`ðŸ“ Context: size preference = small`);
+                console.log(`📝 Context: size preference = small`);
             }
             session.currentWhitelist = [];
         }
@@ -2846,26 +2956,26 @@ app.post('/chat', async (req, res) => {
             msgLower.includes('guests')) {
             if (!session.context.seatCount) {
                 session.context.sizePreference = 'large';
-                console.log(`ðŸ“ Context: size preference = large`);
+                console.log(`📝 Context: size preference = large`);
             }
             session.currentWhitelist = [];
         }
         
         // Relative size changes
         if (msgLower.includes('smaller') || msgLower.includes('fewer seat')) {
-            console.log(`ðŸ“ Customer wants smaller - clearing whitelist`);
+            console.log(`📝 Customer wants smaller - clearing whitelist`);
             session.context.sizePreference = 'smaller';
             session.currentWhitelist = [];
         }
         if (msgLower.includes('bigger') || msgLower.includes('larger') || msgLower.includes('more seat')) {
-            console.log(`ðŸ“ Customer wants bigger - clearing whitelist`);
+            console.log(`📝 Customer wants bigger - clearing whitelist`);
             session.context.sizePreference = 'larger';
             session.currentWhitelist = [];
         }
         
         // Clear whitelist if seat count changed
         if (previousSeats && session.context.seatCount && previousSeats !== session.context.seatCount) {
-            console.log(`ðŸ”„ Seats changed: ${previousSeats} â†’ ${session.context.seatCount} - clearing whitelist`);
+            console.log(`🔄 Seats changed: ${previousSeats} → ${session.context.seatCount} - clearing whitelist`);
             session.currentWhitelist = [];
         }
         
@@ -2874,27 +2984,27 @@ app.post('/chat', async (req, res) => {
         // ============================================
         if (msgLower.includes('grey') || msgLower.includes('gray')) {
             session.context.colour = 'grey';
-            console.log(`ðŸ“ Context: colour = grey`);
+            console.log(`📝 Context: colour = grey`);
         }
         if (msgLower.includes('black')) {
             session.context.colour = 'black';
-            console.log(`ðŸ“ Context: colour = black`);
+            console.log(`📝 Context: colour = black`);
         }
         if (msgLower.includes('beige') || msgLower.includes('cream') || msgLower.includes('natural')) {
             session.context.colour = 'beige';
-            console.log(`ðŸ“ Context: colour = beige`);
+            console.log(`📝 Context: colour = beige`);
         }
         if (msgLower.includes('green')) {
             session.context.colour = 'green';
-            console.log(`ðŸ“ Context: colour = green`);
+            console.log(`📝 Context: colour = green`);
         }
         if (msgLower.includes('taupe') || msgLower.includes('brown')) {
             session.context.colour = 'taupe';
-            console.log(`ðŸ“ Context: colour = taupe`);
+            console.log(`📝 Context: colour = taupe`);
         }
         if (msgLower.includes('white')) {
             session.context.colour = 'white';
-            console.log(`ðŸ“ Context: colour = white`);
+            console.log(`📝 Context: colour = white`);
         }
         
         // ============================================
@@ -2906,34 +3016,34 @@ app.post('/chat', async (req, res) => {
         if (budgetWords.some(word => msgLower.includes(word))) {
             session.context.priceRange = 'budget';
             session.commercial.sentiment = 'price_concerned';
-            console.log(`ðŸ“ Context: price range = budget`);
+            console.log(`📝 Context: price range = budget`);
             session.currentWhitelist = [];
         }
         
         if (premiumWords.some(word => msgLower.includes(word))) {
             session.context.priceRange = 'premium';
-            console.log(`ðŸ“ Context: price range = premium`);
+            console.log(`📝 Context: price range = premium`);
         }
         
         // Price threshold detection
-        const priceMatch = msgLower.match(/(?:under|below|less than|up to|max|maximum)\s*Â£?\s*(\d+)/);
+        const priceMatch = msgLower.match(/(?:under|below|less than|up to|max|maximum)\s*£?\s*(\d+)/);
         if (priceMatch) {
             session.context.maxPrice = parseInt(priceMatch[1]);
-            console.log(`ðŸ“ Context: max price = Â£${session.context.maxPrice}`);
+            console.log(`📝 Context: max price = £${session.context.maxPrice}`);
             session.currentWhitelist = [];
         }
         
-        const minPriceMatch = msgLower.match(/(?:over|above|more than|at least|minimum)\s*Â£?\s*(\d+)/);
+        const minPriceMatch = msgLower.match(/(?:over|above|more than|at least|minimum)\s*£?\s*(\d+)/);
         if (minPriceMatch) {
             session.context.minPrice = parseInt(minPriceMatch[1]);
-            console.log(`ðŸ“ Context: min price = Â£${session.context.minPrice}`);
+            console.log(`📝 Context: min price = £${session.context.minPrice}`);
         }
         
         // "too expensive" detection
         if (msgLower.includes('too expensive') || msgLower.includes('too much') || 
             msgLower.includes('too pricey') || msgLower.includes('can\'t afford')) {
             session.commercial.sentiment = 'price_concerned';
-            console.log(`ðŸ’° Price concern detected - clearing whitelist`);
+            console.log(`💰 Price concern detected - clearing whitelist`);
             session.currentWhitelist = [];
         }
 
@@ -2952,7 +3062,7 @@ app.post('/chat', async (req, res) => {
         
         if (isDimensionQuery) {
             session.context.queryType = 'dimensions';
-            console.log(`ðŸ“ Dimension query detected`);
+            console.log(`📐 Dimension query detected`);
         }
         
         // Detect space size from customer (e.g., "my space is 200cm x 300cm")
@@ -2969,7 +3079,7 @@ app.post('/chat', async (req, res) => {
                 width: Math.min(dim1, dim2),
                 length: Math.max(dim1, dim2)
             };
-            console.log(`ðŸ“ Customer space detected: ${session.context.customerSpace.width}cm Ã— ${session.context.customerSpace.length}cm`);
+            console.log(`📐 Customer space detected: ${session.context.customerSpace.width}cm × ${session.context.customerSpace.length}cm`);
         }
         
         // Detect box/delivery dimension queries
@@ -2983,14 +3093,14 @@ app.post('/chat', async (req, res) => {
         
         if (isBoxQuery) {
             session.context.queryType = 'box_dimensions';
-            console.log(`ðŸ“¦ Box dimension query detected`);
+            console.log(`📦 Box dimension query detected`);
         }
         
         // ============================================
         // GENERIC CHANGE REQUEST - Clear whitelist
         // ============================================
         if (isChangeRequest && session.currentWhitelist.length > 0) {
-            console.log(`ðŸ”„ Change request with existing whitelist - clearing for fresh search`);
+            console.log(`🔄 Change request with existing whitelist - clearing for fresh search`);
             session.currentWhitelist = [];
         }
     
@@ -3004,21 +3114,21 @@ app.post('/chat', async (req, res) => {
         
         if (sentiment.priceConcerned) {
             session.commercial.sentiment = 'price_concerned';
-            console.log(`ðŸ’° Sentiment: Price concerned`);
+            console.log(`💰 Sentiment: Price concerned`);
         } else if (sentiment.positive) {
             session.commercial.sentiment = 'positive';
             session.commercial.positiveSignalReceived = true;
-            console.log(`ðŸ˜Š Sentiment: Positive signal received`);
+            console.log(`😊 Sentiment: Positive signal received`);
         }
         
         if (sentiment.strongPositive) {
             session.commercial.strongPositiveReceived = true;
-            console.log(`ðŸŽ¯ Sentiment: Strong positive - customer has chosen!`);
+            console.log(`🎯 Sentiment: Strong positive - customer has chosen!`);
         }
         
         if (sentiment.bundleInterest) {
             session.commercial.bundleInterestShown = true;
-            console.log(`ðŸŽ Bundle interest detected`);
+            console.log(`🎁 Bundle interest detected`);
         }
         
         // ============================================
@@ -3036,7 +3146,7 @@ app.post('/chat', async (req, res) => {
         const isLeaving = leavingPatterns.some(p => msgLower.includes(p));
         
         if (isLeaving) {
-            console.log(`ðŸš¨ LOST_SALE: Customer leaving - "${message.substring(0, 80)}..."`);
+            console.log(`🚨 LOST_SALE: Customer leaving - "${message.substring(0, 80)}..."`);
             session.commercial.sentiment = 'leaving';
             session.commercial.lostSaleReason = message;
             session.commercial.lostSaleTimestamp = new Date().toISOString();
@@ -3045,18 +3155,68 @@ app.post('/chat', async (req, res) => {
         if (sentiment.decline) {
             if (session.commercial.lastOfferType === 'bundle') {
                 session.commercial.bundleDeclined = true;
-                console.log(`=ÂÅ’ Bundle offer declined`);
+                console.log(`❌ Bundle offer declined`);
             } else if (session.commercial.lastOfferType === 'upsell') {
                 session.commercial.upsellDeclined = true;
-                console.log(`=ÂÅ’ Upsell declined`);
+                console.log(`❌ Upsell declined`);
             }
         }
         
         // ============================================
         // PURCHASE INTENT HANDLING - TRIGGER CLOSING FLOW
         // ============================================
-        if (sentiment.readyToBuy && session.commercial.productsShown.length > 0) {
-            console.log(`ðŸ›’ PURCHASE INTENT DETECTED - Triggering closing flow`);
+        
+        // v16.0: Also trigger closing when customer shows strong positive sentiment
+        // or when they express positive sentiment about a specific shown product
+        const hasProductsShown = session.commercial.productsShown.length > 0;
+        
+        // Check if customer is referring to a specific shown product positively
+        // e.g. "i like the stockholm chaise", "that's perfect", "the palma looks great"
+        let customerChosenProduct = false;
+        if (sentiment.positive && hasProductsShown) {
+            const shownProducts = session.commercial.productsShown;
+            for (const sku of shownProducts) {
+                const product = productIndex.bySku[sku];
+                if (product) {
+                    const family = (product.product_identity?.product_family || '').toLowerCase();
+                    const name = (product.product_identity?.product_name || '').toLowerCase();
+                    // Check if message references this product by family name or product name
+                    if ((family && msgLower.includes(family)) || 
+                        (name && name.split(' ').some(word => word.length > 3 && msgLower.includes(word)))) {
+                        customerChosenProduct = sku;
+                        console.log(`🎯 Customer expressed positive sentiment about shown product: ${sku}`);
+                        break;
+                    }
+                }
+            }
+            // Also catch generic positive about last shown product: "i like it", "that's the one", "looks perfect"
+            const genericPositive = ['i like it', 'i love it', 'that\'s the one', 'that looks', 'looks perfect', 
+                                     'looks great', 'looks good', 'that\'s perfect', 'that\'s great', 'perfect for'];
+            if (!customerChosenProduct && genericPositive.some(p => msgLower.includes(p))) {
+                customerChosenProduct = shownProducts[shownProducts.length - 1];
+                console.log(`🎯 Generic positive about last shown product: ${customerChosenProduct}`);
+            }
+        }
+        
+        const shouldTriggerClosing = hasProductsShown && (
+            sentiment.readyToBuy || 
+            sentiment.strongPositive || 
+            customerChosenProduct
+        );
+        
+        if (shouldTriggerClosing) {
+            const triggerReason = sentiment.readyToBuy ? 'ready_to_buy' : 
+                                  sentiment.strongPositive ? 'strong_positive' : 'product_chosen';
+            console.log(`🛒 PURCHASE INTENT DETECTED (${triggerReason}) - Triggering closing flow`);
+            
+            // If customer chose a specific product, make sure it's the "main" product for closing
+            if (customerChosenProduct && customerChosenProduct !== session.commercial.productsShown[0]) {
+                // Move chosen product to front of shown list so closing flow uses it
+                session.commercial.productsShown = [
+                    customerChosenProduct, 
+                    ...session.commercial.productsShown.filter(s => s !== customerChosenProduct)
+                ];
+            }
             
             // Build closing response directly - don't let AI show more products
             const closingResponse = buildClosingResponse(session, sentiment);
@@ -3072,11 +3232,12 @@ app.post('/chat', async (req, res) => {
                 content: closingResponse.text,
                 metadata: {
                     intent: 'checkout_flow',
+                    triggerReason: triggerReason,
                     timestamp: new Date().toISOString()
                 }
             });
             
-            console.log(`ðŸ“¤ Closing flow response sent`);
+            console.log(`📤 Closing flow response sent (trigger: ${triggerReason})`);
             
             // Log both messages to database
             await logConversationMessage(sessionId, 'customer', message, {
@@ -3085,7 +3246,8 @@ app.post('/chat', async (req, res) => {
             await logConversationMessage(sessionId, 'gwen', closingResponse.text, {
                 intent: 'checkout_flow',
                 productsShown: session.commercial.productsShown.slice(-3),
-                sentiment: session.commercial.sentiment
+                sentiment: session.commercial.sentiment,
+                triggerReason: triggerReason
             });
             
             return res.json({
@@ -3117,8 +3279,8 @@ app.post('/chat', async (req, res) => {
         // Add current user message
         messages.push({ role: "user", content: message });
         
-        console.log(`ðŸ’¬ Sending ${messages.length} messages to AI (${session.conversationHistory.length} history)`);
-        console.log(`ðŸ“‹ Context: ${JSON.stringify(session.context)}`);
+        console.log(`💬 Sending ${messages.length} messages to AI (${session.conversationHistory.length} history)`);
+        console.log(`📋 Context: ${JSON.stringify(session.context)}`);
         
         // Call AI
         let response = await openai.chat.completions.create({
@@ -3182,7 +3344,7 @@ app.post('/chat', async (req, res) => {
                     const products = searchProducts(searchCriteria);
                     
                     session.currentWhitelist = products.map(p => p.sku);
-                    console.log(`ðŸ›¡ï¸ Whitelist: [${session.currentWhitelist.join(', ')}]`);
+                    console.log(`🛡️ Whitelist: [${session.currentWhitelist.join(', ')}]`);
                     
                     // Check if products actually meet the seat requirement
                     let seatWarning = null;
@@ -3223,14 +3385,14 @@ app.post('/chat', async (req, res) => {
                 }
                 
                          if (toolCall.function.name === "request_human_handoff") {
-                    console.log(`ðŸ“§ ESCALATION REQUESTED:`, args);
+                    console.log(`📧 ESCALATION REQUESTED:`, args);
                     
                     // Validate email if provided
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     
                     if (!args.customerEmail || !emailRegex.test(args.customerEmail)) {
                         // No email - ask for it first
-                        console.log(`âš ï¸ Escalation requested but no valid email provided`);
+                        console.log(`⚠️ Escalation requested but no valid email provided`);
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
@@ -3253,8 +3415,8 @@ app.post('/chat', async (req, res) => {
                             session.commercial.productsShown || []
                         );
                         
-                        console.log(`ðŸ“§ ESCALATION sent for: ${args.customerEmail}`);
-                        console.log(`ðŸ“§ Reason: ${args.reason}`);
+                        console.log(`📧 ESCALATION sent for: ${args.customerEmail}`);
+                        console.log(`📧 Reason: ${args.reason}`);
                         
                         toolResults.push({
                             tool_call_id: toolCall.id,
@@ -3269,7 +3431,7 @@ app.post('/chat', async (req, res) => {
                 }
                 
                 if (toolCall.function.name === "capture_email_for_quote") {
-                    console.log(`ðŸ“§ Email capture:`, args);
+                    console.log(`📧 Email capture:`, args);
                     
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(args.email)) {
@@ -3284,8 +3446,8 @@ app.post('/chat', async (req, res) => {
                         session.customerEmail = args.email;
                         const productsForQuote = args.productSkus || session.commercial.productsShown.slice(-3);
                         
-                        console.log(`ðŸ“§ Quote requested for: ${args.email}`);
-                        console.log(`ðŸ“§ Products: ${productsForQuote.join(', ')}`);
+                        console.log(`📧 Quote requested for: ${args.email}`);
+                        console.log(`📧 Products: ${productsForQuote.join(', ')}`);
                         
                         toolResults.push({
                             tool_call_id: toolCall.id,
@@ -3300,7 +3462,7 @@ app.post('/chat', async (req, res) => {
                 }
                 
                if (toolCall.function.name === "initiate_checkout") {
-                    console.log(`ðŸ›’ Checkout initiated:`, args);
+                    console.log(`🛒 Checkout initiated:`, args);
                     
                     // Try to find product by SKU first, then by name
                     let product = productIndex.bySku[args.productSku];
@@ -3308,18 +3470,18 @@ app.post('/chat', async (req, res) => {
                     
                     // If not found by SKU, try finding by name
                     if (!product && args.productSku) {
-                        console.log(`ðŸ” Product not found by SKU, trying name lookup: "${args.productSku}"`);
+                        console.log(`🔍 Product not found by SKU, trying name lookup: "${args.productSku}"`);
                         const productResult = findProductByName(args.productSku, session.commercial.productsShown);
                         if (productResult) {
                             product = productResult.product;
                             actualSku = productResult.sku;
-                            console.log(`âœ… Found product by name: ${actualSku}`);
+                            console.log(`✅ Found product by name: ${actualSku}`);
                         }
                     }
                     
                     if (!product) {
                         // Log what we tried to find for debugging
-                       console.log(`âŒ LOST_SALE: Could not find product: "${args.productSku}"`);
+                       console.log(`❌ LOST_SALE: Could not find product: "${args.productSku}"`);
                         console.log(`   Products shown this session: [${session.commercial.productsShown.join(', ')}]`);
                         
                         // If we have products shown this session, suggest those
@@ -3370,7 +3532,7 @@ app.post('/chat', async (req, res) => {
                                 const discount = bundleTotal * 0.20;
                                 checkoutInfo.bundlePrice = bundleTotal - discount;
                                 checkoutInfo.bundleSavings = discount;
-                                checkoutInfo.message += ` Bundle discount of 20% (saving Â£${discount.toFixed(2)}) applies at checkout when they add the matching cover.`;
+                                checkoutInfo.message += ` Bundle discount of 20% (saving £${discount.toFixed(2)}) applies at checkout when they add the matching cover.`;
                             }
                         }
                         
@@ -3381,7 +3543,7 @@ app.post('/chat', async (req, res) => {
                     }
                 }
 if (toolCall.function.name === "get_product_dimensions") {
-                    console.log(`ðŸ“ Dimension query:`, args);
+                    console.log(`📐 Dimension query:`, args);
                     
                     // Find the product
                     let productResult = null;
@@ -3445,7 +3607,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                 // FIND ACCESSORIES TOOL HANDLER
                 // ============================================
                 if (toolCall.function.name === "find_accessories") {
-                    console.log(`ðŸŽ Accessory search:`, args);
+                    console.log(`🎁 Accessory search:`, args);
                     
                     let mainProduct = null;
                     let mainSku = null;
@@ -3462,12 +3624,12 @@ if (toolCall.function.name === "get_product_dimensions") {
                         if (result) {
                             mainProduct = result.product;
                             mainSku = result.sku;
-                            console.log(`âœ… Found main product by name: ${mainSku}`);
+                            console.log(`✅ Found main product by name: ${mainSku}`);
                         }
                     }
                     
                     if (!mainProduct) {
-                        console.log(`âŒ Could not find main product for accessories`);
+                        console.log(`❌ Could not find main product for accessories`);
                         toolResults.push({
                             tool_call_id: toolCall.id,
                             output: JSON.stringify({
@@ -3479,7 +3641,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         const accessoryType = args.accessoryType === 'any' ? null : args.accessoryType;
                         const accessories = findRelatedAccessories(mainSku, accessoryType);
                         
-                        console.log(`ðŸŽ Found ${accessories.length} accessories for ${mainSku}`);
+                        console.log(`🎁 Found ${accessories.length} accessories for ${mainSku}`);
                         
                         // Add main product and accessories to whitelist
                         session.currentWhitelist = [mainSku, ...accessories.map(a => a.sku)];
@@ -3538,18 +3700,18 @@ if (toolCall.function.name === "get_product_dimensions") {
         // LAYER 1: Try direct JSON parse
         try {
             aiOutput = JSON.parse(aiMessage.content);
-            console.log(`âœ… AI intent: ${aiOutput.intent}`);
+            console.log(`✅ AI intent: ${aiOutput.intent}`);
         } catch (parseError) {
-            console.log(`âš Ã¯Â¸Â JSON parse failed, trying extraction...`);
+            console.log(`⚠️ JSON parse failed, trying extraction...`);
             
             // LAYER 2: Try to extract JSON from markdown code blocks
             const jsonMatch = aiMessage.content?.match(/```(?:json)?\s*([\s\S]*?)```/);
             if (jsonMatch) {
                 try {
                     aiOutput = JSON.parse(jsonMatch[1].trim());
-                    console.log(`âœ… Extracted JSON from code block`);
+                    console.log(`✅ Extracted JSON from code block`);
                 } catch (e2) {
-                    console.log(`âš Ã¯Â¸Â Code block extraction failed`);
+                    console.log(`⚠️ Code block extraction failed`);
                 }
             }
             
@@ -3559,9 +3721,9 @@ if (toolCall.function.name === "get_product_dimensions") {
                 if (objectMatch) {
                     try {
                         aiOutput = JSON.parse(objectMatch[0]);
-                        console.log(`âœ… Extracted JSON object from response`);
+                        console.log(`✅ Extracted JSON object from response`);
                     } catch (e3) {
-                        console.log(`âš Ã¯Â¸Â Object extraction failed`);
+                        console.log(`⚠️ Object extraction failed`);
                     }
                 }
             }
@@ -3570,7 +3732,7 @@ if (toolCall.function.name === "get_product_dimensions") {
             // LAYER 4: CONTEXT-AWARE INTELLIGENT FALLBACK
             // ============================================
             if (!aiOutput) {
-                console.log(`ðŸ”„ Using context-aware fallback`);
+                console.log(`🔄 Using context-aware fallback`);
                 const ctx = session.context;
                 const hasWhitelist = session.currentWhitelist && session.currentWhitelist.length > 0;
                 const hasContext = ctx.material || ctx.furnitureType || ctx.seatCount;
@@ -3593,7 +3755,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                 const wantsEscalation = escalationPatterns.some(p => msgLower.includes(p));
                 
                 if (wantsEscalation) {
-                    console.log(`ðŸš¨ ESCALATION REQUEST DETECTED in fallback`);
+                    console.log(`🚨 ESCALATION REQUEST DETECTED in fallback`);
                     
                     // Check if we already have their email
                     if (session.customerEmail) {
@@ -3638,7 +3800,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                             session.commercial.productsShown || []
                         );
                         
-                        console.log(`ðŸ“§ ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
+                        console.log(`📧 ESCALATION EMAIL SENT after email capture: ${session.customerEmail}`);
                         
                         aiOutput = {
                             intent: 'escalation_sent',
@@ -3659,7 +3821,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                 );
                 
                 if (mentionedProduct) {
-                    console.log(`Â Fallback: Customer mentioned "${mentionedProduct}" - searching`);
+                    console.log(`🔍 Fallback: Customer mentioned "${mentionedProduct}" - searching`);
                     
                     const productSearch = searchProducts({ 
                         productName: mentionedProduct,
@@ -3675,11 +3837,51 @@ if (toolCall.function.name === "get_product_dimensions") {
                             personalisation: '',
                             closing_copy: "Would you like more details?"
                         };
-                        console.log(`âœ… Fallback: Found ${productSearch.length} products`);
+                        console.log(`✅ Fallback: Found ${productSearch.length} products`);
                     } else {
                         aiOutput = {
                             intent: 'question_answer',
                             response_text: `I couldn't find "${mentionedProduct}" in stock. Would you like me to show similar alternatives?`
+                        };
+                    }
+                }
+                
+                // v16.0: PRIORITY 1.5 - PURCHASE/DISCOUNT QUESTIONS
+                // Catch "how do i get the discount", "how to order", etc BEFORE generic question handler
+                if (!aiOutput) {
+                    const purchaseQuestionPatterns = [
+                        'how do i order', 'how to order', 'how do i buy', 'how to buy',
+                        'how do i get the discount', 'how to get the discount', 'how to apply discount',
+                        'how does the bundle work', 'how to get 20%', 'how do i get 20',
+                        'how do i purchase', 'how to purchase', 'where do i pay',
+                        'how to use the discount', 'claim the discount', 'apply the discount',
+                        'where do i checkout', 'how to checkout', 'payment link',
+                        'can you send me a link', 'send me a link', 'order link',
+                        'ready to order', 'ready to buy', 'i want to order', 'i want to buy'
+                    ];
+                    
+                    const isPurchaseQuestion = purchaseQuestionPatterns.some(p => msgLower.includes(p));
+                    
+                    if (isPurchaseQuestion && session.commercial.productsShown.length > 0) {
+                        console.log(`🛒 Fallback: Purchase/discount question detected - triggering closing flow`);
+                        
+                        // Check if this is specifically about bundles
+                        const isBundleQuestion = msgLower.includes('bundle') || msgLower.includes('discount') || 
+                                                  msgLower.includes('20%') || msgLower.includes('save');
+                        if (isBundleQuestion) {
+                            session.commercial.bundleInterestShown = true;
+                        }
+                        
+                        const closingResponse = buildClosingResponse(session, sentiment);
+                        aiOutput = {
+                            intent: 'checkout_flow',
+                            response_text: closingResponse.text
+                        };
+                    } else if (isPurchaseQuestion && session.commercial.productsShown.length === 0) {
+                        console.log(`🛒 Fallback: Purchase question but no products shown yet`);
+                        aiOutput = {
+                            intent: 'clarification',
+                            response_text: "I'd love to help you place an order! Let me first find the right product for you. What type of outdoor furniture are you looking for?"
                         };
                     }
                 }
@@ -3697,7 +3899,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
                     
                     if (isAskingQuestion) {
-                        console.log(`â“ Fallback: Detected question`);
+                        console.log(`❓ Fallback: Detected question`);
                         
                         let helpfulResponse = "";
                         
@@ -3725,7 +3927,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         const isStabilityQuestion = stabilityPatterns.some(p => msgLower.includes(p));
                         
                         if (isWeightQuestion) {
-                            console.log(`âš–ï¸ Fallback: Weight limit question detected`);
+                            console.log(`⚖️ Fallback: Weight limit question detected`);
                             helpfulResponse = en581Info.weightLimit.response;
                             
                             // Check if they might need higher capacity
@@ -3735,10 +3937,10 @@ if (toolCall.function.name === "get_product_dimensions") {
                                 session.escalationReason = 'Customer enquiring about higher weight capacity furniture';
                             }
                         } else if (isStabilityQuestion) {
-                            console.log(`ðŸª‘ Fallback: Stability question detected`);
+                            console.log(`🪑 Fallback: Stability question detected`);
                             helpfulResponse = en581Info.customerQuestions.stability;
                         } else if (isQualityQuestion) {
-                            console.log(`âœ… Fallback: Quality/testing question detected`);
+                            console.log(`✅ Fallback: Quality/testing question detected`);
                             
                             // Give more specific answer based on what they asked
                             if (msgLower.includes('strong') || msgLower.includes('break')) {
@@ -3755,7 +3957,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
                             helpfulResponse = "Our warranty coverage:\n\n= **Rattan:** 2 years structural + colour\n= **Aluminium:** 10 years corrosion\n= **Teak:** 5 years structural\n= **Cushions:** 1 year\n\nAnything specific you'd like to know?";
                         } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
-                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over Â£500\n= Tracking sent when shipped\n\nAnything else I can help with?";
+                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over £500\n= Tracking sent when shipped\n\nAnything else I can help with?";
                         } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
                             helpfulResponse = "Care is easy:\n\n= **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n= **Aluminium:** Just soapy water occasionally.\n= **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
@@ -3783,7 +3985,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isDimensionQuery = dimensionPatterns.some(p => msgLower.includes(p));
                     
                     if (isDimensionQuery) {
-                        console.log(`ðŸ“ Fallback: Detected dimension query`);
+                        console.log(`📐 Fallback: Detected dimension query`);
                         
                         // Try to identify which product they're asking about
                         const productsShown = session.commercial.productsShown || [];
@@ -3805,7 +4007,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         if (!productFound && productsShown.length > 0) {
                             const lastShown = productsShown[productsShown.length - 1];
                             productFound = { sku: lastShown, product: productIndex.bySku[lastShown], source: 'last_shown' };
-                            console.log(`ðŸ“ Using last shown product: ${lastShown}`);
+                            console.log(`📐 Using last shown product: ${lastShown}`);
                         }
                         
                         if (productFound) {
@@ -3817,13 +4019,13 @@ if (toolCall.function.name === "get_product_dimensions") {
                                 include_box_dimensions: includeBoxDimensions,
                                 response_text: ''
                             };
-                            console.log(`âœ… Fallback: Dimension query for ${productFound.sku}`);
+                            console.log(`✅ Fallback: Dimension query for ${productFound.sku}`);
                         } else {
                             aiOutput = {
                                 intent: 'clarification',
                                 response_text: "I'd be happy to help with dimensions! Which product would you like to know the size of?"
                             };
-                            console.log(`=Ââ€œ Fallback: Asking which product for dimensions`);
+                            console.log(`❌ Fallback: Asking which product for dimensions`);
                         }
                     }
                 }
@@ -3841,7 +4043,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                     const isAskingQuestion = questionPatterns.some(p => msgLower.includes(p)) || msgLower.includes('?');
                     
                     if (isAskingQuestion) {
-                        console.log(`=Ââ€œ Fallback: Detected question`);
+                        console.log(`❌ Fallback: Detected question`);
                         
                         let helpfulResponse = "";
                         
@@ -3850,7 +4052,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         } else if (msgLower.includes('warranty') || msgLower.includes('guarantee')) {
                             helpfulResponse = "Our warranty coverage:\n\n= **Rattan:** 2 years structural + colour\n= **Aluminium:** 10 years corrosion\n= **Teak:** 5 years structural\n= **Cushions:** 1 year\n\nAnything specific you'd like to know?";
                         } else if (msgLower.includes('delivery') || msgLower.includes('shipping')) {
-                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over Â£500\n= Tracking sent when shipped\n\nAnything else I can help with?";
+                            helpfulResponse = "We offer fast UK delivery:\n\n= 3-5 working days\n= Free on orders over £500\n= Tracking sent when shipped\n\nAnything else I can help with?";
                         } else if (msgLower.includes('clean') || msgLower.includes('maintenance') || msgLower.includes('care')) {
                             helpfulResponse = "Care is easy:\n\n= **Rattan:** Wipe with damp cloth. Cover in harsh winters.\n= **Aluminium:** Just soapy water occasionally.\n= **Teak:** Oil annually or let weather to silver-grey.\n\nWould you like more tips?";
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
@@ -3878,7 +4080,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         personalisation: '',
                         closing_copy: "Would any of these work for you?"
                     };
-                    console.log(`âœ… Fallback: Showing products with context`);
+                    console.log(`✅ Fallback: Showing products with context`);
                 }
                 
                 // PRIORITY 4: Safety net
@@ -3887,7 +4089,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                         intent: 'clarification',
                         response_text: "I'd love to help! Are you looking for dining furniture, a lounge set, or perhaps a corner sofa?"
                     };
-                    console.log(`âœ… Fallback: Safety net`);
+                    console.log(`✅ Fallback: Safety net`);
                 }
             }
         }
@@ -3999,12 +4201,12 @@ if (toolCall.function.name === "get_product_dimensions") {
         const isOfferingEscalation = escalationOfferPatterns.some(p => finalResponseLower.includes(p));
         
         if (isOfferingEscalation) {
-            console.log(`ðŸš¨ Escalation offered - setting flag for next response`);
+            console.log(`🚨 Escalation offered - setting flag for next response`);
             session.escalationOffered = true;
             session.escalationReason = `Customer inquiry: ${message.substring(0, 200)}`;
         }
         
-        console.log(`ðŸ“¤ Response (${finalResponse.length} chars)`);
+        console.log(`📤 Response (${finalResponse.length} chars)`);
         console.log(`${'='.repeat(60)}\n`);
         
         res.json({
@@ -4013,7 +4215,7 @@ if (toolCall.function.name === "get_product_dimensions") {
         });
         
     } catch (error) {
-        console.error('=ÂÅ’ Error:', error);
+        console.error('❌ Error:', error);
         // Log errors to dashboard too
         try {
             await logConversationMessage(sessionId, 'customer', message || 'unknown', { sentiment: 'error' });
@@ -4077,7 +4279,7 @@ app.get('/debug-session/:sessionId', (req, res) => {
 // Debug endpoint to test search directly
 app.get('/debug-search', (req, res) => {
     const { type, material, seats } = req.query;
-    console.log(`\nðŸ§ª DEBUG SEARCH: type=${type}, material=${material}, seats=${seats}`);
+    console.log(`\n🧪 DEBUG SEARCH: type=${type}, material=${material}, seats=${seats}`);
     
     const results = searchProducts({
         furnitureType: type || undefined,
@@ -4335,7 +4537,7 @@ const TEST_SCENARIOS_V2 = {
       "tests": [
         { "id": "WARRANTY-001", "name": "Warranty coverage", "input": "what warranty do you offer on furniture?", "expect_any": ["warranty", "year", "guarantee", "cover"], "must_not_contain": ["sorry"] },
         { "id": "DELIVERY-001", "name": "Delivery time", "input": "how long does delivery take?", "expect_any": ["deliver", "day", "week", "working", "5", "10"], "must_not_contain": ["sorry"] },
-        { "id": "DELIVERY-002", "name": "Assembly", "input": "do you offer assembly?", "expect_any": ["assembl", "build", "set up", "service", "Â£69", "69.95"], "must_not_contain": ["sorry", "no"] },
+        { "id": "DELIVERY-002", "name": "Assembly", "input": "do you offer assembly?", "expect_any": ["assembl", "build", "set up", "service", "£69", "69.95"], "must_not_contain": ["sorry", "no"] },
         { "id": "DELIVERY-003", "name": "Scotland delivery", "input": "do you deliver to Scotland?", "expect_any": ["Scotland", "deliver", "postcode", "unfortunately", "unable", "currently"], "must_not_contain": ["sorry we cannot help"] }
       ]
     },
@@ -4361,8 +4563,8 @@ const TEST_SCENARIOS_V2 = {
     "price_budget": {
       "description": "Pricing and budget queries",
       "tests": [
-        { "id": "PRICE-001", "name": "Price query", "input": "how much is the Faro set?", "expect_any": ["Â£", "price", "cost", "Faro", "from"], "must_not_contain": ["sorry", "cannot provide"] },
-        { "id": "PRICE-002", "name": "Budget request", "input": "what can I get for under Â£1000?", "expect_any": ["Â£", "budget", "range", "option", "under"], "must_not_contain": ["sorry"] },
+        { "id": "PRICE-001", "name": "Price query", "input": "how much is the Faro set?", "expect_any": ["£", "price", "cost", "Faro", "from"], "must_not_contain": ["sorry", "cannot provide"] },
+        { "id": "PRICE-002", "name": "Budget request", "input": "what can I get for under £1000?", "expect_any": ["£", "budget", "range", "option", "under"], "must_not_contain": ["sorry"] },
         { "id": "PRICE-003", "name": "Value concern", "input": "seems quite expensive, is it worth it?", "expect_any": ["quality", "value", "warranty", "last", "investment", "worth"], "must_not_contain": ["sorry"] },
         { "id": "PRICE-004", "name": "Payment options", "input": "can I pay in installments?", "expect_any": ["pay", "payment", "finance", "deposit", "option"], "must_not_contain": ["sorry", "cash only"] }
       ]
@@ -4499,9 +4701,9 @@ app.get('/run-tests', async (req, res) => {
   const format = req.query.format || 'html';
   const requestedSuites = req.query.suite ? req.query.suite.split(',') : null;
   
-  console.log('\nðŸ§ª =Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â');
-  console.log('ðŸ§ª GWEN TEST SUITE V2');
-  console.log('ðŸ§ª =Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â\n');
+  console.log('\n🧪 =======================================');
+  console.log('🧪 GWEN TEST SUITE V2');
+  console.log('🧪 =======================================\n');
   
   const results = [];
   const suites = TEST_SCENARIOS_V2.suites;
@@ -4513,10 +4715,10 @@ app.get('/run-tests', async (req, res) => {
   
   for (const suiteName of suitesToRun) {
     const suite = suites[suiteName];
-    console.log(`\nðŸ“‹ Suite: ${suiteName}`);
+    console.log(`\n📋 Suite: ${suiteName}`);
     
     for (const test of suite.tests) {
-      console.log(`ðŸ”„ ${test.id}: ${test.name}`);
+      console.log(`🔄 ${test.id}: ${test.name}`);
       const startTime = Date.now();
       
       try {
@@ -4616,7 +4818,7 @@ app.get('/run-tests', async (req, res) => {
           }
         }
         
-        const status = passed ? 'âœ… PASSED' : '=ÂÅ’ FAILED';
+        const status = passed ? '✅ PASSED' : '❌ FAILED';
         console.log(`${status} (${responseTime}ms)`);
         
         if (!passed && missingTerms.length > 0) {
@@ -4641,7 +4843,7 @@ app.get('/run-tests', async (req, res) => {
         });
         
       } catch (error) {
-        console.log(`=ÂÅ’ ERROR: ${error.message}`);
+        console.log(`❌ ERROR: ${error.message}`);
         results.push({
           suite: suiteName,
           id: test.id,
@@ -4663,9 +4865,9 @@ app.get('/run-tests', async (req, res) => {
   const total = results.length;
   const passRate = ((passed / total) * 100).toFixed(1);
   
-  console.log(`\nðŸ§ª =Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â`);
-  console.log(`ðŸ§ª RESULTS: ${passed}/${total} (${passRate}%)`);
-  console.log(`ðŸ§ª =Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â=Â\n`);
+  console.log(`\n🧪 =======================================`);
+  console.log(`🧪 RESULTS: ${passed}/${total} (${passRate}%)`);
+  console.log(`🧪 =======================================\n`);
   
   if (format === 'json') {
     return res.json({ passed, total, passRate, results });
@@ -4706,7 +4908,7 @@ app.get('/run-tests', async (req, res) => {
 app.get('/test-single', async (req, res) => {
   const input = req.query.input || req.query.q || 'outdoor furniture for 4 people';
   
-  console.log(`\nðŸ§ª Single test: "${input}"`);
+  console.log(`\n🧪 Single test: "${input}"`);
   
   try {
     const systemPrompt = buildSystemPrompt ? buildSystemPrompt() : '';
@@ -4819,7 +5021,7 @@ function generateTestReportHTML(results) {
 </head>
 <body>
   <div class="header">
-    <h1>ðŸ§ª Gwen Test Results</h1>
+    <h1>🧪 Gwen Test Results</h1>
     <p>Run at: ${results.timestamp}</p>
   </div>
   
@@ -4851,7 +5053,7 @@ function generateTestReportHTML(results) {
     ${suite.tests.map(test => `
     <div class="test">
       <div class="test-row" onclick="this.nextElementSibling.classList.toggle('show')">
-        <div class="test-status ${test.passed ? 'pass' : 'fail'}">${test.passed ? 'âœ”' : 'âœ—'}</div>
+        <div class="test-status ${test.passed ? 'pass' : 'fail'}">${test.passed ? '✔' : '✗'}</div>
         <div class="test-info">
           <span class="test-id">${test.id}</span>
           <span class="test-name">- ${test.name}</span>
@@ -4898,9 +5100,9 @@ function generateTestReportHTML(results) {
   `).join('')}
   
   <div class="actions">
-    <a href="/run-tests" class="btn">ðŸ”„ Run Again</a>
-    <a href="/run-tests?format=json" class="btn">ðŸ“Š JSON Results</a>
-    <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">ðŸ§ª Test Single</a>
+    <a href="/run-tests" class="btn">🔄 Run Again</a>
+    <a href="/run-tests?format=json" class="btn">📊 JSON Results</a>
+    <a href="/test-single?input=I need 6 seater rattan furniture" class="btn">🧪 Test Single</a>
   </div>
 </body>
 </html>`;
@@ -4915,11 +5117,11 @@ function generateTestReportHTML(results) {
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`ðŸš€ GWEN v14.0 - Conversation + Server Rendering`);
+    console.log(`🚀 GWEN v14.0 - Conversation + Server Rendering`);
     console.log(`   Products: ${Object.keys(productIndex.bySku).length}`);
     console.log(`   Inventory: ${inventoryData.length} records`);
-    console.log(`   OpenAI: ${process.env.OPENAI_API_KEY ? 'âœ…' : '=ÂÅ’'}`);
-    console.log(`   Shopify: ${SHOPIFY_ACCESS_TOKEN ? 'âœ…' : 'âš Ã¯Â¸Â'}`);
+    console.log(`   OpenAI: ${process.env.OPENAI_API_KEY ? '✅' : '❌'}`);
+    console.log(`   Shopify: ${SHOPIFY_ACCESS_TOKEN ? '✅' : '⚠️'}`);
     console.log(`${'='.repeat(60)}\n`);
 });
 
