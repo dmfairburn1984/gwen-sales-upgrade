@@ -1395,6 +1395,17 @@ Show products within 2 messages. Do NOT interview the customer with lots of ques
 3. If vague ("garden furniture") → Ask ONE qualifying question max, then show products
 4. NEVER ask more than 2 questions before showing something
 
+CRITICAL - PRODUCT NAMING:
+ALWAYS use the official product name from the product data, NEVER repeat customer typos or misspellings.
+Example: Customer says "Barcelona vision set" → You say "Barcelona Lounge Set" (the correct name).
+Example: Customer says "Stokholm chais" → You say "Stockholm Chaise Lounge Set".
+If you cannot identify which product the customer means, ask for clarification using the correct product names from our range.
+
+CRITICAL - ORDER TRACKING & EXISTING ORDERS:
+You do NOT handle order tracking, delivery issues, returns, refunds, or any existing order queries.
+For ANY existing order enquiry, direct the customer to our Order Helpdesk immediately.
+Never say you can track orders or help with existing orders.
+
 GOLDEN RULE: A customer looking at a product card is 10x more likely to buy than one answering questions.
 
 ===========================================================
@@ -1914,7 +1925,8 @@ function detectCustomerSentiment(message) {
     const isDecline = declineWords.some(word => msgLower.includes(word));
     
     // Bundle interest signals
-    const bundleInterestWords = ['bundle', 'discount', 'together', 'package', 'deal', 'cover', 'protect', 'save'];
+    const bundleInterestWords = ['bundle', 'discount', 'together', 'package', 'deal', 'cover', 'protect', 'save', 
+                                  'offer', 'offers', 'deals', 'combo', 'both', 'money off', 'special price', 'savings'];
     const bundleInterest = bundleInterestWords.some(word => msgLower.includes(word));
     
     // ============================================
@@ -3810,6 +3822,102 @@ if (toolCall.function.name === "get_product_dimensions") {
                 }
                 
                 // PRIORITY 1: Check if customer mentioned a SPECIFIC PRODUCT BY NAME
+                // BUT FIRST - check if this is a BUNDLE/DEAL question (even if product name is mentioned)
+                const bundleQuestionPatterns = [
+                    'bundle', 'bundle offer', 'bundle deal', 'bundle discount', 'bundle price',
+                    'any deals', 'any offers', 'any discounts', 'any savings',
+                    'what deals', 'what offers', 'what discounts', 'what savings',
+                    'tell me about the deal', 'tell me about the offer', 'tell me about the bundle',
+                    'whats the deal', 'whats the offer', 'what is the deal', 'what is the offer',
+                    'package deal', 'package price', 'money off', 'save money',
+                    'buy together', 'bought together', 'combine', 'combo',
+                    'get a discount', 'get a deal', 'special offer', 'special price',
+                    'how much would both', 'how much for both', 'both together',
+                    'set and cover', 'with the cover', 'with a cover',
+                    'is there a deal', 'is there an offer', 'is there a discount'
+                ];
+                
+                const isBundleQuestion = bundleQuestionPatterns.some(p => msgLower.includes(p));
+                
+                if (isBundleQuestion && session.commercial.productsShown.length > 0) {
+                    console.log(`🎁 Fallback: Bundle/deal question detected - showing bundle info`);
+                    session.commercial.bundleInterestShown = true;
+                    
+                    // Find which shown product has a bundle
+                    let bundleProduct = null;
+                    let bestBundle = null;
+                    
+                    // Check if customer mentioned a specific product family
+                    const productFamiliesForBundle = ['marbella', 'stockholm', 'palma', 'faro', 'lima', 
+                                                      'santorini', 'chesterton', 'kiki', 'malaga'];
+                    const mentionedFamily = productFamiliesForBundle.find(f => msgLower.includes(f));
+                    
+                    for (const sku of session.commercial.productsShown) {
+                        const bundles = getBundleForProduct(sku);
+                        if (bundles.length > 0) {
+                            const product = productIndex.bySku[sku];
+                            const productFamily = (product?.product_identity?.product_family || sku).toLowerCase();
+                            const productName = (product?.product_identity?.product_name || '').toLowerCase();
+                            
+                            // Prefer the bundle matching the mentioned family
+                            if (mentionedFamily && (productFamily.includes(mentionedFamily) || productName.includes(mentionedFamily) || sku.toLowerCase().includes(mentionedFamily))) {
+                                bundleProduct = sku;
+                                bestBundle = bundles[0];
+                                break;
+                            }
+                            // Otherwise use first product with a bundle
+                            if (!bundleProduct) {
+                                bundleProduct = sku;
+                                bestBundle = bundles[0];
+                            }
+                        }
+                    }
+                    
+                    if (bestBundle && bundleProduct) {
+                        // Build bundle response with full pricing
+                        let bundleTotal = 0;
+                        const bundleProductNames = [];
+                        
+                        for (const item of bestBundle.products) {
+                            const prod = productIndex.bySku[item.product_sku];
+                            if (prod) {
+                                const itemPrice = parseFloat(prod.product_identity?.price_gbp) || 0;
+                                bundleTotal += itemPrice * item.product_qty;
+                                bundleProductNames.push(prod.product_identity?.product_name || item.product_sku);
+                            }
+                        }
+                        
+                        const discountPercent = COMMERCE_RULES.bundle.discountPercent;
+                        const discount = bundleTotal * (discountPercent / 100);
+                        const finalPrice = bundleTotal - discount;
+                        
+                        // Show the bundle products and pricing
+                        session.currentWhitelist = bestBundle.products.map(p => p.product_sku);
+                        
+                        aiOutput = {
+                            intent: 'product_recommendation',
+                            intro_copy: `Great news! Here's the bundle deal available:`,
+                            selected_skus: session.currentWhitelist,
+                            personalisation: '',
+                            closing_copy: `\n\n🎁 **${bestBundle.name}**\n\n` +
+                                bundleProductNames.map(n => `- ${n}`).join('\n') + `\n\n` +
+                                `~~Original: £${bundleTotal.toFixed(2)}~~\n` +
+                                `**Bundle Price: £${finalPrice.toFixed(2)}**\n` +
+                                `*You save: £${discount.toFixed(2)} (${discountPercent}% off)*\n\n` +
+                                `Want me to add this bundle to help you complete your purchase?`
+                        };
+                        console.log(`✅ Bundle response built: ${bestBundle.name} - save £${discount.toFixed(2)}`);
+                    } else {
+                        // No bundle available for shown products
+                        const closingResponse = buildClosingResponse(session, sentiment);
+                        aiOutput = {
+                            intent: 'checkout_flow',
+                            response_text: closingResponse.text
+                        };
+                        console.log(`⚠️ No bundle found for shown products - using closing flow`);
+                    }
+                }
+                
                 const productNamePatterns = [
                     'stockholm', 'faro', 'malaga', 'palma', 'santorini', 'barcelona',
                     'sorrento', 'valencia', 'milano', 'como', 'kiki', 'chesterton',
@@ -3820,7 +3928,7 @@ if (toolCall.function.name === "get_product_dimensions") {
                     msgLower.includes(name.toLowerCase())
                 );
                 
-                if (mentionedProduct) {
+                if (!aiOutput && mentionedProduct) {
                     console.log(`🔍 Fallback: Customer mentioned "${mentionedProduct}" - searching`);
                     
                     const productSearch = searchProducts({ 
@@ -3857,7 +3965,9 @@ if (toolCall.function.name === "get_product_dimensions") {
                         'how to use the discount', 'claim the discount', 'apply the discount',
                         'where do i checkout', 'how to checkout', 'payment link',
                         'can you send me a link', 'send me a link', 'order link',
-                        'ready to order', 'ready to buy', 'i want to order', 'i want to buy'
+                        'ready to order', 'ready to buy', 'i want to order', 'i want to buy',
+                        'how do i get the bundle', 'how to get the bundle', 'how to buy the bundle',
+                        'add to basket', 'add to cart', 'take my money', 'shut up and take'
                     ];
                     
                     const isPurchaseQuestion = purchaseQuestionPatterns.some(p => msgLower.includes(p));
@@ -3963,7 +4073,33 @@ if (toolCall.function.name === "get_product_dimensions") {
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
                             helpfulResponse = en581Info.customerQuestions.weatherResistance;
                         } else {
-                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n= Warranty info\n= Delivery details\n= Care and maintenance\n= Product specifications\n\nWhat would you like to know?";
+                            // Context-aware response instead of generic help menu
+                            const shownProducts = session.commercial.productsShown || [];
+                            if (shownProducts.length > 0) {
+                                const lastSku = shownProducts[shownProducts.length - 1];
+                                const lastProd = productIndex.bySku[lastSku];
+                                const lastName = lastProd?.product_identity?.product_name || 'the product';
+                                const bundles = getBundleForProduct(lastSku);
+                                
+                                if (bundles.length > 0) {
+                                    helpfulResponse = `Sure! Regarding the **${lastName}**, I can help with:\n\n` +
+                                        `= 🎁 **Bundle deals** - save ${COMMERCE_RULES.bundle.discountPercent}% when you buy with a matching cover\n` +
+                                        `= 📐 Dimensions and specifications\n` +
+                                        `= 🛡️ Warranty and durability info\n` +
+                                        `= 🚚 Delivery details\n` +
+                                        `= 🧹 Care and maintenance\n\n` +
+                                        `What would you like to know more about?`;
+                                } else {
+                                    helpfulResponse = `Sure! Regarding the **${lastName}**, I can help with:\n\n` +
+                                        `= 📐 Dimensions and specifications\n` +
+                                        `= 🛡️ Warranty and durability info\n` +
+                                        `= 🚚 Delivery details\n` +
+                                        `= 🧹 Care and maintenance\n\n` +
+                                        `What would you like to know more about?`;
+                                }
+                            } else {
+                                helpfulResponse = "I'd love to help! What type of outdoor furniture are you looking for? I can show you our range of rattan, aluminium, and teak sets to find the perfect match for your garden.";
+                            }
                         }
                         
                         aiOutput = {
@@ -4058,7 +4194,16 @@ if (toolCall.function.name === "get_product_dimensions") {
                         } else if (msgLower.includes('weather') || msgLower.includes('rain') || msgLower.includes('winter')) {
                             helpfulResponse = "Our furniture handles weather well:\n\n= **Rattan:** UV-tested 2000 hours. Cover in harsh winters.\n= **Aluminium:** 100% rust-proof, year-round outdoor use.\n= **Teak:** Naturally weather-resistant.\n\nA cover extends life significantly - shall I tell you more?";
                         } else {
-                            helpfulResponse = "I'd be happy to help! I can assist with:\n\n= Warranty info\n= Delivery details\n= Care and maintenance\n= Product dimensions and specifications\n\nWhat would you like to know?";
+                            // Context-aware response instead of generic help menu
+                            const shownProducts2 = session.commercial.productsShown || [];
+                            if (shownProducts2.length > 0) {
+                                const lastSku2 = shownProducts2[shownProducts2.length - 1];
+                                const lastProd2 = productIndex.bySku[lastSku2];
+                                const lastName2 = lastProd2?.product_identity?.product_name || 'the product';
+                                helpfulResponse = `Of course! What would you like to know about the **${lastName2}**? I can help with dimensions, warranty, delivery, or care tips.`;
+                            } else {
+                                helpfulResponse = "What would you like to know? I can help with product recommendations, warranty info, delivery details, or care and maintenance for any of our furniture ranges.";
+                            }
                         }
                         
                         aiOutput = {
