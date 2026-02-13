@@ -1,18 +1,18 @@
 {
   "metadata": {
-    "generatedAt": "2026-02-11T20:34:53.875Z",
+    "generatedAt": "2026-02-12T20:34:53.492Z",
     "version": "1.2",
-    "processingTimeMs": 14890,
-    "totalOrders": 165,
-    "totalLineItems": 203,
-    "fulfilledOrdersSkipped": 3799,
+    "processingTimeMs": 14692,
+    "totalOrders": 170,
+    "totalLineItems": 210,
+    "fulfilledOrdersSkipped": 3801,
     "refundedOrdersSkipped": 184,
-    "arrivedPORingfenced": 58,
-    "keptOnTaggedPO": 16,
+    "arrivedPORingfenced": 4,
+    "keptOnTaggedPO": 20,
     "crossPOAllocations": 0,
     "inventoryRingfenceItems": 15,
     "noStockItems": 12,
-    "bundlesExpanded": 7,
+    "bundlesExpanded": 10,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -73,8 +73,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 178,
-          "inventoryAfterAllocation": 177,
+          "currentInventory": 177,
+          "inventoryAfterAllocation": 176,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -126,7 +126,7 @@
           "stockSourceArrival": "2026-03-15T00:00:00.000Z",
           "arrivalDate": "2026-03-15T00:00:00.000Z",
           "plannedOnSourcePO": 200,
-          "availableAfterAllocation": 179,
+          "availableAfterAllocation": 161,
           "status": "allocated",
           "note": "",
           "keptOnTaggedPO": false,
@@ -172,8 +172,8 @@
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 177,
-          "inventoryAfterAllocation": 176,
+          "currentInventory": 176,
+          "inventoryAfterAllocation": 175,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -564,8 +564,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 39,
-          "inventoryAfterAllocation": 38,
+          "currentInventory": 84,
+          "inventoryAfterAllocation": 83,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -579,24 +579,23 @@
     },
     {
       "orderNumber": "4199",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION-BOX",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -662,24 +661,23 @@
     },
     {
       "orderNumber": "4229",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION-BOX",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -843,83 +841,77 @@
     },
     {
       "orderNumber": "4257",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4262",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION-BOX",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1053,171 +1045,163 @@
     },
     {
       "orderNumber": "4289",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4292",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4295",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4296",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4297",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4298",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4299",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1245,70 +1229,67 @@
     },
     {
       "orderNumber": "4302",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4304",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4306",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1324,8 +1305,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 38,
-          "inventoryAfterAllocation": 37,
+          "currentInventory": 83,
+          "inventoryAfterAllocation": 82,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -1352,24 +1333,23 @@
     },
     {
       "orderNumber": "4316",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1397,24 +1377,23 @@
     },
     {
       "orderNumber": "4321",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1442,70 +1421,67 @@
     },
     {
       "orderNumber": "4323",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4327",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4329",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1565,56 +1541,53 @@
     },
     {
       "orderNumber": "4335",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         },
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4336",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1674,70 +1647,67 @@
     },
     {
       "orderNumber": "4341",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4342",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4343",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION-BOX",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1978,6 +1948,14 @@
           "status": "with-warehouse",
           "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
+        },
+        {
+          "sku": "ASSEMBLY-ADD-ON",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
         }
       ],
       "overallStatus": "delivery-booking-in-progress",
@@ -1988,56 +1966,50 @@
     {
       "orderNumber": "4366",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "32/2026",
-      "tagChangeRequired": true,
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-03-29T23:00:00.000Z",
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-LOUNGE-SET",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "32/2026",
-          "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-          "arrivalDate": "2026-03-29T23:00:00.000Z",
-          "plannedOnSourcePO": 90,
-          "availableAfterAllocation": 80,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 71,
+          "inventoryAfterAllocation": 70,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-LOUNGE-SET",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4368",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "32/2026",
-      "tagChangeRequired": true,
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-03-29T23:00:00.000Z",
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-LOUNGE-SET",
           "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "32/2026",
-          "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-          "arrivalDate": "2026-03-29T23:00:00.000Z",
-          "plannedOnSourcePO": 90,
-          "availableAfterAllocation": 79,
-          "status": "allocated",
-          "note": "",
+          "allocationSource": "inventory",
+          "currentInventory": 70,
+          "inventoryAfterAllocation": 69,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "All items allocated. No action needed.",
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-LOUNGE-SET",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2434,8 +2406,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 37,
-          "inventoryAfterAllocation": 36,
+          "currentInventory": 82,
+          "inventoryAfterAllocation": 81,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -2588,28 +2560,6 @@
       "lineItems": [
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4397",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "BRIDGETOWN-200-6S",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -2926,24 +2876,23 @@
     },
     {
       "orderNumber": "4412",
-      "orderTagPO": "16/2026",
-      "suggestedTagPO": "16/2026",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-02-11T00:00:00.000Z",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION-BOX",
           "quantity": 1,
-          "allocationSource": "arrived-po-inventory",
-          "stockSourcePO": "16/2026 (ARRIVED)",
-          "status": "ringfenced-arrived-po",
-          "note": "PO arrived - ship from warehouse",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "arrived-po-ringfenced",
-      "actionRequired": "Ship from warehouse - PO 16/2026 has arrived",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -3068,8 +3017,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 36,
-          "inventoryAfterAllocation": 35,
+          "currentInventory": 81,
+          "inventoryAfterAllocation": 80,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -3430,28 +3379,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4433",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-BLACK-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4434",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Delivery in Progress",
@@ -3677,8 +3604,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 35,
-          "inventoryAfterAllocation": 34,
+          "currentInventory": 80,
+          "inventoryAfterAllocation": 79,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -3881,8 +3808,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 34,
-          "inventoryAfterAllocation": 33,
+          "currentInventory": 79,
+          "inventoryAfterAllocation": 78,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -3971,8 +3898,8 @@
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 33,
-          "inventoryAfterAllocation": 32,
+          "currentInventory": 78,
+          "inventoryAfterAllocation": 77,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -4063,9 +3990,9 @@
     },
     {
       "orderNumber": "4458",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "34/2026",
       "suggestedTagPO": "34/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-19T23:00:00.000Z",
       "lineItems": [
@@ -4077,18 +4004,17 @@
           "stockSourceArrival": "2026-04-19T23:00:00.000Z",
           "arrivalDate": "2026-04-19T23:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 40,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
           "isFromBundle": false
         },
         {
           "sku": "PALMA-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 32,
-          "inventoryAfterAllocation": 31,
+          "currentInventory": 77,
+          "inventoryAfterAllocation": 76,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -4096,108 +4022,73 @@
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: PALMA-COVER",
+      "actionRequired": "✅ All items allocated on tagged PO 34/2026. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4459",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 176,
-          "inventoryAfterAllocation": 175,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 24,
-          "inventoryAfterAllocation": 23,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE, STOCKHOLM-CHAISE-COVER",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4461",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 175,
-          "inventoryAfterAllocation": 174,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 23,
-          "inventoryAfterAllocation": 22,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE, STOCKHOLM-CHAISE-COVER",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4462",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 174,
-          "inventoryAfterAllocation": 173,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -4224,15 +4115,248 @@
       "actionRequired": "🚨 URGENT: No stock for SANTORINI-BLACK-CUSHION-COVERS. Contact customer.",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4464",
+      "orderTagPO": "34/2026",
+      "suggestedTagPO": "34/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-19T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET-BEIGE",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-19T23:00:00.000Z",
+          "arrivalDate": "2026-04-19T23:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 34/2026. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4465",
+      "orderTagPO": "18/2026",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "arrivalDate": "2026-04-14T23:00:00.000Z",
+          "plannedOnSourcePO": 30,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 76,
+          "inventoryAfterAllocation": 75,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4466",
+      "orderTagPO": "18/2026",
+      "suggestedTagPO": "18/2026",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-14T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "18/2026",
+          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "arrivalDate": "2026-04-14T23:00:00.000Z",
+          "plannedOnSourcePO": 30,
+          "status": "allocated-to-tagged-po",
+          "note": "Stock reserved on tagged PO",
+          "keptOnTaggedPO": true,
+          "isFromBundle": true,
+          "bundleSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4467",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "SANTORINI-GREY",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 35,
+          "inventoryAfterAllocation": 34,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "isFromBundle": false
+        },
+        {
+          "sku": "SANTORINI-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 28,
+          "inventoryAfterAllocation": 27,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: SANTORINI-GREY, SANTORINI-COVER",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4468",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "19/2026",
+      "tagChangeRequired": true,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-03-29T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "19/2026",
+          "stockSourceArrival": "2026-03-29T23:00:00.000Z",
+          "arrivalDate": "2026-03-29T23:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 2,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-03-15T00:00:00.000Z",
+          "arrivalDate": "2026-03-15T00:00:00.000Z",
+          "plannedOnSourcePO": 200,
+          "availableAfterAllocation": 160,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4469",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "19/2026",
+      "tagChangeRequired": true,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-03-29T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "19/2026",
+          "stockSourceArrival": "2026-03-29T23:00:00.000Z",
+          "arrivalDate": "2026-03-29T23:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 1,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4470",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "19/2026",
+      "tagChangeRequired": true,
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-03-29T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "19/2026",
+          "stockSourceArrival": "2026-03-29T23:00:00.000Z",
+          "arrivalDate": "2026-03-29T23:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 0,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "isFromBundle": true,
+          "bundleSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
     "byStatus": {
-      "allocated-inventory": 13,
+      "allocated-inventory": 14,
       "no-stock": 9,
-      "fully-allocated": 14,
-      "delivery-booking-in-progress": 100,
-      "arrived-po-ringfenced": 29
+      "fully-allocated": 17,
+      "delivery-booking-in-progress": 126,
+      "arrived-po-ringfenced": 4
     },
     "tagChangesRequired": [
       {
@@ -4251,19 +4375,19 @@
         "suggestedTag": "18/2026"
       },
       {
-        "orderNumber": "4366",
+        "orderNumber": "4468",
         "currentTag": "NO TAG",
-        "suggestedTag": "32/2026"
+        "suggestedTag": "19/2026"
       },
       {
-        "orderNumber": "4368",
+        "orderNumber": "4469",
         "currentTag": "NO TAG",
-        "suggestedTag": "32/2026"
+        "suggestedTag": "19/2026"
       },
       {
-        "orderNumber": "4458",
+        "orderNumber": "4470",
         "currentTag": "NO TAG",
-        "suggestedTag": "34/2026"
+        "suggestedTag": "19/2026"
       }
     ]
   },
@@ -4291,6 +4415,18 @@
       {
         "orderNumber": "4312",
         "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4366",
+        "sku": "STOCKHOLM-LOUNGE-SET",
+        "qty": 1,
+        "note": "Using warehouse stock"
+      },
+      {
+        "orderNumber": "4368",
+        "sku": "STOCKHOLM-LOUNGE-SET",
         "qty": 1,
         "note": "Using warehouse stock"
       },
@@ -4331,32 +4467,20 @@
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4459",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "orderNumber": "4465",
+        "sku": "PALMA-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4459",
-        "sku": "STOCKHOLM-CHAISE-COVER",
+        "orderNumber": "4467",
+        "sku": "SANTORINI-GREY",
         "qty": 1,
         "note": "Using warehouse stock"
       },
       {
-        "orderNumber": "4461",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
-        "qty": 1,
-        "note": "Using warehouse stock"
-      },
-      {
-        "orderNumber": "4461",
-        "sku": "STOCKHOLM-CHAISE-COVER",
-        "qty": 1,
-        "note": "Using warehouse stock"
-      },
-      {
-        "orderNumber": "4462",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
+        "orderNumber": "4467",
+        "sku": "SANTORINI-COVER",
         "qty": 1,
         "note": "Using warehouse stock"
       }
@@ -4388,384 +4512,6 @@
         "sku": "STOCKHOLM-LOUNGE-SET",
         "qty": 1,
         "taggedPO": "15/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4199",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4229",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4257",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4257",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "FARO-LOUNGE-SET"
-      },
-      {
-        "orderNumber": "4257",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4257",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4257",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4262",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4262",
-        "sku": "STOCKHOLM-CHAISE-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4262",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4289",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4289",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4289",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4292",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4292",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4295",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4295",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4296",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4296",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4297",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4297",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4298",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4298",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4298",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4299",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4299",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4299",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-BOX-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4302",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4302",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4304",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4304",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4306",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4306",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4316",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4316",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4321",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4321",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4323",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4323",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4327",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4327",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4329",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4329",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4335",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4335",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4335",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-CUSHION BOX-BUNDLE"
-      },
-      {
-        "orderNumber": "4336",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4336",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4341",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4341",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4342",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4342",
-        "sku": "PALMA-COVER",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": "PALMA-COVER-BUNDLE"
-      },
-      {
-        "orderNumber": "4343",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
-        "bundleFrom": null
-      },
-      {
-        "orderNumber": "4412",
-        "sku": "PALMA-CUSHION-BOX",
-        "qty": 1,
-        "taggedPO": "16/2026",
         "bundleFrom": null
       }
     ]
