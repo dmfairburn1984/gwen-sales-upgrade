@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "generatedAt": "2026-02-13T08:29:48.220Z",
+    "generatedAt": "2026-02-13T15:14:21.994Z",
     "version": "3.5",
-    "processingTimeSeconds": 11.578,
-    "totalLineItemsInData": 4193,
-    "fulfilledOrdersSkipped": 3165,
+    "processingTimeSeconds": 10.87,
+    "totalLineItemsInData": 4196,
+    "fulfilledOrdersSkipped": 3178,
     "refundedOrdersSkipped": 461,
-    "activeOrdersProcessed": 172,
-    "deliveryBookingInProgressOrders": 126,
-    "keptOnTaggedPOOrders": 25,
+    "activeOrdersProcessed": 163,
+    "deliveryBookingInProgressOrders": 117,
+    "keptOnTaggedPOOrders": 24,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -23,12 +23,12 @@
       "20/2026",
       "32/2026",
       "33/2026",
+      "18/2026",
       "21/2026",
       "22/2026",
       "23/2026",
       "24/2026",
       "25/2026",
-      "18/2026",
       "34/2026",
       "35/2026",
       "36/2026",
@@ -356,39 +356,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4107",
-      "orderTagPO": "15/2026",
-      "suggestedTagPO": "15/2026",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": true,
-      "shipDate": "2026-02-06T00:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": true,
-          "keptOnTaggedPO": false,
-          "currentInventory": 61,
-          "recommendedAction": "Ship from warehouse - PO arrived.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "arrived-po-use-inventory",
-      "actionRequired": "Ship from warehouse - PO 15/2026 has arrived.",
-      "poArrivalDate": "2026-02-06T00:00:00.000Z",
-      "originalDeliveryPromise": "2026-01-01T00:00:00.000Z",
-      "adjustedDeliveryDate": "2026-02-05T00:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4118",
       "orderTagPO": "15/2026",
       "suggestedTagPO": "15/2026",
@@ -430,7 +397,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "OXFORD-5S-CNR-BEIGE",
@@ -438,7 +405,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -448,7 +415,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -456,39 +423,6 @@
     },
     {
       "orderNumber": "4131",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 61,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4157",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
@@ -562,7 +496,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "OXFORD-5S-CNR-BEIGE",
@@ -570,7 +504,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -580,41 +514,8 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4177",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 61,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -850,52 +751,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4207",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 83,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        },
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 61,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4229",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
@@ -970,7 +825,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "OXFORD-5S-CNR-BEIGE",
@@ -978,7 +833,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -988,7 +843,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -1036,7 +891,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "SORRENTO-7S-CNR-BEIGE",
@@ -1044,7 +899,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -1054,7 +909,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -1418,39 +1273,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4268",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 61,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4271",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
@@ -1533,72 +1355,6 @@
       "actionRequired": "🚨 URGENT: No stock available. Contact customer immediately.",
       "poArrivalDate": "2026-04-19T23:00:00.000Z",
       "originalDeliveryPromise": "2026-03-25T00:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4289",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-03-29T23:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-CUSHION BOX-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "20/2026",
-              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 20/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-CUSHION-BOX",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 40,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 134,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -2556,7 +2312,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "OXFORD-5S-CNR-BEIGE",
@@ -2564,7 +2320,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -2574,7 +2330,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -2708,7 +2464,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": false,
       "taggedToArrivedPO": "",
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "HW-MARB-1S-A",
@@ -2716,7 +2472,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": "",
           "keptOnTaggedPO": false,
           "currentInventory": 0,
@@ -2741,7 +2497,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": false,
       "taggedToArrivedPO": "",
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "HW-MARB-1S-A",
@@ -2749,7 +2505,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": "",
           "keptOnTaggedPO": false,
           "currentInventory": 0,
@@ -2767,59 +2523,6 @@
     },
     {
       "orderNumber": "4341",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-03-29T23:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "20/2026",
-              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 20/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 134,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4342",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
@@ -3507,7 +3210,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "SORRENTO-7S-CNR-BEIGE",
@@ -3515,7 +3218,7 @@
           "isBundle": false,
           "allocationSource": "po",
           "stockSourcePO": "18/2026",
-          "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+          "stockSourceArrival": "2026-03-31T23:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
           "currentInventory": 0,
@@ -3525,7 +3228,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -3554,60 +3257,6 @@
           "currentInventory": 174,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4373",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-03-29T23:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 134,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        },
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "20/2026",
-              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 20/2026.",
-              "riskLevel": "Low-Medium"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
       "overallStatus": "delivery-booking-in-progress",
@@ -5626,52 +5275,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4422",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-05-09T23:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "MALAGA-LOUNGE-SET",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "po",
-          "stockSourcePO": "27/2026",
-          "stockSourceArrival": "2026-05-09T23:00:00.000Z",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 0,
-          "recommendedAction": "Stock from PO 27/2026.",
-          "riskLevel": "Low-Medium"
-        },
-        {
-          "sku": "BRIDGETOWN-200-6S",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 16,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4423",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
@@ -5842,59 +5445,6 @@
           "currentInventory": 174,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4428",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-03-29T23:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "20/2026",
-              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 0,
-              "recommendedAction": "Stock from PO 20/2026.",
-              "riskLevel": "Low-Medium"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 134,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low-Medium",
-          "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
       "overallStatus": "delivery-booking-in-progress",
@@ -6410,59 +5960,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4441",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-BLACK-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "STOCKHOLM-CORNER-BLACK",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 163,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            },
-            {
-              "sku": "STOCKHOLM-CORNER-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 83,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "None",
-          "bottleneckSku": ""
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4442",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "NO TAG",
@@ -6504,7 +6001,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -6516,7 +6013,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -6542,7 +6039,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -6717,7 +6214,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
@@ -6729,7 +6226,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -6743,7 +6240,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -6824,7 +6321,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -6836,7 +6333,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -6862,7 +6359,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -6910,7 +6407,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
@@ -6922,7 +6419,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -6936,7 +6433,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -6951,7 +6448,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -6963,7 +6460,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -6989,7 +6486,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -7367,7 +6864,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -7379,7 +6876,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -7405,7 +6902,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -7420,7 +6917,7 @@
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-04-14T23:00:00.000Z",
+      "shipDate": "2026-03-31T23:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
@@ -7432,7 +6929,7 @@
               "quantity": 1,
               "allocationSource": "po",
               "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-14T23:00:00.000Z",
+              "stockSourceArrival": "2026-03-31T23:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
@@ -7446,7 +6943,7 @@
       ],
       "overallStatus": "allocated-on-tagged-po",
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-14T23:00:00.000Z",
+      "poArrivalDate": "2026-03-31T23:00:00.000Z",
       "originalDeliveryPromise": "2026-02-25T00:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
@@ -7455,10 +6952,10 @@
     {
       "orderNumber": "4467",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -7490,8 +6987,8 @@
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -7803,15 +7300,122 @@
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4474",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "20/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-03-29T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "20/2026",
+              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 20/2026.",
+              "riskLevel": "Low-Medium"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 134,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 20/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4475",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "20/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-03-29T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "20/2026",
+              "stockSourceArrival": "2026-03-29T23:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 20/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 134,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 20/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
-    "totalActiveOrders": 172,
-    "tagChangesRequired": 8,
-    "keptOnTaggedPO": 25,
-    "deliveryBookingInProgress": 126,
+    "totalActiveOrders": 163,
+    "tagChangesRequired": 10,
+    "keptOnTaggedPO": 24,
+    "deliveryBookingInProgress": 117,
     "noStockOrders": 9,
-    "inventoryOrders": 136,
+    "inventoryOrders": 125,
     "crossPOOrders": 5,
     "ordersRequiringTagChange": [
       {
@@ -7865,6 +7469,20 @@
       },
       {
         "orderNumber": "4473",
+        "currentTag": "NO TAG",
+        "suggestedTag": "20/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 20/2026."
+      },
+      {
+        "orderNumber": "4474",
+        "currentTag": "NO TAG",
+        "suggestedTag": "20/2026",
+        "reason": "no-tag-needs-po",
+        "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 20/2026."
+      },
+      {
+        "orderNumber": "4475",
         "currentTag": "NO TAG",
         "suggestedTag": "20/2026",
         "reason": "no-tag-needs-po",
