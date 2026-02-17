@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generatedAt": "2026-02-17T06:34:45.520Z",
+    "generatedAt": "2026-02-17T10:34:46.174Z",
     "version": "1.3",
-    "processingTimeMs": 13523,
-    "totalOrders": 171,
+    "processingTimeMs": 14036,
+    "totalOrders": 172,
     "totalLineItems": 238,
     "fulfilledOrdersSkipped": 3846,
     "refundedOrdersSkipped": 186,
@@ -13,7 +13,7 @@
     "crossPOAllocations": 25,
     "inventoryRingfenceItems": 41,
     "noStockItems": 14,
-    "bundlesExpanded": 24,
+    "bundlesExpanded": 23,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -5505,44 +5505,26 @@
     {
       "orderNumber": "4505",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 168,
-          "inventoryAfterAllocation": 167,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 19,
-          "inventoryAfterAllocation": 18,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
+          "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE, STOCKHOLM-CHAISE-COVER",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -5772,13 +5754,39 @@
       "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 21/2026.",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4511",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-LOUNGE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
     "byStatus": {
-      "allocated-inventory": 19,
+      "allocated-inventory": 18,
       "no-stock": 11,
-      "delivery-booking-in-progress": 101,
+      "delivery-booking-in-progress": 103,
       "arrived-po-ringfenced": 2,
       "fully-allocated": 13,
       "allocated-mixed": 17,
@@ -5897,4 +5905,774 @@
         "orderNumber": "4484",
         "currentTag": "23/2026",
         "suggestedTag": "18/2026",
-        "isOverride": tru
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4485",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4488",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4490",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4492",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4494",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4496",
+        "currentTag": "23/2026",
+        "suggestedTag": "18/2026",
+        "isOverride": true
+      },
+      {
+        "orderNumber": "4498",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4499",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4500",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4503",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4504",
+        "currentTag": "NO TAG",
+        "suggestedTag": "34/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4506",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4507",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4508",
+        "currentTag": "NO TAG",
+        "suggestedTag": "18/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4509",
+        "currentTag": "NO TAG",
+        "suggestedTag": "31/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "4510",
+        "currentTag": "NO TAG",
+        "suggestedTag": "21/2026",
+        "isOverride": false
+      }
+    ],
+    "tagOverrides": [
+      {
+        "orderNumber": "4451",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4453",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4454",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4465",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4466",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4468",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4469",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4470",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4471",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4472",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4473",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4474",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4475",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4477",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4478",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4479",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4480",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4482",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4484",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4485",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4488",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4490",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4492",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4494",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      },
+      {
+        "orderNumber": "4496",
+        "staffTag": "23/2026",
+        "fifoRecommendation": "18/2026",
+        "reason": "Staff tagged to 23/2026 (ETA 2026-03-30), but Gwen suggests to tag it to 18/2026 because the ETA is 2026-03-29, so it arrives earlier. Re-tag to 18/2026 for faster delivery."
+      }
+    ]
+  },
+  "auditTrail": {
+    "silentAllocations": [
+      {
+        "timestamp": "2026-02-17T10:34:46.051Z",
+        "orderNumber": "4451",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.051Z",
+        "orderNumber": "4453",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4454",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4465",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4466",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4468",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4469",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4470",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4471",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4472",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4473",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.052Z",
+        "orderNumber": "4474",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4475",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4477",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4478",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4479",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4480",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4482",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4484",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.053Z",
+        "orderNumber": "4485",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.054Z",
+        "orderNumber": "4488",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-CUSHION-BOX, PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.054Z",
+        "orderNumber": "4490",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.054Z",
+        "orderNumber": "4492",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": ""
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.054Z",
+        "orderNumber": "4494",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-02-17T10:34:46.055Z",
+        "orderNumber": "4496",
+        "sku": "FARO-LOUNGE-SET",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "18/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
+      }
+    ],
+    "inventoryRingfence": [
+      {
+        "orderNumber": "4197",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4312",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4417",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4443",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4451",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4454",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4458",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4465",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4468",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4471",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4471",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4473",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4473",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4474",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4475",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4476",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4477",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4477",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4478",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4480",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4480",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4482",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4482",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4484",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4488",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4488",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4490",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4490",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4494",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4494",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4496",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4496",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4498",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4498",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4499",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4500",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4500",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4503",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4507",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4507",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      },
+      {
+        "orderNumber": "4509",
+        "sku": "CHESTERTON-COVER",
+        "qty": 1,
+        "note": "Hold for multi-item order — waiting on PO items"
+      }
+    ],
+    "arrivedPORingfence": [
+      {
+        "orderNumber": "4064",
+        "sku": "KIKI-ORGANIC-CHAISE",
+        "qty": 1,
+        "taggedPO": "16/2026",
+        "bundleFrom": null
+      },
+      {
+        "orderNumber": "4094",
+        "sku": "KIKI-ORGANIC-CHAISE",
+        "qty": 1,
+        "taggedPO": "16/2026",
+        "bundleFrom": null
+      }
+    ]
+  }
+}
