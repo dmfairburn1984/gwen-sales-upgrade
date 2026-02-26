@@ -1366,12 +1366,13 @@ async function renderProductCard(sku, options = {}) {
     const price = shopifyData?.price || 
                   parseFloat(productData.product_identity?.price_gbp) || 0;
     
-    // Determine stock
+  // Determine stock - check regular stock AND pre-order status
     const stock = shopifyData?.stock ?? getProductStock(sku);
+    const stockStatus = getStockStatus(sku);
     
-    // Double-check stock
-    if (stock <= 0) {
-        console.log(`⚠️ ${sku} out of stock at render time`);
+    // Double-check stock - BUT allow pre-order items through
+    if (stock <= 0 && stockStatus.status !== 'pre_order') {
+        console.log(`⚠️ ${sku} out of stock at render time (not pre-order)`);
         return null;
     }
     
@@ -1403,7 +1404,7 @@ async function renderProductCard(sku, options = {}) {
     }
     
     // Stock message - v15.0: with pre-order support
-    const stockStatus = getStockStatus(sku);
+    // stockStatus already defined above
     let stockMessage = '';
     if (stockStatus.status === 'pre_order') {
         stockMessage = stockStatus.message;
