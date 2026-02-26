@@ -547,6 +547,7 @@ function parseFamilyAndType(message) {
 
 // ============================================
 // STOCK STATUS (3-tier: in_stock, pre_order, out_of_stock)
+// Now checks BOTH demand dashboard AND PO shipping plan
 // ============================================
 function getStockStatus(sku) {
     const regularStock = getProductStock(sku);
@@ -565,6 +566,7 @@ function getStockStatus(sku) {
         };
     }
     
+    // CHECK 1: Demand plan dashboard
     if (demandInfo) {
         const nextArrival = demandInfo.stockProjection?.find(sp => sp.poArrival > 0);
         if (nextArrival) {
@@ -585,9 +587,61 @@ function getStockStatus(sku) {
         }
     }
     
+    // CHECK 2: PO Shipping Plan - find any future PO with this SKU and available stock
+    if (poShippingPlan && poShippingPlan.poList) {
+        const today = new Date();
+        
+        for (const po of poShippingPlan.poList) {
+            const skuData = po.skus?.[sku];
+            if (!skuData || skuData.planned <= 0 || skuData.available <= 0) continue;
+            
+            // Get ETA warehouse date
+            const etaStr = po.delayedETAWarehouse || po.originalETAWarehouse;
+            if (!etaStr) continue;
+            
+            const etaWarehouse = new Date(etaStr);
+            
+            // Skip POs that already arrived (stock should already be in inventory)
+            if (po.poArrived) {
+                const arrivedDate = new Date(po.poArrived);
+                if (arrivedDate < today) continue;
+            }
+            
+            // This is a future PO with available stock - it's a pre-order item
+            // Calculate delivery as ETA Warehouse + 10 working days
+            let deliveryDate = new Date(etaWarehouse);
+            let workingDaysAdded = 0;
+            while (workingDaysAdded < 10) {
+                deliveryDate.setDate(deliveryDate.getDate() + 1);
+                const dayOfWeek = deliveryDate.getDay();
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                    workingDaysAdded++;
+                }
+            }
+            
+            const deliveryStr = deliveryDate.toLocaleDateString('en-GB', { 
+                day: 'numeric', month: 'long', year: 'numeric' 
+            });
+            const monthStr = etaWarehouse.toLocaleDateString('en-GB', { 
+                month: 'long', year: 'numeric' 
+            });
+            
+            console.log(`📦 PO pre-order found for ${sku}: PO ${po.purchaseOrderNo}, ETA warehouse ${etaStr.substring(0,10)}, delivery by ${deliveryStr}, ${skuData.available} units available`);
+            
+            return {
+                status: 'pre_order',
+                expectedMonth: monthStr,
+                expectedQuantity: skuData.available,
+                estimatedDelivery: deliveryStr,
+                poNumber: po.purchaseOrderNo,
+                message: `Available for pre-order! Estimated delivery by ${deliveryStr}`,
+                canOrder: true
+            };
+        }
+    }
+    
     return { status: 'unknown', message: 'Contact us for availability', canOrder: true };
 }
-
 // ============================================
 // DELIVERY ESTIMATION - Uses PO Shipping Plan
 // ============================================
