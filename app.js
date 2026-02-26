@@ -319,6 +319,12 @@ const bundleItems = loadDataFile('bundle_items.json', []);
 const demandPlanDashboard = loadDataFile('demand_plan_dashboard.json', { data: [] });
 console.log(`📊 Demand dashboard: ${demandPlanDashboard.data?.length || 0} SKU forecasts`);
 
+// ============================================
+// PO SHIPPING PLAN DATA - For delivery estimates
+// ============================================
+const poShippingPlan = loadDataFile('PO_List_Shipping_Plan_SKU.json', { poList: [] });
+console.log(`📦 PO Shipping Plan: ${poShippingPlan.poList?.length || 0} purchase orders loaded`);
+
 console.log(`📦 Inventory data type: ${typeof rawInventoryData}`);
 console.log(`📦 Inventory is array after processing: ${Array.isArray(inventoryData)}`);
 console.log(`📦 Inventory length: ${inventoryData.length}`);
@@ -582,6 +588,95 @@ function getStockStatus(sku) {
     return { status: 'unknown', message: 'Contact us for availability', canOrder: true };
 }
 
+// ============================================
+// DELIVERY ESTIMATION - Uses PO Shipping Plan
+// ============================================
+
+function addWorkingDays(date, days) {
+    const result = new Date(date);
+    let added = 0;
+    while (added < days) {
+        result.setDate(result.getDate() + 1);
+        const dayOfWeek = result.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+            added++;
+        }
+    }
+    return result;
+}
+
+function getDeliveryEstimate(sku) {
+    const today = new Date();
+    const estimates = [];
+    
+    if (!poShippingPlan.poList || poShippingPlan.poList.length === 0) {
+        return null;
+    }
+    
+    for (const po of poShippingPlan.poList) {
+        // Check if this PO contains our SKU with planned stock
+        const skuData = po.skus?.[sku];
+        if (!skuData || skuData.planned <= 0) continue;
+        
+        // Skip if no available units left on this PO
+        if (skuData.available <= 0) continue;
+        
+        // Get the ETA warehouse date (use delayed if available, otherwise original)
+        const etaStr = po.delayedETAWarehouse || po.originalETAWarehouse;
+        if (!etaStr) continue;
+        
+        const etaWarehouse = new Date(etaStr);
+        
+        // If already arrived, check if it has already been processed
+        if (po.poArrived) {
+            const arrivedDate = new Date(po.poArrived);
+            // If arrived and in the past, this stock should already be in inventory
+            if (arrivedDate < today) {
+                const deliveryDate = addWorkingDays(today, 5);
+                estimates.push({
+                    poNumber: po.purchaseOrderNo,
+                    status: 'in_warehouse',
+                    etaWarehouse: arrivedDate,
+                    estimatedDelivery: deliveryDate,
+                    availableUnits: skuData.available,
+                    message: `In stock — estimated delivery by ${deliveryDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`
+                });
+                continue;
+            }
+        }
+        
+        // Future PO - calculate delivery as ETA Warehouse + 10 working days
+        if (etaWarehouse > today) {
+            const estimatedDelivery = addWorkingDays(etaWarehouse, 10);
+            estimates.push({
+                poNumber: po.purchaseOrderNo,
+                status: 'incoming',
+                etaWarehouse: etaWarehouse,
+                estimatedDelivery: estimatedDelivery,
+                availableUnits: skuData.available,
+                message: `Available for pre-order — estimated delivery by ${estimatedDelivery.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`
+            });
+        }
+    }
+    
+    // Sort by earliest delivery date
+    estimates.sort((a, b) => a.estimatedDelivery - b.estimatedDelivery);
+    
+    if (estimates.length === 0) return null;
+    
+    // Return the earliest available delivery
+    const earliest = estimates[0];
+    const totalAvailable = estimates.reduce((sum, e) => sum + e.availableUnits, 0);
+    
+    return {
+        earliest: earliest,
+        allShipments: estimates,
+        totalAvailableAcrossPos: totalAvailable,
+        summary: earliest.message
+    };
+}
+
+console.log(`📦 Delivery estimation function ready`);
 
 // ============================================
 // STOCK CHECKING - Filter BEFORE AI sees products
@@ -1544,6 +1639,48 @@ DIMENSION QUERIES:
 "how big" / "what size" / "will it fit" / "measurements" → Use get_product_dimensions tool
 
 ===========================================================
+DELIVERY & AVAILABILITY QUERIES - CRITICAL
+===========================================================
+When customer asks about delivery dates, availability, restock, pre-order timing, or "when will X arrive":
+→ ALWAYS use the get_delivery_estimate tool to look up real dates
+→ NEVER give generic "3-5 days" if the item might be a pre-order
+→ If customer says they need it by a specific date, pass that date to the tool
+→ If customer asks "will X be back in stock?" — use get_delivery_estimate to check incoming shipments
+→ Pre-order items: Tell customer the estimated delivery date and that they can secure their order now
+
+===========================================================
+LEFT/RIGHT CONFIGURATION - COMMON QUESTION
+===========================================================
+When customer asks about "left or right corner", "left hand", "right hand", "configuration":
+→ Check the configurable_sides field in product data
+→ If configurable_sides = "left,right" → "Great news! This set can be configured as either left-hand or right-hand facing. You simply arrange the modular pieces to suit your space layout during assembly."
+→ If configurable_sides = "left" → "This set comes in a left-hand configuration. The modular design means you position the longer section on the left side when facing the sofa."
+→ If configurable_sides = "Yes" → "This is a fully modular set — you can configure it however you like!"
+→ If configurable_sides is empty/missing → "Let me check that for you — I'll connect you with our team who can confirm the exact configuration options."
+
+IMPORTANT: For BUNDLE products (e.g., Stockholm Bundle), the bundle entry may not have configurable_sides data.
+In that case, check the underlying FURNITURE product in the same family. For example, if asked about the Stockholm Corner Bundle, check the Stockholm corner set or Stockholm chaise for configuration data.
+Corner sofa sets are typically configurable as left or right — if you cannot find the data, say: "Our corner sets are designed to be configurable as either left or right hand facing — you arrange the pieces during assembly to suit your space."
+
+===========================================================
+PHONE NUMBER / CALLBACK REQUESTS
+===========================================================
+We do NOT have a direct customer service phone line. When customer asks for a phone number:
+→ Never say "we don't have a phone number" bluntly
+→ Instead say: "Rather than a phone line, I can arrange a personal callback from our team! I just need your name, phone number, email and a convenient time window."
+→ The system will collect these details and escalate automatically
+
+===========================================================
+BUNDLE PRODUCT INTELLIGENCE
+===========================================================
+Bundle products combine furniture + accessories at a discounted price.
+When showing a bundle, present it as great value:
+→ Explain what's included (the furniture set + the cover/accessories)
+→ Highlight the savings vs buying separately
+→ Answer questions about the FURNITURE within the bundle using the furniture product's data
+→ If a bundle entry has empty specs, look at the main furniture product in the same family for details
+
+===========================================================
 OUTPUT FORMAT - ALWAYS VALID JSON
 ===========================================================
 
@@ -1733,7 +1870,7 @@ const aiTools = [
             }
         }
     },
-    {
+  {
         type: "function",
         function: {
             name: "find_accessories",
@@ -1753,6 +1890,30 @@ const aiTools = [
                         type: "string",
                         enum: ["cushion", "cover", "parasol", "storage", "any"],
                         description: "Type of accessory to find"
+                    }
+                }
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "get_delivery_estimate",
+            description: "Get estimated delivery date for a product. Use when customer asks about delivery times, shipping dates, when something will arrive, availability dates, pre-order delivery, restock dates, or whether something will be back in stock. Also use when customer needs something by a specific date.",
+            parameters: {
+                type: "object",
+                properties: {
+                    productName: {
+                        type: "string",
+                        description: "Name or family of the product to check delivery for"
+                    },
+                    productSku: {
+                        type: "string",
+                        description: "SKU of the product if known"
+                    },
+                    requiredByDate: {
+                        type: "string",
+                        description: "If customer needs it by a specific date, include that date here (e.g., '8 April 2026')"
                     }
                 }
             }
@@ -3267,6 +3428,180 @@ app.post('/chat', async (req, res) => {
                 sessionId: sessionId
             });
         }
+
+        // ============================================
+        // PRE-AI ESCALATION CHECK - Intercept before AI call
+        // ============================================
+        const preAiEscalationPatterns = [
+            'speak to someone', 'speak to a person', 'speak to a human', 'speak to agent',
+            'speak to human', 'speak to person', 'speak to manager', 'speak to representative',
+            'talk to someone', 'talk to a person', 'talk to a human', 'talk to agent',
+            'talk to human', 'talk to person', 'talk to manager',
+            'real person', 'real human', 'human agent', 'live agent',
+            'want to speak', 'want to talk', 'i want a person', 'i want a human'
+        ];
+        
+        const wantsHumanPreAI = preAiEscalationPatterns.some(p => msgLower.includes(p));
+        
+        if (wantsHumanPreAI) {
+            console.log(`🚨 PRE-AI: Human escalation detected - "${message}"`);
+            
+            if (session.customerEmail) {
+                const emailResult = await sendEscalationEmail(
+                    session.customerEmail,
+                    session.customerName || 'Not provided',
+                    `Customer requested human support. Message: "${message}"`,
+                    session.conversationHistory || [],
+                    session.commercial.productsShown || []
+                );
+                
+                const escalationResponse = `I've passed your request to our customer service team. They will email you at ${session.customerEmail} within a few hours (or first thing tomorrow if outside business hours). Is there anything else I can help with in the meantime?`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: escalationResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, { sentiment: 'escalation_request' });
+                await logConversationMessage(sessionId, 'assistant', escalationResponse, { intent: 'escalation_sent' });
+                
+                return res.json({ response: escalationResponse, sessionId });
+            } else {
+                session.pendingEscalation = true;
+                session.escalationReason = `Customer requested to speak to a person. Last message: "${message}"`;
+                session.escalationOffered = true;
+                
+                const emailRequestResponse = `Of course! I'll connect you with our customer service team who can help you directly.\n\nSo they can get back to you quickly, could you please share your email address? I'll pass on our full conversation so they have all the context.`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: emailRequestResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, { sentiment: 'escalation_request' });
+                await logConversationMessage(sessionId, 'assistant', emailRequestResponse, { intent: 'email_capture_for_escalation' });
+                
+                return res.json({ response: emailRequestResponse, sessionId });
+            }
+        }
+        
+        // ============================================
+        // PRE-AI PHONE/CALLBACK REQUEST CHECK
+        // ============================================
+        const phoneRequestPatterns = [
+            'phone number', 'phone line', 'telephone number', 'call you', 'can i call',
+            'ring you', 'ring me', 'call me', 'call back', 'callback',
+            'want to call', 'need to call', 'is there a number', 'have a number',
+            'give me a call', 'give me your number', 'your phone number',
+            'customer service number', 'helpline', 'hotline'
+        ];
+        
+        const wantsPhoneCall = phoneRequestPatterns.some(p => msgLower.includes(p));
+        
+        if (wantsPhoneCall) {
+            console.log(`📞 PRE-AI: Phone/callback request detected - "${message}"`);
+            
+            session.pendingCallback = true;
+            session.callbackStage = 'collect_details';
+            
+            const callbackResponse = `We don't currently have a direct phone line, but I can absolutely arrange for one of our team to call you back!\n\nTo set that up, I just need a few details:\n\n1. Your **full name**\n2. Your **phone number**\n3. Your **email address**\n4. A **convenient time** for the callback (e.g., "mornings", "after 2pm", "anytime")\n\nPlease share those and I'll get it arranged for you straight away.`;
+            
+            session.conversationHistory.push({ role: 'user', content: message });
+            session.conversationHistory.push({ role: 'assistant', content: callbackResponse });
+            
+            await logConversationMessage(sessionId, 'user', message, { intent: 'phone_request' });
+            await logConversationMessage(sessionId, 'assistant', callbackResponse, { intent: 'callback_collection' });
+            
+            return res.json({ response: callbackResponse, sessionId });
+        }
+        
+        // ============================================
+        // CALLBACK DETAILS COLLECTION
+        // ============================================
+        if (session.pendingCallback) {
+            // Try to extract callback details from message
+            const phoneMatch = message.match(/(?:0|\+44|44)[\s.-]?\d{3,4}[\s.-]?\d{3,4}[\s.-]?\d{0,4}/);
+            const emailMatch = message.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+            
+            if (phoneMatch) session.callbackPhone = phoneMatch[0];
+            if (emailMatch) session.callbackEmail = emailMatch[0];
+            
+            // Try to detect a name (text before/around the phone/email, or standalone name-like text)
+            const nameMatch = message.match(/(?:name is |i'm |i am |my name's )([A-Za-z]+ ?[A-Za-z]*)/i);
+            if (nameMatch) session.callbackName = nameMatch[1].trim();
+            
+            // If no structured name found, look for capitalized words that aren't common words
+            if (!session.callbackName) {
+                const words = message.split(/[\s,]+/);
+                const commonWords = ['my', 'name', 'is', 'the', 'i', 'am', 'please', 'call', 'me', 'back', 'at', 'on', 'phone', 'email', 'number', 'morning', 'afternoon', 'evening', 'anytime', 'after', 'before', 'around', 'between'];
+                const possibleName = words.filter(w => 
+                    w.length > 1 && 
+                    /^[A-Z]/.test(w) && 
+                    !commonWords.includes(w.toLowerCase()) &&
+                    !w.includes('@') &&
+                    !/^\d/.test(w)
+                ).join(' ');
+                if (possibleName.length > 1) session.callbackName = possibleName;
+            }
+            
+            // Check for time preferences
+            const timePatterns = /(?:morning|afternoon|evening|anytime|any time|after \d|before \d|between \d|\d+(?:am|pm|:\d{2}))/i;
+            const timeMatch = message.match(timePatterns);
+            if (timeMatch) session.callbackTime = timeMatch[0];
+            
+            // Check if we have enough info to send the escalation
+            const hasPhone = !!session.callbackPhone;
+            const hasEmail = !!session.callbackEmail;
+            const hasName = !!session.callbackName;
+            
+            if (hasPhone || hasEmail) {
+                session.pendingCallback = false;
+                
+                // Send escalation email with callback details
+                const callbackReason = `CALLBACK REQUEST\n` +
+                    `Name: ${session.callbackName || 'Not provided'}\n` +
+                    `Phone: ${session.callbackPhone || 'Not provided'}\n` +
+                    `Email: ${session.callbackEmail || 'Not provided'}\n` +
+                    `Preferred time: ${session.callbackTime || 'Not specified'}\n` +
+                    `Products discussed: ${session.commercial.productsShown.join(', ') || 'None'}`;
+                
+                const emailResult = await sendEscalationEmail(
+                    session.callbackEmail || session.customerEmail || 'callback-request@mint-outdoor.com',
+                    session.callbackName || 'Callback requested',
+                    callbackReason,
+                    session.conversationHistory || [],
+                    session.commercial.productsShown || []
+                );
+                
+                let confirmationParts = [`Thank you${session.callbackName ? ', ' + session.callbackName : ''}! I've arranged your callback.`];
+                confirmationParts.push(`\nOur team will call you on **${session.callbackPhone || 'the number provided'}**${session.callbackTime ? ' ' + session.callbackTime : ' as soon as possible'}.`);
+                
+                if (!hasPhone && hasEmail) {
+                    confirmationParts = [`Thank you! I've passed your details to our team. They'll reach out to you at ${session.callbackEmail} to arrange a convenient call time.`];
+                }
+                
+                confirmationParts.push(`\nIn the meantime, is there anything else I can help with?`);
+                
+                const confirmResponse = confirmationParts.join('');
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: confirmResponse });
+                
+                await logConversationMessage(sessionId, 'user', message, { intent: 'callback_details' });
+                await logConversationMessage(sessionId, 'assistant', confirmResponse, { intent: 'callback_confirmed' });
+                
+                return res.json({ response: confirmResponse, sessionId });
+            } else {
+                // Still collecting — ask for missing info
+                let missingParts = [];
+                if (!hasName) missingParts.push('your full name');
+                if (!hasPhone) missingParts.push('your phone number');
+                if (!hasEmail) missingParts.push('your email address');
+                
+                const promptResponse = `Thanks! I just need ${missingParts.join(' and ')} to get your callback arranged.`;
+                
+                session.conversationHistory.push({ role: 'user', content: message });
+                session.conversationHistory.push({ role: 'assistant', content: promptResponse });
+                
+                return res.json({ response: promptResponse, sessionId });
+            }
+        }
         
         // Build session state for AI
         const sessionState = {
@@ -3296,11 +3631,12 @@ app.post('/chat', async (req, res) => {
         
         // Call AI
         let response = await openai.chat.completions.create({
-            model: "gpt-4o",
+            model: "gpt-4.1",
             messages: messages,
             tools: aiTools,
             tool_choice: "auto",
-            temperature: 0.4
+            temperature: 0.4,
+            max_tokens: 800
         });
         
         let aiMessage = response.choices[0].message;
@@ -3469,6 +3805,79 @@ app.post('/chat', async (req, res) => {
                                 products: productsForQuote,
                                 message: `Email captured successfully. Confirm to customer that quote will be sent to ${args.email} within a few minutes, with their discount locked in for 48 hours. Also mention they can reply to the email if they have questions.`
                             })
+                        });
+                    }
+                }
+
+                if (toolCall.function.name === "get_delivery_estimate") {
+                    console.log(`📦 Delivery estimate requested:`, args);
+                    
+                    let sku = args.productSku;
+                    
+                    // If no SKU provided, try to find by name
+                    if (!sku && args.productName) {
+                        const productResult = findProductByName(args.productName, session.commercial.productsShown);
+                        if (productResult) {
+                            sku = productResult.sku;
+                        }
+                    }
+                    
+                    // Also try recently shown products
+                    if (!sku && session.commercial.productsShown.length > 0) {
+                        sku = session.commercial.productsShown[session.commercial.productsShown.length - 1];
+                    }
+                    
+                    if (!sku) {
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                success: false,
+                                message: "I'd love to give you a delivery estimate! Which product are you interested in? If you let me know the name or range, I can check availability and delivery dates for you."
+                            })
+                        });
+                    } else {
+                        const estimate = getDeliveryEstimate(sku);
+                        const stockStatus = getStockStatus(sku);
+                        const product = productIndex.bySku[sku];
+                        const productName = product?.product_identity?.product_name || sku;
+                        
+                        let deliveryInfo = {
+                            sku: sku,
+                            productName: productName,
+                            currentStock: stockStatus
+                        };
+                        
+                        if (stockStatus.status === 'in_stock') {
+                            deliveryInfo.message = `${productName} is currently IN STOCK with ${stockStatus.quantity} units available. Standard delivery is 3-5 working days from order.`;
+                            deliveryInfo.estimatedDelivery = '3-5 working days from order';
+                        } else if (estimate && estimate.earliest) {
+                            const estDate = estimate.earliest.estimatedDelivery;
+                            const dateStr = estDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+                            deliveryInfo.message = `${productName} is available for pre-order. Estimated delivery by ${dateStr}. ${estimate.totalAvailableAcrossPos} units expected across incoming shipments.`;
+                            deliveryInfo.estimatedDelivery = dateStr;
+                            deliveryInfo.preOrder = true;
+                            
+                            // Check if customer has a required-by date
+                            if (args.requiredByDate) {
+                                const requiredDate = new Date(args.requiredByDate);
+                                if (!isNaN(requiredDate.getTime())) {
+                                    if (estDate <= requiredDate) {
+                                        deliveryInfo.meetsDeadline = true;
+                                        deliveryInfo.deadlineMessage = `Great news! Based on our current shipping schedule, this should arrive before your ${args.requiredByDate} deadline.`;
+                                    } else {
+                                        deliveryInfo.meetsDeadline = false;
+                                        deliveryInfo.deadlineMessage = `Our current estimate is delivery by ${dateStr}, which may not meet your ${args.requiredByDate} deadline. I want to be upfront about that. Would you like me to check if we have similar items that could arrive sooner?`;
+                                    }
+                                }
+                            }
+                        } else {
+                            deliveryInfo.message = `I don't have a confirmed delivery date for ${productName} right now. Let me connect you with our team who can give you an exact date. Could you share your email address?`;
+                            deliveryInfo.needsEscalation = true;
+                        }
+                        
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify(deliveryInfo)
                         });
                     }
                 }
@@ -3694,10 +4103,11 @@ if (toolCall.function.name === "get_product_dimensions") {
             messages[0].content = buildSystemPrompt(sessionState);
             
             response = await openai.chat.completions.create({
-                model: "gpt-4o",
+                model: "gpt-4.1",
                 messages: messages,
                 response_format: { type: "json_object" },
-                temperature: 0.4
+                temperature: 0.4,
+                max_tokens: 800
             });
             
             aiMessage = response.choices[0].message;
@@ -3755,13 +4165,18 @@ if (toolCall.function.name === "get_product_dimensions") {
                 const escalationPatterns = [
                     'contact support', 'contact team', 'contact you', 'contact someone',
                     'speak to someone', 'speak to a person', 'speak to a human', 'speak to agent',
+                    'speak to human', 'speak to person', 'speak to manager', 'speak to representative',
                     'talk to someone', 'talk to a person', 'talk to a human', 'talk to agent',
+                    'talk to human', 'talk to person', 'talk to manager',
                     'customer service', 'customer support', 'support team', 'help desk',
                     'real person', 'real human', 'human agent', 'live agent', 'live chat',
-                    'phone number', 'call you', 'email you', 'email address', 'email me',
+                    'phone number', 'call you', 'call me', 'call back', 'callback',
+                    'phone line', 'telephone', 'ring me',
+                    'email you', 'email address', 'email me',
                     'get in touch', 'how do i contact', 'how can i contact', 'how to contact',
                     'need help', 'need assistance', 'this is useless', 'you\'re useless',
-                    'not helpful', 'can\'t help', 'cannot help'
+                    'not helpful', 'can\'t help', 'cannot help',
+                    'want to speak', 'want to talk', 'i want a person', 'i want a human'
                 ];
                 
                 const wantsEscalation = escalationPatterns.some(p => msgLower.includes(p));
@@ -4879,7 +5294,7 @@ app.get('/run-tests', async (req, res) => {
         
         // Call OpenAI
         const completion = await openai.chat.completions.create({
-          model: 'gpt-4o-mini',
+          model: 'gpt-4.1',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: test.input }
@@ -4922,7 +5337,7 @@ app.get('/run-tests', async (req, res) => {
           }
           
           const followUp = await openai.chat.completions.create({
-            model: 'gpt-4o-mini',
+            model: 'gpt-4.1',
             messages: toolMessages,
             max_tokens: 800,
             temperature: 0.7
@@ -5064,7 +5479,7 @@ app.get('/test-single', async (req, res) => {
     ];
     
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4.1",
       messages: messages,
       tools: aiTools,
       tool_choice: "auto",
@@ -5098,7 +5513,7 @@ app.get('/test-single', async (req, res) => {
       }
       
       const finalCompletion = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4.1",
         messages: toolMessages,
         temperature: 0.4,
         max_tokens: 600
