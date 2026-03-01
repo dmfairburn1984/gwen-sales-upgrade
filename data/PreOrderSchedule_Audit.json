@@ -1,21 +1,21 @@
 {
   "metadata": {
-    "generatedAt": "2026-02-28T22:30:12.572Z",
+    "generatedAt": "2026-03-01T07:30:12.010Z",
     "script": "updatePreOrderSchedule",
     "version": "4.2",
     "spreadsheetId": "1QMB1yfEgspAIwh0Pnh_0JTuOSddfXxBPFg0WB37w_fM",
     "spreadsheetName": "Order Data by Line Item",
-    "completedAt": "2026-02-28T22:30:31.789Z",
-    "processingTimeMs": 19320
+    "completedAt": "2026-03-01T07:30:26.614Z",
+    "processingTimeMs": 14616
   },
   "summary": {
-    "totalLineItems": 4415,
+    "totalLineItems": 4416,
     "fulfilledSkipped": 3955,
     "refundedSkipped": 191,
-    "allocatedToFuturePOs": 335,
+    "allocatedToFuturePOs": 337,
     "inventoryRingfenced": 0,
-    "noTagOrders": 112,
-    "bundlesExpanded": 95
+    "noTagOrders": 113,
+    "bundlesExpanded": 96
   },
   "poAllocations": {
     "13/2026": {
@@ -1545,8 +1545,13 @@
       "skuAllocations": {
         "MALAGA-LOUNGE-SET": {
           "planned": 63,
-          "allocated": 10,
+          "allocated": 11,
           "orders": [
+            {
+              "orderNumber": "4671",
+              "qty": 1,
+              "bundleFrom": "MALAGA-CUSHION-BOX-BUNDLE"
+            },
             {
               "orderNumber": "4631",
               "qty": 1,
@@ -1626,8 +1631,13 @@
       "skuAllocations": {
         "CHESTERTON-CUSHION-BOX": {
           "planned": 100,
-          "allocated": 2,
+          "allocated": 3,
           "orders": [
+            {
+              "orderNumber": "4671",
+              "qty": 1,
+              "bundleFrom": "MALAGA-CUSHION-BOX-BUNDLE"
+            },
             {
               "orderNumber": "4581",
               "qty": 1,
@@ -5383,6 +5393,7 @@
       "4565",
       "4546",
       "4390",
+      "4385",
       "4364",
       "4317",
       "4303",
@@ -5846,6 +5857,26 @@
     ]
   },
   "allocationDetails": [
+    {
+      "orderNumber": "4671",
+      "sku": "MALAGA-LOUNGE-SET",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "27/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "MALAGA-CUSHION-BOX-BUNDLE"
+    },
+    {
+      "orderNumber": "4671",
+      "sku": "CHESTERTON-CUSHION-BOX",
+      "qty": 1,
+      "status": "ALLOCATED",
+      "allocatedToPO": "31/2026",
+      "orderTagPO": "NO TAG",
+      "crossPO": "",
+      "bundleFrom": "MALAGA-CUSHION-BOX-BUNDLE"
+    },
     {
       "orderNumber": "4670",
       "sku": "OCEAN-SIDE-TABLE",
