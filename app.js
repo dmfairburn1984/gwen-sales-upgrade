@@ -5163,37 +5163,6 @@ app.get('/api/conversations', async (req, res) => {
     }
 });
 
-// API: Get all messages for a specific session
-app.get('/api/conversations/:sessionId', async (req, res) => {
-    if (!pool) {
-        return res.json({ messages: [], error: 'No database connected' });
-    }
-    
-    try {
-        const result = await pool.query(`
-            SELECT 
-                role,
-                content,
-                intent,
-                products_shown,
-                sentiment,
-                created_at
-            FROM conversation_messages
-            WHERE session_id = $1 ORDER BY created_at ASC
-        `, [req.params.sessionId]);
-        
-        res.json({ 
-            session_id: req.params.sessionId,
-            messages: result.rows,
-            count: result.rows.length
-        });
-        
-    } catch (error) {
-        console.error('Failed to get conversation:', error.message);
-        res.status(500).json({ error: error.message, messages: [] });
-    }
-});
-
 // ============================================
 // API: BULK CONVERSATION EXPORT (JSON)
 // Usage: /api/conversations/export?date=2026-03-01
@@ -5311,6 +5280,38 @@ app.get('/api/conversations/export', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// API: Get all messages for a specific session
+app.get('/api/conversations/:sessionId', async (req, res) => {
+    if (!pool) {
+        return res.json({ messages: [], error: 'No database connected' });
+    }
+    
+    try {
+        const result = await pool.query(`
+            SELECT 
+                role,
+                content,
+                intent,
+                products_shown,
+                sentiment,
+                created_at
+            FROM conversation_messages
+            WHERE session_id = $1 ORDER BY created_at ASC
+        `, [req.params.sessionId]);
+        
+        res.json({ 
+            session_id: req.params.sessionId,
+            messages: result.rows,
+            count: result.rows.length
+        });
+        
+    } catch (error) {
+        console.error('Failed to get conversation:', error.message);
+        res.status(500).json({ error: error.message, messages: [] });
+    }
+});
+
 // API: Get conversation stats
 app.get('/api/conversation-stats', async (req, res) => {
     if (!pool) {
