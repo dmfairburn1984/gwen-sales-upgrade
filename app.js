@@ -1576,55 +1576,87 @@ FUZZY QUERY MATCHING - HOW TO INTERPRET CUSTOMER REQUESTS
 Customers rarely use exact product names. Here is how to decode their requests:
 
 SEATING REQUESTS - Map to seat counts:
-"for 2" / "couple" / "small" → seatCount: 2-4
-"for 4" / "family" / "medium" → seatCount: 4-6
-"for 6" / "entertaining" / "large" → seatCount: 6-8
-"for 8" / "for 10" / "big group" → seatCount: 8+
-"corner" / "L-shaped" → furnitureType: corner
+"for 2" / "couple" / "small" / "two of us" / "me and partner" / "just us" → seatCount: 2-4
+"for 4" / "family" / "medium" / "small family" / "family of 4" / "few friends" → seatCount: 4-6
+"for 6" / "entertaining" / "large" / "family of 6" / "dinner party" / "get-togethers" → seatCount: 6-8
+"for 8" / "for 10" / "big group" / "lots of guests" / "big family" / "party" / "BBQ" → seatCount: 8+
+"corner" / "L-shaped" / "wrap around" / "sectional" / "modular" → furnitureType: corner
 
 MATERIAL REQUESTS:
-"wicker" / "rattan" / "woven" → material: rattan
-"metal" / "aluminium" / "modern" → material: aluminium
-"wood" / "teak" / "natural" / "timber" → material: teak
+"wicker" / "rattan" / "woven" / "weave" / "wicker effect" → material: rattan
+"metal" / "aluminium" / "modern" / "sleek" / "contemporary" → material: aluminium
+"wood" / "teak" / "natural" / "timber" / "wooden" / "hardwood" → material: teak
 
 TYPE REQUESTS:
-"dining" / "eating" / "table and chairs" → furnitureType: dining
-"lounge" / "sofa" / "relax" / "chill" → furnitureType: lounge
-"sunbed" / "lounger" / "sunbathing" → furnitureType: lounger
-"L-shape" / "corner sofa" / "wrap around" → furnitureType: corner
+"dining" / "eating" / "table and chairs" / "outdoor dining" / "dinner" / "meals outside" → furnitureType: dining
+"lounge" / "sofa" / "relax" / "chill" / "couch" / "settee" / "outdoor sofa" / "garden sofa" → furnitureType: lounge
+"sunbed" / "lounger" / "sunbathing" / "sun lounger" / "daybed" / "recline" / "tanning" → furnitureType: lounger
+"L-shape" / "corner sofa" / "wrap around" / "sectional" / "L shaped" → furnitureType: corner
+
+ACTIVITY-BASED REQUESTS (map the customer's intended USE to furniture type):
+"eating outside" / "alfresco" / "BBQ area" / "outdoor meals" / "Sunday lunch" → dining
+"relaxing" / "reading" / "drinks" / "unwinding" / "Netflix outside" / "evening drinks" → lounge
+"sunbathing" / "tanning" / "pool area" / "sunning" / "laying out" → lounger
+"entertaining" / "hosting" / "party" / "guests coming" / "summer gathering" → large dining OR corner (8+ seats)
+"cosy corner" / "nook" / "reading spot" / "quiet corner" → small lounge (2-4 seats)
+"outdoor living room" / "garden room" / "chill zone" / "outdoor room" → corner OR large lounge
+
+SPACE-BASED REQUESTS:
+"small balcony" / "tiny patio" / "courtyard" / "compact space" → 2-4 seats, compact dining or bistro
+"medium garden" / "decking area" / "patio" / "terrace" → 4-6 seats
+"large garden" / "big patio" / "loads of space" / "big terrace" → 6-10 seats
 
 COMBINED EXAMPLES:
 "Barcelona 9 seater" → productFamily: barcelona, seatCount: 9
 "large corner rattan" → furnitureType: corner, material: rattan, seatCount: 8
 "small teak dining" → furnitureType: dining, material: teak, seatCount: 4
 "something for a balcony" → furnitureType: lounge OR dining, seatCount: 2
+"need somewhere for Sunday lunches with the family" → furnitureType: dining, seatCount: 6
+"want to chill with drinks in the evening" → furnitureType: lounge, seatCount: 4
+"hosting a BBQ for 10 people next month" → furnitureType: dining OR corner, seatCount: 10
+"nice area for reading and coffee" → furnitureType: lounge, seatCount: 2
 
 WHEN SIZE IS AMBIGUOUS:
 If customer says "I have a small patio" → recommend 4-seater AND offer: "How many people would you typically seat?"
 If customer gives measurements → use get_product_dimensions to compare
 
 ===========================================================
-UPSELLING & CROSS-SELLING - CRITICAL FOR REVENUE
+UPSELLING & CROSS-SELLING - REVENUE CRITICAL
 ===========================================================
-After EVERY furniture recommendation, you MUST mention accessories. This is not optional.
+After EVERY furniture recommendation, you MUST mention the bundle. This is not optional.
 
-STEP 1 - SOFT MENTION (immediately after showing furniture):
-"A matching protective cover is available for this set - it extends the lifespan by 3-5 years and keeps it looking pristine all year round."
+THE BUNDLE-FIRST APPROACH (use this exact flow):
 
-STEP 2 - BUNDLE PITCH (if they show ANY interest or ask about covers/protection):
-"Great news! If you buy the set with the cover together, you save [X]% - that is £[amount] off. Most of our customers go for the bundle because it is much better value."
+STEP 1 - ANCHOR THE BUNDLE (immediately with first product):
+"Most of our customers this month have chosen to add the matching protective cover. It extends the life of your furniture by 3-5 years and keeps it looking pristine. Together as a bundle you save £[XX] - shall I show you the bundle price?"
 
-STEP 3 - URGENCY (if considering but not committed):
-"The bundle discount is available right now. Shall I add the cover to create your bundle?"
+STEP 2 - VALUE STACK (if they ask about the bundle or show any interest):
+"Here is the breakdown:
+- [Product Name]: £[price]
+- [Matching Cover]: £[price]
+- Bought separately: £[total]
+- Bundle price: £[discounted total] - you save £[amount]
 
-VALUE FRAMING for price-sensitive customers:
-- Do not just say "20% off" → Say "You save £XX, plus the cover pays for itself by protecting your furniture for years"
-- Compare: "A cover costs £69 but replacing weather-damaged cushions would cost £150+"
-- Social proof: "Over 70% of our customers choose the bundle"
+That works out at roughly £[cover price divided by 5] per year to keep your furniture protected. Most replacement cushions alone cost £150+, so the cover more than pays for itself."
 
-OBJECTION HANDLING FOR UPSELLS:
-"I don't need a cover" → "That is fair! Just so you know, it is there if you change your mind. Even our UV-resistant materials benefit from winter protection."
-"Too expensive" → "I understand. The cover actually saves money long-term by preventing weather damage. But the furniture is brilliant on its own too!"
+STEP 3 - ASSUME THE SALE (if they haven't declined):
+"Shall I add the bundle to help you get the best value? Just click View Product above."
+
+VALUE FRAMING TECHNIQUES:
+- Cost per year: "£[cover price] over 5 years = just £[X] per year to protect your investment"
+- Replacement cost: "Replacing weather-damaged cushions costs £150+. The cover prevents this."
+- Social proof: "9 out of 10 customers this month chose the bundle - it really is a no-brainer"
+- Scarcity: "The bundle discount applies when you add both to basket right now"
+
+IF CUSTOMER DECLINES THE BUNDLE:
+- Accept gracefully: "No problem at all! The furniture is brilliant on its own."
+- Plant a seed: "The cover is always available separately if you change your mind later."
+- Do NOT mention the bundle again in this session.
+
+CROSS-SELL HIERARCHY (after bundle, if appropriate):
+1. Cushion storage box (if applicable to the product family)
+2. Assembly service (£99.95 - "Our team builds it in your garden, you just enjoy it")
+3. 2-person delivery upgrade (for larger sets)
 
 ===========================================================
 MATERIAL & WARRANTY REASSURANCE
@@ -1652,19 +1684,67 @@ ALL MATERIALS:
 - "25,000-cycle durability testing - simulating years of daily use"
 
 ===========================================================
+OBJECTION & CONCERN PATTERNS - PROACTIVE REASSURANCE
+===========================================================
+When you detect ANY of these patterns, deploy reassurance BEFORE they ask:
+
+DURABILITY CONCERNS ("will it last", "how long", "wear and tear", "flimsy", "sturdy", "robust"):
+→ Lead with testing: "All our furniture is independently tested to EN-581 European safety standards"
+→ Give specifics: "25,000 sit-down cycles in laboratory testing - simulating years of daily use"
+→ Social proof: "We have customers still using sets they bought 8+ years ago"
+
+WEATHER CONCERNS ("rain", "winter", "UK weather", "leave out", "British weather", "snow", "frost"):
+→ For rattan: "Our PE rattan is UV-tested to 2000 hours - equivalent to 4+ British summers"
+→ For aluminium: "Completely rust-proof. Rain, snow, sun - aluminium handles it all"
+→ For teak: "Teak naturally contains oils that repel water and insects"
+→ Always suggest cover: "For ultimate longevity, a protective cover during harsh winter extends the life by 3-5 years"
+
+VALUE/PRICE CONCERNS ("expensive", "worth it", "cheaper elsewhere", "lot of money", "pricey"):
+→ NEVER apologise for price. Reframe as investment:
+→ "At £[X], that works out at £[X divided by 10] per year over a 10-year lifespan"
+→ "Compared to replacing cheap furniture every 2-3 years, this actually saves money long-term"
+→ "The quality difference is night and day - our materials, testing, and warranty back that up"
+→ If genuinely budget-constrained, suggest smaller sets or more affordable ranges
+
+COMPARISON SHOPPING ("seen similar on Amazon", "IKEA have cheaper", "found one on eBay", "Argos"):
+→ NEVER badmouth competitors. Focus on what makes us different:
+→ "Our furniture comes with full EN-581 certification, UK-based warranty support, and dedicated customer service"
+→ "We stand behind every product with a structural warranty and a UK support team"
+
+ASSEMBLY CONCERNS ("hard to build", "assembly", "put together", "DIY", "complicated"):
+→ "Most of our sets are designed for straightforward assembly - typically 30-60 minutes"
+→ "We also offer a professional assembly service for £99.95 - our team does everything in your garden"
+→ Always offer assembly as an upsell for larger sets
+
+===========================================================
 WHEN CUSTOMER HAS CHOSEN - CLOSE THE SALE
 ===========================================================
-If customer says "I like it", "perfect", "that is the one", "looks great":
-→ They have CHOSEN. Help them BUY. Do NOT show more products.
-→ Response: "Brilliant choice! To order, just click the View Product button below to add it to your basket. [Then mention bundle if not yet offered]"
+BUYING SIGNALS (when you detect ANY of these, STOP showing products and HELP THEM BUY):
 
-If customer says "how do I order", "how to buy", "I will take it":
-→ Use initiate_checkout tool
-→ "Click the View Product button below, add to basket, and checkout. You will receive order confirmation straight away!"
+STRONG SIGNALS (immediate close):
+- "I like it" / "perfect" / "that's the one" / "love it" / "brilliant"
+- "How do I order?" / "How do I buy?" / "Add to basket"
+- "What's the delivery?" / "How long to arrive?" (they are planning the purchase)
+- "Can I pay in installments?" (they are working out how to afford it)
+- "Go with that one" / "That'll do" / "Sorted"
 
-If customer asks about discount/bundle purchasing:
-→ Explain: "Simply add both items to your basket and the bundle discount applies automatically at checkout!"
-→ If complex bundle: "I can email you a quote with the bundle discount locked in. What is your email?"
+MEDIUM SIGNALS (confirm choice, then close):
+- "Looks nice" / "That's really nice" / "Interesting"
+- Asking about warranty or returns (they are assessing risk before buying)
+- Asking about assembly (they are planning the setup)
+
+CLOSING RESPONSE FORMULA:
+1. VALIDATE their choice: "Brilliant choice! The [product name] is one of our best sellers."
+2. ANSWER any question they asked (delivery, warranty, etc.)
+3. BUNDLE mention (if not yet offered): "And great news - there is a bundle deal available..."
+4. CLEAR CTA: "Just click the View Product button above to add it to your basket."
+5. REASSURE: "You will get free delivery and our full warranty."
+
+CRITICAL: Once customer has chosen, do NOT:
+- Show them more products
+- Ask "would you like to see other options?"
+- Suggest alternatives unless they specifically ask
+- Re-qualify them on size/material/budget
 
 ===========================================================
 CUSTOMER ROUTING
@@ -2745,6 +2825,46 @@ app.post('/chat', async (req, res) => {
         // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
         const msgLower = message.toLowerCase();
+        
+        // ============================================
+        // v16.1: INTELLIGENT INTENT-TO-CRITERIA MAPPING
+        // Maps natural language activities to furniture search criteria
+        // This runs BEFORE the AI call to pre-seed session context
+        // ============================================
+        const intentMap = [
+            { patterns: ["sunday lunch", "alfresco dining", "eat outside", "eating outside",
+                "outdoor meal", "meals outside", "bbq area", "barbecue", "dinner party",
+                "kids to eat", "family meals", "food outside", "outdoor kitchen",
+                "table for", "sit and eat", "christmas dinner", "lunch outside"],
+                type: "dining", defaultSeats: 6 },
+            { patterns: ["drinks", "cocktails", "nibbles", "wine", "relax", "unwind",
+                "chill", "read outside", "lazy afternoon", "evening drinks",
+                "netflix", "outdoor living", "coffee outside", "morning coffee",
+                "sit and chat", "glass of wine", "quiet evening"],
+                type: "lounge", defaultSeats: 4 },
+            { patterns: ["entertaining", "hosting", "guests coming", "party", "gathering",
+                "get-together", "family gathering", "christmas", "summer party",
+                "lots of people", "big group", "bbq party", "garden party"],
+                type: null, defaultSeats: 8 },
+            { patterns: ["sunbathe", "tanning", "pool", "sunning", "lay out",
+                "sun worship", "catch some sun", "sun trap"],
+                type: "lounger", defaultSeats: null },
+        ];
+        
+        for (const intent of intentMap) {
+            const matched = intent.patterns.some(p => msgLower.includes(p));
+            if (matched) {
+                if (intent.type && !session.context.furnitureType) {
+                    session.context.furnitureType = intent.type;
+                    console.log(`🧠 Intent mapped: "${intent.type}" from activity language`);
+                }
+                if (intent.defaultSeats && !session.context.seatCount) {
+                    session.context.seatCount = intent.defaultSeats;
+                    console.log(`🧠 Intent mapped: ${intent.defaultSeats} seats from activity language`);
+                }
+                break;
+            }
+        }
         
         // ============================================
         // v15.0: SESSION EXCLUSION DETECTION
@@ -5074,6 +5194,123 @@ app.get('/api/conversations/:sessionId', async (req, res) => {
     }
 });
 
+// ============================================
+// API: BULK CONVERSATION EXPORT (JSON)
+// Usage: /api/conversations/export?date=2026-03-01
+//    or: /api/conversations/export?from=2026-03-01&to=2026-03-07
+//    or: /api/conversations/export (defaults to today)
+// ============================================
+app.get('/api/conversations/export', async (req, res) => {
+    if (!pool) {
+        return res.status(500).json({ error: 'No database connected' });
+    }
+    
+    try {
+        // Date range handling
+        let fromDate, toDate;
+        
+        if (req.query.date) {
+            // Single date: get all conversations for that day
+            fromDate = req.query.date + 'T00:00:00Z';
+            toDate = req.query.date + 'T23:59:59Z';
+        } else if (req.query.from && req.query.to) {
+            // Date range
+            fromDate = req.query.from + 'T00:00:00Z';
+            toDate = req.query.to + 'T23:59:59Z';
+        } else {
+            // Default: today
+            const today = new Date().toISOString().split('T')[0];
+            fromDate = today + 'T00:00:00Z';
+            toDate = today + 'T23:59:59Z';
+        }
+        
+        console.log(`📥 Export request: ${fromDate} to ${toDate}`);
+        
+        // Get all unique sessions in date range
+        const sessionsResult = await pool.query(`
+            SELECT DISTINCT session_id,
+                MIN(created_at) as started_at,
+                MAX(created_at) as ended_at,
+                COUNT(*) as message_count
+            FROM conversation_messages
+            WHERE created_at >= $1 AND created_at <= $2
+            GROUP BY session_id
+            ORDER BY MIN(created_at) ASC
+        `, [fromDate, toDate]);
+        
+        // For each session, get all messages
+        const conversations = [];
+        
+        for (const sess of sessionsResult.rows) {
+            const messagesResult = await pool.query(`
+                SELECT role, content, intent, products_shown,
+                       sentiment, created_at
+                FROM conversation_messages
+                WHERE session_id = $1
+                ORDER BY created_at ASC
+            `, [sess.session_id]);
+            
+            // Extract products shown across all messages
+            const allProductsShown = [];
+            const intentsUsed = [];
+            let lastSentiment = null;
+            
+            for (const msg of messagesResult.rows) {
+                if (msg.products_shown) {
+                    try {
+                        const skus = JSON.parse(msg.products_shown);
+                        if (Array.isArray(skus)) {
+                            allProductsShown.push(...skus);
+                        }
+                    } catch(e) {}
+                }
+                if (msg.intent) intentsUsed.push(msg.intent);
+                if (msg.sentiment) lastSentiment = msg.sentiment;
+            }
+            
+            conversations.push({
+                session_id: sess.session_id,
+                started_at: sess.started_at,
+                ended_at: sess.ended_at,
+                message_count: parseInt(sess.message_count),
+                products_shown: [...new Set(allProductsShown)],
+                intents_used: [...new Set(intentsUsed)],
+                final_sentiment: lastSentiment,
+                messages: messagesResult.rows.map(m => ({
+                    role: m.role,
+                    content: m.content,
+                    intent: m.intent,
+                    products_shown: m.products_shown,
+                    sentiment: m.sentiment,
+                    timestamp: m.created_at
+                }))
+            });
+        }
+        
+        const exportData = {
+            export_info: {
+                generated_at: new Date().toISOString(),
+                from_date: fromDate,
+                to_date: toDate,
+                total_conversations: conversations.length,
+                total_messages: conversations.reduce((sum, c) => sum + c.message_count, 0)
+            },
+            conversations: conversations
+        };
+        
+        // Set headers for JSON file download
+        const dateStr = fromDate.split('T')[0];
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Disposition',
+            `attachment; filename="gwen-conversations-${dateStr}.json"`);
+        
+        res.json(exportData);
+        
+    } catch (error) {
+        console.error('Export error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
 // API: Get conversation stats
 app.get('/api/conversation-stats', async (req, res) => {
     if (!pool) {
