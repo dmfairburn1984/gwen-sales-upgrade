@@ -1747,6 +1747,66 @@ CRITICAL: Once customer has chosen, do NOT:
 - Re-qualify them on size/material/budget
 
 ===========================================================
+CUSTOMER CORRECTION DETECTION - CRITICAL RULE
+===========================================================
+When a customer says ANY of these, it means YOUR PREVIOUS ANSWER WAS WRONG OR INCOMPLETE:
+- "I asked for..." / "I said..." / "that's not what I asked"
+- "no I meant..." / "no, the..." / "not that, I want..."
+- "you didn't answer my question" / "that's not what I need"
+- "I already told you..." / "as I said..."
+- "I need the [X] not the [Y]"
+
+When you detect a correction:
+1. ACKNOWLEDGE: "Apologies, let me find that specific information for you."
+2. DO NOT repeat your previous response. The customer is telling you it was wrong.
+3. IDENTIFY what they actually want — re-read their message carefully.
+4. If you genuinely DO NOT have the specific information they are asking for:
+   → Say: "I don't have the exact [specific thing they asked for] in my records, but I can connect you with our team who can check for you. Could you share your email address?"
+   → Do NOT show the same data again in different formatting.
+   → Do NOT say "let me know if you'd like me to confirm" — they ALREADY asked you to confirm. That is deflection.
+5. If you DO have the information, provide ONLY what they asked for — not the full data dump again.
+
+EXAMPLE OF WHAT NOT TO DO:
+Customer: "What is the leg height?"
+You: [shows full footprint dimensions]
+Customer: "I asked for sofa legs"
+You: [shows SAME full footprint dimensions again] ← THIS IS WRONG. NEVER DO THIS.
+
+CORRECT RESPONSE:
+Customer: "I asked for sofa legs"
+You: "Apologies! I don't have the exact leg height measurement for that set in my records. Let me connect you with our team who can check the detailed specs — could you share your email address? They'll get back to you within a few hours."
+
+===========================================================
+DIMENSION GAP HANDLING - WHEN DATA IS MISSING
+===========================================================
+Our product database has overall footprint dimensions (width, depth, length) but may NOT have:
+- Seat height (floor to top of cushion)
+- Leg height (floor to bottom of seat frame)
+- Backrest height
+- Armrest height
+- Table height
+- Individual piece dimensions within a set
+
+WHEN A CUSTOMER ASKS FOR A SPECIFIC MEASUREMENT YOU DO NOT HAVE:
+1. Do NOT show the footprint dimensions and pretend they answer the question.
+2. Do NOT say "check the product page" if you have already tried that.
+3. DO say: "I don't have the exact [measurement they asked for] to hand, but I can help in two ways:"
+   → "Check the detailed dimension diagram on the product page: [link]"
+   → "Or share your email and our team will confirm the exact measurement for you within a few hours."
+4. If they have ALREADY been shown the product page link, skip straight to email escalation.
+
+WHAT YOU CAN ANSWER (from footprint dimensions):
+- "How big is the set?" → Show width x depth x length
+- "Will it fit in my space?" → Show footprint and offer to compare to their space
+- "What are the dimensions?" (general) → Show what you have, note any gaps
+
+WHAT YOU CANNOT ANSWER (requires specific data not in database):
+- "How high is the seat?" → DO NOT guess. Escalate.
+- "What is the leg height?" → DO NOT show footprint dims. Escalate.
+- "How tall is the backrest?" → DO NOT show footprint dims. Escalate.
+- "What height is the table?" → If no separate table height data, escalate.
+
+===========================================================
 CUSTOMER ROUTING
 ===========================================================
 EXISTING CUSTOMER (mentions: my order, delivery, refund, return, tracking, damaged):
@@ -2761,7 +2821,7 @@ async function assembleResponse(aiOutput, sessionId, session) {
 
 app.post('/chat', async (req, res) => {
     try {
-        const { message, sessionId } = req.body;
+        let { message, sessionId } = req.body;
         
         if (!message || !sessionId) {
             return res.status(400).json({ 
@@ -2824,7 +2884,67 @@ app.post('/chat', async (req, res) => {
         // ============================================
         // COMPREHENSIVE CONTEXT EXTRACTION
         // ============================================
-        const msgLower = message.toLowerCase();
+        
+        // ============================================
+        // v16.2: TYPO CORRECTION ENGINE
+        // Corrects common misspellings BEFORE any processing
+        // This is a FURNITURE website — interpret everything in furniture context
+        // ============================================
+        const typoMap = {
+            // Common keyboard typos for furniture terms
+            'sodas': 'sofas', 'soads': 'sofas', 'sofar': 'sofas', 'sofer': 'sofas',
+            'sfoas': 'sofas', 'sophas': 'sofas', 'sopha': 'sofa',
+            'charis': 'chairs', 'chiar': 'chair', 'cahir': 'chair', 'chaire': 'chair',
+            'tabel': 'table', 'talbe': 'table', 'tbale': 'table',
+            'dinning': 'dining', 'dinig': 'dining', 'dning': 'dining',
+            'louge': 'lounge', 'louneg': 'lounge', 'lougne': 'lounge',
+            'ratton': 'rattan', 'raten': 'rattan', 'rattn': 'rattan', 'ratan': 'rattan',
+            'alumimium': 'aluminium', 'aluminuim': 'aluminium', 'aluninium': 'aluminium',
+            'furntiure': 'furniture', 'furnitrue': 'furniture', 'furntiture': 'furniture',
+            'cushoins': 'cushions', 'cusions': 'cushions', 'cushons': 'cushions',
+            'delievry': 'delivery', 'delivrey': 'delivery', 'dleivery': 'delivery',
+            'waranty': 'warranty', 'warrnty': 'warranty', 'warrenty': 'warranty',
+            'assebmly': 'assembly', 'asembly': 'assembly', 'assembley': 'assembly',
+            'covr': 'cover', 'covre': 'cover', 'cvover': 'cover',
+            'seater': 'seater', 'seter': 'seater', 'seaer': 'seater',
+            'corener': 'corner', 'conrer': 'corner', 'cornr': 'corner',
+            'gadern': 'garden', 'graden': 'garden', 'gardn': 'garden',
+            'outoor': 'outdoor', 'outdor': 'outdoor', 'outdoro': 'outdoor',
+            'barbeque': 'barbecue', 'barcecue': 'barbecue',
+            // Product name typos (from real conversations)
+            'stockholme': 'stockholm', 'stokholm': 'stockholm', 'stockholn': 'stockholm',
+            'chesterson': 'chesterton', 'chesteron': 'chesterton', 'chestertone': 'chesterton',
+            'santornini': 'santorini', 'santorinni': 'santorini',
+            'mareblla': 'marbella', 'marbela': 'marbella', 'marbellla': 'marbella',
+            'barcelon': 'barcelona', 'bareclona': 'barcelona',
+            'plama': 'palma', 'palna': 'palma', 'pamla': 'palma', 'parlma': 'palma',
+            'palmer': 'palma',
+            'sorento': 'sorrento', 'sorenro': 'sorrento', 'sorrenot': 'sorrento',
+            // Context-aware: on a furniture site, these ALWAYS mean furniture
+            'soda': 'sofa', 'couch': 'sofa', 'settee': 'sofa', 'suit': 'set',
+            'suits': 'sets', 'sweet': 'set', 'sweets': 'sets'
+        };
+        
+        let correctedMessage = message;
+        const words = message.toLowerCase().split(/\s+/);
+        let typosFixed = [];
+        for (const word of words) {
+            const cleanWord = word.replace(/[^a-z]/g, '');
+            if (typoMap[cleanWord]) {
+                const regex = new RegExp(`\\b${cleanWord}\\b`, 'gi');
+                correctedMessage = correctedMessage.replace(regex, typoMap[cleanWord]);
+                typosFixed.push(`${cleanWord}→${typoMap[cleanWord]}`);
+            }
+        }
+        if (typosFixed.length > 0) {
+            console.log(`✏️ Typo corrections: ${typosFixed.join(', ')}`);
+            console.log(`✏️ Original: "${message}"`);
+            console.log(`✏️ Corrected: "${correctedMessage}"`);
+            // Replace message so ALL downstream code uses the corrected version
+            message = correctedMessage;
+        }
+        
+        const msgLower = correctedMessage.toLowerCase();
         
         // ============================================
         // v16.1: INTELLIGENT INTENT-TO-CRITERIA MAPPING
