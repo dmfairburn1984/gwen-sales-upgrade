@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "generatedAt": "2026-03-06T08:29:50.825Z",
+    "generatedAt": "2026-03-07T08:29:49.513Z",
     "version": "3.5",
-    "processingTimeSeconds": 13.217,
-    "totalLineItemsInData": 4541,
-    "fulfilledOrdersSkipped": 3336,
+    "processingTimeSeconds": 12.207,
+    "totalLineItemsInData": 4556,
+    "fulfilledOrdersSkipped": 3349,
     "refundedOrdersSkipped": 469,
-    "activeOrdersProcessed": 302,
-    "deliveryBookingInProgressOrders": 60,
-    "keptOnTaggedPOOrders": 205,
+    "activeOrdersProcessed": 301,
+    "deliveryBookingInProgressOrders": 54,
+    "keptOnTaggedPOOrders": 211,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -27,6 +27,16 @@
       "23/2026",
       "33/2026",
       "36/2026",
+      "56/2026",
+      "57/2026",
+      "58/2026",
+      "59/2026",
+      "60/2026",
+      "61/2026",
+      "62/2026",
+      "63/2026",
+      "64/2026",
+      "65/2026",
       "22/2026",
       "24/2026",
       "25/2026",
@@ -40,6 +50,11 @@
       "50/2026",
       "51/2026",
       "52/2026",
+      "66/2026",
+      "67/2026",
+      "68/2026",
+      "69/2026",
+      "70/2026",
       "28/2026",
       "29/2026",
       "30/2026",
@@ -79,7 +94,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -112,7 +127,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 500,
+          "currentInventory": 499,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -145,7 +160,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -211,7 +226,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -461,7 +476,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -507,7 +522,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 63,
+          "currentInventory": 61,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -587,65 +602,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4262",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "PALMA-CUSHION-BOX",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 4,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 8,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 152,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4263",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Already in delivery",
@@ -678,40 +634,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4276",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "MARBELLA-COVER",
-          "quantity": 2,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 500,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -760,7 +683,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -797,7 +720,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -1123,7 +1046,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -1135,7 +1058,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -1172,7 +1095,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1218,7 +1141,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1300,7 +1223,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -1452,7 +1375,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -1538,7 +1461,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -1575,7 +1498,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -1667,7 +1590,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -1782,7 +1705,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -1868,7 +1791,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -1987,7 +1910,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             },
@@ -1999,7 +1922,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -2085,7 +2008,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             },
@@ -2097,7 +2020,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -2147,7 +2070,7 @@
           "stockSourceArrival": "2026-03-23T12:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
           "riskLevel": "Low"
         }
@@ -2196,7 +2119,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -2233,7 +2156,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -2261,14 +2184,14 @@
     },
     {
       "orderNumber": "4477",
-      "orderTagPO": "19/2026",
-      "suggestedTagPO": "19/2026",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
       "tagChangeRequired": false,
       "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-23T12:00:00.000Z",
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
@@ -2279,37 +2202,37 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "19/2026",
-              "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "19/2026",
-              "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-              "tagMatch": true,
-              "keptOnTaggedPO": true,
-              "currentInventory": 54,
-              "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
-              "riskLevel": "Low"
-            },
-            {
-              "sku": "PALMA-CUSHION-BOX",
               "quantity": 1,
               "allocationSource": "inventory",
               "stockSourcePO": null,
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
+            },
+            {
+              "sku": "PALMA-CUSHION-BOX",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 3,
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             }
           ],
           "overallRiskLevel": "Low",
@@ -2317,23 +2240,23 @@
         }
       ],
       "overallStatus": "allocated-on-tagged-po",
-      "actionRequired": "✅ All items allocated on tagged PO 19/2026. No action needed.",
-      "poArrivalDate": "2026-03-23T12:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
-      "adjustedDeliveryDate": "2026-04-08T23:00:00.000Z",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4478",
-      "orderTagPO": "19/2026",
-      "suggestedTagPO": "19/2026",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
       "tagChangeRequired": false,
       "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-23T12:00:00.000Z",
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
@@ -2344,25 +2267,25 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "19/2026",
-              "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             },
             {
               "sku": "PALMA-CUSHION-BOX",
               "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": false,
-              "keptOnTaggedPO": false,
-              "currentInventory": 4,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
+              "allocationSource": "po",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 3,
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             }
           ],
           "overallRiskLevel": "Low",
@@ -2370,10 +2293,10 @@
         }
       ],
       "overallStatus": "allocated-on-tagged-po",
-      "actionRequired": "✅ All items allocated on tagged PO 19/2026. No action needed.",
-      "poArrivalDate": "2026-03-23T12:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
-      "adjustedDeliveryDate": "2026-04-08T23:00:00.000Z",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2412,14 +2335,14 @@
     },
     {
       "orderNumber": "4480",
-      "orderTagPO": "19/2026",
-      "suggestedTagPO": "19/2026",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
       "tagChangeRequired": false,
       "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": false,
-      "shipDate": "2026-03-23T12:00:00.000Z",
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-BOX-COVER-BUNDLE",
@@ -2430,37 +2353,37 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "19/2026",
-              "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "19/2026",
-              "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-              "tagMatch": true,
-              "keptOnTaggedPO": true,
-              "currentInventory": 54,
-              "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
-              "riskLevel": "Low"
-            },
-            {
-              "sku": "PALMA-CUSHION-BOX",
               "quantity": 1,
               "allocationSource": "inventory",
               "stockSourcePO": null,
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
+            },
+            {
+              "sku": "PALMA-CUSHION-BOX",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 3,
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             }
           ],
           "overallRiskLevel": "Low",
@@ -2468,10 +2391,10 @@
         }
       ],
       "overallStatus": "allocated-on-tagged-po",
-      "actionRequired": "✅ All items allocated on tagged PO 19/2026. No action needed.",
-      "poArrivalDate": "2026-03-23T12:00:00.000Z",
-      "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
-      "adjustedDeliveryDate": "2026-04-08T23:00:00.000Z",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -2495,7 +2418,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2544,7 +2467,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -2556,7 +2479,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -2609,7 +2532,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -2695,7 +2618,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -2712,7 +2635,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -2794,7 +2717,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -2806,7 +2729,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -2925,7 +2848,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -2937,7 +2860,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -2990,7 +2913,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -3002,7 +2925,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3055,7 +2978,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -3067,7 +2990,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3120,7 +3043,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -3173,7 +3096,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -3185,7 +3108,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3238,7 +3161,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -3291,7 +3214,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3410,7 +3333,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -3422,7 +3345,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3606,7 +3529,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -3857,7 +3780,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -3910,7 +3833,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -3963,7 +3886,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -4000,7 +3923,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -4168,7 +4091,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -4205,7 +4128,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -4267,7 +4190,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
               "riskLevel": "Low"
             }
@@ -4353,7 +4276,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -4365,7 +4288,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -4451,7 +4374,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -4504,7 +4427,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -4574,7 +4497,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -4689,7 +4612,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -4701,7 +4624,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -4754,7 +4677,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -4766,7 +4689,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -4783,7 +4706,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -4832,7 +4755,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -4918,7 +4841,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5004,7 +4927,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -5016,7 +4939,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -5069,7 +4992,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5106,7 +5029,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -5168,7 +5091,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5254,7 +5177,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -5307,7 +5230,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -5319,7 +5242,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -5356,7 +5279,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -5385,7 +5308,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -5438,7 +5361,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5544,7 +5467,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5663,7 +5586,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5716,7 +5639,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5753,7 +5676,7 @@
           "stockSourceArrival": "2026-03-23T12:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
           "riskLevel": "Low"
         },
@@ -5881,7 +5804,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -5999,7 +5922,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6052,7 +5975,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6105,7 +6028,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6158,7 +6081,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6211,7 +6134,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -6223,7 +6146,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -6260,7 +6183,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -6316,39 +6239,6 @@
       "poArrivalDate": "2026-03-23T12:00:00.000Z",
       "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
       "adjustedDeliveryDate": "2026-04-08T23:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4592",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "BRIDGETOWN-200-6S",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "none",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 0,
-          "recommendedAction": "🚨 No stock available.",
-          "riskLevel": "High"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -6421,7 +6311,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -6474,7 +6364,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -6527,7 +6417,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6580,7 +6470,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -6630,7 +6520,7 @@
           "stockSourceArrival": "2026-03-23T12:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
           "riskLevel": "Low"
         }
@@ -6696,7 +6586,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -6844,7 +6734,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -6930,7 +6820,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -7036,7 +6926,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
               "riskLevel": "Low"
             }
@@ -7073,7 +6963,7 @@
           "stockSourceArrival": "2026-03-23T12:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 19/2026.",
           "riskLevel": "Low"
         },
@@ -7168,7 +7058,7 @@
               "stockSourceArrival": "2026-03-23T12:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
               "riskLevel": "Low"
             }
@@ -7251,7 +7141,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -7330,7 +7220,7 @@
           "stockSourceArrival": "2026-03-23T12:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 20/2026.",
           "riskLevel": "Low"
         }
@@ -7373,59 +7263,6 @@
       "poArrivalDate": "2026-03-23T12:00:00.000Z",
       "originalDeliveryPromise": "2026-03-31T23:00:00.000Z",
       "adjustedDeliveryDate": "2026-04-08T23:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4621",
-      "orderTagPO": "18/2026",
-      "suggestedTagPO": "18/2026",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": false,
-      "shipDate": "2026-04-01T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
-              "tagMatch": true,
-              "keptOnTaggedPO": true,
-              "currentInventory": 0,
-              "recommendedAction": "✅ Stock reserved on tagged PO 18/2026.",
-              "riskLevel": "Low"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": false,
-              "keptOnTaggedPO": false,
-              "currentInventory": 54,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-on-tagged-po",
-      "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-01T11:00:00.000Z",
-      "originalDeliveryPromise": "2026-04-08T11:00:00.000Z",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -7548,7 +7385,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -7570,39 +7407,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-08T11:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4627",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "FERN-EXT-DINING-TABLE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 20,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -7694,59 +7498,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4632",
-      "orderTagPO": "18/2026",
-      "suggestedTagPO": "18/2026",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": false,
-      "shipDate": "2026-04-01T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "FARO-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "po",
-              "stockSourcePO": "18/2026",
-              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
-              "tagMatch": true,
-              "keptOnTaggedPO": true,
-              "currentInventory": 0,
-              "recommendedAction": "✅ Stock reserved on tagged PO 18/2026.",
-              "riskLevel": "Low"
-            },
-            {
-              "sku": "PALMA-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": false,
-              "keptOnTaggedPO": false,
-              "currentInventory": 54,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "Low",
-          "bottleneckSku": "FARO-LOUNGE-SET"
-        }
-      ],
-      "overallStatus": "allocated-on-tagged-po",
-      "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
-      "poArrivalDate": "2026-04-01T11:00:00.000Z",
-      "originalDeliveryPromise": "2026-04-08T11:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4633",
       "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
@@ -7812,7 +7563,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -7825,7 +7576,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -7834,59 +7585,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-08T11:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4637",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "SANTORINI-CVR-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "SANTORINI-GREY",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 28,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            },
-            {
-              "sku": "SANTORINI-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 19,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "None",
-          "bottleneckSku": ""
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -7924,7 +7622,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -7937,7 +7635,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -8049,7 +7747,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -8058,59 +7756,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 18/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-08T11:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4642",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "STOCKHOLM-CHAISE-LOUNGE",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 152,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            },
-            {
-              "sku": "STOCKHOLM-CHAISE-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 8,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "None",
-          "bottleneckSku": ""
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -8184,7 +7829,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -8221,7 +7866,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -8382,7 +8027,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -8456,7 +8101,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 152,
+              "currentInventory": 151,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -8554,7 +8199,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -8566,7 +8211,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -8682,7 +8327,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -8777,7 +8422,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -8896,7 +8541,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -8949,7 +8594,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -8961,7 +8606,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9014,7 +8659,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9067,7 +8712,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9117,7 +8762,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         }
@@ -9126,39 +8771,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 21/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-04T23:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4670",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "OCEAN-SIDE-TABLE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 6,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -9282,7 +8894,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         }
@@ -9331,7 +8943,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             },
@@ -9343,7 +8955,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9396,7 +9008,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -9446,7 +9058,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         }
@@ -9495,7 +9107,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -9581,7 +9193,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -9594,39 +9206,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 21/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-04T23:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4685",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 152,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -9651,7 +9230,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -9700,7 +9279,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             },
@@ -9712,7 +9291,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9798,7 +9377,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -9835,7 +9414,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         },
@@ -9897,7 +9476,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -9950,7 +9529,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             },
@@ -9962,7 +9541,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -10012,7 +9591,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         }
@@ -10061,7 +9640,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -10074,59 +9653,6 @@
       "actionRequired": "✅ All items allocated on tagged PO 21/2026. No action needed.",
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-04-04T23:00:00.000Z",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4695",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-GREY-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "STOCKHOLM-LOUNGE-SET",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 49,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            },
-            {
-              "sku": "STOCKHOLM-CORNER-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 63,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "None",
-          "bottleneckSku": ""
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -10200,7 +9726,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -10237,7 +9763,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -10283,7 +9809,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
           "riskLevel": "Low"
         }
@@ -10293,39 +9819,6 @@
       "poArrivalDate": "2026-04-01T11:00:00.000Z",
       "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
       "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4701",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "KRISTEN-NATUR-BED",
-          "quantity": 1,
-          "isBundle": false,
-          "allocationSource": "inventory",
-          "stockSourcePO": null,
-          "stockSourceArrival": "",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
-          "currentInventory": 30,
-          "recommendedAction": "Reserve from warehouse stock.",
-          "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -10353,7 +9846,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 152,
+              "currentInventory": 151,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -10415,7 +9908,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "tagMatch": true,
           "keptOnTaggedPO": true,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
           "riskLevel": "Low"
         }
@@ -10448,62 +9941,9 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4706",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Already in delivery",
-      "tagChangeRequired": false,
-      "tagChangeReason": null,
-      "isDeliveryBookingInProgress": true,
-      "allKeptOnTaggedPO": true,
-      "taggedToArrivedPO": "",
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
-          "quantity": 1,
-          "isBundle": true,
-          "bundleComponents": [
-            {
-              "sku": "STOCKHOLM-CHAISE-LOUNGE",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 152,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            },
-            {
-              "sku": "STOCKHOLM-CHAISE-COVER",
-              "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 8,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
-            }
-          ],
-          "overallRiskLevel": "None",
-          "bottleneckSku": ""
         }
       ],
       "overallStatus": "delivery-booking-in-progress",
@@ -10620,7 +10060,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -10662,7 +10102,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -10674,7 +10114,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -10760,7 +10200,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -10801,7 +10241,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 152,
+              "currentInventory": 151,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -10866,7 +10306,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -11002,7 +10442,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 30,
+          "currentInventory": 28,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -11068,7 +10508,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 4,
+          "currentInventory": 3,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -11118,7 +10558,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 152,
+              "currentInventory": 151,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -11183,7 +10623,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -11290,7 +10730,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 152,
+              "currentInventory": 151,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -11355,7 +10795,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -11408,7 +10848,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -11449,7 +10889,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 139,
+              "currentInventory": 137,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -11461,7 +10901,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -11514,7 +10954,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -11633,7 +11073,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             },
@@ -11645,7 +11085,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -11761,7 +11201,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -11774,7 +11214,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 63,
+          "currentInventory": 61,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -11807,7 +11247,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -11856,7 +11296,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -11959,7 +11399,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12025,7 +11465,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12058,7 +11498,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 30,
+          "currentInventory": 28,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12137,7 +11577,7 @@
           "stockSourceArrival": "",
           "tagMatch": false,
           "keptOnTaggedPO": false,
-          "currentInventory": 54,
+          "currentInventory": 50,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12186,7 +11626,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -12256,7 +11696,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12289,7 +11729,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 139,
+          "currentInventory": 137,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12322,7 +11762,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12401,7 +11841,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
@@ -12450,7 +11890,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -12503,7 +11943,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -12556,7 +11996,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -12609,7 +12049,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -12662,7 +12102,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -12748,7 +12188,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             },
@@ -12760,7 +12200,7 @@
               "stockSourceArrival": "",
               "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 4,
+              "currentInventory": 3,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -12813,7 +12253,7 @@
               "stockSourceArrival": "2026-04-01T11:00:00.000Z",
               "tagMatch": true,
               "keptOnTaggedPO": true,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
               "riskLevel": "Low"
             }
@@ -12854,7 +12294,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 139,
+              "currentInventory": 137,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -12866,7 +12306,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -12918,14 +12358,14 @@
     },
     {
       "orderNumber": "4767",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "21/2026",
+      "suggestedTagPO": "21/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -12936,35 +12376,35 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "23/2026",
-              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
+              "stockSourcePO": "21/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 23/2026.",
-              "riskLevel": "Low-Medium"
+              "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
+              "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 54,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
+              "allocationSource": "po",
+              "stockSourcePO": "21/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 50,
+              "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
+              "riskLevel": "Low"
             }
           ],
-          "overallRiskLevel": "Low-Medium",
+          "overallRiskLevel": "Low",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 21/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-04-04T23:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
@@ -12972,10 +12412,10 @@
     {
       "orderNumber": "4768",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -12993,7 +12433,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 139,
+              "currentInventory": 137,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -13005,7 +12445,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -13014,8 +12454,8 @@
           "bottleneckSku": ""
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -13025,10 +12465,10 @@
     {
       "orderNumber": "4769",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -13042,13 +12482,13 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 152,
+          "currentInventory": 151,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -13058,10 +12498,10 @@
     {
       "orderNumber": "4770",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -13075,13 +12515,13 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 30,
+          "currentInventory": 28,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -13123,14 +12563,14 @@
     },
     {
       "orderNumber": "4772",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "21/2026",
+      "suggestedTagPO": "21/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -13141,49 +12581,49 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "23/2026",
-              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
+              "stockSourcePO": "21/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 23/2026.",
-              "riskLevel": "Low-Medium"
+              "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
+              "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
               "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 54,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
+              "allocationSource": "po",
+              "stockSourcePO": "21/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 50,
+              "recommendedAction": "✅ Stock reserved on tagged PO 21/2026.",
+              "riskLevel": "Low"
             }
           ],
-          "overallRiskLevel": "Low-Medium",
+          "overallRiskLevel": "Low",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 21/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-04-04T23:00:00.000Z",
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4773",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -13194,13 +12634,13 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "23/2026",
-              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 23/2026.",
-              "riskLevel": "Low-Medium"
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
@@ -13208,35 +12648,35 @@
               "allocationSource": "inventory",
               "stockSourcePO": null,
               "stockSourceArrival": "",
-              "tagMatch": "",
+              "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
           ],
-          "overallRiskLevel": "Low-Medium",
+          "overallRiskLevel": "Low",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4774",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-COVER-BUNDLE",
@@ -13247,13 +12687,13 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "23/2026",
-              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 23/2026.",
-              "riskLevel": "Low-Medium"
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             },
             {
               "sku": "PALMA-COVER",
@@ -13261,35 +12701,35 @@
               "allocationSource": "inventory",
               "stockSourcePO": null,
               "stockSourceArrival": "",
-              "tagMatch": "",
+              "tagMatch": false,
               "keptOnTaggedPO": false,
-              "currentInventory": 54,
+              "currentInventory": 50,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
           ],
-          "overallRiskLevel": "Low-Medium",
+          "overallRiskLevel": "Low",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4775",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "PALMA-CUSHION BOX-BUNDLE",
@@ -13300,46 +12740,46 @@
               "sku": "FARO-LOUNGE-SET",
               "quantity": 1,
               "allocationSource": "po",
-              "stockSourcePO": "23/2026",
-              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
               "currentInventory": 0,
-              "recommendedAction": "Stock from PO 23/2026.",
-              "riskLevel": "Low-Medium"
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             },
             {
               "sku": "PALMA-CUSHION-BOX",
               "quantity": 1,
-              "allocationSource": "inventory",
-              "stockSourcePO": null,
-              "stockSourceArrival": "",
-              "tagMatch": "",
-              "keptOnTaggedPO": false,
-              "currentInventory": 4,
-              "recommendedAction": "Reserve from warehouse stock.",
-              "riskLevel": "None"
+              "allocationSource": "po",
+              "stockSourcePO": "26/2026",
+              "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+              "tagMatch": true,
+              "keptOnTaggedPO": true,
+              "currentInventory": 3,
+              "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+              "riskLevel": "Low"
             }
           ],
-          "overallRiskLevel": "Low-Medium",
+          "overallRiskLevel": "Low",
           "bottleneckSku": "FARO-LOUNGE-SET"
         }
       ],
-      "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4776",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -13353,7 +12793,7 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 500,
+          "currentInventory": 499,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         },
@@ -13366,13 +12806,13 @@
           "stockSourceArrival": "",
           "tagMatch": "",
           "keptOnTaggedPO": false,
-          "currentInventory": 99,
+          "currentInventory": 98,
           "recommendedAction": "Reserve from warehouse stock.",
           "riskLevel": "None"
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "All items allocated. No action required.",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
       "poArrivalDate": "",
       "originalDeliveryPromise": "",
       "adjustedDeliveryDate": "",
@@ -13381,110 +12821,110 @@
     },
     {
       "orderNumber": "4777",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "tagMatch": true,
+          "keptOnTaggedPO": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 23/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+          "riskLevel": "Low"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4778",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "tagMatch": true,
+          "keptOnTaggedPO": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 23/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+          "riskLevel": "Low"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4779",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagChangeReason": "no-tag-needs-po",
+      "orderTagPO": "26/2026",
+      "suggestedTagPO": "26/2026",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
       "isDeliveryBookingInProgress": false,
-      "allKeptOnTaggedPO": false,
-      "taggedToArrivedPO": "",
-      "shipDate": "2026-04-11T11:00:00.000Z",
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
         {
           "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
           "isBundle": false,
           "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "tagMatch": "",
-          "keptOnTaggedPO": false,
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "tagMatch": true,
+          "keptOnTaggedPO": true,
           "currentInventory": 0,
-          "recommendedAction": "Stock from PO 23/2026.",
-          "riskLevel": "Low-Medium"
+          "recommendedAction": "✅ Stock reserved on tagged PO 26/2026.",
+          "riskLevel": "Low"
         }
       ],
-      "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "poArrivalDate": "",
-      "originalDeliveryPromise": "",
-      "adjustedDeliveryDate": "",
+      "overallStatus": "allocated-on-tagged-po",
+      "actionRequired": "✅ All items allocated on tagged PO 26/2026. No action needed.",
+      "poArrivalDate": "2026-04-01T11:00:00.000Z",
+      "originalDeliveryPromise": "2026-03-15T00:00:00.000Z",
+      "adjustedDeliveryDate": "2026-04-08T11:00:00.000Z",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4780",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Already in delivery",
       "tagChangeRequired": false,
       "tagChangeReason": null,
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "allKeptOnTaggedPO": true,
       "taggedToArrivedPO": "",
       "shipDate": "",
@@ -13502,7 +12942,7 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 139,
+              "currentInventory": 137,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             },
@@ -13514,7 +12954,410 @@
               "stockSourceArrival": "",
               "tagMatch": "",
               "keptOnTaggedPO": false,
-              "currentInventory": 63,
+              "currentInventory": 61,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "None",
+          "bottleneckSku": ""
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is in 'Delivery Booking in Progress' - already with warehouse. No tag change needed.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4781",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 23/2026.",
+          "riskLevel": "Low-Medium"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 50,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4782",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "23/2026",
+              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 23/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 50,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4783",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "23/2026",
+              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 23/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 50,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4784",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "TALISA-WHITE",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 356,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4785",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 23/2026.",
+          "riskLevel": "Low-Medium"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 50,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4786",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "23/2026",
+              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 23/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 50,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4787",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 23/2026.",
+          "riskLevel": "Low-Medium"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4788",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "CHES-CUSHIONS-BLACK",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "none",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 0,
+          "recommendedAction": "🚨 No stock available.",
+          "riskLevel": "High"
+        }
+      ],
+      "overallStatus": "no-stock",
+      "actionRequired": "🚨 URGENT: No stock available. Contact customer immediately.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4789",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "STOCKHOLM-CHAISE-LOUNGE",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 151,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            },
+            {
+              "sku": "STOCKHOLM-CHAISE-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 8,
               "recommendedAction": "Reserve from warehouse stock.",
               "riskLevel": "None"
             }
@@ -13530,16 +13373,148 @@
       "adjustedDeliveryDate": "",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "4790",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 0,
+          "recommendedAction": "Stock from PO 23/2026.",
+          "riskLevel": "Low-Medium"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 50,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4791",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO TAG",
+      "tagChangeRequired": false,
+      "tagChangeReason": null,
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": true,
+      "taggedToArrivedPO": "",
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "isBundle": false,
+          "allocationSource": "inventory",
+          "stockSourcePO": null,
+          "stockSourceArrival": "",
+          "tagMatch": "",
+          "keptOnTaggedPO": false,
+          "currentInventory": 50,
+          "recommendedAction": "Reserve from warehouse stock.",
+          "riskLevel": "None"
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "All items allocated. No action required.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4792",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": true,
+      "tagChangeReason": "no-tag-needs-po",
+      "isDeliveryBookingInProgress": false,
+      "allKeptOnTaggedPO": false,
+      "taggedToArrivedPO": "",
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER-BUNDLE",
+          "quantity": 1,
+          "isBundle": true,
+          "bundleComponents": [
+            {
+              "sku": "FARO-LOUNGE-SET",
+              "quantity": 1,
+              "allocationSource": "po",
+              "stockSourcePO": "23/2026",
+              "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 0,
+              "recommendedAction": "Stock from PO 23/2026.",
+              "riskLevel": "Low-Medium"
+            },
+            {
+              "sku": "PALMA-COVER",
+              "quantity": 1,
+              "allocationSource": "inventory",
+              "stockSourcePO": null,
+              "stockSourceArrival": "",
+              "tagMatch": "",
+              "keptOnTaggedPO": false,
+              "currentInventory": 50,
+              "recommendedAction": "Reserve from warehouse stock.",
+              "riskLevel": "None"
+            }
+          ],
+          "overallRiskLevel": "Low-Medium",
+          "bottleneckSku": "FARO-LOUNGE-SET"
+        }
+      ],
+      "overallStatus": "allocated-mixed",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "poArrivalDate": "",
+      "originalDeliveryPromise": "",
+      "adjustedDeliveryDate": "",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
-    "totalActiveOrders": 302,
+    "totalActiveOrders": 301,
     "tagChangesRequired": 9,
-    "keptOnTaggedPO": 205,
-    "deliveryBookingInProgress": 60,
-    "noStockOrders": 18,
-    "inventoryOrders": 73,
-    "crossPOOrders": 3,
+    "keptOnTaggedPO": 211,
+    "deliveryBookingInProgress": 54,
+    "noStockOrders": 19,
+    "inventoryOrders": 65,
+    "crossPOOrders": 1,
     "ordersRequiringTagChange": [
       {
         "orderNumber": "4709",
@@ -13549,56 +13524,56 @@
         "action": "Update tag to 36/2026 for accurate tracking. Stock from different PO: FARO-LOUNGE-SET → 23/2026. No delay to customer."
       },
       {
-        "orderNumber": "4767",
+        "orderNumber": "4781",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4772",
+        "orderNumber": "4782",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4773",
+        "orderNumber": "4783",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4774",
+        "orderNumber": "4785",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4775",
+        "orderNumber": "4786",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4777",
+        "orderNumber": "4787",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4778",
+        "orderNumber": "4790",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
         "action": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026."
       },
       {
-        "orderNumber": "4779",
+        "orderNumber": "4792",
         "currentTag": "NO TAG",
         "suggestedTag": "23/2026",
         "reason": "no-tag-needs-po",
@@ -13716,6 +13691,12 @@
         "orderNumber": "4771",
         "skus": [
           "SANTORINI-GREY-CSH-SET"
+        ]
+      },
+      {
+        "orderNumber": "4788",
+        "skus": [
+          "CHES-CUSHIONS-BLACK"
         ]
       }
     ]
