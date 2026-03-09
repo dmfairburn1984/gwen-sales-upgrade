@@ -1,19 +1,19 @@
 {
   "metadata": {
-    "generatedAt": "2026-03-09T02:34:48.206Z",
+    "generatedAt": "2026-03-09T10:34:51.868Z",
     "version": "1.3",
-    "processingTimeMs": 13266,
-    "totalOrders": 350,
-    "totalLineItems": 571,
-    "fulfilledOrdersSkipped": 4011,
+    "processingTimeMs": 16646,
+    "totalOrders": 348,
+    "totalLineItems": 564,
+    "fulfilledOrdersSkipped": 4015,
     "refundedOrdersSkipped": 193,
     "arrivedPORingfenced": 0,
-    "keptOnTaggedPO": 205,
+    "keptOnTaggedPO": 250,
     "tagOverridesDetected": 81,
-    "crossPOAllocations": 125,
-    "inventoryRingfenceItems": 49,
+    "crossPOAllocations": 155,
+    "inventoryRingfenceItems": 47,
     "noStockItems": 23,
-    "bundlesExpanded": 135,
+    "bundlesExpanded": 131,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -1545,11 +1545,11 @@
     },
     {
       "orderNumber": "4468",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -1562,12 +1562,12 @@
           "arrivalDate": "2026-03-23T12:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 38,
-          "status": "allocated-to-tagged-po",
-          "note": "FIFO confirms staff tag",
-          "keptOnTaggedPO": true,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "status": "allocated",
+          "note": "Staff tagged to 26/2026 (ETA 2026-04-01), FIFO allocates to 19/2026 (ETA 2026-03-23)",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "26/2026",
+          "staffTagArrival": "2026-04-01T11:00:00.000Z",
           "isFromBundle": true,
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         },
@@ -1580,9 +1580,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 179,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -1591,7 +1591,7 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1663,11 +1663,11 @@
     },
     {
       "orderNumber": "4471",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -1680,12 +1680,12 @@
           "arrivalDate": "2026-03-23T12:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 35,
-          "status": "allocated-to-tagged-po",
-          "note": "FIFO confirms staff tag",
-          "keptOnTaggedPO": true,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "status": "allocated",
+          "note": "Staff tagged to 26/2026 (ETA 2026-04-01), FIFO allocates to 19/2026 (ETA 2026-03-23)",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "26/2026",
+          "staffTagArrival": "2026-04-01T11:00:00.000Z",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         },
@@ -1712,9 +1712,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 178,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -1723,7 +1723,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -1762,11 +1762,11 @@
     },
     {
       "orderNumber": "4473",
-      "orderTagPO": "19/2026",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -1779,12 +1779,12 @@
           "arrivalDate": "2026-03-23T12:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 33,
-          "status": "allocated-to-tagged-po",
-          "note": "FIFO confirms staff tag",
-          "keptOnTaggedPO": true,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "status": "allocated",
+          "note": "Staff tagged to 26/2026 (ETA 2026-04-01), FIFO allocates to 19/2026 (ETA 2026-03-23)",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "26/2026",
+          "staffTagArrival": "2026-04-01T11:00:00.000Z",
           "isFromBundle": true,
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         },
@@ -1811,9 +1811,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 177,
-          "status": "allocated",
-          "note": "Cross-PO allocation",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -1822,7 +1822,7 @@
         }
       ],
       "overallStatus": "allocated-mixed",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -5328,11 +5328,11 @@
     },
     {
       "orderNumber": "4577",
-      "orderTagPO": "20/2026",
+      "orderTagPO": "19/2026",
       "suggestedTagPO": "19/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 20/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 19/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 19/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-03-23T12:00:00.000Z",
       "lineItems": [
@@ -5345,12 +5345,12 @@
           "arrivalDate": "2026-03-23T12:00:00.000Z",
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 32,
-          "status": "allocated",
-          "note": "Staff tagged to 20/2026 (ETA 2026-03-23), FIFO allocates to 19/2026 (ETA 2026-03-23)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "20/2026",
-          "staffTagArrival": "2026-03-23T12:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": false
         },
         {
@@ -5362,17 +5362,17 @@
           "arrivalDate": "2026-03-23T12:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 23,
-          "status": "allocated-to-tagged-po",
-          "note": "FIFO confirms staff tag",
-          "keptOnTaggedPO": true,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "status": "allocated",
+          "note": "Staff tagged to 19/2026 (ETA 2026-03-23), FIFO allocates to 20/2026 (ETA 2026-03-23)",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "19/2026",
+          "staffTagArrival": "2026-03-23T12:00:00.000Z",
           "isFromBundle": false
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 20/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 19/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 19/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -8288,11 +8288,11 @@
     },
     {
       "orderNumber": "4668",
-      "orderTagPO": "21/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -8305,12 +8305,12 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 30,
           "availableAfterAllocation": 1,
-          "status": "allocated",
-          "note": "Staff tagged to 21/2026 (ETA 2026-04-01), FIFO allocates to 18/2026 (ETA 2026-04-01)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "21/2026",
-          "staffTagArrival": "2026-04-01T11:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": true,
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         },
@@ -8334,17 +8334,17 @@
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4669",
-      "orderTagPO": "21/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -8357,12 +8357,12 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 30,
           "availableAfterAllocation": 0,
-          "status": "allocated",
-          "note": "Staff tagged to 21/2026 (ETA 2026-04-01), FIFO allocates to 18/2026 (ETA 2026-04-01)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "21/2026",
-          "staffTagArrival": "2026-04-01T11:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": false
         },
         {
@@ -8375,16 +8375,16 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 5,
           "status": "allocated",
-          "note": "Staff tagged to 21/2026 (ETA 2026-04-01), FIFO allocates to 19/2026 (ETA 2026-03-23)",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "21/2026",
-          "staffTagArrival": "2026-04-01T11:00:00.000Z",
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": false
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -9439,32 +9439,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4702",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4703",
       "orderTagPO": "21/2026",
       "suggestedTagPO": "21/2026",
@@ -9985,42 +9959,6 @@
       "lineItems": [
         {
           "sku": "STOCK-CHAISE-B",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4721",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "PALMA-CUSHION-BOX",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        },
-        {
-          "sku": "STOCKHOLM-LOUNGE-SET",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -10569,32 +10507,6 @@
         },
         {
           "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4739",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -11801,11 +11713,11 @@
     },
     {
       "orderNumber": "4773",
-      "orderTagPO": "26/2026",
+      "orderTagPO": "21/2026",
       "suggestedTagPO": "21/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -11818,12 +11730,12 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 1,
-          "status": "allocated",
-          "note": "Staff tagged to 26/2026 (ETA 2026-04-01), FIFO allocates to 21/2026 (ETA 2026-04-01)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "26/2026",
-          "staffTagArrival": "2026-04-01T11:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
@@ -11837,27 +11749,27 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 21,
           "status": "allocated",
-          "note": "Cross-PO allocation",
+          "note": "Staff tagged to 21/2026 (ETA 2026-04-01), FIFO allocates to 20/2026 (ETA 2026-03-23)",
           "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "21/2026",
+          "staffTagArrival": "2026-04-01T11:00:00.000Z",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4774",
-      "orderTagPO": "26/2026",
+      "orderTagPO": "21/2026",
       "suggestedTagPO": "21/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-01T11:00:00.000Z",
       "lineItems": [
@@ -11870,12 +11782,12 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 0,
-          "status": "allocated",
-          "note": "Staff tagged to 26/2026 (ETA 2026-04-01), FIFO allocates to 21/2026 (ETA 2026-04-01)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "26/2026",
-          "staffTagArrival": "2026-04-01T11:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         },
@@ -11889,17 +11801,17 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 20,
           "status": "allocated",
-          "note": "Cross-PO allocation",
+          "note": "Staff tagged to 21/2026 (ETA 2026-04-01), FIFO allocates to 20/2026 (ETA 2026-03-23)",
           "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
+          "tagOverrideDetected": true,
+          "staffTaggedPO": "21/2026",
+          "staffTagArrival": "2026-04-01T11:00:00.000Z",
           "isFromBundle": true,
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -12118,9 +12030,9 @@
     },
     {
       "orderNumber": "4781",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12135,9 +12047,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 10,
           "availableAfterAllocation": 4,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12153,7 +12065,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 19,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -12161,16 +12073,16 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 26/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4782",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12185,9 +12097,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 10,
           "availableAfterAllocation": 3,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12204,7 +12116,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 18,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -12213,16 +12125,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 26/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4783",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12237,9 +12149,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 10,
           "availableAfterAllocation": 2,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12256,7 +12168,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 17,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -12265,45 +12177,42 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 26/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4784",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "TALISA-WHITE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 355,
-          "inventoryAfterAllocation": 354,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: TALISA-WHITE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4785",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12318,9 +12227,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 10,
           "availableAfterAllocation": 1,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12336,7 +12245,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 16,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -12344,16 +12253,16 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 26/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4786",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "26/2026",
       "suggestedTagPO": "26/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12368,9 +12277,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 10,
           "availableAfterAllocation": 0,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12387,7 +12296,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 15,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -12396,16 +12305,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 26/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4787",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -12420,9 +12329,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 45,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -12430,7 +12339,7 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -12465,6 +12374,620 @@
     {
       "orderNumber": "4789",
       "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4790",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 44,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 14,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4791",
+      "orderTagPO": "20/2026",
+      "suggestedTagPO": "20/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-03-23T12:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 13,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4792",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 43,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 12,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4793",
+      "orderTagPO": "27/2026",
+      "suggestedTagPO": "27/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "MALAGA-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "27/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 63,
+          "availableAfterAllocation": 43,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        },
+        {
+          "sku": "CHESTERTON-COVER",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 186,
+          "inventoryAfterAllocation": 185,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: CHESTERTON-COVER",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4794",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "SANTORINI-GREY",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4795",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4796",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-BLACK-BUNDLE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4797",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 42,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 11,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4798",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 41,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 10,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4799",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 9,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        },
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 40,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "arrivalDate": "2026-04-01T11:00:00.000Z",
+          "plannedOnSourcePO": 200,
+          "availableAfterAllocation": 132,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4800",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 39,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "20/2026",
+          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
+          "arrivalDate": "2026-03-23T12:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 8,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-COVER-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4801",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4802",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "N/A - Delivery in Progress",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": true,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4803",
+      "orderTagPO": "23/2026",
+      "suggestedTagPO": "23/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-11T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "23/2026",
+          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
+          "arrivalDate": "2026-04-11T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 38,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "arrivalDate": "2026-04-01T11:00:00.000Z",
+          "plannedOnSourcePO": 200,
+          "availableAfterAllocation": 131,
+          "status": "allocated",
+          "note": "Cross-PO allocation",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4804",
+      "orderTagPO": "24/2026",
       "suggestedTagPO": "NO STOCK",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
@@ -12507,189 +13030,8 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4790",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 44,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": false
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 14,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4791",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "20/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-03-23T12:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 13,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 20/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4792",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 43,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 12,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4793",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "27/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-27T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "MALAGA-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "27/2026",
-          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
-          "arrivalDate": "2026-04-27T11:00:00.000Z",
-          "plannedOnSourcePO": 63,
-          "availableAfterAllocation": 43,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": false
-        },
-        {
-          "sku": "CHESTERTON-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 186,
-          "inventoryAfterAllocation": 185,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 27/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4794",
-      "orderTagPO": "NO TAG",
+      "orderNumber": "4805",
+      "orderTagPO": "24/2026",
       "suggestedTagPO": "NO STOCK",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
@@ -12697,49 +13039,6 @@
       "isDeliveryBookingInProgress": false,
       "shipDate": "",
       "lineItems": [
-        {
-          "sku": "SANTORINI-GREY",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 27,
-          "inventoryAfterAllocation": 26,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: SANTORINI-GREY",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4795",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 140,
-          "inventoryAfterAllocation": 139,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
         {
           "sku": "STOCKHOLM-CHAISE-COVER",
           "quantity": 1,
@@ -12751,490 +13050,14 @@
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE, STOCKHOLM-CHAISE-COVER",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4796",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 135,
-          "inventoryAfterAllocation": 134,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-BLACK-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CORNER-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 59,
-          "inventoryAfterAllocation": 58,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-BLACK-BUNDLE"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK, STOCKHOLM-CORNER-COVER",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4797",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 42,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 11,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4798",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 41,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 10,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4799",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 9,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": false
-        },
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 40,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
-        },
-        {
-          "sku": "PALMA-CUSHION-BOX",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "26/2026",
-          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
-          "arrivalDate": "2026-04-01T11:00:00.000Z",
-          "plannedOnSourcePO": 200,
-          "availableAfterAllocation": 132,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4800",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 39,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        },
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "20/2026",
-          "stockSourceArrival": "2026-03-23T12:00:00.000Z",
-          "arrivalDate": "2026-03-23T12:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 8,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-COVER-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4801",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 139,
-          "inventoryAfterAllocation": 138,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 1,
-          "inventoryAfterAllocation": 0,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE, STOCKHOLM-CHAISE-COVER",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4802",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 134,
-          "inventoryAfterAllocation": 133,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4803",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-11T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "FARO-LOUNGE-SET",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "23/2026",
-          "stockSourceArrival": "2026-04-11T11:00:00.000Z",
-          "arrivalDate": "2026-04-11T11:00:00.000Z",
-          "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 38,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
-        },
-        {
-          "sku": "PALMA-CUSHION-BOX",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "26/2026",
-          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
-          "arrivalDate": "2026-04-01T11:00:00.000Z",
-          "plannedOnSourcePO": 200,
-          "availableAfterAllocation": 131,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
-        }
-      ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4804",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "24/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-27T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-LOUNGE",
-          "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 138,
-          "inventoryAfterAllocation": 137,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        },
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "24/2026",
-          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
-          "arrivalDate": "2026-04-27T11:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 44,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
-          "isFromBundle": true,
-          "bundleSku": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-        }
-      ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 24/2026.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4805",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "24/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
-      "shipDate": "2026-04-27T11:00:00.000Z",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CHAISE-COVER",
-          "quantity": 1,
-          "allocationSource": "po",
-          "stockSourcePO": "24/2026",
-          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
-          "arrivalDate": "2026-04-27T11:00:00.000Z",
-          "plannedOnSourcePO": 50,
-          "availableAfterAllocation": 43,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "staffTaggedPO": null,
-          "staffTagArrival": null,
           "isFromBundle": false
         },
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 137,
-          "inventoryAfterAllocation": 136,
+          "currentInventory": 140,
+          "inventoryAfterAllocation": 139,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -13244,15 +13067,15 @@
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 24/2026.",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-COVER, STOCKHOLM-CHAISE-LOUNGE",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4806",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13267,9 +13090,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 37,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13286,7 +13109,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 7,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13295,74 +13118,68 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4807",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "CHESTERTON-COVER",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 185,
-          "inventoryAfterAllocation": 184,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: CHESTERTON-COVER",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4808",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-LOUNGE-SET",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 45,
-          "inventoryAfterAllocation": 44,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-LOUNGE-SET",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4809",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13377,9 +13194,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 36,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13396,7 +13213,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 6,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13405,16 +13222,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4810",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13429,9 +13246,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 35,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13448,7 +13265,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 5,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13466,7 +13283,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 130,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13475,16 +13292,16 @@
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4811",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "34/2026",
       "suggestedTagPO": "34/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13499,9 +13316,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 27,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13509,15 +13326,15 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 34/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4812",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13532,9 +13349,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 34,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13551,7 +13368,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 4,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13560,16 +13377,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4813",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13584,9 +13401,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 33,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13603,7 +13420,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 3,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13612,45 +13429,42 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4814",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 136,
-          "inventoryAfterAllocation": 135,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4815",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13665,9 +13479,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 32,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13675,44 +13489,41 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4816",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 135,
-          "inventoryAfterAllocation": 134,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4817",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "27/2026",
       "suggestedTagPO": "27/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13727,9 +13538,9 @@
           "arrivalDate": "2026-04-27T11:00:00.000Z",
           "plannedOnSourcePO": 63,
           "availableAfterAllocation": 42,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13740,8 +13551,8 @@
           "sku": "CHESTERTON-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 184,
-          "inventoryAfterAllocation": 183,
+          "currentInventory": 185,
+          "inventoryAfterAllocation": 184,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -13752,44 +13563,41 @@
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 27/2026.",
+      "actionRequired": "Reserve warehouse stock for: CHESTERTON-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4818",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CORNER-COVER",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 58,
-          "inventoryAfterAllocation": 57,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-COVER",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4819",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13804,9 +13612,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 31,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13814,15 +13622,15 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4820",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13837,9 +13645,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 30,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13856,7 +13664,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 2,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13874,7 +13682,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 129,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13883,16 +13691,16 @@
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4821",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13907,9 +13715,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 29,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13926,7 +13734,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 1,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13935,16 +13743,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4822",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -13959,9 +13767,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 28,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -13978,7 +13786,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 128,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -13987,45 +13795,42 @@
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4823",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 134,
-          "inventoryAfterAllocation": 133,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4824",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14040,9 +13845,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 27,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14050,7 +13855,7 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -14085,9 +13890,9 @@
     },
     {
       "orderNumber": "4826",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "27/2026",
       "suggestedTagPO": "27/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14102,9 +13907,9 @@
           "arrivalDate": "2026-04-27T11:00:00.000Z",
           "plannedOnSourcePO": 63,
           "availableAfterAllocation": 41,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14115,8 +13920,8 @@
           "sku": "CHESTERTON-COVER",
           "quantity": 1,
           "allocationSource": "inventory",
-          "currentInventory": 183,
-          "inventoryAfterAllocation": 182,
+          "currentInventory": 184,
+          "inventoryAfterAllocation": 183,
           "status": "ringfenced",
           "note": "Using warehouse stock",
           "keptOnTaggedPO": false,
@@ -14127,15 +13932,15 @@
         }
       ],
       "overallStatus": "allocated-inventory",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 27/2026.",
+      "actionRequired": "Reserve warehouse stock for: CHESTERTON-COVER",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4827",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14150,9 +13955,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 26,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14169,7 +13974,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 0,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14178,16 +13983,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4828",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "21/2026",
       "suggestedTagPO": "21/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14202,9 +14007,9 @@
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 44,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14212,44 +14017,41 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 21/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4829",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 2,
-          "allocationSource": "inventory",
-          "currentInventory": 133,
-          "inventoryAfterAllocation": 131,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4830",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14264,9 +14066,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 25,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14274,15 +14076,15 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4831",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14297,9 +14099,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 24,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14316,7 +14118,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 43,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14334,7 +14136,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 127,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14343,16 +14145,16 @@
           "bundleSku": "PALMA-BOX-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4832",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14367,9 +14169,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 23,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14386,7 +14188,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 126,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14395,45 +14197,42 @@
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4833",
       "orderTagPO": "NO TAG",
-      "suggestedTagPO": "NO STOCK",
+      "suggestedTagPO": "N/A - Delivery in Progress",
       "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": false,
+      "isDeliveryBookingInProgress": true,
       "shipDate": "",
       "lineItems": [
         {
           "sku": "STOCKHOLM-CHAISE-LOUNGE",
           "quantity": 1,
-          "allocationSource": "inventory",
-          "currentInventory": 131,
-          "inventoryAfterAllocation": 130,
-          "status": "ringfenced",
-          "note": "Using warehouse stock",
+          "allocationSource": "delivery-in-progress",
+          "status": "with-warehouse",
+          "note": "Order already with warehouse for delivery booking",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
-          "staffTaggedPO": null,
           "isFromBundle": false
         }
       ],
-      "overallStatus": "allocated-inventory",
-      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
+      "overallStatus": "delivery-booking-in-progress",
+      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4834",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14448,9 +14247,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 22,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14467,7 +14266,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 42,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14476,16 +14275,16 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4835",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14500,9 +14299,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 21,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14519,7 +14318,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 125,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14537,7 +14336,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 41,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14545,16 +14344,16 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4836",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "31/2026",
       "suggestedTagPO": "31/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14569,9 +14368,9 @@
           "arrivalDate": "2026-05-14T23:00:00.000Z",
           "plannedOnSourcePO": 100,
           "availableAfterAllocation": 86,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14588,7 +14387,7 @@
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 26,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14596,16 +14395,16 @@
           "isFromBundle": false
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 31/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4837",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14620,9 +14419,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 20,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14630,7 +14429,7 @@
         }
       ],
       "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -14664,9 +14463,9 @@
     },
     {
       "orderNumber": "4839",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14682,7 +14481,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 40,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14698,9 +14497,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 19,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14717,7 +14516,7 @@
           "plannedOnSourcePO": 200,
           "availableAfterAllocation": 124,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14726,16 +14525,16 @@
           "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4840",
-      "orderTagPO": "NO TAG",
+      "orderTagPO": "23/2026",
       "suggestedTagPO": "23/2026",
-      "tagChangeRequired": true,
+      "tagChangeRequired": false,
       "tagOverrideDetected": false,
       "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
@@ -14750,9 +14549,9 @@
           "arrivalDate": "2026-04-11T11:00:00.000Z",
           "plannedOnSourcePO": 52,
           "availableAfterAllocation": 18,
-          "status": "allocated",
-          "note": "",
-          "keptOnTaggedPO": false,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
           "staffTagArrival": null,
@@ -14769,7 +14568,7 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 39,
           "status": "allocated",
-          "note": "",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
           "tagOverrideDetected": false,
           "staffTaggedPO": null,
@@ -14778,13 +14577,46 @@
           "bundleSku": "PALMA-COVER-BUNDLE"
         }
       ],
-      "overallStatus": "fully-allocated",
-      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 23/2026.",
+      "overallStatus": "allocated-cross-po",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
     {
       "orderNumber": "4841",
+      "orderTagPO": "34/2026",
+      "suggestedTagPO": "34/2026",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-01T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET-BEIGE",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "34/2026",
+          "stockSourceArrival": "2026-04-01T11:00:00.000Z",
+          "arrivalDate": "2026-04-01T11:00:00.000Z",
+          "plannedOnSourcePO": 52,
+          "availableAfterAllocation": 25,
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "All items allocated. No action needed.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "4842",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "34/2026",
       "tagChangeRequired": true,
@@ -14801,7 +14633,7 @@
           "stockSourceArrival": "2026-04-01T11:00:00.000Z",
           "arrivalDate": "2026-04-01T11:00:00.000Z",
           "plannedOnSourcePO": 52,
-          "availableAfterAllocation": 25,
+          "availableAfterAllocation": 24,
           "status": "allocated",
           "note": "",
           "keptOnTaggedPO": false,
@@ -14819,12 +14651,12 @@
   ],
   "summary": {
     "byStatus": {
-      "allocated-inventory": 54,
-      "delivery-booking-in-progress": 54,
-      "fully-allocated": 117,
+      "allocated-inventory": 39,
+      "delivery-booking-in-progress": 66,
+      "fully-allocated": 90,
       "no-stock": 20,
       "allocated-mixed": 18,
-      "allocated-cross-po": 87
+      "allocated-cross-po": 115
     },
     "tagChangesRequired": [
       {
@@ -14840,307 +14672,7 @@
         "isOverride": true
       },
       {
-        "orderNumber": "4468",
-        "currentTag": "19/2026",
-        "suggestedTag": "26/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4471",
-        "currentTag": "19/2026",
-        "suggestedTag": "26/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4473",
-        "currentTag": "19/2026",
-        "suggestedTag": "26/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4577",
-        "currentTag": "20/2026",
-        "suggestedTag": "19/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4668",
-        "currentTag": "21/2026",
-        "suggestedTag": "18/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4669",
-        "currentTag": "21/2026",
-        "suggestedTag": "18/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4773",
-        "currentTag": "26/2026",
-        "suggestedTag": "21/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4774",
-        "currentTag": "26/2026",
-        "suggestedTag": "21/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4781",
-        "currentTag": "NO TAG",
-        "suggestedTag": "26/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4782",
-        "currentTag": "NO TAG",
-        "suggestedTag": "26/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4783",
-        "currentTag": "NO TAG",
-        "suggestedTag": "26/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4785",
-        "currentTag": "NO TAG",
-        "suggestedTag": "26/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4786",
-        "currentTag": "NO TAG",
-        "suggestedTag": "26/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4787",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4790",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4791",
-        "currentTag": "NO TAG",
-        "suggestedTag": "20/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4792",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4793",
-        "currentTag": "NO TAG",
-        "suggestedTag": "27/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4797",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4798",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4799",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4800",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4803",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4804",
-        "currentTag": "NO TAG",
-        "suggestedTag": "24/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4805",
-        "currentTag": "NO TAG",
-        "suggestedTag": "24/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4806",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4809",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4810",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4811",
-        "currentTag": "NO TAG",
-        "suggestedTag": "34/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4812",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4813",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4815",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4817",
-        "currentTag": "NO TAG",
-        "suggestedTag": "27/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4819",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4820",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4821",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4822",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4824",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4826",
-        "currentTag": "NO TAG",
-        "suggestedTag": "27/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4827",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4828",
-        "currentTag": "NO TAG",
-        "suggestedTag": "21/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4830",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4831",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4832",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4834",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4835",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4836",
-        "currentTag": "NO TAG",
-        "suggestedTag": "31/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4837",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4839",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4840",
-        "currentTag": "NO TAG",
-        "suggestedTag": "23/2026",
-        "isOverride": false
-      },
-      {
-        "orderNumber": "4841",
+        "orderNumber": "4842",
         "currentTag": "NO TAG",
         "suggestedTag": "34/2026",
         "isOverride": false
@@ -15158,61 +14690,13 @@
         "staffTag": "18/2026",
         "fifoRecommendation": "19/2026",
         "reason": "Staff tagged to 18/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 19/2026 because the ETA is 2026-03-23, so it arrives earlier. Re-tag to 19/2026 for faster delivery."
-      },
-      {
-        "orderNumber": "4468",
-        "staffTag": "19/2026",
-        "fifoRecommendation": "26/2026",
-        "reason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management."
-      },
-      {
-        "orderNumber": "4471",
-        "staffTag": "19/2026",
-        "fifoRecommendation": "26/2026",
-        "reason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management."
-      },
-      {
-        "orderNumber": "4473",
-        "staffTag": "19/2026",
-        "fifoRecommendation": "26/2026",
-        "reason": "Staff tagged to 19/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 26/2026 because the ETA is 2026-04-01. Re-tag to 26/2026 to align with what the system has already allocated unless you see this as a problem in which case escalate to management."
-      },
-      {
-        "orderNumber": "4577",
-        "staffTag": "20/2026",
-        "fifoRecommendation": "19/2026",
-        "reason": "Staff tagged to 20/2026 (ETA 2026-03-23), but Gwen suggests to tag it to 19/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 19/2026 to align with system allocation."
-      },
-      {
-        "orderNumber": "4668",
-        "staffTag": "21/2026",
-        "fifoRecommendation": "18/2026",
-        "reason": "Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation."
-      },
-      {
-        "orderNumber": "4669",
-        "staffTag": "21/2026",
-        "fifoRecommendation": "18/2026",
-        "reason": "Staff tagged to 21/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation."
-      },
-      {
-        "orderNumber": "4773",
-        "staffTag": "26/2026",
-        "fifoRecommendation": "21/2026",
-        "reason": "Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation."
-      },
-      {
-        "orderNumber": "4774",
-        "staffTag": "26/2026",
-        "fifoRecommendation": "21/2026",
-        "reason": "Staff tagged to 26/2026 (ETA 2026-04-01), but Gwen suggests to tag it to 21/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 21/2026 to align with system allocation."
       }
     ]
   },
   "auditTrail": {
     "silentAllocations": [
       {
-        "timestamp": "2026-03-09T02:34:48.072Z",
+        "timestamp": "2026-03-09T10:34:51.705Z",
         "orderNumber": "4443",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15222,7 +14706,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.072Z",
+        "timestamp": "2026-03-09T10:34:51.706Z",
         "orderNumber": "4448",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15232,37 +14716,37 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4468",
-        "sku": "PALMA-CUSHION-BOX",
+        "sku": "FARO-LOUNGE-SET",
         "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "26/2026",
+        "fromPO": "26/2026",
+        "toPO": "19/2026",
         "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
+        "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4471",
-        "sku": "PALMA-CUSHION-BOX",
+        "sku": "FARO-LOUNGE-SET",
         "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "26/2026",
+        "fromPO": "26/2026",
+        "toPO": "19/2026",
         "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4473",
-        "sku": "PALMA-CUSHION-BOX",
+        "sku": "FARO-LOUNGE-SET",
         "qty": 1,
-        "fromPO": "19/2026",
-        "toPO": "26/2026",
+        "fromPO": "26/2026",
+        "toPO": "19/2026",
         "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+        "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4477",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15272,7 +14756,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4478",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15282,7 +14766,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.073Z",
+        "timestamp": "2026-03-09T10:34:51.711Z",
         "orderNumber": "4480",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15292,7 +14776,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.074Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4482",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15302,7 +14786,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.074Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4488",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15312,7 +14796,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.074Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4490",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15322,7 +14806,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.075Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4494",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15332,7 +14816,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.075Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4496",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15342,7 +14826,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.076Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4498",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15352,7 +14836,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.076Z",
+        "timestamp": "2026-03-09T10:34:51.712Z",
         "orderNumber": "4500",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15362,7 +14846,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.076Z",
+        "timestamp": "2026-03-09T10:34:51.713Z",
         "orderNumber": "4503",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15372,7 +14856,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.089Z",
+        "timestamp": "2026-03-09T10:34:51.713Z",
         "orderNumber": "4507",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15382,7 +14866,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.090Z",
+        "timestamp": "2026-03-09T10:34:51.713Z",
         "orderNumber": "4509",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -15392,7 +14876,7 @@
         "otherSKUs": "CHESTERTON-COVER, CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.097Z",
+        "timestamp": "2026-03-09T10:34:51.713Z",
         "orderNumber": "4522",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15402,7 +14886,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4536",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15412,7 +14896,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4538",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15422,7 +14906,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4545",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15432,7 +14916,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4547",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15442,7 +14926,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4548",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15452,7 +14936,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.100Z",
+        "timestamp": "2026-03-09T10:34:51.724Z",
         "orderNumber": "4551",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15462,7 +14946,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.725Z",
         "orderNumber": "4553",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15472,7 +14956,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.725Z",
         "orderNumber": "4553",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15482,7 +14966,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.725Z",
         "orderNumber": "4554",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15492,7 +14976,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.725Z",
         "orderNumber": "4558",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15502,7 +14986,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.725Z",
         "orderNumber": "4559",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15512,7 +14996,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4561",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15522,7 +15006,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4566",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15532,7 +15016,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.102Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4566",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15542,7 +15026,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.103Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4567",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15552,7 +15036,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.103Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4567",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15562,7 +15046,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.103Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4568",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15572,7 +15056,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.103Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4570",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15582,7 +15066,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.104Z",
+        "timestamp": "2026-03-09T10:34:51.726Z",
         "orderNumber": "4574",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15592,7 +15076,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.104Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4575",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15602,17 +15086,17 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.104Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4577",
-        "sku": "PALMA-COVER",
+        "sku": "FARO-LOUNGE-SET",
         "qty": 1,
-        "fromPO": "20/2026",
-        "toPO": "19/2026",
+        "fromPO": "19/2026",
+        "toPO": "20/2026",
         "reserveInventory": "No",
-        "otherSKUs": "FARO-LOUNGE-SET"
+        "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.104Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4580",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15622,7 +15106,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.106Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4581",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -15632,7 +15116,7 @@
         "otherSKUs": "CHESTERTON-COVER, CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.106Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4582",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15642,7 +15126,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.106Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4585",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15652,7 +15136,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.106Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4586",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15662,7 +15146,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.107Z",
+        "timestamp": "2026-03-09T10:34:51.727Z",
         "orderNumber": "4587",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15672,7 +15156,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.107Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4588",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15682,7 +15166,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.107Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4588",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15692,7 +15176,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.107Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4590",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15702,7 +15186,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.108Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4596",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15712,7 +15196,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.109Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4597",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15722,7 +15206,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.109Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4598",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15732,7 +15216,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.109Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4600",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15742,7 +15226,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.110Z",
+        "timestamp": "2026-03-09T10:34:51.728Z",
         "orderNumber": "4609",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15752,7 +15236,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.110Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4612",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15762,7 +15246,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.111Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4613",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -15772,7 +15256,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.111Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4615",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15782,7 +15266,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.114Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4617",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15792,7 +15276,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.114Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4619",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15802,7 +15286,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.114Z",
+        "timestamp": "2026-03-09T10:34:51.729Z",
         "orderNumber": "4625",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15812,7 +15296,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4634",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15822,7 +15306,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4634",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15832,7 +15316,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4638",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15842,7 +15326,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4638",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15852,7 +15336,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4641",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15862,7 +15346,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4645",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15872,7 +15356,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.115Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4646",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15882,7 +15366,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.117Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4652",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15892,7 +15376,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4657",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15902,7 +15386,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4657",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15912,7 +15396,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4660",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15922,7 +15406,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4662",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15932,7 +15416,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4665",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15942,7 +15426,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4666",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15952,7 +15436,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4666",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -15962,7 +15446,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4667",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -15972,47 +15456,27 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
-        "orderNumber": "4668",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "21/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "PALMA-CUSHION-BOX"
-      },
-      {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.730Z",
         "orderNumber": "4668",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
-        "fromPO": "21/2026",
+        "fromPO": "18/2026",
         "toPO": "26/2026",
         "reserveInventory": "No",
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
-        "orderNumber": "4669",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "21/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "PALMA-COVER"
-      },
-      {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4669",
         "sku": "PALMA-COVER",
         "qty": 1,
-        "fromPO": "21/2026",
+        "fromPO": "18/2026",
         "toPO": "19/2026",
         "reserveInventory": "No",
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4671",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -16022,7 +15486,7 @@
         "otherSKUs": "CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4674",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16032,7 +15496,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4675",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16042,7 +15506,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4675",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16052,7 +15516,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.118Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4676",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16062,7 +15526,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4678",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16072,7 +15536,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4680",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16082,7 +15546,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4682",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16092,7 +15556,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4687",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16102,7 +15566,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4687",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16112,7 +15576,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4689",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16122,7 +15586,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4690",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16132,7 +15596,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.119Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4691",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16142,7 +15606,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.120Z",
+        "timestamp": "2026-03-09T10:34:51.731Z",
         "orderNumber": "4692",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16152,7 +15616,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.120Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4692",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16162,7 +15626,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.121Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4693",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16172,7 +15636,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.121Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4694",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16182,7 +15646,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4697",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16192,7 +15656,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4703",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16202,7 +15666,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4709",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16212,7 +15676,7 @@
         "otherSKUs": "SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4709",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -16222,7 +15686,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, SICILY-140CM-8S-BLACK, PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4709",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16232,7 +15696,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4709",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16242,7 +15706,7 @@
         "otherSKUs": "SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4713",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16252,7 +15716,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4723",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16262,7 +15726,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4727",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16272,7 +15736,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.122Z",
+        "timestamp": "2026-03-09T10:34:51.732Z",
         "orderNumber": "4732",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16282,7 +15746,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.123Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4735",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16292,7 +15756,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.123Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4735",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16302,7 +15766,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.123Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4740",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16312,7 +15776,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.123Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4749",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16322,7 +15786,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.136Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4750",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16332,7 +15796,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4757",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16342,7 +15806,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4758",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16352,7 +15816,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4759",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16362,7 +15826,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.733Z",
         "orderNumber": "4761",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16372,7 +15836,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4763",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16382,7 +15846,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.137Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4763",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -16392,7 +15856,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4764",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16402,7 +15866,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4767",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16412,7 +15876,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4772",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -16422,18 +15886,28 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
+        "timestamp": "2026-03-09T10:34:51.734Z",
         "orderNumber": "4773",
-        "sku": "FARO-LOUNGE-SET",
+        "sku": "PALMA-COVER",
         "qty": 1,
-        "fromPO": "26/2026",
-        "toPO": "21/2026",
+        "fromPO": "21/2026",
+        "toPO": "20/2026",
         "reserveInventory": "No",
-        "otherSKUs": "PALMA-COVER"
+        "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
-        "orderNumber": "4773",
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4774",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "21/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4781",
         "sku": "PALMA-COVER",
         "qty": 1,
         "fromPO": "26/2026",
@@ -16442,22 +15916,332 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-09T02:34:48.138Z",
-        "orderNumber": "4774",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "26/2026",
-        "toPO": "21/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "PALMA-COVER"
-      },
-      {
-        "timestamp": "2026-03-09T02:34:48.138Z",
-        "orderNumber": "4774",
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4782",
         "sku": "PALMA-COVER",
         "qty": 1,
         "fromPO": "26/2026",
         "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4783",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "26/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4785",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "26/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4786",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "26/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4790",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4792",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4797",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4798",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4799",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4799",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4800",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4803",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.734Z",
+        "orderNumber": "4806",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4809",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4810",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4810",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4812",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4813",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4820",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4820",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4821",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4822",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4827",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "20/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4831",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "21/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4831",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.735Z",
+        "orderNumber": "4832",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4834",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "21/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4835",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4835",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "21/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4836",
+        "sku": "FARO-LOUNGE-SET-BEIGE",
+        "qty": 1,
+        "fromPO": "31/2026",
+        "toPO": "34/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "CHESTERTON-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4839",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "21/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4839",
+        "sku": "PALMA-CUSHION-BOX",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "26/2026",
+        "reserveInventory": "No",
+        "otherSKUs": "PALMA-COVER, FARO-LOUNGE-SET"
+      },
+      {
+        "timestamp": "2026-03-09T10:34:51.736Z",
+        "orderNumber": "4840",
+        "sku": "PALMA-COVER",
+        "qty": 1,
+        "fromPO": "23/2026",
+        "toPO": "21/2026",
         "reserveInventory": "No",
         "otherSKUs": "FARO-LOUNGE-SET"
       }
@@ -16730,18 +16514,6 @@
       {
         "orderNumber": "4793",
         "sku": "CHESTERTON-COVER",
-        "qty": 1,
-        "note": "Hold for multi-item order — waiting on PO items"
-      },
-      {
-        "orderNumber": "4804",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
-        "qty": 1,
-        "note": "Hold for multi-item order — waiting on PO items"
-      },
-      {
-        "orderNumber": "4805",
-        "sku": "STOCKHOLM-CHAISE-LOUNGE",
         "qty": 1,
         "note": "Hold for multi-item order — waiting on PO items"
       },
