@@ -1,21 +1,21 @@
 {
   "metadata": {
-    "generatedAt": "2026-03-17T04:30:12.131Z",
+    "generatedAt": "2026-03-17T09:30:12.560Z",
     "script": "updatePreOrderSchedule",
     "version": "4.2",
     "spreadsheetId": "1QMB1yfEgspAIwh0Pnh_0JTuOSddfXxBPFg0WB37w_fM",
     "spreadsheetName": "Order Data by Line Item",
-    "completedAt": "2026-03-17T04:30:37.042Z",
-    "processingTimeMs": 24916
+    "completedAt": "2026-03-17T09:30:39.996Z",
+    "processingTimeMs": 27442
   },
   "summary": {
     "totalLineItems": 4833,
-    "fulfilledSkipped": 4072,
+    "fulfilledSkipped": 4075,
     "refundedSkipped": 202,
-    "allocatedToFuturePOs": 745,
+    "allocatedToFuturePOs": 741,
     "inventoryRingfenced": 0,
-    "noTagOrders": 120,
-    "bundlesExpanded": 224
+    "noTagOrders": 118,
+    "bundlesExpanded": 221
   },
   "poAllocations": {
     "13/2026": {
@@ -2405,7 +2405,7 @@
       "skuAllocations": {
         "STOCKHOLM-CHAISE-COVER": {
           "planned": 50,
-          "allocated": 19,
+          "allocated": 18,
           "orders": [
             {
               "orderNumber": "5017",
@@ -2454,11 +2454,6 @@
             },
             {
               "orderNumber": "4916",
-              "qty": 1,
-              "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-            },
-            {
-              "orderNumber": "4908",
               "qty": 1,
               "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
             },
@@ -3173,7 +3168,7 @@
       "skuAllocations": {
         "STOCKHOLM-LOUNGE-SET": {
           "planned": 90,
-          "allocated": 11,
+          "allocated": 10,
           "orders": [
             {
               "orderNumber": "4978",
@@ -3194,11 +3189,6 @@
               "orderNumber": "4917",
               "qty": 1,
               "bundleFrom": null
-            },
-            {
-              "orderNumber": "4879",
-              "qty": 1,
-              "bundleFrom": "STOCKHOLM-GREY-BUNDLE"
             },
             {
               "orderNumber": "4861",
@@ -3479,7 +3469,7 @@
       "skuAllocations": {
         "STOCKHOLM-CORNER-COVER": {
           "planned": 40,
-          "allocated": 16,
+          "allocated": 15,
           "orders": [
             {
               "orderNumber": "4978",
@@ -3510,11 +3500,6 @@
               "orderNumber": "4885",
               "qty": 1,
               "bundleFrom": "STOCKHOLM-BLACK-BUNDLE"
-            },
-            {
-              "orderNumber": "4879",
-              "qty": 1,
-              "bundleFrom": "STOCKHOLM-GREY-BUNDLE"
             },
             {
               "orderNumber": "4863",
@@ -3590,7 +3575,7 @@
       "skuAllocations": {
         "STOCKHOLM-CHAISE-LOUNGE": {
           "planned": 107,
-          "allocated": 26,
+          "allocated": 25,
           "orders": [
             {
               "orderNumber": "5017",
@@ -3649,11 +3634,6 @@
             },
             {
               "orderNumber": "4916",
-              "qty": 1,
-              "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-            },
-            {
-              "orderNumber": "4908",
               "qty": 1,
               "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
             },
@@ -4301,6 +4281,7 @@
       "4819",
       "4816",
       "4814",
+      "4808",
       "4805",
       "4802",
       "4795",
@@ -4308,6 +4289,8 @@
       "4784",
       "4780",
       "4770",
+      "4769",
+      "4765",
       "4760",
       "4754",
       "4753",
@@ -4319,12 +4302,14 @@
       "4731",
       "4730",
       "4728",
+      "4725",
       "4724",
       "4722",
       "4721",
       "4720",
       "4719",
       "4717",
+      "4716",
       "4712",
       "4711",
       "4710",
@@ -7648,6 +7633,9 @@
       "1006",
       "1005",
       "1003",
+      "4941",
+      "4879",
+      "4908",
       "4865",
       "4746",
       "4801",
@@ -7661,11 +7649,6 @@
       "4881",
       "DUX052180665-A",
       "4804",
-      "4808",
-      "4716",
-      "4725",
-      "4769",
-      "4765",
       "DUX051272258-A",
       "1054A",
       "4563C",
@@ -9649,19 +9632,10 @@
     },
     {
       "orderNumber": "4941",
-      "sku": "SANTORINI-GREY",
+      "sku": "SANTORINI-CVR-BUNDLE",
       "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": "SANTORINI-CVR-BUNDLE"
-    },
-    {
-      "orderNumber": "4941",
-      "sku": "SANTORINI-COVER",
-      "qty": 1,
-      "status": "NO_STOCK",
-      "reason": "No future PO has this SKU planned",
-      "bundleFrom": "SANTORINI-CVR-BUNDLE"
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4940",
@@ -10258,23 +10232,10 @@
     },
     {
       "orderNumber": "4908",
-      "sku": "STOCKHOLM-CHAISE-LOUNGE",
+      "sku": "STOCKHOLM-CHAISE-CVR-BUNDLE",
       "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "42/2026",
-      "orderTagPO": "24/2026",
-      "crossPO": true,
-      "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
-    },
-    {
-      "orderNumber": "4908",
-      "sku": "STOCKHOLM-CHAISE-COVER",
-      "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "24/2026",
-      "orderTagPO": "24/2026",
-      "crossPO": false,
-      "bundleFrom": "STOCKHOLM-CHAISE-CVR-BUNDLE"
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4907",
@@ -10725,23 +10686,10 @@
     },
     {
       "orderNumber": "4879",
-      "sku": "STOCKHOLM-LOUNGE-SET",
+      "sku": "STOCKHOLM-GREY-BUNDLE",
       "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "33/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
-      "bundleFrom": "STOCKHOLM-GREY-BUNDLE"
-    },
-    {
-      "orderNumber": "4879",
-      "sku": "STOCKHOLM-CORNER-COVER",
-      "qty": 1,
-      "status": "ALLOCATED",
-      "allocatedToPO": "38/2026",
-      "orderTagPO": "NO TAG",
-      "crossPO": "",
-      "bundleFrom": "STOCKHOLM-GREY-BUNDLE"
+      "status": "SKIPPED_FULFILLED",
+      "reason": "Order already fulfilled - excluded from all allocations"
     },
     {
       "orderNumber": "4878",
