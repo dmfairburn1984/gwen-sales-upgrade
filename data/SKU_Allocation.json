@@ -1,19 +1,19 @@
 {
   "metadata": {
-    "generatedAt": "2026-03-17T14:34:58.760Z",
+    "generatedAt": "2026-03-17T18:36:07.561Z",
     "version": "1.3",
-    "processingTimeMs": 20549,
-    "totalOrders": 480,
-    "totalLineItems": 819,
-    "fulfilledOrdersSkipped": 4077,
+    "processingTimeMs": 75029,
+    "totalOrders": 484,
+    "totalLineItems": 824,
+    "fulfilledOrdersSkipped": 4082,
     "refundedOrdersSkipped": 202,
     "arrivedPORingfenced": 0,
-    "keptOnTaggedPO": 342,
-    "tagOverridesDetected": 116,
-    "crossPOAllocations": 220,
+    "keptOnTaggedPO": 343,
+    "tagOverridesDetected": 114,
+    "crossPOAllocations": 219,
     "inventoryRingfenceItems": 98,
     "noStockItems": 29,
-    "bundlesExpanded": 207,
+    "bundlesExpanded": 208,
     "arrivedPOs": [
       "13/2026",
       "14/2026",
@@ -8090,11 +8090,11 @@
     },
     {
       "orderNumber": "4674",
-      "orderTagPO": "21/2026",
+      "orderTagPO": "18/2026",
       "suggestedTagPO": "18/2026",
-      "tagChangeRequired": true,
-      "tagOverrideDetected": true,
-      "tagOverrideReason": "Staff tagged to 21/2026 (ETA 2026-04-05), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
       "isDeliveryBookingInProgress": false,
       "shipDate": "2026-04-05T11:00:00.000Z",
       "lineItems": [
@@ -8107,12 +8107,12 @@
           "arrivalDate": "2026-04-05T11:00:00.000Z",
           "plannedOnSourcePO": 30,
           "availableAfterAllocation": 0,
-          "status": "allocated",
-          "note": "Staff tagged to 21/2026 (ETA 2026-04-05), FIFO allocates to 18/2026 (ETA 2026-04-05)",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "21/2026",
-          "staffTagArrival": "2026-04-05T11:00:00.000Z",
+          "status": "allocated-to-tagged-po",
+          "note": "FIFO confirms staff tag",
+          "keptOnTaggedPO": true,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": false
         },
         {
@@ -8125,16 +8125,16 @@
           "plannedOnSourcePO": 50,
           "availableAfterAllocation": 40,
           "status": "allocated",
-          "note": "Staff tagged to 21/2026 (ETA 2026-04-05), FIFO allocates to 19/2026 (ETA 2026-03-23)",
+          "note": "Cross-PO allocation",
           "keptOnTaggedPO": false,
-          "tagOverrideDetected": true,
-          "staffTaggedPO": "21/2026",
-          "staffTagArrival": "2026-04-05T11:00:00.000Z",
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
           "isFromBundle": false
         }
       ],
       "overallStatus": "allocated-cross-po",
-      "actionRequired": "⚠️ TAG OVERRIDE: Staff tagged to 21/2026 (ETA 2026-04-05), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation.",
+      "actionRequired": "All items allocated. No action needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -13111,32 +13111,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4844",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "KRISTEN-NATUR-BED",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4845",
       "orderTagPO": "34/2026",
       "suggestedTagPO": "34/2026",
@@ -13744,32 +13718,6 @@
       ],
       "overallStatus": "allocated-cross-po",
       "actionRequired": "All items allocated. No action needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4861",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-GREY-BUNDLE",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
       "isFulfilled": false,
       "isRefunded": false
     },
@@ -16252,32 +16200,6 @@
       "isRefunded": false
     },
     {
-      "orderNumber": "4923",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "STOCKHOLM-CORNER-BLACK",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
       "orderNumber": "4924",
       "orderTagPO": "NO TAG",
       "suggestedTagPO": "N/A - Delivery in Progress",
@@ -17764,42 +17686,6 @@
         },
         {
           "sku": "SANTORINI-GREY",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        }
-      ],
-      "overallStatus": "delivery-booking-in-progress",
-      "actionRequired": "✅ Order is with warehouse for delivery booking. No changes needed.",
-      "isFulfilled": false,
-      "isRefunded": false
-    },
-    {
-      "orderNumber": "4961",
-      "orderTagPO": "NO TAG",
-      "suggestedTagPO": "N/A - Delivery in Progress",
-      "tagChangeRequired": false,
-      "tagOverrideDetected": false,
-      "tagOverrideReason": "",
-      "isDeliveryBookingInProgress": true,
-      "shipDate": "",
-      "lineItems": [
-        {
-          "sku": "PALMA-COVER",
-          "quantity": 1,
-          "allocationSource": "delivery-in-progress",
-          "status": "with-warehouse",
-          "note": "Order already with warehouse for delivery booking",
-          "keptOnTaggedPO": false,
-          "tagOverrideDetected": false,
-          "isFromBundle": false
-        },
-        {
-          "sku": "FARO-LOUNGE-SET",
           "quantity": 1,
           "allocationSource": "delivery-in-progress",
           "status": "with-warehouse",
@@ -21011,13 +20897,305 @@
       "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CHAISE-LOUNGE",
       "isFulfilled": false,
       "isRefunded": false
+    },
+    {
+      "orderNumber": "5039",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 38,
+          "inventoryAfterAllocation": 37,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-LOUNGE-SET",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5040",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "53/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-06-04T23:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "OXFORD-5S-CNR-BEIGE",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "53/2026",
+          "stockSourceArrival": "2026-06-04T23:00:00.000Z",
+          "arrivalDate": "2026-06-04T23:00:00.000Z",
+          "plannedOnSourcePO": 40,
+          "availableAfterAllocation": 35,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 53/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5041",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "46/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "46/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 19,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 46/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5042",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "NO STOCK",
+      "tagChangeRequired": false,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "",
+      "lineItems": [
+        {
+          "sku": "STOCKHOLM-CORNER-BLACK",
+          "quantity": 1,
+          "allocationSource": "inventory",
+          "currentInventory": 119,
+          "inventoryAfterAllocation": 118,
+          "status": "ringfenced",
+          "note": "Using warehouse stock",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "allocated-inventory",
+      "actionRequired": "Reserve warehouse stock for: STOCKHOLM-CORNER-BLACK",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5043",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "46/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "46/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 18,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 46/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5044",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "46/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "46/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 17,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 46/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5045",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "46/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "46/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 16,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        },
+        {
+          "sku": "PALMA-COVER",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "22/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 44,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": false
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 46/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
+    },
+    {
+      "orderNumber": "5046",
+      "orderTagPO": "NO TAG",
+      "suggestedTagPO": "46/2026",
+      "tagChangeRequired": true,
+      "tagOverrideDetected": false,
+      "tagOverrideReason": "",
+      "isDeliveryBookingInProgress": false,
+      "shipDate": "2026-04-27T11:00:00.000Z",
+      "lineItems": [
+        {
+          "sku": "FARO-LOUNGE-SET",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "46/2026",
+          "stockSourceArrival": "2026-04-27T11:00:00.000Z",
+          "arrivalDate": "2026-04-27T11:00:00.000Z",
+          "plannedOnSourcePO": 50,
+          "availableAfterAllocation": 15,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        },
+        {
+          "sku": "PALMA-CUSHION-BOX",
+          "quantity": 1,
+          "allocationSource": "po",
+          "stockSourcePO": "26/2026",
+          "stockSourceArrival": "2026-04-05T11:00:00.000Z",
+          "arrivalDate": "2026-04-05T11:00:00.000Z",
+          "plannedOnSourcePO": 200,
+          "availableAfterAllocation": 93,
+          "status": "allocated",
+          "note": "",
+          "keptOnTaggedPO": false,
+          "tagOverrideDetected": false,
+          "staffTaggedPO": null,
+          "staffTagArrival": null,
+          "isFromBundle": true,
+          "bundleSku": "PALMA-CUSHION BOX-BUNDLE"
+        }
+      ],
+      "overallStatus": "fully-allocated",
+      "actionRequired": "⚠️ Order has NO TAG but requires PO stock. Tag order to 46/2026.",
+      "isFulfilled": false,
+      "isRefunded": false
     }
   ],
   "summary": {
     "byStatus": {
-      "allocated-inventory": 79,
-      "fully-allocated": 128,
-      "delivery-booking-in-progress": 65,
+      "allocated-inventory": 81,
+      "fully-allocated": 134,
+      "delivery-booking-in-progress": 61,
       "no-stock": 26,
       "allocated-mixed": 27,
       "allocated-cross-po": 155
@@ -21039,12 +21217,6 @@
         "orderNumber": "4448",
         "currentTag": "18/2026",
         "suggestedTag": "19/2026",
-        "isOverride": true
-      },
-      {
-        "orderNumber": "4674",
-        "currentTag": "21/2026",
-        "suggestedTag": "18/2026",
         "isOverride": true
       },
       {
@@ -21268,6 +21440,42 @@
         "currentTag": "NO TAG",
         "suggestedTag": "46/2026",
         "isOverride": false
+      },
+      {
+        "orderNumber": "5040",
+        "currentTag": "NO TAG",
+        "suggestedTag": "53/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "5041",
+        "currentTag": "NO TAG",
+        "suggestedTag": "46/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "5043",
+        "currentTag": "NO TAG",
+        "suggestedTag": "46/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "5044",
+        "currentTag": "NO TAG",
+        "suggestedTag": "46/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "5045",
+        "currentTag": "NO TAG",
+        "suggestedTag": "46/2026",
+        "isOverride": false
+      },
+      {
+        "orderNumber": "5046",
+        "currentTag": "NO TAG",
+        "suggestedTag": "46/2026",
+        "isOverride": false
       }
     ],
     "tagOverrides": [
@@ -21282,12 +21490,6 @@
         "staffTag": "18/2026",
         "fifoRecommendation": "19/2026",
         "reason": "Staff tagged to 18/2026 (ETA 2026-04-05), but Gwen suggests to tag it to 19/2026 because the ETA is 2026-03-23, so it arrives earlier. Re-tag to 19/2026 for faster delivery."
-      },
-      {
-        "orderNumber": "4674",
-        "staffTag": "21/2026",
-        "fifoRecommendation": "18/2026",
-        "reason": "Staff tagged to 21/2026 (ETA 2026-04-05), but Gwen suggests to tag it to 18/2026 because although its the same ETA its earlier in the allocation queue). Re-tag to 18/2026 to align with system allocation."
       },
       {
         "orderNumber": "4777",
@@ -21372,7 +21574,7 @@
   "auditTrail": {
     "silentAllocations": [
       {
-        "timestamp": "2026-03-17T14:34:58.519Z",
+        "timestamp": "2026-03-17T18:36:06.116Z",
         "orderNumber": "4443",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21382,7 +21584,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.519Z",
+        "timestamp": "2026-03-17T18:36:06.118Z",
         "orderNumber": "4448",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21392,7 +21594,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.520Z",
+        "timestamp": "2026-03-17T18:36:06.122Z",
         "orderNumber": "4468",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21402,7 +21604,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.520Z",
+        "timestamp": "2026-03-17T18:36:06.145Z",
         "orderNumber": "4471",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21412,7 +21614,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.520Z",
+        "timestamp": "2026-03-17T18:36:06.149Z",
         "orderNumber": "4473",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21422,7 +21624,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.521Z",
+        "timestamp": "2026-03-17T18:36:06.150Z",
         "orderNumber": "4477",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21432,7 +21634,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.150Z",
         "orderNumber": "4478",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21442,7 +21644,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.150Z",
         "orderNumber": "4480",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21452,7 +21654,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.150Z",
         "orderNumber": "4482",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21462,7 +21664,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.150Z",
         "orderNumber": "4488",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21472,7 +21674,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4490",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21482,7 +21684,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.522Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4494",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21492,7 +21694,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.527Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4496",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21502,7 +21704,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.527Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4498",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21512,7 +21714,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.527Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4500",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21522,7 +21724,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.535Z",
+        "timestamp": "2026-03-17T18:36:06.151Z",
         "orderNumber": "4503",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21532,7 +21734,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.535Z",
+        "timestamp": "2026-03-17T18:36:06.152Z",
         "orderNumber": "4507",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21542,7 +21744,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.536Z",
+        "timestamp": "2026-03-17T18:36:06.152Z",
         "orderNumber": "4509",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -21552,7 +21754,7 @@
         "otherSKUs": "CHESTERTON-COVER, CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.536Z",
+        "timestamp": "2026-03-17T18:36:06.153Z",
         "orderNumber": "4522",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21562,7 +21764,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.537Z",
+        "timestamp": "2026-03-17T18:36:06.153Z",
         "orderNumber": "4536",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21572,7 +21774,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.537Z",
+        "timestamp": "2026-03-17T18:36:06.153Z",
         "orderNumber": "4538",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21582,7 +21784,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.154Z",
         "orderNumber": "4545",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21592,7 +21794,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.154Z",
         "orderNumber": "4547",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21602,7 +21804,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.154Z",
         "orderNumber": "4553",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21612,7 +21814,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.155Z",
         "orderNumber": "4561",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21622,7 +21824,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.155Z",
         "orderNumber": "4566",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21632,7 +21834,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.538Z",
+        "timestamp": "2026-03-17T18:36:06.155Z",
         "orderNumber": "4567",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21642,7 +21844,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.549Z",
+        "timestamp": "2026-03-17T18:36:06.156Z",
         "orderNumber": "4581",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -21652,7 +21854,7 @@
         "otherSKUs": "CHESTERTON-COVER, CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.554Z",
+        "timestamp": "2026-03-17T18:36:06.156Z",
         "orderNumber": "4588",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21662,7 +21864,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.554Z",
+        "timestamp": "2026-03-17T18:36:06.156Z",
         "orderNumber": "4596",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21672,7 +21874,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.556Z",
+        "timestamp": "2026-03-17T18:36:06.157Z",
         "orderNumber": "4612",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -21682,7 +21884,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.557Z",
+        "timestamp": "2026-03-17T18:36:06.158Z",
         "orderNumber": "4634",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21692,7 +21894,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.558Z",
+        "timestamp": "2026-03-17T18:36:06.158Z",
         "orderNumber": "4638",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21702,7 +21904,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.558Z",
+        "timestamp": "2026-03-17T18:36:06.158Z",
         "orderNumber": "4641",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21712,7 +21914,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.158Z",
         "orderNumber": "4657",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21722,7 +21924,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4662",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21732,7 +21934,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4665",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21742,7 +21944,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4666",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21752,7 +21954,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4666",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21762,7 +21964,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.559Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4667",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21772,7 +21974,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4668",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21782,7 +21984,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4669",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21792,7 +21994,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.159Z",
         "orderNumber": "4671",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -21802,27 +22004,17 @@
         "otherSKUs": "CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
-        "orderNumber": "4674",
-        "sku": "FARO-LOUNGE-SET",
-        "qty": 1,
-        "fromPO": "21/2026",
-        "toPO": "18/2026",
-        "reserveInventory": "No",
-        "otherSKUs": "PALMA-COVER"
-      },
-      {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4674",
         "sku": "PALMA-COVER",
         "qty": 1,
-        "fromPO": "21/2026",
+        "fromPO": "18/2026",
         "toPO": "19/2026",
         "reserveInventory": "No",
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4675",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21832,7 +22024,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4675",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21842,7 +22034,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.560Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4676",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21852,7 +22044,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4678",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21862,7 +22054,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4680",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21872,7 +22064,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4682",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21882,7 +22074,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4687",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21892,7 +22084,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4687",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21902,7 +22094,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4689",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21912,7 +22104,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.160Z",
         "orderNumber": "4690",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21922,7 +22114,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.561Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4691",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21932,7 +22124,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4692",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21942,7 +22134,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4692",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21952,7 +22144,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4693",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21962,7 +22154,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4694",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21972,7 +22164,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4697",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -21982,7 +22174,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4703",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -21992,7 +22184,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4709",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22002,7 +22194,7 @@
         "otherSKUs": "SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.161Z",
         "orderNumber": "4709",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -22012,7 +22204,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, SICILY-140CM-8S-BLACK, PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4709",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22022,7 +22214,7 @@
         "otherSKUs": "PALMA-CUSHION-BOX, SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4709",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22032,7 +22224,7 @@
         "otherSKUs": "SICILY-140CM-8S-BLACK, FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.563Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4713",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22042,7 +22234,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.564Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4723",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22052,7 +22244,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.564Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4727",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22062,7 +22254,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.564Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4732",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22072,7 +22264,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4735",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22082,7 +22274,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4735",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22092,7 +22284,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.162Z",
         "orderNumber": "4740",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22102,7 +22294,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4749",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22112,7 +22304,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4750",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22122,7 +22314,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4757",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22132,7 +22324,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4758",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22142,7 +22334,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.565Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4759",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22152,7 +22344,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.163Z",
         "orderNumber": "4761",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22162,7 +22354,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4763",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22172,7 +22364,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4763",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22182,7 +22374,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4764",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22192,7 +22384,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4767",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22202,7 +22394,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4772",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22212,7 +22404,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.566Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4773",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22222,7 +22414,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4774",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22232,7 +22424,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.164Z",
         "orderNumber": "4775",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22242,7 +22434,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.215Z",
         "orderNumber": "4777",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -22252,7 +22444,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.215Z",
         "orderNumber": "4781",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22262,7 +22454,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.215Z",
         "orderNumber": "4782",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22272,7 +22464,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4783",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22282,7 +22474,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.567Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4785",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22292,7 +22484,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.568Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4786",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22302,7 +22494,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4792",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -22312,7 +22504,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4792",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22322,7 +22514,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4797",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22332,7 +22524,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4798",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22342,7 +22534,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4799",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22352,7 +22544,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4799",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22362,7 +22554,7 @@
         "otherSKUs": "PALMA-COVER, FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4800",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22372,7 +22564,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.589Z",
+        "timestamp": "2026-03-17T18:36:06.216Z",
         "orderNumber": "4803",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22382,7 +22574,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.217Z",
         "orderNumber": "4806",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22392,7 +22584,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4809",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22402,7 +22594,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4810",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22412,7 +22604,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4810",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22422,7 +22614,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4812",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22432,7 +22624,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.590Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4813",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22442,7 +22634,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.611Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4820",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22452,7 +22644,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.611Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4820",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22462,7 +22654,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.223Z",
         "orderNumber": "4821",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22472,7 +22664,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4827",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22482,7 +22674,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4831",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22492,7 +22684,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4831",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22502,7 +22694,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4832",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22512,7 +22704,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.612Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4834",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22522,7 +22714,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4835",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22532,7 +22724,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4835",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22542,7 +22734,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.224Z",
         "orderNumber": "4836",
         "sku": "FARO-LOUNGE-SET-BEIGE",
         "qty": 1,
@@ -22552,7 +22744,7 @@
         "otherSKUs": "CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.225Z",
         "orderNumber": "4839",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22562,7 +22754,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.225Z",
         "orderNumber": "4839",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22572,7 +22764,7 @@
         "otherSKUs": "PALMA-COVER, FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.225Z",
         "orderNumber": "4840",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22582,7 +22774,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.225Z",
         "orderNumber": "4845",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22592,7 +22784,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.226Z",
         "orderNumber": "4847",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22602,7 +22794,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.226Z",
         "orderNumber": "4849",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22612,7 +22804,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.613Z",
+        "timestamp": "2026-03-17T18:36:06.226Z",
         "orderNumber": "4850",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22622,7 +22814,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.226Z",
         "orderNumber": "4852",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22632,7 +22824,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.227Z",
         "orderNumber": "4853",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22642,7 +22834,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.227Z",
         "orderNumber": "4854",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22652,7 +22844,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.232Z",
         "orderNumber": "4857",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22662,7 +22854,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.232Z",
         "orderNumber": "4860",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22672,7 +22864,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.232Z",
         "orderNumber": "4864",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22682,7 +22874,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.614Z",
+        "timestamp": "2026-03-17T18:36:06.266Z",
         "orderNumber": "4868",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22692,7 +22884,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.615Z",
+        "timestamp": "2026-03-17T18:36:06.270Z",
         "orderNumber": "4869",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22702,7 +22894,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.270Z",
         "orderNumber": "4870",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22712,7 +22904,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.270Z",
         "orderNumber": "4870",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22722,7 +22914,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.270Z",
         "orderNumber": "4871",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22732,7 +22924,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.270Z",
         "orderNumber": "4872",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22742,7 +22934,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.288Z",
         "orderNumber": "4874",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22752,7 +22944,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.295Z",
         "orderNumber": "4875",
         "sku": "PALMA-COVER",
         "qty": 2,
@@ -22762,7 +22954,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.627Z",
+        "timestamp": "2026-03-17T18:36:06.296Z",
         "orderNumber": "4876",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22772,7 +22964,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.641Z",
+        "timestamp": "2026-03-17T18:36:06.303Z",
         "orderNumber": "4878",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22782,7 +22974,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.641Z",
+        "timestamp": "2026-03-17T18:36:06.303Z",
         "orderNumber": "4878",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22792,7 +22984,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.641Z",
+        "timestamp": "2026-03-17T18:36:06.303Z",
         "orderNumber": "4880",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22802,7 +22994,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.641Z",
+        "timestamp": "2026-03-17T18:36:06.303Z",
         "orderNumber": "4880",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22812,7 +23004,7 @@
         "otherSKUs": "PALMA-COVER, FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.641Z",
+        "timestamp": "2026-03-17T18:36:06.310Z",
         "orderNumber": "4884",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22822,7 +23014,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.642Z",
+        "timestamp": "2026-03-17T18:36:06.315Z",
         "orderNumber": "4892",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22832,7 +23024,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.316Z",
         "orderNumber": "4893",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -22842,7 +23034,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.316Z",
         "orderNumber": "4893",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22852,7 +23044,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.321Z",
         "orderNumber": "4894",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22862,7 +23054,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.321Z",
         "orderNumber": "4894",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22872,7 +23064,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.325Z",
         "orderNumber": "4895",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22882,7 +23074,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.333Z",
         "orderNumber": "4898",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22892,7 +23084,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.333Z",
         "orderNumber": "4899",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22902,7 +23094,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.333Z",
         "orderNumber": "4900",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22912,7 +23104,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.643Z",
+        "timestamp": "2026-03-17T18:36:06.333Z",
         "orderNumber": "4902",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22922,7 +23114,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.335Z",
         "orderNumber": "4904",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22932,7 +23124,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.335Z",
         "orderNumber": "4905",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22942,7 +23134,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.342Z",
         "orderNumber": "4906",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22952,7 +23144,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.345Z",
         "orderNumber": "4906",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22962,7 +23154,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.345Z",
         "orderNumber": "4909",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22972,7 +23164,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.345Z",
         "orderNumber": "4909",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -22982,7 +23174,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.644Z",
+        "timestamp": "2026-03-17T18:36:06.345Z",
         "orderNumber": "4910",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -22992,7 +23184,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.645Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4911",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23002,7 +23194,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.645Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4911",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23012,7 +23204,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.645Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4913",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23022,7 +23214,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.645Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4913",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23032,7 +23224,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.645Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4914",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23042,7 +23234,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.646Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4915",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23052,7 +23244,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.646Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4918",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23062,7 +23254,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.646Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4919",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23072,7 +23264,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.646Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4919",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23082,7 +23274,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.646Z",
+        "timestamp": "2026-03-17T18:36:06.346Z",
         "orderNumber": "4920",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23092,7 +23284,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.647Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4928",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23102,7 +23294,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.647Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4928",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23112,7 +23304,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.647Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4929",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23122,7 +23314,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.647Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4931",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23132,7 +23324,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.647Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4932",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23142,7 +23334,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.648Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4933",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23152,7 +23344,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.648Z",
+        "timestamp": "2026-03-17T18:36:06.367Z",
         "orderNumber": "4933",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23162,7 +23354,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.649Z",
+        "timestamp": "2026-03-17T18:36:06.371Z",
         "orderNumber": "4936",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23172,7 +23364,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.650Z",
+        "timestamp": "2026-03-17T18:36:06.372Z",
         "orderNumber": "4940",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23182,7 +23374,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.650Z",
+        "timestamp": "2026-03-17T18:36:06.373Z",
         "orderNumber": "4943",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23192,7 +23384,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.650Z",
+        "timestamp": "2026-03-17T18:36:06.373Z",
         "orderNumber": "4943",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23202,7 +23394,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.650Z",
+        "timestamp": "2026-03-17T18:36:06.451Z",
         "orderNumber": "4945",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23212,7 +23404,7 @@
         "otherSKUs": "BALI-WOOD-PARASOL-GREY, FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.650Z",
+        "timestamp": "2026-03-17T18:36:06.451Z",
         "orderNumber": "4945",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23222,7 +23414,7 @@
         "otherSKUs": "BALI-WOOD-PARASOL-GREY, FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.651Z",
+        "timestamp": "2026-03-17T18:36:06.453Z",
         "orderNumber": "4947",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23232,7 +23424,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.653Z",
+        "timestamp": "2026-03-17T18:36:06.453Z",
         "orderNumber": "4948",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23242,7 +23434,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.653Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4950",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23252,7 +23444,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.653Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4951",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23262,7 +23454,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.654Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4955",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23272,7 +23464,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.654Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4955",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23282,7 +23474,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.654Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4959",
         "sku": "MALAGA-LOUNGE-SET",
         "qty": 1,
@@ -23292,7 +23484,7 @@
         "otherSKUs": "CHESTERTON-COVER, CHESTERTON-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.668Z",
+        "timestamp": "2026-03-17T18:36:06.454Z",
         "orderNumber": "4962",
         "sku": "FARO-LOUNGE-SET-BEIGE",
         "qty": 1,
@@ -23302,7 +23494,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.668Z",
+        "timestamp": "2026-03-17T18:36:06.460Z",
         "orderNumber": "4967",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23312,7 +23504,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.668Z",
+        "timestamp": "2026-03-17T18:36:06.460Z",
         "orderNumber": "4971",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23322,7 +23514,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.668Z",
+        "timestamp": "2026-03-17T18:36:06.460Z",
         "orderNumber": "4975",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23332,7 +23524,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.669Z",
+        "timestamp": "2026-03-17T18:36:06.460Z",
         "orderNumber": "4976",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23342,7 +23534,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.669Z",
+        "timestamp": "2026-03-17T18:36:06.460Z",
         "orderNumber": "4977",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23352,7 +23544,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.670Z",
+        "timestamp": "2026-03-17T18:36:06.462Z",
         "orderNumber": "4980",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23362,7 +23554,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.468Z",
         "orderNumber": "4981",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23372,7 +23564,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4982",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23382,7 +23574,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4983",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23392,7 +23584,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4984",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23402,7 +23594,7 @@
         "otherSKUs": ""
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4985",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23412,7 +23604,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.682Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4985",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23422,7 +23614,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4986",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23432,7 +23624,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4986",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23442,7 +23634,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4987",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23452,7 +23644,7 @@
         "otherSKUs": "PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.469Z",
         "orderNumber": "4987",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23462,7 +23654,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4989",
         "sku": "FARO-LOUNGE-SET",
         "qty": 1,
@@ -23472,7 +23664,7 @@
         "otherSKUs": "PALMA-COVER, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4989",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23482,7 +23674,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4989",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23492,7 +23684,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4991",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23502,7 +23694,7 @@
         "otherSKUs": "FARO-LOUNGE-SET-BEIGE"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.683Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4992",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23512,7 +23704,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.684Z",
+        "timestamp": "2026-03-17T18:36:06.471Z",
         "orderNumber": "4993",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23522,7 +23714,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.684Z",
+        "timestamp": "2026-03-17T18:36:06.472Z",
         "orderNumber": "4999",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23532,7 +23724,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-CUSHION-BOX"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.684Z",
+        "timestamp": "2026-03-17T18:36:06.472Z",
         "orderNumber": "4999",
         "sku": "PALMA-CUSHION-BOX",
         "qty": 1,
@@ -23542,7 +23734,7 @@
         "otherSKUs": "FARO-LOUNGE-SET, PALMA-COVER"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.685Z",
+        "timestamp": "2026-03-17T18:36:06.472Z",
         "orderNumber": "5003",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23552,7 +23744,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.685Z",
+        "timestamp": "2026-03-17T18:36:06.475Z",
         "orderNumber": "5007",
         "sku": "PALMA-COVER",
         "qty": 1,
@@ -23562,7 +23754,7 @@
         "otherSKUs": "FARO-LOUNGE-SET"
       },
       {
-        "timestamp": "2026-03-17T14:34:58.685Z",
+        "timestamp": "2026-03-17T18:36:06.475Z",
         "orderNumber": "5008",
         "sku": "PALMA-COVER",
         "qty": 1,
