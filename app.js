@@ -1558,7 +1558,7 @@ If you cannot identify which product the customer means, ask for clarification u
 
 CRITICAL - EXISTING ORDERS & DELIVERY:
 You CAN help an existing customer with the delivery timing / status of their OWN order — but ONLY using verified order data the system provides you. To look anything up you must have BOTH their order number AND their delivery postcode; politely ask for whichever is missing. NEVER invent, guess, or estimate a delivery date: if the system has not given you a verified date for this order, tell the customer you don't have a confirmed date to hand and ask them to email help@mint-outdoor.com — in this same reply. Never say you'll check or get back to them.
-For DAMAGE or missing/faulty parts, point the customer to our care team. For REFUNDS, RETURNS, or CANCELLATIONS, do NOT process these yourself — tell the customer to email help@mint-outdoor.com with their order number and the team will action it. Never invent a refund or returns process beyond this.
+For DAMAGE or missing/faulty parts, point the customer to our care team. If a customer EXPLICITLY asks to CANCEL their order or get a REFUND: do NOT process, confirm, promise, negotiate, or quote any amount yourself. Instead ask for their order number AND delivery postcode, then use the file_refund_request tool to pass it to the team; once it succeeds, simply tell them you've passed their cancellation/refund request to the team and they'll be in touch shortly. If it can't be verified, ask them to email help@mint-outdoor.com. For RETURNS of an item they have already received, ask them to email help@mint-outdoor.com with their order number. Never invent a refund or returns process beyond this.
 
 CRITICAL - NO STALLING, NO BACKGROUND WORK:
 You have NO background process and CANNOT go away and come back. Never tell the customer to wait, that you're "checking", "verifying in the background", "pulling up their order", or that you'll "get back to them". Every reply must be complete in itself: either you have the answer and you give it now, or you don't and you either ask for the specific missing detail or hand off — in THIS reply. Never promise a follow-up you cannot send.
@@ -2136,6 +2136,31 @@ const aiTools = [
                     postcode: {
                         type: "string",
                         description: "The customer's delivery postcode, used to verify their identity against the order."
+                    }
+                },
+                required: ["orderNumber", "postcode"]
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "file_refund_request",
+            description: "File a CANCELLATION or REFUND request for an existing order, ONLY when the customer EXPLICITLY asks to cancel their order or get a refund. You MUST have collected BOTH the order number AND the delivery postcode first — if either is missing, ask for it in your reply. Do NOT use this for delivery questions, damage, or returns of an already-delivered item. NEVER offer a refund proactively; only use this when the customer themselves demands a cancellation or refund. After filing, simply tell the customer it has been passed to the team — never confirm, promise, negotiate, or quote a refund amount.",
+            parameters: {
+                type: "object",
+                properties: {
+                    orderNumber: {
+                        type: "string",
+                        description: "The customer's order number (digits)."
+                    },
+                    postcode: {
+                        type: "string",
+                        description: "The customer's delivery postcode, used to verify identity against the order."
+                    },
+                    customerIntent: {
+                        type: "string",
+                        description: "One short sentence describing what the customer asked for."
                     }
                 },
                 required: ["orderNumber", "postcode"]
@@ -3106,16 +3131,8 @@ app.post('/chat', async (req, res) => {
             'missing part', 'missing parts', 'parts missing',
             'missing from order', 'missing from my', 'missing from the'
         ];
-        const refundReturnCancelPatterns = [
-            'refund', 'send back', 'sending back', 'send it back', 'money back',
-            'return my', 'return it', 'want a refund', 'get a refund',
-            'cancel my order', 'cancel order', 'cancel my', 'cancel it',
-            'want to cancel', 'like to cancel'
-        ];
-
         const hasOrderEvidence = orderEvidencePatterns.some(p => msgLower.includes(p));
         const hasDamageClaim = damageClaimPatterns.some(p => msgLower.includes(p));
-        const hasRefundReturnCancel = refundReturnCancelPatterns.some(p => msgLower.includes(p));
         const hasFrustration = frustrationPatterns.some(p => msgLower.includes(p));
         const isNotACustomer = notACustomerPatterns.some(p => msgLower.includes(p));
         const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') || 
@@ -3140,22 +3157,9 @@ app.post('/chat', async (req, res) => {
             return res.json({ response: damageResponse, sessionId });
         }
 
-        // ROUTE A2 (Phase 0.0): REFUND / RETURN / CANCEL → concrete interim destination
-        // (email help@). Only fires on explicit refund/return/cancel language. Phase 1
-        // will formalise the goodwill→escalation flow; this is the interim destination.
-        if (hasRefundReturnCancel && !isNotACustomer && !wantsToBuyMore) {
-            console.log(`💸 REFUND/RETURN/CANCEL DETECTED → help@: "${message}"`);
-
-            const refundResponse = `I'm sorry you're looking to arrange that. To get a refund, return, or cancellation actioned, please email our team at <a href="mailto:help@mint-outdoor.com">help@mint-outdoor.com</a> with your order number and they'll get it sorted for you as quickly as possible.\n\nIf there's anything else I can help with in the meantime, I'm right here!`;
-
-            session.conversationHistory.push({ role: 'user', content: message });
-            session.conversationHistory.push({ role: 'assistant', content: refundResponse });
-
-            await logConversationMessage(sessionId, 'user', message, { sentiment: 'refund_return_cancel' });
-            await logConversationMessage(sessionId, 'assistant', refundResponse, { intent: 'refund_help_email_redirect' });
-
-            return res.json({ response: refundResponse, sessionId });
-        }
+        // Phase 1a: REFUND / CANCELLATION is no longer a deterministic deflection. An explicit
+        // cancel/refund demand now flows to the assistant, which verifies the order (number +
+        // postcode) and files a refund_request via the file_refund_request tool (handler below).
         
         // ROUTE B: Frustration WITHOUT order evidence (or explicitly said "not a customer")
         if ((hasFrustration && !hasOrderEvidence) || (isNotACustomer && hasFrustration)) {
@@ -4327,6 +4331,78 @@ app.post('/chat', async (req, res) => {
                                 output: JSON.stringify({
                                     verified: false,
                                     message: "The order lookup is temporarily unavailable. In this reply, apologise briefly and ask the customer to email help@mint-outdoor.com with their order number so the team can confirm their delivery date. Do not promise to check yourself."
+                                })
+                            });
+                        }
+                    }
+                }
+
+                if (toolCall.function.name === "file_refund_request") {
+                    console.log(`💸 Refund/cancellation request:`, { orderNumber: args.orderNumber, hasPostcode: !!args.postcode });
+
+                    const refOrder = (args.orderNumber || '').toString().replace(/[^0-9]/g, '');
+                    const refPostcode = (args.postcode || '').toString().trim();
+
+                    if (!refOrder || !refPostcode) {
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                filed: false,
+                                message: "To pass a cancellation/refund to the team I need BOTH the order number AND the delivery postcode. Ask the customer for whichever is missing — in this reply."
+                            })
+                        });
+                    } else {
+                        try {
+                            const controller = new AbortController();
+                            const timer = setTimeout(() => controller.abort(), 5000);
+                            const escRes = await fetch(`${INTEL_API_URL}/chatbot-escalation`, {
+                                method: 'POST',
+                                headers: { 'X-API-Key': INTEL_API_KEY, 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    orderNumber: refOrder,
+                                    postcode: refPostcode,
+                                    scenario: 'refund_request',
+                                    customerIntent: (args.customerIntent || 'Customer asked to cancel/refund their order').toString().slice(0, 300),
+                                    sessionId,
+                                    transcript: (session.conversationHistory || []).slice(-30)
+                                }),
+                                signal: controller.signal
+                            });
+                            clearTimeout(timer);
+                            const escData = escRes.ok ? await escRes.json() : null;
+
+                            if (escData && escData.filed === true) {
+                                toolResults.push({
+                                    tool_call_id: toolCall.id,
+                                    output: JSON.stringify({
+                                        filed: true,
+                                        message: `Done. In this reply, tell the customer warmly and briefly: "I've passed your cancellation/refund request to our team and they'll be in touch shortly to sort it out for you." Do NOT confirm or promise the refund, do NOT negotiate, and do NOT quote any amount.`
+                                    })
+                                });
+                            } else if (escData && escData.verified === false) {
+                                toolResults.push({
+                                    tool_call_id: toolCall.id,
+                                    output: JSON.stringify({
+                                        filed: false,
+                                        message: "The postcode doesn't match that order, so I couldn't verify it. In this reply, politely ask the customer to re-check their order number and delivery postcode. Do not file anything yet."
+                                    })
+                                });
+                            } else {
+                                toolResults.push({
+                                    tool_call_id: toolCall.id,
+                                    output: JSON.stringify({
+                                        filed: false,
+                                        message: "I couldn't file that just now. In this reply, ask the customer to email help@mint-outdoor.com with their order number so the team can action the cancellation/refund."
+                                    })
+                                });
+                            }
+                        } catch (err) {
+                            console.error(`[INTEL] file_refund_request failed:`, err.message);
+                            toolResults.push({
+                                tool_call_id: toolCall.id,
+                                output: JSON.stringify({
+                                    filed: false,
+                                    message: "That couldn't be filed right now. In this reply, ask the customer to email help@mint-outdoor.com with their order number so the team can action it."
                                 })
                             });
                         }
