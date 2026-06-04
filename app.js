@@ -1551,10 +1551,9 @@ Example: Customer says "Barcelona vision set" → You say "Barcelona Lounge Set"
 Example: Customer says "Stokholm chais" → You say "Stockholm Chaise Lounge Set".
 If you cannot identify which product the customer means, ask for clarification using the correct product names from our range.
 
-CRITICAL - ORDER TRACKING & EXISTING ORDERS:
-You do NOT handle order tracking, delivery issues, returns, refunds, or any existing order queries.
-For ANY existing order enquiry, direct the customer to our Order Helpdesk immediately.
-Never say you can track orders or help with existing orders.
+CRITICAL - EXISTING ORDERS & DELIVERY:
+You CAN help an existing customer with the delivery timing / status of their OWN order — but ONLY using verified order data the system provides you. To look anything up you must have BOTH their order number AND their delivery postcode; politely ask for whichever is missing. NEVER invent, guess, or estimate a delivery date: if the system has not given you a verified date for this order, tell the customer you'll check and connect them to the team rather than guessing.
+For DAMAGE or missing/faulty parts, point the customer to our care team. For REFUNDS, RETURNS, or CANCELLATIONS, do NOT process these yourself — tell the customer to email help@mint-outdoor.com with their order number and the team will action it. Never invent a refund or returns process beyond this.
 
 GOLDEN RULE: A customer looking at a product card is 10x more likely to buy than one answering questions.
 
@@ -3070,27 +3069,63 @@ app.post('/chat', async (req, res) => {
             'looking to buy', 'interested in buying', 'thinking of buying'
         ];
         
+        // Phase 0.0: damage/claim and refund/return/cancel are distinct deterministic
+        // intakes (care form / help@), NOT order-status. Order-status falls through.
+        const damageClaimPatterns = [
+            'arrived damaged', 'arrived broken', 'damaged on arrival', 'arrived faulty', 'faulty',
+            'wrong item', 'wrong item sent', 'sent wrong', 'received wrong',
+            'missing part', 'missing parts', 'parts missing',
+            'missing from order', 'missing from my', 'missing from the'
+        ];
+        const refundReturnCancelPatterns = [
+            'refund', 'send back', 'sending back', 'send it back', 'money back',
+            'return my', 'return it', 'want a refund', 'get a refund',
+            'cancel my order', 'cancel order', 'cancel my', 'cancel it',
+            'want to cancel', 'like to cancel'
+        ];
+
         const hasOrderEvidence = orderEvidencePatterns.some(p => msgLower.includes(p));
+        const hasDamageClaim = damageClaimPatterns.some(p => msgLower.includes(p));
+        const hasRefundReturnCancel = refundReturnCancelPatterns.some(p => msgLower.includes(p));
         const hasFrustration = frustrationPatterns.some(p => msgLower.includes(p));
         const isNotACustomer = notACustomerPatterns.some(p => msgLower.includes(p));
         const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') || 
                                msgLower.includes('another') || msgLower.includes('additional order') ||
                                msgLower.includes('new order') || msgLower.includes('want to buy');
         
-        // ROUTE A: Clear order evidence (and not explicitly saying they're not a customer)
-        if (hasOrderEvidence && !isNotACustomer && !wantsToBuyMore) {
-            console.log(`🚨 EXISTING CUSTOMER ORDER ISSUE DETECTED: "${message}"`);
-            
-            const helpdeskUrl = 'https://mint-orderhelpdesk-bot-5c699086fbd7.herokuapp.com/';
-            const complaintResponse = `I'm really sorry to hear you're having an issue with your order. For existing order enquiries, complaints, or issues with deliveries, our dedicated Order Helpdesk team can assist you straight away.\n\n**Please click here to speak with our Order Helpdesk:**\n<a href="${helpdeskUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Go to Order Helpdesk →</a>\n\nThey have access to your order details and can resolve issues much faster than I can.\n\nIf you'd like to browse new products or make a new purchase, I'm happy to help with that here!`;
-            
+        // ROUTE A (Phase 0.0): DAMAGE / CLAIM only → deterministic deflection to the care
+        // form. Order-status / delivery queries are NO LONGER caught here — they fall
+        // through to the assistant (Phase 0.1 adds verified order-status lookup).
+        if (hasDamageClaim && !isNotACustomer && !wantsToBuyMore) {
+            console.log(`🛠️ DAMAGE/CLAIM DETECTED → care form: "${message}"`);
+
+            const careFormUrl = 'https://care.mint-outdoor.com/';
+            const damageResponse = `I'm really sorry to hear something's arrived damaged or isn't right. The quickest way to get this sorted is our dedicated care team, who handle replacements and any missing or damaged parts.\n\n**Please tell us what's happened here:**\n<a href="${careFormUrl}" target="_blank" style="display:inline-block; padding:12px 24px; background:#2E6041; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Get this sorted →</a>\n\nYou'll just need your order number to hand, and they'll arrange a replacement or fix for you.\n\nIf there's anything else I can help with in the meantime, I'm right here!`;
+
             session.conversationHistory.push({ role: 'user', content: message });
-            session.conversationHistory.push({ role: 'assistant', content: complaintResponse });
-            
-            await logConversationMessage(sessionId, 'user', message, { sentiment: 'complaint' });
-            await logConversationMessage(sessionId, 'assistant', complaintResponse, { intent: 'complaint_redirect' });
-            
-            return res.json({ response: complaintResponse, sessionId });
+            session.conversationHistory.push({ role: 'assistant', content: damageResponse });
+
+            await logConversationMessage(sessionId, 'user', message, { sentiment: 'damage_claim' });
+            await logConversationMessage(sessionId, 'assistant', damageResponse, { intent: 'damage_care_form_redirect' });
+
+            return res.json({ response: damageResponse, sessionId });
+        }
+
+        // ROUTE A2 (Phase 0.0): REFUND / RETURN / CANCEL → concrete interim destination
+        // (email help@). Only fires on explicit refund/return/cancel language. Phase 1
+        // will formalise the goodwill→escalation flow; this is the interim destination.
+        if (hasRefundReturnCancel && !isNotACustomer && !wantsToBuyMore) {
+            console.log(`💸 REFUND/RETURN/CANCEL DETECTED → help@: "${message}"`);
+
+            const refundResponse = `I'm sorry you're looking to arrange that. To get a refund, return, or cancellation actioned, please email our team at <a href="mailto:help@mint-outdoor.com">help@mint-outdoor.com</a> with your order number and they'll get it sorted for you as quickly as possible.\n\nIf there's anything else I can help with in the meantime, I'm right here!`;
+
+            session.conversationHistory.push({ role: 'user', content: message });
+            session.conversationHistory.push({ role: 'assistant', content: refundResponse });
+
+            await logConversationMessage(sessionId, 'user', message, { sentiment: 'refund_return_cancel' });
+            await logConversationMessage(sessionId, 'assistant', refundResponse, { intent: 'refund_help_email_redirect' });
+
+            return res.json({ response: refundResponse, sessionId });
         }
         
         // ROUTE B: Frustration WITHOUT order evidence (or explicitly said "not a customer")
