@@ -1561,7 +1561,7 @@ You CAN help an existing customer with the delivery timing / status of their OWN
 For DAMAGE or missing/faulty parts, point the customer to our care team. If a customer EXPLICITLY asks to CANCEL their order or get a REFUND: do NOT process, confirm, promise, negotiate, or quote any amount yourself. Instead ask for their order number AND delivery postcode, then use the file_refund_request tool to pass it to the team; once it succeeds, simply tell them you've passed their cancellation/refund request to the team and they'll be in touch shortly. If it can't be verified, ask them to email help@mint-outdoor.com. For RETURNS of an item they have already received, ask them to email help@mint-outdoor.com with their order number. Never invent a refund or returns process beyond this.
 
 CRITICAL - NO STALLING, NO BACKGROUND WORK:
-You have NO background process and CANNOT go away and come back. Never tell the customer to wait, that you're "checking", "verifying in the background", "pulling up their order", or that you'll "get back to them". Every reply must be complete in itself: either you have the answer and you give it now, or you don't and you either ask for the specific missing detail or hand off — in THIS reply. Never promise a follow-up you cannot send.
+You have NO background process and CANNOT go away and come back. Never tell the customer to wait, that you're "checking", "verifying in the background", "pulling up their order", or that you'll "get back to them". Every reply must be complete in itself: either you have the answer and you give it now, or you don't and you either ask for the specific missing detail or hand off — in THIS reply. Never promise a follow-up you cannot send. And never state that an action has been done, passed on, escalated, flagged, or actioned unless a tool in THIS turn actually confirmed it succeeded — if nothing confirmed it, do not claim it happened.
 
 GOLDEN RULE: A customer looking at a product card is 10x more likely to buy than one answering questions.
 
@@ -1980,7 +1980,7 @@ const aiTools = [
         type: "function",
         function: {
             name: "request_human_handoff",
-            description: "Request handoff to human support team when customer needs help you cannot provide, wants to speak to someone, asks how to contact support, or when you cannot fulfill their request. ALWAYS capture customer email first so support can respond.",
+            description: "Request handoff to a human for GENERAL support a customer needs that you cannot otherwise provide, or when they ask to speak to someone or how to contact support. Do NOT use this for cancellations or refunds (use file_refund_request instead), for delivery-date/order-status questions (use get_order_delivery_status), or for damage/missing/faulty parts (direct them to the care team). ALWAYS capture the customer's email first so support can respond.",
             parameters: {
                 type: "object",
                 properties: {
@@ -3135,10 +3135,21 @@ app.post('/chat', async (req, res) => {
         const hasDamageClaim = damageClaimPatterns.some(p => msgLower.includes(p));
         const hasFrustration = frustrationPatterns.some(p => msgLower.includes(p));
         const isNotACustomer = notACustomerPatterns.some(p => msgLower.includes(p));
-        const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') || 
+        const wantsToBuyMore = msgLower.includes('buy more') || msgLower.includes('order more') ||
                                msgLower.includes('another') || msgLower.includes('additional order') ||
                                msgLower.includes('new order') || msgLower.includes('want to buy');
-        
+
+        // Phase 1a-fix: tight deterministic detector for EXPLICIT refund/cancel intent. Used to
+        // (1) stop the legacy email-escalation paths swallowing it, and (2) force the
+        // file_refund_request tool. Deliberately excludes "change my order" / "add an item".
+        const refundCancelPatterns = [
+            'refund', 'money back', 'want a refund', 'get a refund', 'full refund', 'partial refund',
+            'cancel my order', 'cancel the order', 'cancel order', 'cancel my purchase',
+            'want to cancel', 'like to cancel', 'please cancel', 'cancel it',
+            'send it back', 'send back', 'sending back', 'return for a refund'
+        ];
+        const hasRefundCancel = refundCancelPatterns.some(p => msgLower.includes(p));
+
         // ROUTE A (Phase 0.0): DAMAGE / CLAIM only → deterministic deflection to the care
         // form. Order-status / delivery queries are NO LONGER caught here — they fall
         // through to the assistant (Phase 0.1 adds verified order-status lookup).
@@ -3200,7 +3211,9 @@ app.post('/chat', async (req, res) => {
         });
         
         // Check if customer is accepting escalation offer
-        if (session.escalationOffered && isAffirmative) {
+        // Phase 1a-fix: an explicit refund/cancel demand must NOT be swallowed here as a generic
+        // "yes, escalate me" — it routes to the file_refund_request flow instead.
+        if (session.escalationOffered && isAffirmative && !hasRefundCancel) {
             console.log(`🚨 Customer accepted escalation offer - proceeding with email capture`);
             session.pendingEscalation = true;
             session.escalationOffered = false; // Reset the offer flag
@@ -3975,10 +3988,16 @@ app.post('/chat', async (req, res) => {
         };
         
         const systemPrompt = buildSystemPrompt(sessionState);
-        
+
+        // Phase 1a-fix: when the customer is explicitly cancelling/refunding, deterministically
+        // force the file_refund_request flow and forbid the legacy email/handoff paths.
+        const refundDirective = hasRefundCancel
+            ? "\n\nACTIVE CANCELLATION/REFUND REQUEST: The customer is explicitly asking to cancel or refund their order. You MUST handle this ONLY with the file_refund_request tool. Reuse the order number and delivery postcode already confirmed earlier in this conversation if you have them; only ask for whatever is genuinely missing. Do NOT use request_human_handoff, do NOT ask for their email, and do NOT promise anything. Only tell the customer it has been passed to the team if file_refund_request returns success this turn; otherwise ask them to email help@mint-outdoor.com."
+            : "";
+
         // CRITICAL: Include conversation history so AI has context
         let messages = [
-            { role: "system", content: systemPrompt }
+            { role: "system", content: systemPrompt + refundDirective }
         ];
         
         // Add conversation history (previous exchanges)
@@ -4627,7 +4646,7 @@ if (toolCall.function.name === "get_product_dimensions") {
             }
             
             sessionState.availableSkus = session.currentWhitelist;
-            messages[0].content = buildSystemPrompt(sessionState);
+            messages[0].content = buildSystemPrompt(sessionState) + refundDirective;
             
             response = await openai.chat.completions.create({
                 model: "gpt-4.1",
