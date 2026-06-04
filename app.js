@@ -242,6 +242,11 @@ const sessions = new Map();
 const SHOPIFY_DOMAIN = process.env.SHOPIFY_STORE_URL || 'bb69ce-b5.myshopify.com';
 const SHOPIFY_ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
 
+// Phase 0.1: intel API (host-side, read-only) for verified order delivery status.
+// Reuses the existing :3850 endpoints; CHATBOT_API_KEY is a Coolify env var.
+const INTEL_API_URL = process.env.INTEL_API_URL || 'http://10.0.1.1:3850';
+const INTEL_API_KEY = process.env.CHATBOT_API_KEY || '';
+
 // ============================================
 // SHOPIFY CACHING SYSTEM (5-minute TTL)
 // ============================================
@@ -1552,8 +1557,11 @@ Example: Customer says "Stokholm chais" → You say "Stockholm Chaise Lounge Set
 If you cannot identify which product the customer means, ask for clarification using the correct product names from our range.
 
 CRITICAL - EXISTING ORDERS & DELIVERY:
-You CAN help an existing customer with the delivery timing / status of their OWN order — but ONLY using verified order data the system provides you. To look anything up you must have BOTH their order number AND their delivery postcode; politely ask for whichever is missing. NEVER invent, guess, or estimate a delivery date: if the system has not given you a verified date for this order, tell the customer you'll check and connect them to the team rather than guessing.
+You CAN help an existing customer with the delivery timing / status of their OWN order — but ONLY using verified order data the system provides you. To look anything up you must have BOTH their order number AND their delivery postcode; politely ask for whichever is missing. NEVER invent, guess, or estimate a delivery date: if the system has not given you a verified date for this order, tell the customer you don't have a confirmed date to hand and ask them to email help@mint-outdoor.com — in this same reply. Never say you'll check or get back to them.
 For DAMAGE or missing/faulty parts, point the customer to our care team. For REFUNDS, RETURNS, or CANCELLATIONS, do NOT process these yourself — tell the customer to email help@mint-outdoor.com with their order number and the team will action it. Never invent a refund or returns process beyond this.
+
+CRITICAL - NO STALLING, NO BACKGROUND WORK:
+You have NO background process and CANNOT go away and come back. Never tell the customer to wait, that you're "checking", "verifying in the background", "pulling up their order", or that you'll "get back to them". Every reply must be complete in itself: either you have the answer and you give it now, or you don't and you either ask for the specific missing detail or hand off — in THIS reply. Never promise a follow-up you cannot send.
 
 GOLDEN RULE: A customer looking at a product card is 10x more likely to buy than one answering questions.
 
@@ -2110,6 +2118,27 @@ const aiTools = [
                         description: "If customer needs it by a specific date, include that date here (e.g., '8 April 2026')"
                     }
                 }
+            }
+        }
+    },
+    {
+        type: "function",
+        function: {
+            name: "get_order_delivery_status",
+            description: "Look up the REAL, current delivery date for an EXISTING customer's order. Use ONLY for an existing order the customer is asking about (where is my order, when will it arrive, delivery date/status). You MUST have collected BOTH the order number AND the delivery postcode before calling — if either is missing, ask the customer for it first in your reply. This verifies identity (order number + postcode) and returns a verified delivery date or instructions. NEVER fabricate or guess a delivery date yourself; only state what this tool returns.",
+            parameters: {
+                type: "object",
+                properties: {
+                    orderNumber: {
+                        type: "string",
+                        description: "The customer's order number (digits)."
+                    },
+                    postcode: {
+                        type: "string",
+                        description: "The customer's delivery postcode, used to verify their identity against the order."
+                    }
+                },
+                required: ["orderNumber", "postcode"]
             }
         }
     }
@@ -4211,7 +4240,99 @@ app.post('/chat', async (req, res) => {
                         });
                     }
                 }
-                
+
+                if (toolCall.function.name === "get_order_delivery_status") {
+                    console.log(`📦 Order delivery status requested:`, { orderNumber: args.orderNumber, hasPostcode: !!args.postcode });
+
+                    const lookupOrder = (args.orderNumber || '').toString().replace(/[^0-9]/g, '');
+                    const lookupPostcode = (args.postcode || '').toString().trim();
+
+                    if (!lookupOrder || !lookupPostcode) {
+                        toolResults.push({
+                            tool_call_id: toolCall.id,
+                            output: JSON.stringify({
+                                verified: false,
+                                message: "To look up the order I need BOTH the order number AND the delivery postcode. Ask the customer for whichever is missing — in this reply. Do not provide any date yet."
+                            })
+                        });
+                    } else {
+                        try {
+                            const controller = new AbortController();
+                            const timer = setTimeout(() => controller.abort(), 5000);
+
+                            // Step 1: deterministic verification gate (order number + postcode)
+                            const vRes = await fetch(`${INTEL_API_URL}/order-intel`, {
+                                method: 'POST',
+                                headers: { 'X-API-Key': INTEL_API_KEY, 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ orderNumber: lookupOrder, postcode: lookupPostcode }),
+                                signal: controller.signal
+                            });
+                            const vData = vRes.ok ? await vRes.json() : null;
+
+                            if (!vData || vData.found !== true) {
+                                clearTimeout(timer);
+                                toolResults.push({
+                                    tool_call_id: toolCall.id,
+                                    output: JSON.stringify({
+                                        verified: false,
+                                        message: "That order number wasn't found. Ask the customer to double-check their order number — in this reply. Do not invent any details."
+                                    })
+                                });
+                            } else if (vData.verified !== true) {
+                                clearTimeout(timer);
+                                toolResults.push({
+                                    tool_call_id: toolCall.id,
+                                    output: JSON.stringify({
+                                        verified: false,
+                                        message: "The postcode does not match this order, so identity is NOT verified. Politely ask the customer to re-check the delivery postcode — in this reply. Do NOT provide any delivery date or any other order details."
+                                    })
+                                });
+                            } else {
+                                // Step 2: verified — fetch the authoritative delivery date (key on the date, not fulfilmentPath)
+                                const dRes = await fetch(`${INTEL_API_URL}/delivery-promise`, {
+                                    method: 'POST',
+                                    headers: { 'X-API-Key': INTEL_API_KEY, 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ orderNumber: lookupOrder }),
+                                    signal: controller.signal
+                                });
+                                clearTimeout(timer);
+                                const dData = dRes.ok ? await dRes.json() : null;
+                                const deliveryDate = dData && dData.authoritativeDate ? dData.authoritativeDate : null;
+
+                                if (deliveryDate) {
+                                    const overdue = dData.isOverdue === true;
+                                    const message = overdue
+                                        ? `The order is verified and IS running behind the original estimate. In this reply: briefly and honestly acknowledge the delay and apologise, then give the date and offer to connect them to the team. Phrase it as: "I'm sorry it's taken a little longer than planned — your order #${lookupOrder} is now on track for delivery around ${deliveryDate}. If you'd like, I can connect you with our team for more detail." Give it now; never stall.`
+                                        : `The order is verified. In this reply, give the customer this delivery date now, warmly and in your own words. Suggested: "Good news — your order #${lookupOrder} is on track for delivery around ${deliveryDate}. I'll let you know here if anything changes." Do not stall and do not say you'll check.`;
+                                    toolResults.push({
+                                        tool_call_id: toolCall.id,
+                                        output: JSON.stringify({ verified: true, deliveryDate, isOverdue: overdue, message })
+                                    });
+                                } else {
+                                    // Verified but no confirmed date — never invent; hand off in this reply
+                                    toolResults.push({
+                                        tool_call_id: toolCall.id,
+                                        output: JSON.stringify({
+                                            verified: true,
+                                            deliveryDate: null,
+                                            message: "The order is verified but there is no confirmed delivery date available. Do NOT invent a date. In this reply, tell the customer you don't have a confirmed date to hand and ask them to email help@mint-outdoor.com with their order number so the team can confirm it. Never promise to get back to them yourself."
+                                        })
+                                    });
+                                }
+                            }
+                        } catch (err) {
+                            console.error(`[INTEL] order-delivery-status failed:`, err.message);
+                            toolResults.push({
+                                tool_call_id: toolCall.id,
+                                output: JSON.stringify({
+                                    verified: false,
+                                    message: "The order lookup is temporarily unavailable. In this reply, apologise briefly and ask the customer to email help@mint-outdoor.com with their order number so the team can confirm their delivery date. Do not promise to check yourself."
+                                })
+                            });
+                        }
+                    }
+                }
+
                if (toolCall.function.name === "initiate_checkout") {
                     console.log(`🛒 Checkout initiated:`, args);
                     
